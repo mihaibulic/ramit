@@ -1,7 +1,7 @@
 /**
  * A player of the IT game.
- * @param team The team number the player is on.
- * @param playerID The player's ID number.
+ * @param {Number} team The team number the player is on.
+ * @param {Number} playerID The player's ID number.
  */
 var Player = function(team, playerID) {
 	this.team = team;
@@ -22,8 +22,13 @@ var Player = function(team, playerID) {
 };
 
 /**
+ * The factor in which diagonal speed is multiplied.
+ */
+Player.DIAGONAL_CONST = Math.sqrt(0.5);
+
+/**
  * Draw's the player's information.
- * @param level An object describing the state of the level.
+ * @param {Object} level An object describing the state of the level.
  */
 Player.prototype.draw = function(level) {
 	var xPos = this.tank.x - level.x;
@@ -40,11 +45,16 @@ Player.prototype.draw = function(level) {
 				globals.resources.turrets[this.team][this.tank.turretAim],
 				xPos - 7, yPos - 7);
 	}
+
+	globals.ctx.strokeStyle = "#0000ff";
+	var rect = this.getCollisionBarrier();
+	globals.ctx.strokeRect(rect.left - level.x, rect.top - level.y, rect.width(),
+			rect.height());
 };
 
 /**
  * Updates the player's turret's aim.
- * @param e The mouse event triggering the call.
+ * @param {Event} e The mouse event triggering the call.
  */
 Player.prototype.updateAim = function(e) {
 	var canvasPos = globals.canvas.getBoundingClientRect();
@@ -58,7 +68,7 @@ Player.prototype.updateAim = function(e) {
 
 /**
  * Update the player's pressed keys.
- * @param e The key event triggering the call.
+ * @param {Event} e The key event triggering the call.
  */
 Player.prototype.updateKeys = function(e) {
 	var value = e.type === "keydown";
@@ -79,27 +89,21 @@ Player.prototype.updateKeys = function(e) {
 };
 
 /**
- * Convert's key's into a direction
+ * Update the state of the Player.
  */
-Player.prototype.update = function() {	
+Player.prototype.update = function(level) {	
+	this.move(level);
+	
 	// Determine a numeric value for which keys are pressed and move the tank.
 	var keyValue = 0;
-	if (this.keys.up) {
+	if (this.keys.up)
 		keyValue += 1;
-		this.tank.y -= this.speed;
-	}
-	if (this.keys.down) {
+	if (this.keys.down)
 		keyValue += 2;
-		this.tank.y += this.speed;
-	}
-	if (this.keys.left) {
+	if (this.keys.left)
 		keyValue += 4;
-		this.tank.x -= this.speed;
-	}
-	if (this.keys.right) {
+	if (this.keys.right)
 		keyValue += 8;
-		this.tank.x += this.speed;
-	}
 	
 	// Based on which keys are pressed, determine which direction to draw the
 	// Tank in.
@@ -133,4 +137,54 @@ Player.prototype.update = function() {
 		this.tank.direction = 1;
 		break;
 	}
+};
+
+/**
+ * Move the tank.
+ */
+Player.prototype.move = function(level) {
+	var x = this.tank.x;
+	var y = this.tank.y;
+	
+	var speed = (this.tank.direction % 2 == 0) ? this.speed :
+			Player.DIAGONAL_CONST * this.speed;
+	
+	if (this.keys.up)
+		y -= speed;
+	if (this.keys.down)
+		y += speed;
+	if (this.keys.left)
+		x -= speed;
+	if (this.keys.right)
+		x += speed;
+	
+	var rectYMovement = this.getCollisionBarrier({x: this.tank.x, y: y});
+	var rectXMovement = this.getCollisionBarrier({x: x, y: this.tank.y});
+	for (var i = 0; i < level.walls.length; i++) {
+		if (rectYMovement.intersects(level.walls[i])) {
+			y = this.tank.y;
+		}
+		if (rectXMovement.intersects(level.walls[i])) {
+			x = this.tank.x;
+		}
+	}
+	if (i === level.walls.length) {
+		this.tank.x = x;
+		this.tank.y = y;
+	}
+		
+};
+
+/**
+ * Returns a rectangle representing the collidable area for the provided
+ * location. If no location is provided, it will use the location of the tank
+ * by default.
+ * @param {Object} location An object that holds the location of the tank.
+ * @returns {Rectangle} A rectangle of the collidable area of the tank.
+ */
+Player.prototype.getCollisionBarrier = function(location) {
+	if (!location)
+		location = this.tank;
+	return new Rectangle({left: location.x + 10, right: location.x + 50, 
+		  top: location.y + 10, bottom: location.y + 50});
 };

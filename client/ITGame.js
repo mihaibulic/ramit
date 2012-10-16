@@ -32,7 +32,7 @@ var ITGame = function(team, playerID) {
  * Update the game state.
  */
 ITGame.prototype.update = function() {
-	this.player.update();
+	this.player.update(this.level);
 		
 	this.level.x = this.player.tank.x - 470;
 	this.level.y = this.player.tank.y - 220;
@@ -69,6 +69,11 @@ ITGame.prototype.draw = function() {
 	}
 	
 	this.player.draw(this.level);
+	
+	globals.ctx.strokeStyle = "#00ff00";
+	for (var i = 0; i < this.level.walls.length; i++) {
+		globals.ctx.strokeRect(this.level.walls[i].left - this.level.x, this.level.walls[i].top - this.level.y, this.level.walls[i].width(), this.level.walls[i].height());
+	}
 };
 
 /**
@@ -101,15 +106,16 @@ ITGame.prototype.loadLevel = function() {
 	             {left:350,right:400,top:1875,bottom:2175},
 	             {left:350,right:650,top:2125,bottom:2175},
 	             {left:525,right:1225,top:1825,bottom:1875},
-	             {left:775,right:957,top:1750,bottom:1950},
+	             {left:775,right:975,top:1750,bottom:1950},
 	             {left:850,right:900,top:1950,bottom:2250},
 	             {left:1450,right:1550,top:1800,bottom:1900},
 	             {left:1100,right:1900,top:2125,bottom:2175},
-	             {left:1750,right:2475,top:1825,bottom:1875},
+	             {left:1775,right:2475,top:1825,bottom:1875},
 	             {left:2025,right:2225,top:1750,bottom:1950},
 	             {left:2100,right:2150,top:1950,bottom:2250},
 	             {left:2350,right:2650,top:2125,bottom:2175},
 	             {left:2600,right:2650,top:1875,bottom:2175}];
+	this.level.walls = [];
 	for (var i = 0; i < walls.length; i++) {
 		this.level.walls[i] = new Rectangle(walls[i]);
 	}

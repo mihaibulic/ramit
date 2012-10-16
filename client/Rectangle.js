@@ -15,13 +15,26 @@ var Rectangle = function(box) {
 };
 
 /**
- * Returns true if the rectangle intersects with another.
  * @param rect The other rectangle to check.
- * @returns true if the rectangles are intersecting.
+ * @returns {Boolean} true if the rectangles are intersecting.
  */
 Rectangle.prototype.intersects = function(rect) {
-	return !(rect.left > this.right ||
-			rect.right < this.left || 
-      rect.top > this.bottom ||
-      rect.bottom < this.top);
+	return (this.left <= rect.right &&
+      rect.left <= this.right &&
+      this.top <= rect.bottom &&
+      rect.top <= this.bottom);
+};
+
+/**
+ * @returns {Number} The height of the rectangle.
+ */
+Rectangle.prototype.width = function() {
+	return this.right - this.left;
+};
+
+/**
+ * @returns {Number} The height of the rectangle.
+ */
+Rectangle.prototype.height = function() {
+	return this.bottom - this.top;
 };

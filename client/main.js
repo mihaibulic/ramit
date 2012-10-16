@@ -127,8 +127,8 @@ globals.renderTanks = function()
 		ctx.save();
 		ctx.translate(30, 30);
 		ctx.rotate(45 * i * Math.PI / 180);
-		ctx.drawImage(globals.rawImages.tanks, num * 50, 0, 50, 39, -25, -19, 50,
-				39);
+		ctx.drawImage(globals.rawImages.tanks, num * 42, 0, 40, 40, -20, -20, 40,
+				40);
 		ctx.restore();
 		var img = new Image();
 		img.src = renderer.toDataURL();
@@ -153,8 +153,8 @@ globals.renderTanks = function()
 		ctx.save();
 		ctx.translate(37, 37);
 		ctx.rotate(i * 2 * Math.PI / 180);
-		ctx.drawImage(globals.rawImages.tanks, num * 50, 39, 42, 21, -10, -10, 42,
-				21);
+		ctx.drawImage(globals.rawImages.tanks, num * 42, 40, 42, 22, -10, -11, 42,
+				22);
 		ctx.restore();
 		var img = new Image();
 		img.src = renderer.toDataURL();
