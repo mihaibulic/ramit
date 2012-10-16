@@ -158,6 +158,9 @@ Player.prototype.move = function(level) {
 	if (this.keys.right)
 		x += speed;
 	
+	x = Math.round(x);
+	y = Math.round(y);
+	
 	var rectYMovement = this.getCollisionBarrier({x: this.tank.x, y: y});
 	var rectXMovement = this.getCollisionBarrier({x: x, y: this.tank.y});
 	for (var i = 0; i < level.walls.length; i++) {
