@@ -38,3 +38,25 @@ Rectangle.prototype.width = function() {
 Rectangle.prototype.height = function() {
 	return this.bottom - this.top;
 };
+
+/**
+ * Calculates the X distance between two rectangles. The rectangles should not
+ * be intersecting.
+ * @param {Rectangle} rect The rectangle to check.
+ * @returns {Number} The X distance between this rectangle and the other.
+ */
+Rectangle.prototype.getXDistance = function(rect) {
+	return Math.min(Math.abs(this.left - rect.right),
+			Math.abs(rect.left - this.right));
+};
+
+/**
+ * Calculates the Y distance between two rectangles. The rectangles should not
+ * be intersecting.
+ * @param {Rectangle} rect The rectangle to check.
+ * @returns {Number} The Y distance between this rectangle and the other.
+ */
+Rectangle.prototype.getYDistance = function(rect) {
+	return Math.min(Math.abs(this.top - rect.bottom),
+			Math.abs(rect.top - this.bottom));
+};

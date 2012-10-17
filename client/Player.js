@@ -145,37 +145,48 @@ Player.prototype.update = function(level) {
 Player.prototype.move = function(level) {
 	var x = this.tank.x;
 	var y = this.tank.y;
+	var xDir = 1;
+	var yDir = 1;
 	
 	var speed = (this.tank.direction % 2 == 0) ? this.speed :
 			Player.DIAGONAL_CONST * this.speed;
 	
-	if (this.keys.up)
+	if (this.keys.up) {
 		y -= speed;
-	if (this.keys.down)
+		yDir = -1;
+	}	
+	if (this.keys.down) {
 		y += speed;
-	if (this.keys.left)
+		yDir = 1;
+	}
+	if (this.keys.left) {
 		x -= speed;
-	if (this.keys.right)
+		xDir = -1;
+	}
+	if (this.keys.right) {
 		x += speed;
+		xDir = 1;
+	}
 	
 	x = Math.round(x);
 	y = Math.round(y);
 	
+	var tankBox = this.getCollisionBarrier();
 	var rectYMovement = this.getCollisionBarrier({x: this.tank.x, y: y});
 	var rectXMovement = this.getCollisionBarrier({x: x, y: this.tank.y});
+	var distance;
 	for (var i = 0; i < level.walls.length; i++) {
 		if (rectYMovement.intersects(level.walls[i])) {
-			y = this.tank.y;
+			distance = tankBox.getYDistance(level.walls[i]);
+			y = this.tank.y + ((distance - 1) * yDir);
 		}
 		if (rectXMovement.intersects(level.walls[i])) {
-			x = this.tank.x;
+			distance = tankBox.getXDistance(level.walls[i]);
+			x = this.tank.x + ((distance - 1) * xDir);
 		}
 	}
-	if (i === level.walls.length) {
-		this.tank.x = x;
-		this.tank.y = y;
-	}
-		
+	this.tank.x = x;
+	this.tank.y = y;
 };
 
 /**
