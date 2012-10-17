@@ -46,7 +46,7 @@ Player.prototype.draw = function(level) {
 				xPos - 7, yPos - 7);
 	}
 
-	globals.ctx.strokeStyle = "#0000ff";
+	globals.ctx.strokeStyle = (this.team == 0 ? "#0000ff" : "#ff0000");
 	var rect = this.getCollisionBarrier();
 	globals.ctx.strokeRect(rect.left - level.x, rect.top - level.y, rect.width(),
 			rect.height());
