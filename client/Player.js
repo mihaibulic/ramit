@@ -143,14 +143,15 @@ Player.prototype.update = function(level) {
  * Move the tank.
  */
 Player.prototype.move = function(level) {
+	var speed = (this.tank.direction % 2 == 0) ? this.speed :
+			Player.DIAGONAL_CONST * this.speed;
 	var x = this.tank.x;
 	var y = this.tank.y;
+	// Which direction left/right, up/down is the tank moving in.
 	var xDir = 1;
 	var yDir = 1;
 	
-	var speed = (this.tank.direction % 2 == 0) ? this.speed :
-			Player.DIAGONAL_CONST * this.speed;
-	
+	// Determine the end location based on the keys.
 	if (this.keys.up) {
 		y -= speed;
 		yDir = -1;
@@ -167,20 +168,26 @@ Player.prototype.move = function(level) {
 		x += speed;
 		xDir = 1;
 	}
-	
 	x = Math.round(x);
 	y = Math.round(y);
 	
+	// The collision box of the tank.
 	var tankBox = this.getCollisionBarrier();
+	//The collision box after the tank moves in the Y direction.
 	var rectYMovement = this.getCollisionBarrier({x: this.tank.x, y: y});
+	//The collision box after the tank moves in the X direction.
 	var rectXMovement = this.getCollisionBarrier({x: x, y: this.tank.y});
 	var distance;
 	for (var i = 0; i < level.walls.length; i++) {
 		if (rectYMovement.intersects(level.walls[i])) {
+			// Moving up/down collided with a wall, move up to the wall but no
+			// farther.
 			distance = tankBox.getYDistance(level.walls[i]);
 			y = this.tank.y + ((distance - 1) * yDir);
 		}
 		if (rectXMovement.intersects(level.walls[i])) {
+			// Moving left/right collided with a wall, move up to the wall but no
+			// farther.
 			distance = tankBox.getXDistance(level.walls[i]);
 			x = this.tank.x + ((distance - 1) * xDir);
 		}
