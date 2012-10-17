@@ -21,8 +21,19 @@ var ITGame = function(team, playerID) {
 		this.player.updateAim(e);
 	}, this));
 	
+	// FPS Stuff
+	this.fps = 0;
+	this.count = 0;
+	if (globals.queries['debug'] == "true") {
+		this.fpsCount = window.setInterval(globals.bind(function() {
+			this.fps = this.count;
+			this.count = 0;
+		}, this), 1000);
+	}
+	
 	// Game loop.
 	this.interval = window.setInterval(globals.bind(function() {
+		this.count++;
 		this.update();
 		this.draw();
 	}, this), 16);
@@ -77,6 +88,12 @@ ITGame.prototype.draw = function() {
 					this.level.walls[i].top - this.level.y, this.level.walls[i].width(), 
 					this.level.walls[i].height());
 		}
+		
+		// Draw FPS
+		globals.ctx.fillStyle = "#ffffff";
+		globals.ctx.font = "normal 18px sans-serif";
+		globals.ctx.textBaseline = "top";
+		globals.ctx.fillText("FPS: " + this.fps, 5, 5);
 	}
 };
 
