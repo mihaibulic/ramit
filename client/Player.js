@@ -51,10 +51,12 @@ Player.prototype.draw = function(level) {
 				xPos - 7, yPos - 7);
 	}
 
-	globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
-	var rect = this.getCollisionBarrier();
-	globals.ctx.strokeRect(rect.left - level.x, rect.top - level.y, rect.width(),
-			rect.height());
+	if (globals.queries['debug'] == "true") {
+		globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
+		var rect = this.getCollisionBarrier();
+		globals.ctx.strokeRect(rect.left - level.x, rect.top - level.y, rect.width(),
+				rect.height());
+	}
 };
 
 /**

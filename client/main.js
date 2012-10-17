@@ -18,6 +18,22 @@ var globals = {
 };
 
 /**
+ * An object containing the query strings.
+ */
+globals.queries = (function() {
+	var result = {};
+	var queryString = location.search.substring(1);
+	var re = /([^&=]+)=([^&]*)/g;
+	var m;
+	
+	while (m = re.exec(queryString)) {
+		result[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+	}
+
+	return result;
+})();
+
+/**
  * Binds a function to an object.
  * @param fn The function to be bound.
  * @param context The 'this' object for the function.
