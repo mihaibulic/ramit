@@ -14,7 +14,7 @@ var Player = function(team, playerID) {
 	};
 	this.tank = {
 			x: 470,
-			y: 220,
+			y: (team == 0 ? 250 : 3000 - 310),
 			direction: 0,
 			turretAim: 0
 	};
