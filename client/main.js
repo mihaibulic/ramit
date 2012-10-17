@@ -107,8 +107,8 @@ globals.renderLevelTiles = function() {
 
 /**
  * Renders the tank images from the raw image. Each tank is rendered into 8
- * images, one for each direction. Each turret is rendered into 90 images,
- * each separated by 4 degrees of rotation.
+ * images, one for each direction. Each turret is rendered into 180 images,
+ * each separated by 2 degrees of rotation.
  */
 globals.renderTanks = function()
 {
@@ -183,6 +183,6 @@ window.onload = function() {
 	globals.ctx = globals.canvas.getContext('2d');
 	globals.load(function() 
 	{
-		globals.game = new ITGame(1,0);
+		globals.game = new ITGame(0,0);
 	});
 };

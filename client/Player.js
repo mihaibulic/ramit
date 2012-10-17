@@ -27,6 +27,11 @@ var Player = function(team, playerID) {
 Player.DIAGONAL_CONST = Math.sqrt(0.5);
 
 /**
+ * The color of the collision bound for each team.
+ */
+Player.COLLISION_BOUND_STROKE = ["#0000FF", "#FF0000"];
+
+/**
  * Draw's the player's information.
  * @param {Object} level An object describing the state of the level.
  */
@@ -46,7 +51,7 @@ Player.prototype.draw = function(level) {
 				xPos - 7, yPos - 7);
 	}
 
-	globals.ctx.strokeStyle = (this.team == 0 ? "#0000ff" : "#ff0000");
+	globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
 	var rect = this.getCollisionBarrier();
 	globals.ctx.strokeRect(rect.left - level.x, rect.top - level.y, rect.width(),
 			rect.height());

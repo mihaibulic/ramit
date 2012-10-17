@@ -72,7 +72,9 @@ ITGame.prototype.draw = function() {
 	
 	globals.ctx.strokeStyle = "#00ff00";
 	for (var i = 0; i < this.level.walls.length; i++) {
-		globals.ctx.strokeRect(this.level.walls[i].left - this.level.x, this.level.walls[i].top - this.level.y, this.level.walls[i].width(), this.level.walls[i].height());
+		globals.ctx.strokeRect(this.level.walls[i].left - this.level.x, 
+				this.level.walls[i].top - this.level.y, this.level.walls[i].width(), 
+				this.level.walls[i].height());
 	}
 };
 
