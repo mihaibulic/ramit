@@ -2,20 +2,11 @@
  * @author mihai
  */
 
-var app = require('http').createServer(handler);
+var app = require('http').createServer(function(req, res) {});
 var io = require('socket.io').listen(app);
-var fs = require('fs');
 var s = 0;
 
-app.listen(1337);
-
-function handler(request, response) 
-{
-	console.log("received request");
-    response.writeHead(200, {'Content-Type': 'text/plain'});
-    response.write('Hello World\n');
-    response.end();
-}
+app.listen(1337, '127.0.0.1');
 
 io.sockets.on('connection', 
 	function(socket) 
@@ -37,5 +28,3 @@ io.sockets.on('connection',
 		);
 	}
 );
-
-
