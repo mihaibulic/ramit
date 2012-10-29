@@ -2,22 +2,50 @@
  * The Interactive Tanks game.
  */
 var ITGame = function(team, playerID) {
-	this.team = team;
-	this.player = new Player(team, playerID);
-	this.level = new Level();
+    this.level = new Level();
+    globals.socket = io.connect('ws://www.misquares.com');
+    globals.socket.on('setup', globals.bind(function(data) {
+
+	globals.socket.on('state', function(data) {
+	  for(var id in data) {
+	      if (data[id].key !== undefined) {
+		  globals.players[id].keys.up = (data[id].key&1);
+		  globals.players[id].keys.down = (data[id].key&2);
+		  globals.players[id].keys.left = (data[id].key&4);
+		  globals.players[id].keys.right = (data[id].key&8);
+	      }
+	      if (data[id].x !== undefined)
+		  globals.players[id].tank.x = data[id].x;
+	      if (data[id].y !== undefined)
+		  globals.players[id].tank.y = data[id].y;
+	      if (data[id].aim !== undefined)
+		  globals.players[id].setAim(data[id].aim);
+	  }
+	});
+
+	globals.socket.on('join', function(data) {
+	  globals.players[data.i] = new Player(data.t, data.i);
+	});
+	globals.socket.on('leave', function(data) {
+	  delete globals.players[data.i];
+        });
+
+	this.team = data.p.t;
+	this.player = data.p.i;
+	globals.players[data.p.i] = new Player(data.p.t, data.p.i);
 	
 	// Input events.
 	var keyEvent = globals.bind(function(e) {
 		if (!e)
 			e = window.event;
-		this.player.updateKeys(e);
+		globals.players[this.player].updateKeys(e);
 	}, this);
 	window.addEventListener('keydown', keyEvent);
 	window.addEventListener('keyup', keyEvent);
 	window.addEventListener('mousemove', globals.bind(function(e) {
 		if (!e)
 			e = window.event;
-		this.player.updateAim(e);
+		globals.players[this.player].updateAim(e);
 	}, this));
 	
 	// FPS Stuff
@@ -37,16 +65,17 @@ var ITGame = function(team, playerID) {
 		this.update();
 		this.draw();
 	}, this), 16);
+    }, this));
 };
 
 /**
  * Update the game state.
  */
 ITGame.prototype.update = function() {
-	this.player.update(this.level);
+    //globals.players[this.player].update(this.level);
 		
-	this.level.x = this.player.tank.x - 470;
-	this.level.y = this.player.tank.y - 220;
+	this.level.x = globals.players[this.player].tank.x - 470;
+	this.level.y = globals.players[this.player].tank.y - 220;
 };
 
 /**
@@ -79,7 +108,9 @@ ITGame.prototype.draw = function() {
 				-1 * levelX + 1000, -1 * levelY + 1000);
 	}
 	
-	this.player.draw(this.level);
+	for (var pid in globals.players) {
+	  globals.players[pid].draw(this.level);
+	}
 	
 	if (globals.queries['debug'] == "true") {
 		globals.ctx.strokeStyle = "#00ff00";

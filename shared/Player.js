@@ -41,68 +41,6 @@ Player.prototype.draw = function(level) {
 	var xPos = this.tank.x - level.x;
 	var yPos = this.tank.y - level.y;
 	
-	// If the tank will not be displayed on the screen, do not bother drawing it.
-	if (xPos > -60 && xPos < 1000 && yPos > -60 && yPos < 500) {
-		// Draw the tank.
-		globals.ctx.drawImage(
-				globals.resources.tanks[this.team][this.tank.direction],
-				xPos, yPos);
-		// Draw the turret.
-		globals.ctx.drawImage(
-				globals.resources.turrets[this.team][this.tank.turretAim],
-				xPos - 7, yPos - 7);
-	}
-
-	if (globals.queries['debug'] == "true") {
-		globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
-		var rect = this.getCollisionBarrier();
-		globals.ctx.strokeRect(rect.left - level.x, rect.top - level.y, rect.width(),
-				rect.height());
-	}
-};
-
-/**
- * Updates the player's turret's aim.
- * @param {Event} e The mouse event triggering the call.
- */
-Player.prototype.updateAim = function(e) {
-	var canvasPos = globals.canvas.getBoundingClientRect();
-	var centerPoint = {x: canvasPos.left + 500, y: canvasPos.top + 250};
-	var r = Math.atan2(e.clientY - centerPoint.y, e.clientX - centerPoint.x)
-			* 180 / Math.PI;
-	if (r < 0)
-		r += 360;
-	this.tank.turretAim = Math.floor(r / 2);
-};
-
-/**
- * Update the player's pressed keys.
- * @param {Event} e The key event triggering the call.
- */
-Player.prototype.updateKeys = function(e) {
-	var value = e.type === "keydown";
-	switch (e.keyCode) {
-	case 87: // W
-		this.keys.up = value;
-		break;
-	case 65: // A
-		this.keys.left = value;
-		break;
-	case 83: // S
-		this.keys.down = value;
-		break;
-	case 68: // D
-		this.keys.right = value;
-		break;
-	}
-};
-
-/**
- * Update the state of the Player.
- */
-Player.prototype.update = function(level, diff) {		
-	this.move(level, diff);
-	
 	// Determine a numeric value for which keys are pressed and move the tank.
 	keyValue = this.getKeyValue();
 	
@@ -138,6 +76,75 @@ Player.prototype.update = function(level, diff) {
 		this.tank.direction = 1;
 		break;
 	}
+
+	// If the tank will not be displayed on the screen, do not bother drawing it.
+	if (xPos > -60 && xPos < 1000 && yPos > -60 && yPos < 500) {
+		// Draw the tank.
+		globals.ctx.drawImage(
+				globals.resources.tanks[this.team][this.tank.direction],
+				xPos, yPos);
+		// Draw the turret.
+		globals.ctx.drawImage(
+				globals.resources.turrets[this.team][this.tank.turretAim],
+				xPos - 7, yPos - 7);
+	}
+
+	if (globals.queries['debug'] == "true") {
+		globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
+		var rect = this.getCollisionBarrier();
+		globals.ctx.strokeRect(rect.left - level.x, rect.top - level.y, rect.width(),
+				rect.height());
+	}
+};
+
+/**
+ * Updates the player's turret's aim.
+ * @param {Event} e The mouse event triggering the call.
+ */
+Player.prototype.updateAim = function(e) {
+	var canvasPos = globals.canvas.getBoundingClientRect();
+	var centerPoint = {x: canvasPos.left + 500, y: canvasPos.top + 250};
+	var r = Math.atan2(e.clientY - centerPoint.y, e.clientX - centerPoint.x)
+			* 180 / Math.PI;
+	if (r < 0)
+		r += 360;
+	//this.tank.turretAim = Math.floor(r / 2);
+	globals.socket.emit('aim', {a: Math.floor(r/2)});
+};
+
+/**
+ * Update the player's pressed keys.
+ * @param {Event} e The key event triggering the call.
+ */
+Player.prototype.updateKeys = function(e) {
+    var diff = {};
+	var value = e.type === "keydown";
+	switch (e.keyCode) {
+	case 87: // W
+	    //this.keys.up = value;
+		diff.u = value;
+		break;
+	case 65: // A
+	    //this.keys.left = value;
+		diff.l = value;
+		break;
+	case 83: // S
+	    //this.keys.down = value;
+		diff.d = value;
+		break;
+	case 68: // D
+	    //this.keys.right = value;
+		diff.r = value;
+		break;
+	}
+    globals.socket.emit('key', diff);
+};
+
+/**
+ * Update the state of the Player.
+ */
+Player.prototype.update = function(level, diff) {		
+	this.move(level, diff);
 };
 
 /**

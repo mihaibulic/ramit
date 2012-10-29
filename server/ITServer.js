@@ -1,3 +1,6 @@
+/**
+ * @author ryjust
+ */
 var io = require('socket.io').listen(1337);
 
 // Globals for the server.
@@ -5,9 +8,12 @@ var server = {
 	interval: null,
 	numberOfPlayers: 0,
 	players: {},
+	socketToId: {},
+	playerIDQueue: [7,6,5,4,3,2,1,0],
 	colors: [0,0],
 	level: new Level(),
-	diff: {}
+	diff: {},
+	usedDiff: false
 };
 
 /**
@@ -23,11 +29,13 @@ var update = function() {
 			if (!server.diff[player])
 				server.diff[player] = {};
 			server.diff[player][diff] = playerDiff[diff];
+			server.usedDiff = true;
 		}
 	}
-	if (server.diff !== {})
+	if (server.usedDiff)
 		io.sockets.emit('state', server.diff);
 	server.diff = {};
+	server.usedDiff = false;
 };
 
 /**
@@ -49,56 +57,62 @@ io.sockets.on('connection', function(socket) {
 	
 	// If this is the first player, start the game.
 	if (server.numberOfPlayers === 0)
-		interval = setInterval(update, 16);
+		interval = setInterval(update, 33);
 	
 	// Create the player.
-	numberOfPlayers++;
+	server.numberOfPlayers++;
 	var color = 0;
 	if (server.colors[1] < server.colors[0])
 		color = 1;
 	server.colors[color]++;
-	server.players[socket.id] = new Player(color, socket.id);
+	var id = server.playerIDQueue.pop();
+	server.socketToId[socket.id] = id;
+	server.players[id] = new Player(color, id);
 	
 	// Actions to perform when the player presses or releases a key.
 	socket.on('key', function(data) {
 		if (data.u !== undefined)
-			server.players[socket.id].keys.up = data.u;
+			server.players[id].keys.up = data.u;
 		if (data.d !== undefined)
-			server.players[socket.id].keys.down = data.d;
+			server.players[id].keys.down = data.d;
 		if (data.l !== undefined)
-			server.players[socket.id].keys.left = data.l;
+			server.players[id].keys.left = data.l;
 		if (data.r !== undefined)
-			server.players[socket.id].keys.right = data.r;
+			server.players[id].keys.right = data.r;
 		
-		if (!server.diff[socket.id])
-			server.diff[socket.id] = {};
-		server.diff[socket.id].key = server.players[socket.id].getKeyValue();
+		if (!server.diff[id])
+			server.diff[id] = {};
+		server.diff[id].key = server.players[id].getKeyValue();
+		server.usedDiff = true;
 	});
 	
 	// Actions to perform when the player changes the tank's aim.
 	socket.on('aim', function(data) {
 		if (data.a !== undefined)
-			server.players[socket.id].setAim(data.a);
+			server.players[id].setAim(data.a);
 		
-		if (!server.diff[socket.id])
-			server.diff[socket.id] = {};
-		server.diff[socket.id].aim = server.players[socket.id].getAim();
+		if (!server.diff[id])
+			server.diff[id] = {};
+		server.diff[id].aim = server.players[id].getAim();
+		server.usedDiff = true;
 	});
 	
 	// Actions to perform when the player disconnects.
 	socket.on('disconnect', function() {
-		server.colors[server.players[socket.id].team]--;
-		delete server.players[socket.id];
-		if (--numberOfPlayers === 0) {
-			stopInterval(state.interval);
-			state.interval = null;
+		server.colors[server.players[id].team]--;
+		delete server.players[id];
+		if (--server.numberOfPlayers === 0) {
+			clearInterval(server.interval);
+			server.interval = null;
 		}
 		// Notify the other players that a player has left.
-		socket.broadcast.emit('leave', {i: socket.id});
+		socket.broadcast.emit('leave', {i: id});
+		server.playerIDQueue.push(id);
+		delete server.socketToId[socket.id];
 	});
 	
 	// Broadcast to the other players that there is a new player.
-	var playerInfo = {t: color, i: socket.id};
+	var playerInfo = {t: color, i: id};
 	socket.broadcast.emit('join', playerInfo);
 	socket.emit('setup', {p: playerInfo, s: getAbsoluteState()});
 });
