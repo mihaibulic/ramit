@@ -15,6 +15,8 @@ var Player = function(team, playerID) {
 	this.tank = {
 			x: 470,
 			y: (team == 0 ? 250 : 3000 - 310),
+			sx: 470,
+			sy: (team == 0 ? 250 : 3000 - 310),
 			direction: 0,
 			turretAim: 0
 	};
@@ -98,19 +100,11 @@ Player.prototype.updateKeys = function(e) {
 /**
  * Update the state of the Player.
  */
-Player.prototype.update = function(level) {	
-	this.move(level);
+Player.prototype.update = function(level, diff) {		
+	this.move(level, diff);
 	
 	// Determine a numeric value for which keys are pressed and move the tank.
-	var keyValue = 0;
-	if (this.keys.up)
-		keyValue += 1;
-	if (this.keys.down)
-		keyValue += 2;
-	if (this.keys.left)
-		keyValue += 4;
-	if (this.keys.right)
-		keyValue += 8;
+	keyValue = this.getKeyValue();
 	
 	// Based on which keys are pressed, determine which direction to draw the
 	// Tank in.
@@ -149,7 +143,7 @@ Player.prototype.update = function(level) {
 /**
  * Move the tank.
  */
-Player.prototype.move = function(level) {
+Player.prototype.move = function(level, diff) {
 	var speed = (this.tank.direction % 2 == 0) ? this.speed :
 			Player.DIAGONAL_CONST * this.speed;
 	var x = this.tank.x;
@@ -199,8 +193,28 @@ Player.prototype.move = function(level) {
 			x = this.tank.x + ((distance - 1) * xDir);
 		}
 	}
+	
+	if (diff && this.tank.x !== x)
+		diff.x = x;
+	if (diff && this.tank.y !== y)
+		diff.y = y;
+	
 	this.tank.x = x;
 	this.tank.y = y;
+};
+
+/**
+ * @returns {Number} The direction the turret is aiming.
+ */
+Player.prototype.getAim = function() {
+	return this.tank.turretAim;
+};
+
+/**
+ * @param aim The direction the turret is aiming.
+ */
+Player.prototype.setAim = function(aim) {
+	this.tank.turretAim = aim;
 };
 
 /**
@@ -215,4 +229,21 @@ Player.prototype.getCollisionBarrier = function(location) {
 		location = this.tank;
 	return new Rectangle({left: location.x + 10, right: location.x + 50, 
 		  top: location.y + 10, bottom: location.y + 50});
+};
+
+/**
+ * @returns {Number} A numeric value representing the keys pressed by the
+ *     player.
+ */
+Player.prototype.getKeyValue = function() {
+	var keyValue = 0;
+	if (this.keys.up)
+		keyValue += 1;
+	if (this.keys.down)
+		keyValue += 2;
+	if (this.keys.left)
+		keyValue += 4;
+	if (this.keys.right)
+		keyValue += 8;
+	return keyValue;
 };
