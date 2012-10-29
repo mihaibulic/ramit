@@ -304,7 +304,15 @@ Player.prototype.getKeyValue = function() {
 	if (this.keys.right)
 		keyValue += 8;
 	return keyValue;
-};/**
+};
+
+Player.prototype.setKeyValue = function(keyValue) {
+    this.keys.up = (keyValue & 1);
+    this.keys.down = (keyValue & 2);
+    this.keys.left = (keyValue & 4);
+    this.keys.right = (keyValue & 8);
+};
+/**
  * A rectangle.
  */
 var Rectangle = function(box) {
@@ -410,7 +418,16 @@ var update = function() {
  * @returns {Object} The absolute state of the game.
  */
 var getAbsoluteState = function() {
-	return {};
+  var state = {};
+  for (var id in server.players) {
+    state[id] = {};
+    state[id].t = server.players[id].team;
+    state[id].x = server.players[id].tank.x;
+    state[id].y = server.players[id].tank.y;
+    state[id].aim = server.players[id].getAim();
+    state[id].key = server.players[id].getKeyValue();
+  }
+  return state;
 };
 
 /**

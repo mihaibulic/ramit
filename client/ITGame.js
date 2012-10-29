@@ -32,7 +32,13 @@ var ITGame = function(team, playerID) {
 
 	this.team = data.p.t;
 	this.player = data.p.i;
-	globals.players[data.p.i] = new Player(data.p.t, data.p.i);
+	for (var pid in data.s) {
+	    globals.players[pid] = new Player(data.s[pid].t, pid);
+	    globals.players[pid].tank.x = data.s[pid].x;
+	    globals.players[pid].tank.y = data.s[pid].y;
+	    globals.players[pid].setAim(data.s[pid].aim);
+	    globals.players[pid].setKeyValue(data.s[pid].key);
+	}
 	
 	// Input events.
 	var keyEvent = globals.bind(function(e) {

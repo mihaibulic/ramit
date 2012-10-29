@@ -42,7 +42,16 @@ var update = function() {
  * @returns {Object} The absolute state of the game.
  */
 var getAbsoluteState = function() {
-	return {};
+  var state = {};
+  for (var id in server.players) {
+    state[id] = {};
+    state[id].t = server.players[id].team;
+    state[id].x = server.players[id].tank.x;
+    state[id].y = server.players[id].tank.y;
+    state[id].aim = server.players[id].getAim();
+    state[id].key = server.players[id].getKeyValue();
+  }
+  return state;
 };
 
 /**

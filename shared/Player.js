@@ -254,3 +254,10 @@ Player.prototype.getKeyValue = function() {
 		keyValue += 8;
 	return keyValue;
 };
+
+Player.prototype.setKeyValue = function(keyValue) {
+    this.keys.up = (keyValue & 1);
+    this.keys.down = (keyValue & 2);
+    this.keys.left = (keyValue & 4);
+    this.keys.right = (keyValue & 8);
+};
