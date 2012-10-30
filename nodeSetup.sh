@@ -1,7 +1,6 @@
 #!/bin/bash
 
-VERSION='v0.8.12'
-
+# install basic stuff
 command -V apt-get &> /dev/null
 if [[ $? -eq 0 ]]; then
   sudo apt-get update;
@@ -14,6 +13,8 @@ fi
 DIR=$(pwd)
 cd $HOME
 
+# install node
+VERSION='v0.8.12'
 git clone git://github.com/joyent/node.git
 cd node
 git checkout $VERSION
@@ -22,9 +23,11 @@ git checkout $VERSION
 ./configure
 make
 sudo make install
+sudo cp node /usr/sbin/.
 
 cd $HOME
 
+# install NPM
 git clone https://github.com/isaacs/npm.git
 cd npm
 sudo make install
@@ -33,12 +36,19 @@ if [[ $? -eq 0 ]]; then
   exit 1;
 fi
 
+# install node pacakges
 sudo npm install socket.io forever -g
 cd ${DIR}
 ln -s $HOME/npm/node_modules
 
+# this lets node find socket.io
 cp node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js ${DIR}
 
+# auto start node
+sudo cp ./node /etc/init.d/.
+sudo chkconfig --add node
+
+# setup haproxy
 haproxy/haproxySetup.sh
 
 echo -e "\n\n\n Node.js, the Node Package Manager (npm), and the socket io package have been installed.";

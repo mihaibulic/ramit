@@ -442,7 +442,7 @@ io.sockets.on('connection', function(socket) {
 	
 	// If this is the first player, start the game.
 	if (server.numberOfPlayers === 0)
-		interval = setInterval(update, 33);
+		interval = setInterval(update, 16);
 	
 	// Create the player.
 	server.numberOfPlayers++;

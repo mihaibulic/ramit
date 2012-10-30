@@ -1,0 +1,60 @@
+#!/bin/sh
+#
+# 
+#
+# chkconfig: 2345 20 80
+# description: This is a daemon for automatically \ 
+# start node
+#
+# processname: node
+# 
+#
+
+prefix=/usr
+exec_prefix=/usr
+sbindir=/usr/sbin
+
+RETVAL=0
+
+start()
+{
+    echo "Starting node.js"
+	node /home/ec2-user/ramit/ramit_server.js >> /tmp/node.log 2>&1 &
+    echo "Done starting node.js!"
+}
+
+stop()
+{
+    echo "Stopping node.js"
+    sudo killall -w node >> /tmp/node.log 2>&1
+    echo "Done stopping node.js!"
+}
+
+# See how we were called.
+case "$1" in
+     start)
+         start
+         ;;
+     stop)
+         stop
+         ;;
+     status)
+         status -p $pidfile $processname
+         RETVAL=$?
+     ;;
+     restart)
+         stop
+         start
+         ;;
+     condrestart)
+         if [ -f /var/lock/subsys/$servicename ]; then
+             stop
+             start
+         fi
+         ;;
+     *)
+         echo $"Usage: $0 {start|stop|status|restart|condrestart}"
+         ;;
+esac
+
+exit $RETVAL

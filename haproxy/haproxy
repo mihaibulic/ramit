@@ -1,0 +1,62 @@
+#!/bin/sh
+#
+# 
+#
+# chkconfig: 2345 20 80
+# description: This is a daemon for automatically \ 
+# start haproxy
+#
+# processname: haproxy
+# 
+#
+
+prefix=/usr
+exec_prefix=/usr
+sbindir=/usr/sbin
+
+RETVAL=0
+
+BASE=/etc/haproxy
+
+start()
+{
+    echo "Starting haproxy"
+    sudo haproxy -f ${BASE}/haproxy.cfg >> /tmp/haproxy.log 2>&1 & 
+    echo "Done starting haproxy!"
+}
+
+stop()
+{
+    echo "Stopping haproxy"
+    sudo killall -w haproxy >> /tmp/haproxy.log 2>&1
+    echo "Done stopping haproxy!"
+}
+
+# See how we were called.
+case "$1" in
+     start)
+         start
+         ;;
+     stop)
+         stop
+         ;;
+     status)
+         status -p $pidfile $processname
+         RETVAL=$?
+     ;;
+     restart)
+         stop
+         start
+         ;;
+     condrestart)
+         if [ -f /var/lock/subsys/$servicename ]; then
+             stop
+             start
+         fi
+         ;;
+     *)
+         echo $"Usage: $0 {start|stop|status|restart|condrestart}"
+         ;;
+esac
+
+exit $RETVAL
