@@ -9,6 +9,8 @@ lib-cov
 *.out
 *.pid
 *.gz
+*.swp
+.project
 
 pids
 logs
