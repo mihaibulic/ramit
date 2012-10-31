@@ -13,7 +13,7 @@ Player.prototype.draw = function(level) {
 	var yPos = this.tank.y - level.y;
 	
 	if (xPos > -20 && xPos < 1000 && yPos > -20 && yPos < 500) {
-		globals.ctx.fillRect(
+		globals.ctx.fillRect(xPow, yPos, 40, 40);
 	}
 	
 };
