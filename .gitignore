@@ -1,4 +1,7 @@
 lib-cov
+*~
+\.\#*
+\#*\#
 *.seed
 *.log
 *.csv
@@ -13,3 +16,4 @@ results
 
 node_modules
 npm-debug.log
+deploy.sh

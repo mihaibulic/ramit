@@ -14,8 +14,25 @@ var globals = {
 		},
 		canvas: null,
 		ctx: null,
-		remainingResources: 0
+		remainingResources: 0,
+		players: {}
 };
+
+/**
+ * An object containing the query strings.
+ */
+globals.queries = (function() {
+	var result = {};
+	var queryString = location.search.substring(1);
+	var re = /([^&=]+)=([^&]*)/g;
+	var m;
+	
+	while (m = re.exec(queryString)) {
+		result[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+	}
+
+	return result;
+})();
 
 /**
  * Binds a function to an object.

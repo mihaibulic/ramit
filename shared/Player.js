@@ -15,6 +15,8 @@ var Player = function(team, playerID) {
 	this.tank = {
 			x: 470,
 			y: (team == 0 ? 250 : 3000 - 310),
+			sx: 470,
+			sy: (team == 0 ? 250 : 3000 - 310),
 			direction: 0,
 			turretAim: 0
 	};
@@ -39,76 +41,8 @@ Player.prototype.draw = function(level) {
 	var xPos = this.tank.x - level.x;
 	var yPos = this.tank.y - level.y;
 	
-	// If the tank will not be displayed on the screen, do not bother drawing it.
-	if (xPos > -60 && xPos < 1000 && yPos > -60 && yPos < 500) {
-		// Draw the tank.
-		globals.ctx.drawImage(
-				globals.resources.tanks[this.team][this.tank.direction],
-				xPos, yPos);
-		// Draw the turret.
-		globals.ctx.drawImage(
-				globals.resources.turrets[this.team][this.tank.turretAim],
-				xPos - 7, yPos - 7);
-	}
-
-	globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
-	var rect = this.getCollisionBarrier();
-	globals.ctx.strokeRect(rect.left - level.x, rect.top - level.y, rect.width(),
-			rect.height());
-};
-
-/**
- * Updates the player's turret's aim.
- * @param {Event} e The mouse event triggering the call.
- */
-Player.prototype.updateAim = function(e) {
-	var canvasPos = globals.canvas.getBoundingClientRect();
-	var centerPoint = {x: canvasPos.left + 500, y: canvasPos.top + 250};
-	var r = Math.atan2(e.clientY - centerPoint.y, e.clientX - centerPoint.x)
-			* 180 / Math.PI;
-	if (r < 0)
-		r += 360;
-	this.tank.turretAim = Math.floor(r / 2);
-};
-
-/**
- * Update the player's pressed keys.
- * @param {Event} e The key event triggering the call.
- */
-Player.prototype.updateKeys = function(e) {
-	var value = e.type === "keydown";
-	switch (e.keyCode) {
-	case 87: // W
-		this.keys.up = value;
-		break;
-	case 65: // A
-		this.keys.left = value;
-		break;
-	case 83: // S
-		this.keys.down = value;
-		break;
-	case 68: // D
-		this.keys.right = value;
-		break;
-	}
-};
-
-/**
- * Update the state of the Player.
- */
-Player.prototype.update = function(level) {	
-	this.move(level);
-	
 	// Determine a numeric value for which keys are pressed and move the tank.
-	var keyValue = 0;
-	if (this.keys.up)
-		keyValue += 1;
-	if (this.keys.down)
-		keyValue += 2;
-	if (this.keys.left)
-		keyValue += 4;
-	if (this.keys.right)
-		keyValue += 8;
+	keyValue = this.getKeyValue();
 	
 	// Based on which keys are pressed, determine which direction to draw the
 	// Tank in.
@@ -142,12 +76,81 @@ Player.prototype.update = function(level) {
 		this.tank.direction = 1;
 		break;
 	}
+
+	// If the tank will not be displayed on the screen, do not bother drawing it.
+	if (xPos > -60 && xPos < 1000 && yPos > -60 && yPos < 500) {
+		// Draw the tank.
+		globals.ctx.drawImage(
+				globals.resources.tanks[this.team][this.tank.direction],
+				xPos, yPos);
+		// Draw the turret.
+		globals.ctx.drawImage(
+				globals.resources.turrets[this.team][this.tank.turretAim],
+				xPos - 7, yPos - 7);
+	}
+
+	if (globals.queries['debug'] == "true") {
+		globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
+		var rect = this.getCollisionBarrier();
+		globals.ctx.strokeRect(rect.left - level.x, rect.top - level.y, rect.width(),
+				rect.height());
+	}
+};
+
+/**
+ * Updates the player's turret's aim.
+ * @param {Event} e The mouse event triggering the call.
+ */
+Player.prototype.updateAim = function(e) {
+	var canvasPos = globals.canvas.getBoundingClientRect();
+	var centerPoint = {x: canvasPos.left + 500, y: canvasPos.top + 250};
+	var r = Math.atan2(e.clientY - centerPoint.y, e.clientX - centerPoint.x)
+			* 180 / Math.PI;
+	if (r < 0)
+		r += 360;
+	//this.tank.turretAim = Math.floor(r / 2);
+	globals.socket.emit('aim', {a: Math.floor(r/2)});
+};
+
+/**
+ * Update the player's pressed keys.
+ * @param {Event} e The key event triggering the call.
+ */
+Player.prototype.updateKeys = function(e) {
+    var diff = {};
+	var value = e.type === "keydown";
+	switch (e.keyCode) {
+	case 87: // W
+	    //this.keys.up = value;
+		diff.u = value;
+		break;
+	case 65: // A
+	    //this.keys.left = value;
+		diff.l = value;
+		break;
+	case 83: // S
+	    //this.keys.down = value;
+		diff.d = value;
+		break;
+	case 68: // D
+	    //this.keys.right = value;
+		diff.r = value;
+		break;
+	}
+    globals.socket.emit('key', diff);
+};
+
+/**
+ * Update the state of the Player.
+ */
+Player.prototype.update = function(level, diff) {		
+	this.move(level, diff);
 };
 
 /**
  * Move the tank.
  */
-Player.prototype.move = function(level) {
+Player.prototype.move = function(level, diff) {
 	var speed = (this.tank.direction % 2 == 0) ? this.speed :
 			Player.DIAGONAL_CONST * this.speed;
 	var x = this.tank.x;
@@ -197,8 +200,28 @@ Player.prototype.move = function(level) {
 			x = this.tank.x + ((distance - 1) * xDir);
 		}
 	}
+	
+	if (diff && this.tank.x !== x)
+		diff.x = x;
+	if (diff && this.tank.y !== y)
+		diff.y = y;
+	
 	this.tank.x = x;
 	this.tank.y = y;
+};
+
+/**
+ * @returns {Number} The direction the turret is aiming.
+ */
+Player.prototype.getAim = function() {
+	return this.tank.turretAim;
+};
+
+/**
+ * @param aim The direction the turret is aiming.
+ */
+Player.prototype.setAim = function(aim) {
+	this.tank.turretAim = aim;
 };
 
 /**
@@ -213,4 +236,28 @@ Player.prototype.getCollisionBarrier = function(location) {
 		location = this.tank;
 	return new Rectangle({left: location.x + 10, right: location.x + 50, 
 		  top: location.y + 10, bottom: location.y + 50});
+};
+
+/**
+ * @returns {Number} A numeric value representing the keys pressed by the
+ *     player.
+ */
+Player.prototype.getKeyValue = function() {
+	var keyValue = 0;
+	if (this.keys.up)
+		keyValue += 1;
+	if (this.keys.down)
+		keyValue += 2;
+	if (this.keys.left)
+		keyValue += 4;
+	if (this.keys.right)
+		keyValue += 8;
+	return keyValue;
+};
+
+Player.prototype.setKeyValue = function(keyValue) {
+    this.keys.up = (keyValue & 1);
+    this.keys.down = (keyValue & 2);
+    this.keys.left = (keyValue & 4);
+    this.keys.right = (keyValue & 8);
 };

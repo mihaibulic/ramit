@@ -2,40 +2,86 @@
  * The Interactive Tanks game.
  */
 var ITGame = function(team, playerID) {
-	this.team = team;
-	this.player = new Player(team, playerID);
-	this.level = {x: 0, y: 0};
-	this.loadLevel();
+    this.level = new Level();
+    globals.socket = io.connect('ws://www.misquares.com');
+    globals.socket.on('setup', globals.bind(function(data) {
+
+	globals.socket.on('state', function(data) {
+	  for(var id in data) {
+	      if (data[id].key !== undefined) {
+		  globals.players[id].keys.up = (data[id].key&1);
+		  globals.players[id].keys.down = (data[id].key&2);
+		  globals.players[id].keys.left = (data[id].key&4);
+		  globals.players[id].keys.right = (data[id].key&8);
+	      }
+	      if (data[id].x !== undefined)
+		  globals.players[id].tank.x = data[id].x;
+	      if (data[id].y !== undefined)
+		  globals.players[id].tank.y = data[id].y;
+	      if (data[id].aim !== undefined)
+		  globals.players[id].setAim(data[id].aim);
+	  }
+	});
+
+	globals.socket.on('join', function(data) {
+	  globals.players[data.i] = new Player(data.t, data.i);
+	});
+	globals.socket.on('leave', function(data) {
+	  delete globals.players[data.i];
+        });
+
+	this.team = data.p.t;
+	this.player = data.p.i;
+	for (var pid in data.s) {
+	    globals.players[pid] = new Player(data.s[pid].t, pid);
+	    globals.players[pid].tank.x = data.s[pid].x;
+	    globals.players[pid].tank.y = data.s[pid].y;
+	    globals.players[pid].setAim(data.s[pid].aim);
+	    globals.players[pid].setKeyValue(data.s[pid].key);
+	}
 	
 	// Input events.
 	var keyEvent = globals.bind(function(e) {
 		if (!e)
 			e = window.event;
-		this.player.updateKeys(e);
+		globals.players[this.player].updateKeys(e);
 	}, this);
 	window.addEventListener('keydown', keyEvent);
 	window.addEventListener('keyup', keyEvent);
 	window.addEventListener('mousemove', globals.bind(function(e) {
 		if (!e)
 			e = window.event;
-		this.player.updateAim(e);
+		globals.players[this.player].updateAim(e);
 	}, this));
+	
+	// FPS Stuff
+	this.fps = 0;
+	this.count = 0;
+	if (globals.queries['debug'] == "true") {
+		this.fpsCount = window.setInterval(globals.bind(function() {
+			this.fps = this.count;
+			this.count = 0;
+		}, this), 1000);
+	}
 	
 	// Game loop.
 	this.interval = window.setInterval(globals.bind(function() {
+		if (globals.queries['debug'] == 'true')
+			this.count++;
 		this.update();
 		this.draw();
 	}, this), 16);
+    }, this));
 };
 
 /**
  * Update the game state.
  */
 ITGame.prototype.update = function() {
-	this.player.update(this.level);
+    //globals.players[this.player].update(this.level);
 		
-	this.level.x = this.player.tank.x - 470;
-	this.level.y = this.player.tank.y - 220;
+	this.level.x = globals.players[this.player].tank.x - 470;
+	this.level.y = globals.players[this.player].tank.y - 220;
 };
 
 /**
@@ -68,57 +114,22 @@ ITGame.prototype.draw = function() {
 				-1 * levelX + 1000, -1 * levelY + 1000);
 	}
 	
-	this.player.draw(this.level);
-	
-	globals.ctx.strokeStyle = "#00ff00";
-	for (var i = 0; i < this.level.walls.length; i++) {
-		globals.ctx.strokeRect(this.level.walls[i].left - this.level.x, 
-				this.level.walls[i].top - this.level.y, this.level.walls[i].width(), 
-				this.level.walls[i].height());
+	for (var pid in globals.players) {
+	  globals.players[pid].draw(this.level);
 	}
-};
-
-/**
- * Loads the walls into the level.
- */
-ITGame.prototype.loadLevel = function() {
-	var walls = [{left:0, right: 3000, top:0, bottom:125},
-	             {left:0, right:125,top:0, bottom:3000},
-	             {left:2875, right:3000, top:0, bottom:3000},
-	             {left:0, right:3000, top:2875, bottom:3000},
-	             {left:0,right:1350,top:438,bottom:563},
-	             {left:1650,right:3000,top:438,bottom:563},
-	             {left:0,right:1350,top:2438,bottom:2563},
-	             {left:1650,right:3000,top:2438,bottom:2563},
-	             {left:350,right:650,top:825,bottom:875},
-	             {left:350,right:400,top:825,bottom:1125},
-	             {left:850,right:900,top:750,bottom:1050},
-	             {left:775,right:975,top:1050,bottom:1250},
-	             {left:525,right:1225,top:1125,bottom:1175},
-	             {left:1100,right:1900,top:825,bottom:875},
-	             {left:1450,right:1550,top:1100,bottom:1200},
-	             {left:2100,right:2150,top:750,bottom:1050},
-	             {left:2025,right:2225,top:1050,bottom:1250},
-	             {left:1775,right:2475,top:1125,bottom:1175},
-	             {left:2350,right:2650,top:825,bottom:875},
-	             {left:2600,right:2650,top:825,bottom:1125},
-	             {left:350,right:1150,top:1475,bottom:1525},
-	             {left:1400,right:1600,top:1400,bottom:1600},
-	             {left:1850,right:2650,top:1475,bottom:1525},
-	             {left:350,right:400,top:1875,bottom:2175},
-	             {left:350,right:650,top:2125,bottom:2175},
-	             {left:525,right:1225,top:1825,bottom:1875},
-	             {left:775,right:975,top:1750,bottom:1950},
-	             {left:850,right:900,top:1950,bottom:2250},
-	             {left:1450,right:1550,top:1800,bottom:1900},
-	             {left:1100,right:1900,top:2125,bottom:2175},
-	             {left:1775,right:2475,top:1825,bottom:1875},
-	             {left:2025,right:2225,top:1750,bottom:1950},
-	             {left:2100,right:2150,top:1950,bottom:2250},
-	             {left:2350,right:2650,top:2125,bottom:2175},
-	             {left:2600,right:2650,top:1875,bottom:2175}];
-	this.level.walls = [];
-	for (var i = 0; i < walls.length; i++) {
-		this.level.walls[i] = new Rectangle(walls[i]);
+	
+	if (globals.queries['debug'] == "true") {
+		globals.ctx.strokeStyle = "#00ff00";
+		for (var i = 0; i < this.level.walls.length; i++) {
+			globals.ctx.strokeRect(this.level.walls[i].left - this.level.x, 
+					this.level.walls[i].top - this.level.y, this.level.walls[i].width(), 
+					this.level.walls[i].height());
+		}
+		
+		// Draw FPS
+		globals.ctx.fillStyle = "#ffffff";
+		globals.ctx.font = "normal 18px sans-serif";
+		globals.ctx.textBaseline = "top";
+		globals.ctx.fillText("FPS: " + this.fps, 5, 5);
 	}
 };
