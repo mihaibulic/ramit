@@ -11,7 +11,8 @@ lib-cov
 *.gz
 *.swp
 .project
-
+ramit_server.js
+ramit_client.js
 pids
 logs
 results

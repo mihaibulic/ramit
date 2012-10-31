@@ -25,6 +25,6 @@ else
   branch="${2}";
 fi
 
-yes | ssh ec2-user@ec2-184-72-242-128.compute-1.amazonaws.com 'cd /var/lib/tomcat6/webapps/ROOT/ramit && git pull ${remote} ${branch}'
+yes | ssh -i misquares.pem ec2-user@ec2-184-72-242-128.compute-1.amazonaws.com 'cd /var/lib/tomcat6/webapps/ROOT/ramit && git pull ${remote} ${branch} &&./deploy.sh'
 
 
