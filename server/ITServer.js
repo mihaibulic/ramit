@@ -6,6 +6,7 @@ var io = require('socket.io').listen(1337);
 // Globals for the server.
 var server = {
 	interval: null,
+	fps: 60,
 	numberOfPlayers: 0,
 	players: {},
 	socketToId: {},
@@ -66,7 +67,7 @@ io.sockets.on('connection', function(socket) {
 	
 	// If this is the first player, start the game.
 	if (server.numberOfPlayers === 0)
-		server.interval = setInterval(update, 33);
+		server.interval = setInterval(update, 1000 / server.fps);
 	
 	// Create the player.
 	server.numberOfPlayers++;
