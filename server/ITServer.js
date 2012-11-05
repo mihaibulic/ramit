@@ -27,7 +27,8 @@ var update = function() {
 	for (var player in server.players) {
 		playerDiff = {};
 		server.players[player].update(server.level, playerDiff);
-		if (server.players[player].lastFire > 60 && server.players[player].keys.space == true) {
+		console.log('updating');
+		if (server.players[player].lastFire > 60 && server.players[player].keys.space === true) {
 			server.projectiles[server.n] = new Projectile(server.players[player]);
 			var msg = { i: player, n: n };
 			io.sockets.emit('fire', msg);
