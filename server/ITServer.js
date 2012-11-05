@@ -27,12 +27,12 @@ var update = function() {
 	for (var player in server.players) {
 		playerDiff = {};
 		server.players[player].update(server.level, playerDiff);
-		console.log('updating');
+		// check if the player should fire
 		if (server.players[player].lastFire > 60 && server.players[player].keys.space === true) {
 			server.projectiles[server.n] = new Projectile(server.players[player]);
-			var msg = { i: player, n: n };
+			var msg = { i: player, n: server.n };
 			io.sockets.emit('fire', msg);
-			n++;
+			server.n++;
 		}
 		// Copy the differences found into the server's diff object.
 		for (var diff in playerDiff) {
