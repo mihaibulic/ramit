@@ -32,7 +32,7 @@ var update = function() {
 			server.projectiles[server.n] = new Projectile(server.players[player]);
 			var msg = { i: player, n: server.n };
 			io.sockets.emit('fire', msg);
-			server.n++;
+			n++;
 		}
 		// Copy the differences found into the server's diff object.
 		for (var diff in playerDiff) {
