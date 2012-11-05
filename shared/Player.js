@@ -38,7 +38,7 @@ Player.COLLISION_BOUND_STROKE = ["#0000FF", "#FF0000"];
 /**
  * The spawn points for each team.
  */
-Player.SPAWN_POINT = [ { x:470, y: 250 }, { x:470, y: 2690 } ];
+Player.SPAWN_POINT = [ { x: 470, y: 250 }, { x: 470, y: 2690 } ];
 
 /**
  * Draw's the player's information.
