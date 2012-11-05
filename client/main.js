@@ -15,8 +15,8 @@ var globals = {
 		canvas: null,
 		ctx: null,
 		remainingResources: 0,
-		players: {},
-		projectiles: {}
+		projectiles: {},
+		players: {}
 };
 
 /**

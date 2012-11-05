@@ -127,7 +127,7 @@ ITGame.prototype.draw = function() {
 	  globals.players[pid].draw(this.level);
 	}
 
-	//draw projectiles
+	//draw projectiles,
 	for (var projn in globals.projectiles) {
 		globals.projectiles[projn].draw(this.level);
 	}
