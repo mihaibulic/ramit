@@ -41,7 +41,7 @@ Projectile.prototype.checkHit = function(globals, level) {
 		}
 	}
 	for (var i = 0; i < 8; i++) {
-		if (globals.players[i] && box.intersects(globals.players[i].getCollisionBarrier()) {
+		if (globals.players[i] && box.intersects(globals.players[i].getCollisionBarrier())) {
 			return globals.players[i].playerID;
 		}
 	}
