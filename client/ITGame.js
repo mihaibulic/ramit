@@ -90,6 +90,9 @@ ITGame.prototype.update = function() {
 		
 	this.level.x = globals.players[this.player].tank.x - 470;
 	this.level.y = globals.players[this.player].tank.y - 220;
+	for (projectile in globals.projectiles) {
+		globals.projectiles[projectile].update();
+	}
 };
 
 /**
