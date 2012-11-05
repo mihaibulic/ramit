@@ -18,7 +18,7 @@ Projectile.prototype.draw = function(level) {
 
 	if (xPos > -20 && xPos < 1000 && yPos > -20 && yPos < 500) {
 		globals.ctx.fillStyle = "#ff0000";
-		globals.ctx.fillRect(xPos, yPos, 40, 40);
+		globals.ctx.fillRect(xPos, yPos, 20, 20);
 	}
 };
 
