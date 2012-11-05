@@ -19,6 +19,11 @@ Projectile.prototype.draw = function(level) {
 	if (xPos > -20 && xPos < 1000 && yPos > -20 && yPos < 500) {
 		globals.ctx.fillStyle = "#ff0000";
 		globals.ctx.fillRect(xPos, yPos, 20, 20);
+		globals.ctx.strokeStyle("#00ff00");
+		var rect = this.getCollisionBarrier();
+		globals.ctx.strokeRect(rect.left - level.x, rect.top - level.y, rect.width(),
+				rect.height());
+	
 	}
 };
 
@@ -52,7 +57,7 @@ Projectile.prototype.checkHit = function(globals, level) {
 Projectile.prototype.getCollisionBarrier = function(location) {
 	if (!location)
 		location = this;
-	return new Rectangle({left: location.x + 20, right: location.x + 40,
-		top: location.y + 20, bottom: location.y + 40});
+	return new Rectangle({left: location.x, right: location.x + 20,
+		top: location.y, bottom: location.y + 20});
 };
 
