@@ -18,7 +18,7 @@ Projectile.prototype.draw = function(level) {
 
 	if (xPos > -20 && xPos < 1000 && yPos > -20 && yPos < 500) {
 		globals.ctx.fillStyle = "#ff0000";
-		globals.ctx.fillRect(xPos, yPos, 20, 20);
+		//globals.ctx.fillRect(xPos, yPos, 20, 20);
 		globals.ctx.strokeStyle("#0000ff");
 		var rect = this.getCollisionBarrier();
 		globals.ctx.strokeRect(rect.left - level.x, rect.top - level.y, rect.width(),
