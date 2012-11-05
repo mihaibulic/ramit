@@ -27,8 +27,8 @@ Projectile.prototype.update = function(level) {
 };
 
 Projectile.prototype.move = function(level) {
-	this.x = Math.round(this.x + this.vx);
-	this.y = Math.round(this.y + this.vy);
+	this.x = this.x + this.vx;
+	this.y = this.y + this.vy;
 	//client does no collision detection
 };
 
