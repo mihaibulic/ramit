@@ -1,7 +1,7 @@
 var Projectile = function(player, n) {
 	this.n = n;
-	this.x = player.tank.x;
-	this.y = player.tank.y;
+	this.x = player.tank.x+20;
+	this.y = player.tank.y+20;
 	var degrees = player.tank.turretAim * 2;
 	var rads = degrees * Math.PI / 180;
 	this.vx = Math.cos(rads) * .5;
