@@ -52,7 +52,7 @@ Projectile.prototype.checkHit = function(globals, level) {
 Projectile.prototype.getCollisionBarrier = function(location) {
 	if (!location)
 		location = this;
-	return new Rectangle({left: location.x + 10, right: location.x + 50,
-		top: location.y + 10, bottom: location.y + 50});
+	return new Rectangle({left: location.x + 20, right: location.x + 40,
+		top: location.y + 20, bottom: location.y + 40});
 };
 
