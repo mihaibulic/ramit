@@ -9,6 +9,7 @@ var Projectile = function(player, n) {
 	this.team = player.team;
 	this.owner = player.playerID; // for score tracking
 	this.damage = 1;
+	player.lastFire = 0;
 };
 
 Projectile.prototype.draw = function(level) {

@@ -27,7 +27,6 @@ var update = function() {
 	for (var player in server.players) {
 		playerDiff = {};
 		server.players[player].update(server.level, playerDiff);
-		f++;
 		// check if the player should fire
 		if (server.players[player].lastFire > 60 && server.players[player].keys.space === true) {
 			server.projectiles[server.n] = new Projectile(server.players[player]);
