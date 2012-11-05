@@ -17,8 +17,8 @@ Projectile.prototype.draw = function(level) {
 	var yPos = this.y - level.y;
 
 	if (xPos > -20 && xPos < 1000 && yPos > -20 && yPos < 500) {
-		globals.ctx.strokeStyle = "#ff0000";
-		globals.ctx.strokeRect(xPos, yPos, 40, 40);
+		globals.ctx.fillStyle = "#ff0000";
+		globals.ctx.fillRect(xPos, yPos, 40, 40);
 	}
 };
 
