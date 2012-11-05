@@ -13,10 +13,10 @@ var Player = function(team, playerID) {
 			right: false
 	};
 	this.tank = {
-			x: Player.SPAWN_POINT[team].x;
-			y: Player.SPAWN_POINT[team].y;
-			sx: Player.SPAWN_POINT[team].x;
-			sy: Player.SPAWN_POINT[team].y;
+			x: Player.SPAWN_POINT[team].x,
+			y: Player.SPAWN_POINT[team].y,
+			sx: Player.SPAWN_POINT[team].x,
+			sy: Player.SPAWN_POINT[team].y,
 			direction: 0,
 			turretAim: 0
 	};
