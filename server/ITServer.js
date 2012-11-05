@@ -9,12 +9,14 @@ var server = {
 	fps: 60,
 	numberOfPlayers: 0,
 	players: {},
+	projectiles: {},
 	socketToId: {},
 	playerIDQueue: [7,6,5,4,3,2,1,0],
 	colors: [0,0],
 	level: new Level(),
 	diff: {},
-	usedDiff: false
+	usedDiff: false,
+	n: 0
 };
 
 /**
@@ -25,6 +27,12 @@ var update = function() {
 	for (var player in server.players) {
 		playerDiff = {};
 		server.players[player].update(server.level, playerDiff);
+		if (server.players[player].lastFire > 60 && server.players[player].keys.space == true) {
+			server.projectiles[server.n] = new Projectile(server.players[player]);
+			var msg = { i: player, n: n };
+			io.sockets.emit('fire', msg);
+			n++;
+		}
 		// Copy the differences found into the server's diff object.
 		for (var diff in playerDiff) {
 			if (!server.diff[player])
@@ -32,6 +40,18 @@ var update = function() {
 			server.diff[player][diff] = playerDiff[diff];
 			server.usedDiff = true;
 		}
+	}
+	for (var projectile in server.projectiles) {
+		server.projectiles[projectile].update(server.level);
+		var target = server.projectiles[projectile].checkHit(globals, server.level);
+		if (target >= -1) { 
+			if (target >= 0) { 
+				server.players[target].takeHit(server.projectiles[projectile].damage);
+			}
+			var msg = { i: target, n: server.projectiles[projectile].n };
+			io.sockets.emit('hit', msg);
+			delete server.projectiles[projectile];
+		} 
 	}
 	if (server.usedDiff)
 		io.sockets.emit('state', server.diff);
@@ -89,6 +109,8 @@ io.sockets.on('connection', function(socket) {
 			server.players[id].keys.left = data.l;
 		if (data.r !== undefined)
 			server.players[id].keys.right = data.r;
+		if (data.s !== undefined)
+			server.players[id].keys.space = data.s;
 		
 		if (!server.diff[id])
 			server.diff[id] = {};

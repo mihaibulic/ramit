@@ -13,14 +13,16 @@ var Player = function(team, playerID) {
 			right: false
 	};
 	this.tank = {
-			x: 470,
-			y: (team == 0 ? 250 : 3000 - 310),
-			sx: 470,
-			sy: (team == 0 ? 250 : 3000 - 310),
+			x: Player.SPAWN_POINT[team].x;
+			y: Player.SPAWN_POINT[team].y;
+			sx: Player.SPAWN_POINT[team].x;
+			sy: Player.SPAWN_POINT[team].y;
 			direction: 0,
 			turretAim: 0
 	};
 	this.speed = 4;
+	this.health = 10;
+	this.lastFire = 0;
 };
 
 /**
@@ -32,6 +34,11 @@ Player.DIAGONAL_CONST = Math.sqrt(0.5);
  * The color of the collision bound for each team.
  */
 Player.COLLISION_BOUND_STROKE = ["#0000FF", "#FF0000"];
+
+/**
+ * The spawn points for each team.
+ */
+Player.SPAWN_POINT = [ { x:470, y: 250 }, { x:470, y: 2690 } ];
 
 /**
  * Draw's the player's information.
@@ -136,6 +143,10 @@ Player.prototype.updateKeys = function(e) {
 	    //this.keys.right = value;
 		diff.r = value;
 		break;
+	case 32: // Space
+		//this.keys.space = value;
+		diff.s = value;
+		break;
 	}
     globals.socket.emit('key', diff);
 };
@@ -145,6 +156,7 @@ Player.prototype.updateKeys = function(e) {
  */
 Player.prototype.update = function(level, diff) {		
 	this.move(level, diff);
+	this.lastFire++;
 };
 
 /**
@@ -223,6 +235,17 @@ Player.prototype.getAim = function() {
 Player.prototype.setAim = function(aim) {
 	this.tank.turretAim = aim;
 };
+
+/**
+ * Causes damage to tank. Kills tank if dead (returns to spawn point)
+ */
+Player.prototype.takeHit = function(damage) {
+	this.health -= damage;
+	if (this.health <= 0) {
+		this.x = Player.SPAWN_POINT[this.team].x;
+		this.y = Player.SPAWN_POINT[this.team].y;
+	}
+}
 
 /**
  * Returns a rectangle representing the collidable area for the provided

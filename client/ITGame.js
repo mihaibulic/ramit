@@ -28,7 +28,15 @@ var ITGame = function(team, playerID) {
 	});
 	globals.socket.on('leave', function(data) {
 	  delete globals.players[data.i];
-        });
+    });
+
+	globals.socket.on('fire', function(data) {
+		globals.projectiles[data.n] = new Projectile(globals.players[data.i], data.n);
+	});
+	globals.socket.on('hit', function(data) {
+		if (data.i >= 0) globals.players[data.i].takeHit(globals.projectiles[data.n].damage);
+		delete globals.projectiles[data.n];
+	});
 
 	this.team = data.p.t;
 	this.player = data.p.i;
@@ -114,8 +122,14 @@ ITGame.prototype.draw = function() {
 				-1 * levelX + 1000, -1 * levelY + 1000);
 	}
 	
+	//draw players
 	for (var pid in globals.players) {
 	  globals.players[pid].draw(this.level);
+	}
+
+	//draw projectiles
+	for (var projn in globals.projectiles) {
+		globals.projectiles[projn].draw(this.level);
 	}
 	
 	if (globals.queries['debug'] == "true") {
