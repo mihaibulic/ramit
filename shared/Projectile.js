@@ -1,6 +1,6 @@
 var Projectile = function(player, n) {
 	var speed = .5;
-	var turretLength = 50;
+	var turretLength = 30;
 	this.n = n;
 	var degrees = player.tank.turretAim * 2;
 	var rads = degrees * Math.PI / 180;
