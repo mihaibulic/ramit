@@ -20,19 +20,11 @@ var Projectile = function(player, n) {
 Projectile.prototype.draw = function(level) {
 	var xPos = this.x - level.x;
 	var yPos = this.y - level.y;
-	console.log("level.x level.y");
-	console.log(level.x + ", " + level.y);
-	console.log("x, y");
-	console.log(this.x + ", " + this.y);
-	console.log("xpos, ypos");
-	console.log(xPos + ", " + yPos);
 
 	if (xPos > -20 && xPos < 1000 && yPos > -20 && yPos < 500) {
-		globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[0];
 		var rect = this.getCollisionBarrier();
-		globals.ctx.fillRect(xPos, yPos, rect.width()/2, rect.height());
-		globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[1];
-		globals.ctx.fillRect(rect.x, rect.y, rect.width(), rect.height());
+		globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[this.team];
+		globals.ctx.fillRect(xPos, yPos, rect.width(), rect.height());
 	}
 };
 
