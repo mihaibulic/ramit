@@ -1,11 +1,11 @@
 var Projectile = function(player, n) {
 	this.n = n;
-	this.x = player.tank.x+20;
-	this.y = player.tank.y+20;
+	this.x = player.tank.x+25;
+	this.y = player.tank.y+25;
 	var degrees = player.tank.turretAim * 2;
 	var rads = degrees * Math.PI / 180;
-	this.vx = Math.cos(rads) * .10;
-	this.vy = Math.sin(rads) * .10;
+	this.vx = Math.cos(rads) * 10;
+	this.vy = Math.sin(rads) * 10;
 	this.team = player.team;
 	this.owner = player.playerID; // for score tracking
 	this.damage = 1;
@@ -55,6 +55,6 @@ Projectile.prototype.checkHit = function(globals, level) {
 Projectile.prototype.getCollisionBarrier = function(location) {
 	if (!location)
 		location = this;
-	return new Rectangle({left: location.x, right: location.x + 20,
-		top: location.y, bottom: location.y + 20});
+	return new Rectangle({left: location.x, right: location.x + 10,
+		top: location.y, bottom: location.y + 10});
 };
