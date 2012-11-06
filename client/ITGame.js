@@ -87,7 +87,7 @@ var ITGame = function(team, playerID) {
  */
 ITGame.prototype.update = function() {
     //globals.players[this.player].update(this.level);
-		
+
 	this.level.x = globals.players[this.player].tank.x - 470;
 	this.level.y = globals.players[this.player].tank.y - 220;
 	for (projectile in globals.projectiles) {
@@ -130,11 +130,12 @@ ITGame.prototype.draw = function() {
 	  globals.players[pid].draw(this.level);
 	}
 
-	//draw projectiles,
+	//draw projectiles
 	for (var projn in globals.projectiles) {
 		globals.projectiles[projn].draw(this.level);
 	}
 	
+	//degbug info
 	if (globals.queries['debug'] == "true") {
 		globals.ctx.strokeStyle = "#00ff00";
 		for (var i = 0; i < this.level.walls.length; i++) {
