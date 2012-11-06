@@ -28,7 +28,7 @@ var update = function() {
 		playerDiff = {};
 		server.players[player].update(server.level, playerDiff);
 		// check if the player should fire
-		if (server.players[player].lastFire > 60 && server.players[player].keys.space === true) {
+		if (server.players[player].lastFire > 10 && server.players[player].keys.space === true) {
 			server.projectiles[server.n] = new Projectile(server.players[player]);
 			var msg = { i: player, n: server.n };
 			io.sockets.emit('fire', msg);
