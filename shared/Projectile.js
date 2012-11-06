@@ -1,5 +1,5 @@
 var Projectile = function(player, n) {
-	var speed = 10;
+	var speed = .1;
 	var turretLength = 30;
 	this.n = n;
 	var degrees = player.tank.turretAim * 2;
