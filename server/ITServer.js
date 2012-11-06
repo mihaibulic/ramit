@@ -45,7 +45,7 @@ var update = function() {
 	for (var projectile in server.projectiles) {
 		server.projectiles[projectile].update(server.level);
 		//fails on next line
-		//var target = server.projectiles[projectile].checkHit(globals, server.level);
+		var target = server.projectiles[projectile].checkHit(globals, server.level);
 		//if (target >= -1) { 
 			//if (target >= 0) { 
 			//	server.players[target].takeHit(server.projectiles[projectile].damage);

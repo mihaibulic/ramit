@@ -1,5 +1,5 @@
 var Projectile = function(player, n) {
-	var speed = .5;
+	var speed = 10;
 	var turretLength = 30;
 	this.n = n;
 	var degrees = player.tank.turretAim * 2;
@@ -22,7 +22,7 @@ Projectile.prototype.draw = function(level) {
 	var yPos = this.y - level.y;
 
 	if (xPos > -20 && xPos < 1000 && yPos > -20 && yPos < 500) {
-		globals.ctx.fillStyle = "#ff0000";
+		globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[this.team];
 		var rect = this.getCollisionBarrier();
 		globals.ctx.fillRect(rect.left - level.x, rect.top - level.y, rect.width(),
 				rect.height());
@@ -44,13 +44,16 @@ Projectile.prototype.move = function(level) {
  */
 Projectile.prototype.checkHit = function(globals, level) {
 	/*var box = this.getCollisionBarrier();
+	//check walls
 	for (var i in level.walls.length) {
 		if (box.intersects(level.walls[i])) {
 			return -1;
 		}
 	}
+	//check players of other teams
 	for (var player in globals.players) {
-		if (box.intersects(globals.players[player].getCollisionBarrier())) {
+		if (globals.players[player].team != this.team && 
+				box.intersects(globals.players[player].getCollisionBarrier())) {
 			return player;
 		}
 	}*/
