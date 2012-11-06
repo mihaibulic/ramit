@@ -44,7 +44,6 @@ var update = function() {
 	}
 	for (var projectile in server.projectiles) {
 		server.projectiles[projectile].update(server.level);
-		//fails on next line
 		var target = server.projectiles[projectile].checkHit(server, server.level);
 		if (target >= -1) { 
 			if (target >= 0) { 
