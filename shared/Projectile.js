@@ -2,14 +2,13 @@ var Projectile = function(player, n) {
 	var speed = .5;
 	var turretLength = 10;
 	this.n = n;
-	this.x = player.tank.x+25;
-	this.y = player.tank.y+25;
 	var degrees = player.tank.turretAim * 2;
 	var rads = degrees * Math.PI / 180;
 	this.vx = Math.cos(rads);
 	this.vy = Math.sin(rads);
-	//this.x += vx * turretLength;
-	//this.y += vy * turretLength;
+	// (tank center) + (turret offset)
+	this.x = (player.tank.x + 25) + (this.vx * turretLength);
+	this.y = (player.tank.y + 25) + (this.vy * turretLength);
 	this.vx *= speed;
 	this.vy *= speed;
 	this.team = player.team;
