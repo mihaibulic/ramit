@@ -42,7 +42,7 @@ Projectile.prototype.move = function(level) {
  * Returns -1 if hit wall, PlayerID if hit player, undefined if no hit
  */
 Projectile.prototype.checkHit = function(globals, level) {
-	console.log("CHECKING HIT");
+	console.log("CHECKING HIT %d, %d", this.x, this.y);
 	var box = this.getCollisionBarrier();
 	//check walls
 	for (var i in level.walls.length) {
