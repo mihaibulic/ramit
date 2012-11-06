@@ -20,6 +20,7 @@ var Projectile = function(player, n) {
 Projectile.prototype.draw = function(level) {
 	var xPos = this.x - level.x;
 	var yPos = this.y - level.y;
+	console.log("level.x level.y");
 	console.log(level.x);
 	console.log(level.y);
 
