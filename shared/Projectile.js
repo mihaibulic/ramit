@@ -43,13 +43,14 @@ Projectile.prototype.move = function(level) {
  * Returns -1 if hit wall, PlayerID if hit player, undefined if no hit
  */
 Projectile.prototype.checkHit = function(globals, level) {
-	/*var box = this.getCollisionBarrier();
+	var box = this.getCollisionBarrier();
 	//check walls
 	for (var i in level.walls.length) {
 		if (box.intersects(level.walls[i])) {
 			return -1;
 		}
 	}
+	/*
 	//check players of other teams
 	for (var player in globals.players) {
 		if (globals.players[player].team != this.team && 
