@@ -30,7 +30,7 @@ Projectile.prototype.draw = function(level) {
 	if (xPos > -20 && xPos < 1000 && yPos > -20 && yPos < 500) {
 		globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[0];
 		var rect = this.getCollisionBarrier();
-		globals.ctx.fillRect(xPos, yPos, rect.width(), rect.height());
+		globals.ctx.fillRect(xPos, yPos, rect.width()/2, rect.height());
 		globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[1];
 		globals.ctx.fillRect(rect.x, rect.y, rect.width(), rect.height());
 	}
