@@ -34,6 +34,7 @@ var ITGame = function(team, playerID) {
 		globals.projectiles[data.n] = new Projectile(globals.players[data.i], data.n);
 	});
 	globals.socket.on('hit', function(data) {
+		console.log("projectile %d hit %d", data.n, data.i);
 		if (data.i >= 0) globals.players[data.i].takeHit(globals.projectiles[data.n].damage);
 		delete globals.projectiles[data.n];
 	});
