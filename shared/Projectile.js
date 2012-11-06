@@ -21,10 +21,6 @@ Projectile.prototype.draw = function(level) {
 		var rect = this.getCollisionBarrier();
 		globals.ctx.fillRect(rect.left - level.x, rect.top - level.y, rect.width(),
 				rect.height());
-		//globals.ctx.fillRect(xPos, yPos, 20, 20);
-		//globals.ctx.strokeStyle("#ff0000");
-		//globals.ctx.strokeRect(rect.left - level.x, rect.top - level.y, rect.width(),
-				//rect.height());
 	}
 };
 
@@ -43,16 +39,17 @@ Projectile.prototype.move = function(level) {
  */
 Projectile.prototype.checkHit = function(globals, level) {
 	var box = this.getCollisionBarrier();
-	for (var i = 0; i < level.walls.length; i++) {
+	for (var i in level.walls.length) {
 		if (box.intersects(level.walls[i])) {
 			return -1;
 		}
 	}
-	for (var i = 0; i < 8; i++) {
-		if (globals.players[i] && box.intersects(globals.players[i].getCollisionBarrier())) {
-			return globals.players[i].playerID;
+	for (var player in globals.players) {
+		if (box.intersects(globals.players[player].getCollisionBarrier())) {
+			return player;
 		}
 	}
+	return -2; //probably don't need this
 };
 
 Projectile.prototype.getCollisionBarrier = function(location) {
@@ -61,4 +58,3 @@ Projectile.prototype.getCollisionBarrier = function(location) {
 	return new Rectangle({left: location.x, right: location.x + 20,
 		top: location.y, bottom: location.y + 20});
 };
-
