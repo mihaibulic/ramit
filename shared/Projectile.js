@@ -21,8 +21,9 @@ Projectile.prototype.draw = function(level) {
 	var xPos = this.x - level.x;
 	var yPos = this.y - level.y;
 	console.log("level.x level.y");
-	console.log(level.x);
-	console.log(level.y);
+	console.log(level.x + ", " + level.y);
+	console.log("x, y");
+	console.log(this.x + ", " + this.y);
 
 	if (xPos > -20 && xPos < 1000 && yPos > -20 && yPos < 500) {
 		globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[this.team];
