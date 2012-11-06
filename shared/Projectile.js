@@ -45,7 +45,7 @@ Projectile.prototype.checkHit = function(globals, level) {
 	console.log("CHECKING HIT %d, %d", this.x, this.y);
 	var box = this.getCollisionBarrier();
 	//check walls
-	for (var i in level.walls.length) {
+	for (var i in level.walls) {
 		if (box.intersects(level.walls[i])) {
 			console.log("HIT WALL");
 			return -1;
