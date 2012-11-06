@@ -1,5 +1,6 @@
 var Projectile = function(player, n) {
-	var speed = .5, turretLength = 10;
+	var speed = .5;
+	var turretLength = 10;
 	this.n = n;
 	this.x = player.tank.x+25;
 	this.y = player.tank.y+25;
