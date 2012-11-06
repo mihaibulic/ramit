@@ -49,7 +49,7 @@ var update = function() {
 			if (target >= 0) { 
 				server.players[target].takeHit(server.projectiles[projectile].damage);
 			}
-			var msg = { i: target, n: server.projectiles[projectile].n };
+			var msg = { i: target, n: projectile };
 			io.sockets.emit('hit', msg);
 			delete server.projectiles[projectile];
 		}
