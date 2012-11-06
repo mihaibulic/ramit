@@ -51,14 +51,13 @@ Projectile.prototype.checkHit = function(globals, level) {
 			return -1;
 		}
 	}
-	/*
 	//check players of other teams
 	for (var player in globals.players) {
 		if (globals.players[player].team != this.team && 
 				box.intersects(globals.players[player].getCollisionBarrier())) {
 			return player;
 		}
-	}*/
+	}
 	return -2; //probably don't need this
 };
 
