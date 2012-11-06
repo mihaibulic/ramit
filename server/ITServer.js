@@ -46,11 +46,11 @@ var update = function() {
 		server.projectiles[projectile].update(server.level);
 		var target = server.projectiles[projectile].checkHit(globals, server.level);
 		if (target >= -1) { 
-			if (target >= 0) { 
-				server.players[target].takeHit(server.projectiles[projectile].damage);
-			}
-			var msg = { i: target, n: server.projectiles[projectile].n };
-			io.sockets.emit('hit', msg);
+			//if (target >= 0) { 
+			//	server.players[target].takeHit(server.projectiles[projectile].damage);
+			//}
+			//var msg = { i: target, n: server.projectiles[projectile].n };
+			//io.sockets.emit('hit', msg);
 			//delete server.projectiles[projectile];
 		}
 	}
