@@ -58,7 +58,6 @@ Projectile.prototype.checkHit = function(globals, level) {
 			return player;
 		}
 	}
-	return -2; //probably don't need this
 };
 
 Projectile.prototype.getCollisionBarrier = function(location) {
