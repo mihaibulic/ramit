@@ -44,7 +44,7 @@ var update = function() {
 	}
 	for (var projectile in server.projectiles) {
 		server.projectiles[projectile].update(server.level);
-		var target = server.projectiles[projectile].checkHit(globals, server.level);
+		/*var target = server.projectiles[projectile].checkHit(globals, server.level);
 		if (target >= -1) { 
 			if (target >= 0) { 
 				server.players[target].takeHit(server.projectiles[projectile].damage);
@@ -52,7 +52,7 @@ var update = function() {
 			var msg = { i: target, n: server.projectiles[projectile].n };
 			io.sockets.emit('hit', msg);
 			delete server.projectiles[projectile];
-		} 
+		}*/
 	}
 	if (server.usedDiff)
 		io.sockets.emit('state', server.diff);
