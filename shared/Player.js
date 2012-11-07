@@ -21,8 +21,14 @@ var Player = function(team, playerID) {
 			turretAim: 0
 	};
 	this.speed = 4;
-	this.health = 10;
-	this.lastFire = 0;
+	this.health = 100;
+	this.score = 0;		//for spending on upgrades
+	this.totScore = 0; 	//for traking total score, both incremented the same
+	this.projectile = {
+		damage: 5,
+		speed: 5,
+		lastFire: 0
+	};
 };
 
 /**

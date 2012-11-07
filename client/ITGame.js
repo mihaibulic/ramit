@@ -36,7 +36,17 @@ var ITGame = function(team, playerID) {
 	});
 	globals.socket.on('hit', function(data) {
 		if (data.i >= 0) {
-			globals.players[data.i].takeHit(globals.projectiles[data.n].damage);
+			var projectile = globals.projectiles[data.n];
+			var hit = globals.players[data.i];
+			var hitter = globals.players[projectile.owner];
+			hit.takeHit(projectile.damage);
+			hitter.score++;
+			hitter.totScore++;
+			if (hitter.score > 25) {
+				hitter.score = 0;
+				hitter.projectile.damage += 5;
+				hitter.projectile.speed += 5;
+			}
 			console.log("projectile %d hit %d health %d", data.n, data.i, globals.players[data.i].health);
 		}
 		delete globals.projectiles[data.n];

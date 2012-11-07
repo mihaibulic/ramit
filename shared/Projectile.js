@@ -1,5 +1,5 @@
 var Projectile = function(player, n) {
-	var speed = 10; //eventually taken from player for upgrades
+	var speed = player.projectile.speed;
 	var turretLength = 30;
 	this.n = n;
 	var degrees = player.tank.turretAim * 2;
@@ -13,8 +13,8 @@ var Projectile = function(player, n) {
 	this.vy *= speed;
 	this.team = player.team;
 	this.owner = player.playerID; // for score tracking
-	this.damage = 1;	//eventually taken from player for upgrades
-	player.lastFire = 0;
+	this.damage = player.projectile.damage;
+	player.projectile.lastFire = 0;
 };
 
 Projectile.prototype.draw = function(level) {
