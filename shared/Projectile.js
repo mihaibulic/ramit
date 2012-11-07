@@ -23,11 +23,14 @@ Projectile.prototype.draw = function(level) {
 
 	if (xPos > -20 && xPos < 1000 && yPos > -20 && yPos < 500) {
 		var rect = this.getCollisionBarrier();
+
 		globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[this.team];
 
         globals.ctx.beginPath();
-		globals.ctx.arc(xPos, yPos, rect.width(), 0 , 2 * Math.PI, true);
-        globals.ctx.stroke();
+		globals.ctx.arc(xPos, yPos, rect.width()/2, 0 , 2 * Math.PI, true);
+        globals.ctx.closePath();
+
+        globals.ctx.fill();
 	}
 };
 
