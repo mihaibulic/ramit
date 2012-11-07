@@ -136,6 +136,7 @@ io.sockets.on('connection', function(socket) {
             server.players[id].mouse.middle = data.m;
         if(data.r !== undefined)
             server.players[id].mouse.right = data.r;
+    });
 	
 	// Actions to perform when the player changes the tank's aim.
 	socket.on('aim', function(data) {
