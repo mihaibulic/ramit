@@ -26,7 +26,7 @@ var Player = function(team, playerID) {
 			turretAim: 0
 	};
 	this.speed = 4;
-	this.initHealth = 100;
+	this.initHealth = 1000;
 	this.health = this.initHealth;
 	this.score = 0;		//for spending on upgrades
 	this.totScore = 0; 	//for traking total score, both incremented the same
