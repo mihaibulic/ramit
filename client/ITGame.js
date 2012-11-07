@@ -171,7 +171,7 @@ ITGame.prototype.draw = function() {
 	}
 	globals.ctx.fillStyle = "#ffffff";
 	globals.ctx.font = "normal 18px sans-serif";
-	globals.ctx.textBaseline = "top";
+	globals.ctx.textBaseline = "bottom";
 	for (player in globals.players) {
 		globals.ctx.fillText("Player: " + player + " HP: " + globals.players[player].health, 5, 5);
 	}
