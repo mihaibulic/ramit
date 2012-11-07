@@ -16,6 +16,7 @@ ramit_client.js
 pids
 logs
 results
+doItAll.sh
 
 node_modules
 npm-debug.log
