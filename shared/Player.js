@@ -242,8 +242,9 @@ Player.prototype.setAim = function(aim) {
 Player.prototype.takeHit = function(damage) {
 	this.health -= damage;
 	if (this.health <= 0) {
-		this.x = Player.SPAWN_POINT[this.team].x;
-		this.y = Player.SPAWN_POINT[this.team].y;
+		this.tank.x = Player.SPAWN_POINT[this.team].x;
+		this.tank.y = Player.SPAWN_POINT[this.team].y;
+		this.health = 10;
 	}
 }
 
