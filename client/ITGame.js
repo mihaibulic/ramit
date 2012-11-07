@@ -42,12 +42,9 @@ var ITGame = function(team, playerID) {
 			hit.takeHit(projectile.damage);
 			hitter.score++;
 			hitter.totScore++;
-			if (hitter.score > 25) {
-				hitter.score = 0;
-				hitter.projectile.damage += 5;
-				hitter.projectile.speed += 5;
-			}
 			console.log("projectile %d hit %d health %d", data.n, data.i, globals.players[data.i].health);
+		} else {
+			console.log("projectile %d hit a wall", data.n);
 		}
 		delete globals.projectiles[data.n];
 	});

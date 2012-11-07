@@ -54,11 +54,6 @@ var update = function() {
 			var hitter = server.players[server.projectiles[projectile].owner];
 			hitter.score++;
 			hitter.totScore++;
-			if (hitter.score > 25) {
-				hitter.score = 0;
-				hitter.projectile.damage += 5;
-				hitter.projectile.speed += 5;
-			}
 			var msg = { i: target, n: projectile };
 			io.sockets.emit('hit', msg);
 			delete server.projectiles[projectile];
