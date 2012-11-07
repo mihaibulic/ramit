@@ -13,9 +13,9 @@ var Player = function(team, playerID) {
 			right: false
 	};
     this.mouse = {
-            left: false;
-            middle: false;
-            right: false;
+            left: false,
+            middle: false,
+            right: false
     };
 	this.tank = {
 			x: Player.SPAWN_POINT[team].x,
