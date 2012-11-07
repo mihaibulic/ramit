@@ -162,7 +162,7 @@ Player.prototype.updateKeys = function(e) {
  */
 Player.prototype.update = function(level, diff) {		
 	this.move(level, diff);
-	this.lastFire++;
+	this.projectile.lastFire++;
 };
 
 /**
