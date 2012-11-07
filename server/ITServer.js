@@ -28,7 +28,9 @@ var update = function() {
 		playerDiff = {};
 		server.players[player].update(server.level, playerDiff);
 		// check if the player should fire
-		if (server.players[player].projectile.lastFire > 10 && server.players[player].keys.space === true) {
+		if (server.players[player].projectile.lastFire > 10 && 
+            (server.players[player].keys.space === true || server.players[player].mouse.left === true)) 
+        {
 			server.projectiles[server.n] = new Projectile(server.players[player]);
 			var msg = { i: player, n: server.n };
 			io.sockets.emit('fire', msg);
@@ -126,6 +128,14 @@ io.sockets.on('connection', function(socket) {
 		server.diff[id].key = server.players[id].getKeyValue();
 		server.usedDiff = true;
 	});
+
+    socket.on('mouse', function(data) {
+        if(data.l !== undefined)
+            server.players[id].mouse.left = data.l;
+        if(data.m !== undefined)
+            server.players[id].mouse.middle = data.m;
+        if(data.r !== undefined)
+            server.players[id].mouse.right = data.r;
 	
 	// Actions to perform when the player changes the tank's aim.
 	socket.on('aim', function(data) {

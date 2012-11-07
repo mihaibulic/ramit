@@ -12,6 +12,11 @@ var Player = function(team, playerID) {
 			left: false,
 			right: false
 	};
+    this.mouse = {
+            left: false;
+            middle: false;
+            right: false;
+    };
 	this.tank = {
 			x: Player.SPAWN_POINT[team].x,
 			y: Player.SPAWN_POINT[team].y,
@@ -123,6 +128,32 @@ Player.prototype.updateAim = function(e) {
 		r += 360;
 	//this.tank.turretAim = Math.floor(r / 2);
 	globals.socket.emit('aim', {a: Math.floor(r/2)});
+};
+
+Player.prototype.updateMouse = function(e) {
+    var diff = {};
+    var value = e.type === "mousedown";
+
+    if (!e.which && e.button) 
+    {
+        if (e.button & 1) e.which = 1      // Left
+        else if (e.button & 4) e.which = 2 // Middle
+        else if (e.button & 2) e.which = 3 // Right
+    }
+
+    switch (e.which)
+    {
+    case 1: // left
+        diff.l = value;
+        break;
+    case 2: // middle
+        diff.m = value;
+        break;
+    case 3: // right
+        diff.r = value;
+        break;
+    }
+    globals.socket.emit('mouse', diff);
 };
 
 /**
