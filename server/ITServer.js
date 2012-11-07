@@ -28,7 +28,7 @@ var update = function() {
 		playerDiff = {};
 		server.players[player].update(server.level, playerDiff);
 		// check if the player should fire
-		if (server.players[player].lastFire > 10 && server.players[player].keys.space === true) {
+		if (server.players[player].projectile.lastFire > 10 && server.players[player].keys.space === true) {
 			server.projectiles[server.n] = new Projectile(server.players[player]);
 			var msg = { i: player, n: server.n };
 			io.sockets.emit('fire', msg);
@@ -48,6 +48,14 @@ var update = function() {
 		if (target >= -1) { 
 			if (target >= 0) { 
 				server.players[target].takeHit(server.projectiles[projectile].damage);
+			}
+			var hitter = server.players[server.projectiles[projectile].owner];
+			hitter.score++;
+			hitter.totScore++;
+			if (hitter.score > 25) {
+				hitter.score = 0;
+				hitter.projectile.damage += 5;
+				hitter.projectile.speed += 5;
 			}
 			var msg = { i: target, n: projectile };
 			io.sockets.emit('hit', msg);
