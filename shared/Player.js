@@ -31,7 +31,7 @@ var Player = function(team, playerID) {
 	this.totScore = 0; 	//for traking total score, both incremented the same
 	this.projectile = {
 		damage: 5,
-		speed: 1,
+		speed: 10,
 		lastFire: 0
 	};
 };
