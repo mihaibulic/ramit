@@ -19,6 +19,7 @@ RETVAL=0
 start()
 {
     echo "Starting node.js"
+    rm -f /tmp/node.log
 	node /home/ec2-user/ramit/ramit_server.js >> /tmp/node.log 2>&1 &
     echo "Done starting node.js!"
 }
