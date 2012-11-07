@@ -26,7 +26,8 @@ var Player = function(team, playerID) {
 			turretAim: 0
 	};
 	this.speed = 4;
-	this.health = 100;
+	this.initHealth = 100;
+	this.health = this.initHealth;
 	this.score = 0;		//for spending on upgrades
 	this.totScore = 0; 	//for traking total score, both incremented the same
 	this.projectile = {
@@ -281,7 +282,7 @@ Player.prototype.takeHit = function(damage) {
 	if (this.health <= 0) {
 		this.tank.x = Player.SPAWN_POINT[this.team].x;
 		this.tank.y = Player.SPAWN_POINT[this.team].y;
-		this.health = 10;
+		this.health = this.initHealth;
 	}
 }
 
