@@ -31,10 +31,11 @@ var ITGame = function(team, playerID) {
     });
 
 	globals.socket.on('fire', function(data) {
+		console.log("new projectile %d", data.n);
 		globals.projectiles[data.n] = new Projectile(globals.players[data.i], data.n);
 	});
 	globals.socket.on('hit', function(data) {
-		console.log("projectile %d hit %d", data.n, data.i);
+		console.log("projectile %d hit %d, health %d", data.n, data.i, globals.players[data.i].health);
 		if (data.i >= 0) globals.players[data.i].takeHit(globals.projectiles[data.n].damage);
 		delete globals.projectiles[data.n];
 	});
