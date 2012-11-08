@@ -2,21 +2,22 @@
  * An object of global variables and functions for use throughout the program.
  */
 var globals = {
-        NUMBER_OF_PLAYERS: 2,
-        rawImages: {
-            level: new Image(),
-            tanks: new Image()
-        },
-        resources: {
-          level: null,
-            tanks: null,
-            turrets: null
-        },
-        canvas: null,
-        ctx: null,
-        remainingResources: 0,
-        projectiles: {},
-        players: {}
+    NUMBER_OF_PLAYERS: 2,
+    rawImages: {
+        level: new Image(),
+        tanks: new Image()
+    },
+    resources: {
+        level: null,
+        tanks: null,
+        turrets: null,
+	gates: null
+    },
+    canvas: null,
+    ctx: null,
+    remainingResources: 0,
+    projectiles: {},
+    players: {}
 };
 
 /**
@@ -85,6 +86,46 @@ globals.load = function(callback) {
             globals.rawImages[img].src = "images/" + img + ".png";
         }
     }
+};
+
+/**
+ * Renders the gates image into three separate images.
+ */
+globals.renderGates = function() {
+    globals.remainingResources += 3;
+    globals.resources.gates = [];
+
+    var renderer = document.getElementById('renderer');
+    var ctx = renderer.getContext('2d');
+    renderer.width = 300;
+    renderer.height = 25;
+    
+    var positions = [[0, 0, 300, 15, 0, 5, 300, 15],
+		     [0, 15, 300, 15, 0, 5, 300, 15],
+		     [300, 0, 6, 25, 0, 0, 6, 25],
+		     [306, 0, 6, 25, 294, 0, 6, 25]];
+    var render = function(i) {
+	ctx.clearRect(0, 0, 300, 15);
+	ctx.drawImage(globals.rawImages.gates, positions[i][0], positions[i][1],
+		      positions[i][2], positions[i][3], positions[i][4],
+		      positions[i][5], positions[i][6], positions[i][7]);
+	if (i == 2) {
+	    ctx.drawImage(globals.rawImages.gates, positions[3][0],
+		      positions[3][1], positions[3][2], positions[3][3],
+		      positions[3][4], positions[3][5], positions[3][6],
+		      positions[3][7]);
+	}
+
+	var img = new Image();
+        img.src = renderer.toDataURL();
+        img.onload = function() {
+            globals.resources.gates[i] = img;
+            globals.resourceLoaded();
+            if (i < 2)
+                render(i + 1);
+        };
+    };
+    render(0);
 };
 
 /**
