@@ -2,7 +2,7 @@ var Level = function() {
     this.x = 0;
     this.y = 0;
     this.walls = [];
-	//this.gates = [ new Gate(0), new Gate(1) ];
+	this.gates = [ new Gate(0), new Gate(1) ];
     this.loadLevel();
 };
 
