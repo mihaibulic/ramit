@@ -20,8 +20,8 @@ Gate.prototype.takeHit = function(damage) {
 
 Gate.prototype.draw = function(level) {
 	var box = this.getCollisionBarrier();
-    var xPos = box.x - level.x;
-    var yPos = box.y - level.y;
+    var xPos = this.left - level.x;
+    var yPos = this.top - level.y;
 
     //if (xPos > -300 && xPos < 1000 && yPos > -20 && yPos < 500) {
 		globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
