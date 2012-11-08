@@ -85,7 +85,7 @@ var ITGame = function(team, playerID) {
     // FPS Stuff
     this.fps = 0;
     this.count = 0;
-    if (globals.queries.debug == "true") {
+    if (globals.queries.debug === "true") {
         this.fpsCount = window.setInterval(globals.bind(function() {
             this.fps = this.count;
             this.count = 0;
@@ -94,7 +94,7 @@ var ITGame = function(team, playerID) {
     
     // Game loop.
     this.interval = window.setInterval(globals.bind(function() {
-        if (globals.queries.debug == 'true')
+        if (globals.queries.debug === "true")
             this.count++;
         this.update();
         this.draw();
@@ -156,7 +156,7 @@ ITGame.prototype.draw = function() {
     }
     
     //degbug info
-    if (globals.queries.debug == "true") {
+    if (globals.queries.debug === "true") {
         globals.ctx.strokeStyle = "#00ff00";
         for (var i = 0; i < this.level.walls.length; i++) {
             globals.ctx.strokeRect(this.level.walls[i].left - this.level.x, 

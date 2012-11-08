@@ -114,7 +114,7 @@ Player.prototype.draw = function(level) {
         globals.ctx.globalAlpha = 1;
     }
 
-    if (globals.queries.debug == "true") {
+    if (globals.queries.debug === "true") {
         globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
         var rect = this.getCollisionBarrier();
         globals.ctx.strokeRect(rect.left - level.x, rect.top - level.y, rect.width(),
