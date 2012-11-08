@@ -3,10 +3,11 @@ var Gate = function(team) {
 	this.team = team;
 };
 
-Gate.BARRIER = [ new Rectangle( { left: 1350, right: 1650, 
-					top: 500, bottom: 540 } ), 
-				 new Rectangel( { left: 1350, right: 1650, 
-				 	top: 2500, bottom:2540 } ) ];
+Gate.BARRIER = [];
+Gate.BARRIER[0] = new Rectangle( { left: 1350, right: 1650, 
+					top: 500, bottom: 540 } );
+Gate.BARRIER[1] = new Rectangel( { left: 1350, right: 1650, 
+				 	top: 2500, bottom:2540 } );
 
 Gate.prototype.takeHit = function(damage) {
 	this.health -= damage;
