@@ -25,5 +25,5 @@ Gate.prototype.draw = function(level) {
 }
 
 Gate.prototype.getCollisionBarrier = function(location) {
-	return Gate.BARRIER[team];
+	return Gate.BARRIER[this.team];
 }
