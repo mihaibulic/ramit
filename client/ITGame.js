@@ -155,6 +155,7 @@ ITGame.prototype.draw = function() {
         globals.projectiles[projn].draw(this.level);
     }
 
+	//draw gates
 	for (var g in level.gates) {
 		level.gates[g].draw(level);
 	}
