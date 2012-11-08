@@ -54,7 +54,7 @@ Projectile.prototype.checkHit = function(globals, level) {
     for (var i in level.walls) {
         if (box.intersects(level.walls[i])) {
             console.log("HIT WALL");
-            return true;
+            return 1;
         }
     }
     //check players of other teams
