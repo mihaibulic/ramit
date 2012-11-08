@@ -10,6 +10,7 @@ Gate.BARRIER = [ new Rectangle( { left: 1350, right: 1650,
 
 Gate.prototype.takeHit = function(damage) {
 	this.health -= damage;
+	if (this.health < 0) this.health = 0;
 };
 
 Gate.prototype.draw = function(level) {
@@ -17,7 +18,7 @@ Gate.prototype.draw = function(level) {
     var xPos = box.x - level.x;
     var yPos = box.y - level.y;
 
-    //if (xPos > -300 && xPos < 1000 && yPos > -20 && yPos < 500) {
+    if (xPos > -300 && xPos < 1000 && yPos > -20 && yPos < 500) {
 		globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
 		globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[this.team];
 		globals.ctx.strokeRect(xPos, yPos, box.width(), box.height());
@@ -25,10 +26,10 @@ Gate.prototype.draw = function(level) {
 		golbals.ctx.fillRect(xPos, yPos, box.width(), box.height());
 		globals.ctx.globalAlpha = 1;
 		consol.log("drew gate %d at %d %d", this.team, xPos, yPos);
-	//}
+	}
 };
 
-Gate.prototype.getCollisionBarrier = function(location) {
+Gate.prototype.getCollisionBarrier = function() {
 	return Gate.BARRIER[this.team];
 };
 
