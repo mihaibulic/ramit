@@ -2,37 +2,37 @@
  * An object of global variables and functions for use throughout the program.
  */
 var globals = {
-		NUMBER_OF_PLAYERS: 2,
-		rawImages: {
-			level: new Image(),
-			tanks: new Image()
-		},
-		resources: {
-		  level: null,
-			tanks: null,
-			turrets: null
-		},
-		canvas: null,
-		ctx: null,
-		remainingResources: 0,
-		projectiles: {},
-		players: {}
+        NUMBER_OF_PLAYERS: 2,
+        rawImages: {
+            level: new Image(),
+            tanks: new Image()
+        },
+        resources: {
+          level: null,
+            tanks: null,
+            turrets: null
+        },
+        canvas: null,
+        ctx: null,
+        remainingResources: 0,
+        projectiles: {},
+        players: {}
 };
 
 /**
  * An object containing the query strings.
  */
 globals.queries = (function() {
-	var result = {};
-	var queryString = location.search.substring(1);
-	var re = /([^&=]+)=([^&]*)/g;
-	var m;
-	
-	while (m = re.exec(queryString)) {
-		result[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
-	}
+    var result = {};
+    var queryString = location.search.substring(1);
+    var re = /([^&=]+)=([^&]*)/g;
+    var m;
+    
+    while (m === re.exec(queryString)) {
+        result[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+    }
 
-	return result;
+    return result;
 })();
 
 /**
@@ -42,7 +42,7 @@ globals.queries = (function() {
  * @returns A function which calls fn in the correct context.
  */
 globals.bind = function(fn, context) {
-	return fn.bind(context);
+    return fn.bind(context);
 };
 
 /**
@@ -54,35 +54,37 @@ globals.bind = function(fn, context) {
  * @param callback A function that is called when the game is finished loading.
  */
 globals.load = function(callback) {
-	globals.resourceLoaded = function() {
-		globals.remainingResources--;
-		// Nothing else needs to be loaded. Call the callback.
-		if (globals.remainingResources === 0 && !!callback)
-			callback();
-	};
-	
-	for (img in globals.rawImages) {
-		if (globals.rawImages[img] instanceof Image) {
-			++globals.remainingResources;
-			globals.rawImages[img].onload = function(e) {
-				if (!e)
-					e = window.event;
-				
-				var start = e.target.src.lastIndexOf("/") + 1;
-				var end = e.target.src.lastIndexOf(".");
-				var target = e.target.src.substring(start, end);
-				
-				// Perform any special tasks on the image if need be.
-				if (target === "tanks")
-					globals.renderTanks();
-				else if (target === "level")
-					globals.renderLevelTiles();
-				
-				globals.resourceLoaded();
-			};
-			globals.rawImages[img].src = "images/" + img + ".png";
-		}
-	}
+    globals.resourceLoaded = function() {
+        globals.remainingResources--;
+        // Nothing else needs to be loaded. Call the callback.
+        if (globals.remainingResources === 0 && !!callback)
+            callback();
+    };
+   
+    var onload = function(e) {
+        if (!e)
+            e = window.event;
+
+        var start = e.target.src.lastIndexOf("/") + 1;
+        var end = e.target.src.lastIndexOf(".");
+        var target = e.target.src.substring(start, end);
+
+        // Perform any special tasks on the image if need be.
+        if (target === "tanks")
+            globals.renderTanks();
+        else if (target === "level")
+            globals.renderLevelTiles();
+       
+        globals.resourceLoaded();
+    };
+ 
+    for (var img in globals.rawImages) {
+        if (globals.rawImages[img] instanceof Image) {
+            ++globals.remainingResources;
+            globals.rawImages[img].onload = onload;
+            globals.rawImages[img].src = "images/" + img + ".png";
+        }
+    }
 };
 
 /**
@@ -90,37 +92,37 @@ globals.load = function(callback) {
  * quickly.
  */
 globals.renderLevelTiles = function() {
-	var width = Math.ceil(globals.rawImages.level.width / 1000);
-	var height = Math.ceil(globals.rawImages.level.height / 1000);
-	globals.remainingResources += width * height;
-	globals.resources.level = [];
-	
-	var renderer = document.getElementById('renderer');
-	var ctx = renderer.getContext('2d');
-	
-	// Renders a level tile.
-	var render = function(i, j) {
-		renderer.width = 1000;
-		renderer.height = 1000;
-		ctx.drawImage(globals.rawImages.level, i * 1000, j * 1000, 1000, 1000, 0,
-				0, 1000, 1000);
-		var img = new Image();
-		img.src = renderer.toDataURL();
-		img.onload = function() {
-			if (!globals.resources.level[i])
-				globals.resources.level[i] = [];
-			globals.resources.level[i][j] = img;
-			globals.resourceLoaded();
-			if (++i >= 3) {
-				i = 0;
-				++j;
-			}
-			if (j < 3)
-				render(i, j);
-		};
-	};
-	
-	render(0, 0);
+    var width = Math.ceil(globals.rawImages.level.width / 1000);
+    var height = Math.ceil(globals.rawImages.level.height / 1000);
+    globals.remainingResources += width * height;
+    globals.resources.level = [];
+    
+    var renderer = document.getElementById('renderer');
+    var ctx = renderer.getContext('2d');
+    
+    // Renders a level tile.
+    var render = function(i, j) {
+        renderer.width = 1000;
+        renderer.height = 1000;
+        ctx.drawImage(globals.rawImages.level, i * 1000, j * 1000, 1000, 1000, 0,
+                0, 1000, 1000);
+        var img = new Image();
+        img.src = renderer.toDataURL();
+        img.onload = function() {
+            if (!globals.resources.level[i])
+                globals.resources.level[i] = [];
+            globals.resources.level[i][j] = img;
+            globals.resourceLoaded();
+            if (++i >= 3) {
+                i = 0;
+                ++j;
+            }
+            if (j < 3)
+                render(i, j);
+        };
+    };
+    
+    render(0, 0);
 };
 
 /**
@@ -130,77 +132,77 @@ globals.renderLevelTiles = function() {
  */
 globals.renderTanks = function()
 {
-	globals.remainingResources += globals.NUMBER_OF_PLAYERS * 188;
-	var renderer = document.getElementById('renderer');
-	var ctx = renderer.getContext('2d');
-	var i = 0;
-	globals.resources.tanks = [];
-	globals.resources.turrets = [];
-	
-	// Render the tank rotation images.
-	var renderTank = function(num) {
-		renderer.width = 60;
-		renderer.height = 60;
-		ctx.clearRect(0, 0, 60, 60);
-		ctx.save();
-		ctx.translate(30, 30);
-		ctx.rotate(45 * i * Math.PI / 180);
-		ctx.drawImage(globals.rawImages.tanks, num * 42, 0, 40, 40, -20, -20, 40,
-				40);
-		ctx.restore();
-		var img = new Image();
-		img.src = renderer.toDataURL();
-		img.onload = function() {
-			if (!globals.resources.tanks[num])
-				globals.resources.tanks[num] = [];
-			globals.resources.tanks[num].push(img);
-			globals.resourceLoaded();
-			if (++i < 8) {
-				renderTank(num);
-			} else {
-				i = 0;
-				renderTurret(num);
-			}
-		};
-	};
-	// Renders the turret rotation images.
-	var renderTurret = function(num) {
-		renderer.width = 74;
-		renderer.height = 74;
-		ctx.clearRect(0, 0, 74, 74);
-		ctx.save();
-		ctx.translate(37, 37);
-		ctx.rotate(i * 2 * Math.PI / 180);
-		ctx.drawImage(globals.rawImages.tanks, num * 42, 40, 42, 22, -10, -11, 42,
-				22);
-		ctx.restore();
-		var img = new Image();
-		img.src = renderer.toDataURL();
-		img.onload = function() {
-			if (!globals.resources.turrets[num])
-				globals.resources.turrets[num] = [];
-			globals.resources.turrets[num].push(img);
-			globals.resourceLoaded();
-			if (++i < 180) {
-				renderTurret(num);
-			} else if (++num < globals.NUMBER_OF_PLAYERS) {
-				i = 0;
-				renderTank(num);
-			}
-		};
-	};
-		
-	renderTank(0);
+    globals.remainingResources += globals.NUMBER_OF_PLAYERS * 188;
+    var renderer = document.getElementById('renderer');
+    var ctx = renderer.getContext('2d');
+    var i = 0;
+    globals.resources.tanks = [];
+    globals.resources.turrets = [];
+    
+    // Render the tank rotation images.
+    var renderTank = function(num) {
+        renderer.width = 60;
+        renderer.height = 60;
+        ctx.clearRect(0, 0, 60, 60);
+        ctx.save();
+        ctx.translate(30, 30);
+        ctx.rotate(45 * i * Math.PI / 180);
+        ctx.drawImage(globals.rawImages.tanks, num * 42, 0, 40, 40, -20, -20, 40,
+                40);
+        ctx.restore();
+        var img = new Image();
+        img.src = renderer.toDataURL();
+        img.onload = function() {
+            if (!globals.resources.tanks[num])
+                globals.resources.tanks[num] = [];
+            globals.resources.tanks[num].push(img);
+            globals.resourceLoaded();
+            if (++i < 8) {
+                renderTank(num);
+            } else {
+                i = 0;
+                renderTurret(num);
+            }
+        };
+    };
+    // Renders the turret rotation images.
+    var renderTurret = function(num) {
+        renderer.width = 74;
+        renderer.height = 74;
+        ctx.clearRect(0, 0, 74, 74);
+        ctx.save();
+        ctx.translate(37, 37);
+        ctx.rotate(i * 2 * Math.PI / 180);
+        ctx.drawImage(globals.rawImages.tanks, num * 42, 40, 42, 22, -10, -11, 42,
+                22);
+        ctx.restore();
+        var img = new Image();
+        img.src = renderer.toDataURL();
+        img.onload = function() {
+            if (!globals.resources.turrets[num])
+                globals.resources.turrets[num] = [];
+            globals.resources.turrets[num].push(img);
+            globals.resourceLoaded();
+            if (++i < 180) {
+                renderTurret(num);
+            } else if (++num < globals.NUMBER_OF_PLAYERS) {
+                i = 0;
+                renderTank(num);
+            }
+        };
+    };
+        
+    renderTank(0);
 };
 
 /**
  * Initialize the state and begin.
  */
 window.onload = function() {
-	globals.canvas = document.getElementById('cnv');
-	globals.ctx = globals.canvas.getContext('2d');
-	globals.load(function() 
-	{
-		globals.game = new ITGame(0,0);
-	});
+    globals.canvas = document.getElementById('cnv');
+    globals.ctx = globals.canvas.getContext('2d');
+    globals.load(function() 
+    {
+        globals.game = new ITGame(0,0);
+    });
 };

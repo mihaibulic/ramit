@@ -1,30 +1,53 @@
 #!/bin/bash
 
-DEF_REMOTE="github";
+case $(git remote | grep -c "") in
+    0)
+        echo "Error: no git remotes found";
+        exit -1;
+        ;;
+    1)
+        DEF_REMOTE=$(git remote);
+        ;;
+    *)
+        DEF_REMOTE="github";
+        ;;
+esac
+
 DEF_BRANCH="master";
 
-if [ $# -ne 0 ] && [ $# -ne 1 ] && [ $# -ne 2 ]
+if [ $# -ne 1 ] && [ $# -ne 2 ] && [ $# -ne 3 ]
 then
-  echo "Error: use no args to push to the ${DEF_REMOTE} remote and ${DEF_BRANCH} branch OR enter just the branch name OR enter the remote followed by branch to use.";
-  echo "e.g.: $0 ${DEF_REMOTE} ${DEF_BRANCH}";
-  echo "e.g.: $0 ${DEF_BRANCH}";
-  echo "e.g.: $0";
+  echo "Error: First arg must be commit message. After you may have just a branch to push to OR both a remote and a branch" 
+  echo -e "\ne.g.: $0 \"random commit msg\" ${DEF_REMOTE} ${DEF_BRANCH}";
+  echo "e.g.: $0 \"random commit msg\" ${DEF_BRANCH}";
+  echo "e.g.: $0 \"random commit msg\"";
+  echo -e "\nNOTE: if no remote/branch is specified they default to ${DEF_REMOTE}/${DEF_BRANCH}";
   exit
 fi
 
-if [ $# -eq 0 ] 
+msg="${1}"
+
+if [ $# -eq 1 ] 
 then
   remote="${DEF_REMOTE}";
   branch="${DEF_BRANCH}";
-elif [ $# -eq 1 ]
+elif [ $# -eq 2 ]
 then
   remote="${DEF_REMOTE}";
-  branch="${1}";
-else
-  remote="${1}";
   branch="${2}";
+else
+  remote="${2}";
+  branch="${3}";
 fi
 
-yes | ssh -i misquares.pem ec2-user@ec2-184-72-242-128.compute-1.amazonaws.com 'cd /var/lib/tomcat6/webapps/ROOT/ramit && git pull ${remote} ${branch} &&./deploy.sh'
-
+output=$(find . -name '*.js' -exec jshint {} \;); 
+if [ ${#output} -eq 0 ]; then
+    git add --all
+    git commit -a -m "${msg}"
+    git push ${remote} ${branch}
+    yes | ssh -i misquares.pem ec2-user@ec2-184-72-242-128.compute-1.amazonaws.com 'cd /var/lib/tomcat6/webapps/ROOT/ramit && git pull github ${branch} &&./deploy.sh'
+else
+    echo "${output}";
+    echo "Cannot push your code because jshint has found errors.";
+fi
 

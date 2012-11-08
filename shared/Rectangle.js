@@ -2,16 +2,16 @@
  * A rectangle.
  */
 var Rectangle = function(box) {
-	this.left = 0;
-	this.right = 0;
-	this.top = 0;
-	this.bottom = 0;
-	if (box) {
-		this.left = box.left;
-		this.right = box.right;
-		this.top = box.top;
-		this.bottom = box.bottom;
-	}
+    this.left = 0;
+    this.right = 0;
+    this.top = 0;
+    this.bottom = 0;
+    if (box) {
+        this.left = box.left;
+        this.right = box.right;
+        this.top = box.top;
+        this.bottom = box.bottom;
+    }
 };
 
 /**
@@ -19,7 +19,7 @@ var Rectangle = function(box) {
  * @returns {Boolean} true if the rectangles are intersecting.
  */
 Rectangle.prototype.intersects = function(rect) {
-	return (this.left <= rect.right &&
+    return (this.left <= rect.right &&
       rect.left <= this.right &&
       this.top <= rect.bottom &&
       rect.top <= this.bottom);
@@ -29,14 +29,14 @@ Rectangle.prototype.intersects = function(rect) {
  * @returns {Number} The height of the rectangle.
  */
 Rectangle.prototype.width = function() {
-	return this.right - this.left;
+    return this.right - this.left;
 };
 
 /**
  * @returns {Number} The height of the rectangle.
  */
 Rectangle.prototype.height = function() {
-	return this.bottom - this.top;
+    return this.bottom - this.top;
 };
 
 /**
@@ -46,8 +46,8 @@ Rectangle.prototype.height = function() {
  * @returns {Number} The X distance between this rectangle and the other.
  */
 Rectangle.prototype.getXDistance = function(rect) {
-	return Math.min(Math.abs(this.left - rect.right),
-			Math.abs(rect.left - this.right));
+    return Math.min(Math.abs(this.left - rect.right),
+            Math.abs(rect.left - this.right));
 };
 
 /**
@@ -57,6 +57,6 @@ Rectangle.prototype.getXDistance = function(rect) {
  * @returns {Number} The Y distance between this rectangle and the other.
  */
 Rectangle.prototype.getYDistance = function(rect) {
-	return Math.min(Math.abs(this.top - rect.bottom),
-			Math.abs(rect.top - this.bottom));
+    return Math.min(Math.abs(this.top - rect.bottom),
+            Math.abs(rect.top - this.bottom));
 };
