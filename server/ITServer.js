@@ -49,9 +49,9 @@ var update = function() {
     for (var projectile in server.projectiles) {
         server.projectiles[projectile].update(server.level);
         var target = server.projectiles[projectile].checkHit(server, server.level);
-        if (target >= -1) { 
-            if (target >= 0) { 
-                server.players[target].takeHit(server.projectiles[projectile].damage);
+        if (target) { 
+            if (target !== true) { 
+                target.takeHit(server.projectiles[projectile].damage);
             }
             var hitter = server.players[server.projectiles[projectile].owner];
             if (hitter) {
