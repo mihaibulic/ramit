@@ -100,14 +100,14 @@ globals.renderGates = function() {
 
     var renderer = document.getElementById('renderer');
     var ctx = renderer.getContext('2d');
-    renderer.width = 300;
-    renderer.height = 25;
     
     var positions = [[0, 0, 300, 15, 0, 5, 300, 15],
 		     [0, 15, 300, 15, 0, 5, 300, 15],
 		     [300, 0, 6, 25, 0, 0, 6, 25],
 		     [306, 0, 6, 25, 294, 0, 6, 25]];
     var render = function(i) {
+	renderer.width = 300;
+	renderer.height = 25;
 	ctx.clearRect(0, 0, 300, 15);
 	ctx.drawImage(globals.rawImages.gates, positions[i][0], positions[i][1],
 		      positions[i][2], positions[i][3], positions[i][4],
