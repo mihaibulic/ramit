@@ -154,11 +154,11 @@ ITGame.prototype.draw = function() {
     for (var projn in globals.projectiles) {
         globals.projectiles[projn].draw(this.level);
     }
-
+/*
 	//draw gates
 	for (var g in this.level.gates) {
 		this.level.gates[g].draw(this.level);
-	}
+	}*/
     
     //degbug info
     if (globals.queries.debug === "true") {
