@@ -26,7 +26,7 @@ Projectile.prototype.draw = function(level) {
 
 		globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[this.team];
 
-        globals.ctx.beginPath();
+		globals.ctx.beginPath();
 		globals.ctx.arc(xPos, yPos, rect.width()/2, 0 , 2 * Math.PI, true);
         globals.ctx.closePath();
 
@@ -48,7 +48,6 @@ Projectile.prototype.move = function(level) {
  * Returns -1 if hit wall, PlayerID if hit player, undefined if no hit
  */
 Projectile.prototype.checkHit = function(globals, level) {
-	console.log("CHECKING HIT %d, %d", this.x, this.y);
 	var box = this.getCollisionBarrier();
 	//check walls
 	for (var i in level.walls) {
@@ -61,6 +60,7 @@ Projectile.prototype.checkHit = function(globals, level) {
 	for (var player in globals.players) {
 		if (globals.players[player].team != this.team && 
 				box.intersects(globals.players[player].getCollisionBarrier())) {
+			console.log("HIT PLAYER " + player);
 			return player;
 		}
 	}
