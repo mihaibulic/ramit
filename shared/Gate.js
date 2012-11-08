@@ -3,7 +3,7 @@ var Gate = function(team) {
 	this.team = team;
 }
 
-Gate.BARRIER = [ { x: 1350, y: 500 width: 300, height: 30 }, 
+Gate.BARRIER = [ { x: 1350, y: 500, width: 300, height: 30 }, 
 				{ x: 1350, y: 2500, width: 300, height: 30 } ];
 
 Gate.prototype.takeHit = function(damage) {
