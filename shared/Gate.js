@@ -2,13 +2,16 @@
 var Gate = function(team) {
 	this.health = 1000;
 	this.team = team;
+	this.left = 1350;
+	this.right = 1650;
+	if (team == 0) {
+		this.top = 500;
+		this.bottom = 540;
+	} else {
+		this.top = 2500;
+		this.bottom = 2540;
+	}
 };
-Gate.BARRIER = [];
-var b1 = { left: 1350, right: 1650, 
-					top: 500, bottom: 540 };
-Gate.BARRIER[0] = new Rectangle(b1);
-//Gate.BARRIER[1] = new Rectangel( { left: 1350, right: 1650, 
-				 	//top: 2500, bottom:2540 } );
 
 Gate.prototype.takeHit = function(damage) {
 	this.health -= damage;
@@ -32,6 +35,6 @@ Gate.prototype.draw = function(level) {
 };
 
 Gate.prototype.getCollisionBarrier = function() {
-	return Gate.BARRIER[this.team];
+	return new Rectangle(this);
 };
 
