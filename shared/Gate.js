@@ -30,7 +30,7 @@ Gate.prototype.draw = function(level) {
 		globals.ctx.globalAlpha = this.health / 1000;
 		globals.ctx.fillRect(xPos, yPos, box.width(), box.height());
 		globals.ctx.globalAlpha = 1;
-		consol.log("drew gate %d at %d %d", this.team, xPos, yPos);
+		console.log("drew gate %d at %d %d", this.team, xPos, yPos);
 	//}
 };
 
