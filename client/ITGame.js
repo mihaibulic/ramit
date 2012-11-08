@@ -47,13 +47,14 @@ var ITGame = function(team, playerID) {
 			if (data.i || data.i === 0) {
 				//hit player
 				var hit = globals.players[data.i];
+				hit.takeHit(projectile.damage);
 				console.log("projectile %d hit player %d health %d", data.n, data.i, hit.health);
 			} else {
 				//hit gate
 				var hit = this.level.gates[data.t];
+				hit.takeHit(projectile.damage);
 				console.log("projectile %f hit gate %d health %d", data.n, data.t, hit.health);
 			}
-			hit.takeHit(projectile.damage);
         } else {
             console.log("projectile %d hit a wall", data.n);
         }
