@@ -265,7 +265,7 @@ Player.prototype.move = function(level, diff) {
 		// ignore own team's gate
 		if (g !== this.team) {
 			var box = level.gates[g].getCollisionBarrier();
-			if (rectYMovement.intersects(box) {
+			if (rectYMovement.intersects(box)) {
 				// Moving up/down collided with a gate, move up to the gate but no
 				// farther.
 				distance = tankBox.getYDistance(box);
