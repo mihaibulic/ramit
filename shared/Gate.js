@@ -4,8 +4,9 @@ var Gate = function(team) {
 };
 
 Gate.BARRIER = [];
-Gate.BARRIER[0] = new Rectangle( { left: 1350, right: 1650, 
-					top: 500, bottom: 540 } );
+var b1 = { left: 1350, right: 1650, 
+					top: 500, bottom: 540 }
+Gate.BARRIER[0] = new Rectangle(b1);
 Gate.BARRIER[1] = new Rectangel( { left: 1350, right: 1650, 
 				 	top: 2500, bottom:2540 } );
 
