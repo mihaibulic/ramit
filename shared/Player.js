@@ -278,8 +278,8 @@ Player.prototype.move = function(level, diff) {
 				distance = tankBox.getXDistance(box);
 				x = this.tank.x + ((distance - 1) * xDir);
 			}
-		}*/
-	}
+		}
+	}*/
     
     if (diff && this.tank.x !== x)
         diff.x = x;
