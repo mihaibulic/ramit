@@ -36,7 +36,7 @@ var ITGame = function(team, playerID) {
         globals.projectiles[data.n] = new Projectile(globals.players[data.i], data.n);
     });
     globals.socket.on('hit', function(data) {
-		if (data.t) {
+		if (data.t || data.t == 0) {
 			var projectile = globals.projectiles[data.n];
 			var hitter = globals.players[projectile.owner];
 			if (hitter) {
