@@ -3,6 +3,7 @@
  */
 var ITGame = function(team, playerID) {
     this.level = new Level();
+
     globals.socket = io.connect('ws://www.misquares.com');
     globals.socket.on('setup', globals.bind(function(data) {
 
