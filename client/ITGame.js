@@ -174,6 +174,6 @@ ITGame.prototype.draw = function() {
     globals.ctx.font = "normal 18px sans-serif";
     globals.ctx.textBaseline = "top";
     for (var player in globals.players) {
-        globals.ctx.fillText("Player: " + player + " HP: " + globals.players[player].health, 5, 5 + 20 * player);
+        globals.ctx.fillText("Player: " + player + " Score: " + globals.players[player].score, 5, 5 + 20 * player);
     }
 };
