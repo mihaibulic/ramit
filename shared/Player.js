@@ -108,15 +108,6 @@ Player.prototype.draw = function(level) {
         globals.ctx.drawImage(
                 globals.resources.turrets[this.team][this.tank.turretAim],
                 xPos - 7, yPos - 7);
-        // health bar
-        globals.ctx.strokeStyle = "#00FF00";
-		var color = Math.floor(this.health / this.initHealth * Player.HEALTH.length);
-		if (color == Player.HEALTH.length) color--;
-        globals.ctx.fillStyle = Player.HEALTH[color];
-        globals.ctx.globalAlpha = 0.5;
-        globals.ctx.strokeRect(xPos + 10, yPos + 55, 40, 10);
-        globals.ctx.fillRect(xPos + 10, yPos + 55, 40 * this.health / this.initHealth, 10);
-        globals.ctx.globalAlpha = 1;
     }
 
     if (globals.queries.debug === "true") {
@@ -124,6 +115,23 @@ Player.prototype.draw = function(level) {
         var rect = this.getCollisionBarrier();
         globals.ctx.strokeRect(rect.left - level.x, rect.top - level.y, rect.width(),
                 rect.height());
+    }
+};
+
+/**
+ * Draws a tanks information, such as it's health and name.
+ */
+Player.prototype.drawDetails = function() {
+    if (xPos > -60 && xPos < 1000 && yPos > -60 && yPos < 500) {
+	// health bar
+        globals.ctx.strokeStyle = "#00FF00";
+		var color = Math.floor(this.health / this.initHealth * Player.HEALTH.length);
+		if (color == Player.HEALTH.length) color--;
+        globals.ctx.fillStyle = Player.HEALTH[color];
+        globals.ctx.globalAlpha = 0.5;
+        globals.ctx.strokeRect(xPos + 10, yPos + 55, 40, 4);
+        globals.ctx.fillRect(xPos + 10, yPos + 55, 40 * this.health / this.initHealth, 4);
+        globals.ctx.globalAlpha = 1;
     }
 };
 
