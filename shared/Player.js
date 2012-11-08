@@ -47,7 +47,7 @@ Player.DIAGONAL_CONST = Math.sqrt(0.5);
  */
 Player.COLLISION_BOUND_STROKE = ["#0000FF", "#FF0000"];
 
-Player.HEALTH = ["#FF0000", "#00FF00"];
+Player.HEALTH = ["#FF0000", "#FFFF00", "#00FF00"];
 
 /**
  * The spawn points for each team.
