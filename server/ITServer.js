@@ -60,7 +60,7 @@ var update = function() {
             }
             msg = { n: projectile, t: target.team, i: target.playerID };
             io.sockets.emit('hit', msg);
-            delete server.projectiles[projectile];
+        	delete server.projectiles[projectile];
         }
     }
     if (server.usedDiff)

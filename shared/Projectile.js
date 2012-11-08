@@ -60,12 +60,14 @@ Projectile.prototype.checkHit = function(globals, level) {
     for (var player in globals.players) {
         if (globals.players[player].team != this.team && 
                 box.intersects(globals.players[player].getCollisionBarrier())) {
+			console.log("HIT PLAYER");
             return globals.players[player];
         }
     }
 	//check gates 
 	for (var g in level.gates) {
-		if (this.team !== level.gates[g].team) {
+		if (this.team !== level.gates[g].team && 
+				box.intersects(level.gates[g].getCollisionBarrier())) {
 			return level.gates[g];
 		}
 	}
