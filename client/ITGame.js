@@ -40,8 +40,10 @@ var ITGame = function(team, playerID) {
 			var hit = globals.players[data.i];
 			var hitter = globals.players[projectile.owner];
 			hit.takeHit(projectile.damage);
-			hitter.score++;
-			hitter.totScore++;
+			if (hitter) {
+				hitter.score++;
+				hitter.totScore++;
+			}
 			console.log("projectile %d hit %d health %d", data.n, data.i, globals.players[data.i].health);
 		} else {
 			console.log("projectile %d hit a wall", data.n);
@@ -169,11 +171,4 @@ ITGame.prototype.draw = function() {
 		globals.ctx.textBaseline = "top";
 		globals.ctx.fillText("FPS: " + this.fps, 5, 5);
 	}
-	globals.ctx.fillStyle = "#ffffff";
-	globals.ctx.font = "normal 18px sans-serif";
-	globals.ctx.textBaseline = "top";
-	for (player in globals.players) {
-		globals.ctx.fillText("Player: " + player + " HP: " + globals.players[player].health, 5, 5 + 20 * player);
-	}
-
 };
