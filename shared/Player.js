@@ -26,7 +26,8 @@ var Player = function(team, playerID) {
             turretAim: 0
     };
     this.speed = 4;
-    this.health = 100;
+	this.initHealth = 100;
+    this.health = this.initHealth;
     this.score = 0;        //for spending on upgrades
     this.totScore = 0;     //for traking total score, both incremented the same
     this.projectile = {
@@ -106,8 +107,8 @@ Player.prototype.draw = function(level) {
                 globals.resources.turrets[this.team][this.tank.turretAim],
                 xPos - 7, yPos - 7);
         // health bar
-        globals.ctx.fillStyle = "#ff0000";
-        globals.ctx.strokeStyle = "#00ff00";
+        globals.ctx.fillStyle = "#00FF00";
+        globals.ctx.strokeStyle = "#00FF00";
         globals.ctx.strokeRect(xPos + 10, yPos + 40, 40, 10);
         //globals.ctx.globalAlpha = 0.8;
         globals.ctx.fillRect(xPos + 10, yPos + 40, 40 * this.health / this.initHealth, 10);
@@ -286,7 +287,7 @@ Player.prototype.takeHit = function(damage) {
     if (this.health <= 0) {
         this.tank.x = Player.SPAWN_POINT[this.team].x;
         this.tank.y = Player.SPAWN_POINT[this.team].y;
-        this.health = 10;
+        this.health = this.initHealth;
     }
 };
 
