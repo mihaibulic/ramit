@@ -23,15 +23,14 @@ Gate.prototype.draw = function(level) {
     var xPos = this.left - level.x;
     var yPos = this.top - level.y;
 
-    //if (xPos > -300 && xPos < 1000 && yPos > -20 && yPos < 500) {
+    if (xPos > -300 && xPos < 1000 && yPos > -20 && yPos < 500) {
 		globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
 		globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[this.team];
 		globals.ctx.strokeRect(xPos, yPos, box.width(), box.height());
 		globals.ctx.globalAlpha = this.health / 1000;
 		globals.ctx.fillRect(xPos, yPos, box.width(), box.height());
 		globals.ctx.globalAlpha = 1;
-		console.log("drew gate %d at %d %d", this.team, xPos, yPos);
-	//}
+	}
 };
 
 Gate.prototype.getCollisionBarrier = function() {
