@@ -171,6 +171,11 @@ ITGame.prototype.draw = function() {
 	this.level.gates[g].draw(this.level);
     }
     
+    //draw players info
+    for (var pid in globals.players) {
+      globals.players[pid].drawDetails(this.level);
+    }
+
     //degbug info
     if (globals.queries.debug === "true") {
         globals.ctx.strokeStyle = "#00ff00";

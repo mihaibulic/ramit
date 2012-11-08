@@ -121,7 +121,9 @@ Player.prototype.draw = function(level) {
 /**
  * Draws a tanks information, such as it's health and name.
  */
-Player.prototype.drawDetails = function() {
+Player.prototype.drawDetails = function(level) {
+    var xPos = this.tank.x - level.x;
+    var yPos = this.tank.y - level.y;
     if (xPos > -60 && xPos < 1000 && yPos > -60 && yPos < 500) {
 	// health bar
         globals.ctx.strokeStyle = "#00FF00";
