@@ -47,6 +47,8 @@ Player.DIAGONAL_CONST = Math.sqrt(0.5);
  */
 Player.COLLISION_BOUND_STROKE = ["#0000FF", "#FF0000"];
 
+Player.HEALTH = ["#FF0000", "#00FF00"];
+
 /**
  * The spawn points for each team.
  */
@@ -108,7 +110,7 @@ Player.prototype.draw = function(level) {
                 xPos - 7, yPos - 7);
         // health bar
         globals.ctx.fillStyle = "#00FF00";
-        globals.ctx.strokeStyle = "#00FF00";
+        globals.ctx.strokeStyle = Player.HEALTH[Math.floor(this.health / this.initHealth * Player.HEALTH.length)];
         globals.ctx.globalAlpha = 0.5;
         globals.ctx.strokeRect(xPos + 10, yPos + 55, 40, 10);
         globals.ctx.fillRect(xPos + 10, yPos + 55, 40 * this.health / this.initHealth, 10);
