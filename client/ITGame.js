@@ -3,6 +3,7 @@
  */
 var ITGame = function(team, playerID) {
     this.level = new Level();
+
     globals.socket = io.connect('ws://www.misquares.com');
     globals.socket.on('setup', globals.bind(function(data) {
 
@@ -175,5 +176,4 @@ ITGame.prototype.draw = function() {
     for (var player in globals.players) {
         globals.ctx.fillText("Player: " + player + " HP: " + globals.players[player].health, 5, 5 + 20 * player);
     }
-
 };
