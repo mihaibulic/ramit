@@ -22,7 +22,7 @@ var globals = {
 /**
  * An object containing the query strings.
  */
-globals.queries = function() {
+globals.queries = (function() {
     var result = {};
     var queryString = location.search.substring(1);
     var re = /([^&=]+)=([^&]*)/g;
@@ -33,7 +33,7 @@ globals.queries = function() {
     }
 
     return result;
-};
+})();
 
 /**
  * Binds a function to an object.
