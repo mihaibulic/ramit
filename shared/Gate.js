@@ -24,7 +24,7 @@ Gate.prototype.draw = function(level) {
     var yPos = this.top - level.y;
     
     if (xPos > -300 && xPos < 1000 && yPos > -20 && yPos < 500) {
-	if (health > 0)
+	if (this.health > 0)
 	    globals.ctx.drawImage(globals.resources.gates[this.team], xPox, yPos);
 	globals.ctx.drawImage(globals.resources.gates[2], xPox, yPos);
     }
