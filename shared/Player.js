@@ -127,12 +127,12 @@ Player.prototype.drawDetails = function(level) {
     if (xPos > -60 && xPos < 1000 && yPos > -60 && yPos < 500) {
 	// health bar
         globals.ctx.strokeStyle = "#00FF00";
-		var color = Math.floor(this.health / this.initHealth * Player.HEALTH.length);
-		if (color == Player.HEALTH.length) color--;
+	var color = Math.floor(this.health / this.initHealth * Player.HEALTH.length);
+	if (color == Player.HEALTH.length) color--;
         globals.ctx.fillStyle = Player.HEALTH[color];
         globals.ctx.globalAlpha = 0.5;
-        globals.ctx.strokeRect(xPos + 10, yPos + 55, 40, 4);
-        globals.ctx.fillRect(xPos + 10, yPos + 55, 40 * this.health / this.initHealth, 4);
+        globals.ctx.strokeRect(xPos + 10, yPos + 55, 40, 3);
+        globals.ctx.fillRect(xPos + 10, yPos + 55, 40 * this.health / this.initHealth, 3);
         globals.ctx.globalAlpha = 1;
     }
 };
