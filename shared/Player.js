@@ -264,7 +264,7 @@ Player.prototype.move = function(level, diff) {
 	// check gates
 	for (var g in level.gates) {
 		// ignore own team's gate
-		if (level.gates[gate].team !== this.team) {
+		if (level.gates[g].team !== this.team) {
 			var box = level.gates[g].getCollisionBarrier();
 			if (rectYMovement.intersects(box)) {
 				// Moving up/down collided with a gate, move up to the gate but no
