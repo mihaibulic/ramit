@@ -109,8 +109,8 @@ Player.prototype.draw = function(level) {
                 globals.resources.turrets[this.team][this.tank.turretAim],
                 xPos - 7, yPos - 7);
         // health bar
-        globals.ctx.fillStyle = "#00FF00";
-        globals.ctx.strokeStyle = Player.HEALTH[Math.floor(this.health / this.initHealth * Player.HEALTH.length)];
+        globals.ctx.strokeStyle = "#00FF00";
+        globals.ctx.fillStyle = Player.HEALTH[Math.floor(this.health / this.initHealth * Player.HEALTH.length)];
         globals.ctx.globalAlpha = 0.5;
         globals.ctx.strokeRect(xPos + 10, yPos + 55, 40, 10);
         globals.ctx.fillRect(xPos + 10, yPos + 55, 40 * this.health / this.initHealth, 10);
