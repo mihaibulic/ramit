@@ -156,8 +156,8 @@ ITGame.prototype.draw = function() {
     }
 
 	//draw gates
-	for (var g in level.gates) {
-		level.gates[g].draw(level);
+	for (var g in this.level.gates) {
+		this.level.gates[g].draw(this.level);
 	}
     
     //degbug info

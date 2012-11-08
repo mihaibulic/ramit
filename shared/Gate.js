@@ -3,8 +3,8 @@ var Gate = function(team) {
 	this.team = team;
 }
 
-Gate.BARRIER = [ { x: 1350, y: 500, width: 300, height: 30 }, 
-				{ x: 1350, y: 2500, width: 300, height: 30 } ];
+Gate.BARRIER = [ new Rectangle( { left: 1350, top: 500, right: 1650, bottom: 540 } ), 
+				 new Rectangel( { left: 1350, top: 2500, right: 1650, bottom:2540 } ) ];
 
 Gate.prototype.takeHit = function(damage) {
 	this.health -= damage;
