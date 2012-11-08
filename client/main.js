@@ -5,7 +5,8 @@ var globals = {
     NUMBER_OF_PLAYERS: 2,
     rawImages: {
         level: new Image(),
-        tanks: new Image()
+        tanks: new Image(),
+	gates: new Image()
     },
     resources: {
         level: null,
@@ -75,6 +76,8 @@ globals.load = function(callback) {
             globals.renderTanks();
         else if (target === "level")
             globals.renderLevelTiles();
+	else if (target === "gates")
+	    globals.renderGates();
        
         globals.resourceLoaded();
     };
