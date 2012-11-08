@@ -36,14 +36,24 @@ var ITGame = function(team, playerID) {
         globals.projectiles[data.n] = new Projectile(globals.players[data.i], data.n);
     });
     globals.socket.on('hit', function(data) {
-        if (data.i >= 0) {
-            var projectile = globals.projectiles[data.n];
-            var hit = globals.players[data.i];
-            var hitter = globals.players[projectile.owner];
-            hit.takeHit(projectile.damage);
-            hitter.score++;
-            hitter.totScore++;
-            console.log("projectile %d hit %d health %d", data.n, data.i, globals.players[data.i].health);
+		if (data.t) {
+			var projectile = globals.projectiles[data.n];
+			var hitter = globals.players[projectile.owner];
+			if (hitter) {
+				//hitter still in game
+				hitter.score++;
+				hitter.totScore++;
+			}
+			if (data.i) {
+				//hit player
+				var hit = globals.players[data.i];
+				console.log("projectile %d hit player %d health %d", data.n, data.i, hit.health);
+			} else {
+				//hit gate
+				var hit = level.gates[data.t];
+				console.log("projectile %f hit gate %d health %d", data.n, data.t, hit.health);
+			}
+			hit.takeHit(projectile.damage);
         } else {
             console.log("projectile %d hit a wall", data.n);
         }

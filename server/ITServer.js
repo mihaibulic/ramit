@@ -58,7 +58,7 @@ var update = function() {
                 hitter.score++;
                 hitter.totScore++;
             }
-            msg = { i: target.playerID, n: projectile };
+            msg = { n: projectile, t: target.team, i: target.playerID };
             io.sockets.emit('hit', msg);
             delete server.projectiles[projectile];
         }
