@@ -50,7 +50,7 @@ var ITGame = function(team, playerID) {
 				console.log("projectile %d hit player %d health %d", data.n, data.i, hit.health);
 			} else {
 				//hit gate
-				var hit = level.gates[data.t];
+				var hit = this.level.gates[data.t];
 				console.log("projectile %f hit gate %d health %d", data.n, data.t, hit.health);
 			}
 			hit.takeHit(projectile.damage);
