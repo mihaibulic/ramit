@@ -10,6 +10,7 @@ var server = {
     numberOfPlayers: 0,
     players: {},
     projectiles: {},
+	gates: [new Gate(0), new Gate(1)],
     socketToId: {},
     playerIDQueue: [7,6,5,4,3,2,1,0],
     colors: [0,0],

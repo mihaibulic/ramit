@@ -154,6 +154,10 @@ ITGame.prototype.draw = function() {
     for (var projn in globals.projectiles) {
         globals.projectiles[projn].draw(this.level);
     }
+
+	for (var g in level.gates) {
+		level.gates[g].draw(level);
+	}
     
     //degbug info
     if (globals.queries.debug === "true") {
@@ -168,7 +172,7 @@ ITGame.prototype.draw = function() {
         globals.ctx.fillStyle = "#ffffff";
         globals.ctx.font = "normal 18px sans-serif";
         globals.ctx.textBaseline = "top";
-        globals.ctx.fillText("FPS: " + this.fps, 5, 5);
+        globals.ctx.fillText("FPS: " + this.fps, 500, 5);
     }
     globals.ctx.fillStyle = "#ffffff";
     globals.ctx.font = "normal 18px sans-serif";

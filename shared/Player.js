@@ -245,7 +245,8 @@ Player.prototype.move = function(level, diff) {
     //The collision box after the tank moves in the X direction.
     var rectXMovement = this.getCollisionBarrier({x: x, y: this.tank.y});
     var distance;
-    for (var i = 0; i < level.walls.length; i++) {
+	//check walls
+    for (var i in level.walls) {
         if (rectYMovement.intersects(level.walls[i])) {
             // Moving up/down collided with a wall, move up to the wall but no
             // farther.
@@ -259,6 +260,25 @@ Player.prototype.move = function(level, diff) {
             x = this.tank.x + ((distance - 1) * xDir);
         }
     }
+	// check gates
+	for (var g in level.gates) {
+		// ignore own team's gate
+		if (g !== this.team) {
+			var box = level.gates[g].getCollisionBarrier();
+			if (rectYMovement.intersects(box) {
+				// Moving up/down collided with a gate, move up to the gate but no
+				// farther.
+				distance = tankBox.getYDistance(box);
+				y = this.tank.y + ((distance - 1) * yDir);
+			}
+			if (rectXMovement.intersects(box)) {
+				// Moving left/right collided with a gate, move up to the gate but no
+				// farther.
+				distance = tankBox.getXDistance(box);
+				x = this.tank.x + ((distance - 1) * xDir);
+			}
+		}
+	}
     
     if (diff && this.tank.x !== x)
         diff.x = x;
