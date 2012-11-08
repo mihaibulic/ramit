@@ -144,7 +144,12 @@ ITGame.prototype.draw = function() {
         globals.ctx.drawImage(globals.resources.level[tileX + 1][tileY + 1],
                 -1 * levelX + 1000, -1 * levelY + 1000);
     }
-    
+
+    //draw gates
+	for (var g in this.level.gates) {
+		this.level.gates[g].draw(this.level);
+	}
+
     //draw players
     for (var pid in globals.players) {
       globals.players[pid].draw(this.level);
@@ -154,11 +159,6 @@ ITGame.prototype.draw = function() {
     for (var projn in globals.projectiles) {
         globals.projectiles[projn].draw(this.level);
     }
-
-	//draw gates
-	for (var g in this.level.gates) {
-		this.level.gates[g].draw(this.level);
-	}
     
     //degbug info
     if (globals.queries.debug === "true") {
