@@ -109,7 +109,7 @@ Player.prototype.draw = function(level) {
 		// health bar
 		globals.ctx.fillStyle = "#00ff00";
 		globals.ctx.strokeStyle = "#00ff00";
-		globals.ctx.globalAlpha = 0.2;
+		globals.ctx.globalAlpha = 0.4;
 		globals.ctx.strokeRect(xPos + 10, yPos + 45, 40, 10);
 		globals.ctx.fillRect(xPos + 10, yPos + 45, 40 * this.health / this.initHealth, 10);
 		globals.ctx.globalAlpha = 1;
