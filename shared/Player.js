@@ -260,7 +260,7 @@ Player.prototype.move = function(level, diff) {
             x = this.tank.x + ((distance - 1) * xDir);
         }
     }
-/*
+
 	// check gates
 	for (var g in level.gates) {
 		// ignore own team's gate
@@ -279,7 +279,7 @@ Player.prototype.move = function(level, diff) {
 				x = this.tank.x + ((distance - 1) * xDir);
 			}
 		}
-	}*/
+	}
     
     if (diff && this.tank.x !== x)
         diff.x = x;
