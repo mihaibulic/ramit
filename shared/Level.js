@@ -1,8 +1,8 @@
 var Level = function() {
     this.x = 0;
     this.y = 0;
-//  this.walls;
-//  this.loadLevel;
+    this.walls = [];
+    this.loadLevel();
 };
 
 /**
@@ -44,7 +44,6 @@ Level.prototype.loadLevel = function() {
                  {left:2100,right:2150,top:1950,bottom:2250},
                  {left:2350,right:2650,top:2125,bottom:2175},
                  {left:2600,right:2650,top:1875,bottom:2175}];
-    this.walls = [];
     for (var i = 0; i < walls.length; i++) {
         this.walls[i] = new Rectangle(walls[i]);
     }
