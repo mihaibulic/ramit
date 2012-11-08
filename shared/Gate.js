@@ -1,4 +1,4 @@
-/*
+
 var Gate = function(team) {
 	this.health = 1000;
 	this.team = team;
@@ -35,4 +35,4 @@ Gate.prototype.draw = function(level) {
 Gate.prototype.getCollisionBarrier = function() {
 	return Gate.BARRIER[this.team];
 };
-*/
+
