@@ -68,6 +68,7 @@ Projectile.prototype.checkHit = function(globals, level) {
 	for (var g in level.gates) {
 		if (this.team !== level.gates[g].team && 
 				box.intersects(level.gates[g].getCollisionBarrier())) {
+			console.log("HIT GATE");
 			return level.gates[g];
 		}
 	}

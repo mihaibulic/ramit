@@ -44,7 +44,7 @@ var ITGame = function(team, playerID) {
 				hitter.score++;
 				hitter.totScore++;
 			}
-			if (data.i) {
+			if (data.i || data.i === 0) {
 				//hit player
 				var hit = globals.players[data.i];
 				console.log("projectile %d hit player %d health %d", data.n, data.i, hit.health);
