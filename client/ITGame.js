@@ -184,12 +184,12 @@ ITGame.prototype.draw = function() {
     for (var projn in globals.projectiles) {
         globals.projectiles[projn].draw(this.level);
     }
-
-	//draw mines
-	for (var mine in globals.mines) {
-		globals.mines[mine].draw(this.level);
-	}
-
+    
+    //draw mines
+    for (var mine in globals.mines) {
+	globals.mines[mine].draw(this.level);
+    }
+    
     //draw gates
     for (var g in this.level.gates) {
 	this.level.gates[g].draw(this.level);
@@ -197,7 +197,8 @@ ITGame.prototype.draw = function() {
     
     //draw players info
     for (var pid in globals.players) {
-      globals.players[pid].drawDetails(this.level);
+	if (pid !== this.player) // Only draw if this tank is not the player.
+	    globals.players[pid].drawDetails(this.level);
     }
 
     // Draw HUD
