@@ -138,9 +138,9 @@ ITGame.prototype.update = function() {
     for (var projectile in globals.projectiles) {
         globals.projectiles[projectile].update();
     }
-	for (var mine in globals.mines) {
+	/*for (var mine in globals.mines) {
 		globals.mines[mine].update(); //ignores hits
-	}
+	}*/
 };
 
 /**
@@ -183,7 +183,7 @@ ITGame.prototype.draw = function() {
         globals.projectiles[projn].draw(this.level);
     }
 
-	//draw mines
+	/*//draw mines
 	for (var mine in globals.mines) {
 		globals.mines[mine].draw(this.level);
 	}
@@ -191,7 +191,7 @@ ITGame.prototype.draw = function() {
     //draw gates
     for (var g in this.level.gates) {
 	this.level.gates[g].draw(this.level);
-    }
+    }*/
     
     //draw players info
     for (var pid in globals.players) {

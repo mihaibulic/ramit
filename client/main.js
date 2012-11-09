@@ -18,7 +18,7 @@ var globals = {
     ctx: null,
     remainingResources: 0,
     projectiles: {},
-	mines: {},
+	//mines: {},
     players: {}
 };
 
