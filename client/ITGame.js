@@ -27,7 +27,10 @@ var ITGame = function(team, playerID) {
 			} 
 			if (data[id].m !== undefined) {
 				console.log("new mine %d", data[id].m);
-				globals.mines[data[id].m] = new Mine(globals.players[id], data[id].m);
+                if(data[id].mx === undefined)
+				    globals.mines[data[id].m] = new Mine(globals.players[id], data[id].m);
+                else
+				    globals.mines[data[id].m] = new Mine(globals.players[id], data[id].m, globals.projectiles[data[id].mn]);
 			}
 			if (data.h !== undefined) {
 				for (var n in data.h) {
@@ -61,10 +64,12 @@ var ITGame = function(team, playerID) {
 			if (data.s !== undefined) {
 				for (var m in data.s) {
 					console.log("Mine %d exploded! Damaging %d player(s)!", m, data.s[m].h.length);
-					for (var h in data.s[m].h) {
-						globals.players[data.s[m].h[h]].takeHit(globals.mines[m].damage);
+					if (globals.mines[m]) {
+						for (var h in data.s[m].h) {
+							globals.players[data.s[m].h[h]].takeHit(globals.mines[m].damage);
+						}
+						delete globals.mines[m];
 					}
-					delete globals.mines[m];
 				}
 			}
 	    }

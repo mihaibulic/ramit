@@ -25,7 +25,7 @@ var server = {
 // Define globals as an alias of server to make the shared code more compatible.
 var globals = server;
 
-/**
+/*
  * Updates the game and sends out a 'diff' message to the players.
  */
 var update = function() {
@@ -72,10 +72,12 @@ var update = function() {
         if (target) { 
             if(server.projectiles[projectile].isRocket !== undefined)
             {
+				var pid = server.projectiles[projectile].owner; 
                 server.mines[server.m] = new Mine(server.players[pid], server.m, server.projectiles[projectile]);
                 if (!server.diff[pid])
                     server.diff[pid] = {};
-                server.diff[pid].m = server.m;			    
+                server.diff[pid].m = server.m;
+                server.diff[pid].mn = projectile;
                 server.m++;
             }
             
@@ -87,7 +89,7 @@ var update = function() {
                 hitter.score++;
                 hitter.totScore++;
             }
-	    if (!server.diff.h) server.diff.h = {};
+	    	if (!server.diff.h) server.diff.h = {};
             server.diff.h[projectile] = { t: target.team, i: target.playerID };
             server.usedDiff = true;
         	delete server.projectiles[projectile];
@@ -95,22 +97,22 @@ var update = function() {
     }
     // update all mines
     for (var mine in server.mines) {
-	var hits = server.mines[mine].update(server);
-	if (hits.length > 0) {
-	    if (!server.diff.s) server.diff.s = {};
-	    server.diff.s[mine] = {};
-	    server.diff.s[mine].h = [];
-	    for (var hit in hits) {
-		server.diff.s[mine].h.push(hits[hit]);
-		server.players[hits[hit]].takeHit(server.mines[mine].damage);
-	    }
-            server.usedDiff = true;
-            if(server.mines[mine].isRocket === undefined) // this is a mine
-		server.players[server.mines[mine].owner].mine.live--;
-            else
-		server.players[server.mines[mine].owner].rocket.live--;
-	    delete server.mines[mine];
-	}
+		var hits = server.mines[mine].update(server);
+		if (hits.length > 0) {
+			if (!server.diff.s) server.diff.s = {};
+			server.diff.s[mine] = {};
+			server.diff.s[mine].h = [];
+			for (var hit in hits) {
+				server.diff.s[mine].h.push(hits[hit]);
+				server.players[hits[hit]].takeHit(server.mines[mine].damage);
+			}
+			server.usedDiff = true;
+			if(server.mines[mine].isRocket === undefined) // this is a mine
+				server.players[server.mines[mine].owner].mine.live--;
+			else
+				server.players[server.mines[mine].owner].rocket.live--;
+			delete server.mines[mine];
+		}
     }
     if (server.usedDiff)
         io.sockets.emit('state', server.diff);
