@@ -76,11 +76,13 @@ var update = function() {
 	for (var mine in server.mines) {
 		var hits = server.mines[mine].update(server);
 		if (hits.length > 0) {
+			server.diff.s[mine].h = { };
 			for (var hit in hits) {
+				sever.diff.s[mine].h.push(hits[hit]);
 				server.players[hits[hit]].takeHit(server.mines[mine].damage);
 			}
-			msg = { m: mine, h: hits };
-			io.sockets.emit('splash', msg);
+			if (!server.diff.s) server.diff.s = {};
+            server.usedDiff = true;
 			server.players[server.mines[mine].owner].mine.live--;
 			delete server.mines[mine];
 		}

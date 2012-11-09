@@ -31,7 +31,6 @@ var ITGame = function(team, playerID) {
 			}
 			if (data.h !== undefined) {
 				for (var n in data.h) {
-					console.log("projectile %d hit something", n);
 					if (data.h[n].t !== undefined) { //hit gate or player
 						var projectile = globals.projectiles[n];
 						if (projectile) {
@@ -59,6 +58,15 @@ var ITGame = function(team, playerID) {
 					delete globals.projectiles[n];
 				}
 			}
+			if (data.s !== undefined) {
+				for (var m in data.s) {
+					console.log("Mine %d exploded! Damaging %d player(s)!", m, data.s[m].h.length);
+					for (var h in data.s[m].h) {
+						globals.players[data.s[m].h[h]].takeHit(globals.mines[m].damage);
+					}
+					delete globals.mines[data.m];
+				}
+			}
 	    }
 	});
 	
@@ -67,14 +75,6 @@ var ITGame = function(team, playerID) {
 	});
 	globals.socket.on('leave', function(data) {
 	    delete globals.players[data.i];
-	});
-
-	globals.socket.on('splash', function(data) {
-		console.log("Mine %d exploded! Damaging %d player(s)!", data.m, data.h.length);
-		for (var h in data.h) {
-			globals.players[data.h[h]].takeHit(globals.mines[data.m].damage);
-		}
-		delete globals.mines[data.m];
 	});
 
 	this.team = data.p.t;
