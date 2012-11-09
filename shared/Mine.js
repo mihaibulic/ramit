@@ -32,11 +32,11 @@ Mine.prototype.update = function(globals) {
 };
 
 Mine.prototype.draw = function(level) {
-	console.log("drawing mine");
 	var xPos = this.x - level.x;
     var yPos = this.y - level.y;
 
     if (xPos > -10 && xPos < 1000 && yPos > -10 && yPos < 500) {
+	console.log("drawing mine");
 		if (this.delay > 0) {
 			globals.ctx.fillStyle = "#00FF00"; //green if not hot
 		} else {
