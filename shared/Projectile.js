@@ -1,4 +1,4 @@
-var Projectile = function(player, n) {
+var Projectile = function(player, n, isRocket) {
     var speed = player.projectile.speed;
     var turretLength = 30;
     this.n = n;
@@ -14,7 +14,17 @@ var Projectile = function(player, n) {
     this.team = player.team;
     this.owner = player.playerID; // for score tracking
     this.damage = player.projectile.damage;
-    player.projectile.lastFire = 0;
+
+    if(isRocket === undefined)
+    {
+        player.projectile.lastFire = 0;
+    }
+    else
+    {
+        this.isRocket = isRocket;
+        player.rocket.live++;
+        player.rocket.lastFire = 0;
+    }
 };
 
 Projectile.prototype.draw = function(level) {

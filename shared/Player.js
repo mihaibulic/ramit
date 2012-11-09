@@ -42,6 +42,11 @@ var Player = function(team, playerID) {
 	live: 0,
 	allowed: 1
     };
+    this.rocket = {
+        lastFire: 0,
+        live: 0,
+        allowed: 1
+    };
 };
 
 /**
