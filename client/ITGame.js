@@ -34,22 +34,24 @@ var ITGame = function(team, playerID) {
 					console.log("projectile %d hit something", n);
 					if (data.h[n].t !== undefined) { //hit gate or player
 						var projectile = globals.projectiles[n];
-						var hitter = globals.players[projectile.owner];
-						if (hitter) {
-							//hitter still in game
-							hitter.score++;
-							hitter.totScore++;
-						}
-						if (data.h[n].i !== undefined) {
-							//hit player
-							var hit = globals.players[data.h[n].i];
-							hit.takeHit(projectile.damage);
-							console.log("projectile %d hit player %d health %d", n, data.h[n].i, hit.health);
-						} else {
-							//hit gate
-							var hit = level.gates[data.h[n].t];
-							hit.takeHit(projectile.damage);
-							console.log("projectile %d hit gate %d health %d", n, data.h[n].t, hit.health);
+						if (projectile) {
+							var hitter = globals.players[projectile.owner];
+							if (hitter) {
+								//hitter still in game
+								hitter.score++;
+								hitter.totScore++;
+							}
+							if (data.h[n].i !== undefined) {
+								//hit player
+								var hit = globals.players[data.h[n].i];
+								hit.takeHit(projectile.damage);
+								console.log("projectile %d hit player %d health %d", n, data.h[n].i, hit.health);
+							} else {
+								//hit gate
+								var hit = level.gates[data.h[n].t];
+								hit.takeHit(projectile.damage);
+								console.log("projectile %d hit gate %d health %d", n, data.h[n].t, hit.health);
+							}
 						}
 					} else {
 						console.log("projectile %d hit a wall", n);
