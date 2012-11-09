@@ -14,8 +14,10 @@ var ITGame = function(team, playerID) {
 				globals.players[id].keys.left = (data[id].key&4);
 				globals.players[id].keys.right = (data[id].key&8);
 			}
-			if (data[id].x !== undefined)
+			if (data[id].x !== undefined) {
+				console.log("id: " + id);
 				globals.players[id].tank.x = data[id].x;
+			}
 			if (data[id].y !== undefined)
 				globals.players[id].tank.y = data[id].y;
 			if (data[id].aim !== undefined)
