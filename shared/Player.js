@@ -141,7 +141,7 @@ Player.prototype.drawDetails = function(level) {
 	globals.ctx.font = "8px monospace";
 	globals.ctx.textAlign = "center";
 	globals.ctx.textBaseline = "top";
-	globals.ctx.fillText("name", xPos + 30, yPos - 10
+	globals.ctx.fillText("name", xPos + 30, yPos - 10);
 	globals.ctx.fillText("name", xPos + 30, yPos - 10);
     }
 };
