@@ -139,7 +139,7 @@ ITGame.prototype.update = function() {
         globals.projectiles[projectile].update();
     }
 	for (var mine in globals.mines) {
-		globals.mines[mine].update(); //ignores hits
+		globals.mines[mine].update(globals); //ignores hits
 	}
 };
 
