@@ -72,11 +72,12 @@ var update = function() {
         if (target) { 
             if(server.projectiles[projectile].isRocket !== undefined)
             {
-				//pid should be server.projectiles[projectile].owner and the client still doesn't know the x,y
+				var pid = server.projectiles[projectile].owner; 
                 server.mines[server.m] = new Mine(server.players[pid], server.m, server.projectiles[projectile]);
                 if (!server.diff[pid])
                     server.diff[pid] = {};
                 server.diff[pid].m = server.m;
+                server.diff[pid].mn = projectile;
                 server.m++;
             }
             
