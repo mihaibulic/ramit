@@ -49,8 +49,8 @@ var update = function() {
 		}*/
         // Copy the differences found into the server's diff object.
         for (var diff in playerDiff) {
-            if (!server.diff[player])
-                server.diff[player] = {};
+            if (!server.diff[pid])
+                server.diff[pid] = {};
             server.diff[pid][diff] = playerDiff[diff];
             server.usedDiff = true;
         }
