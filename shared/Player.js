@@ -140,9 +140,9 @@ Player.prototype.drawDetails = function(level) {
 	globals.ctx.fillStyle = "#FFFFFF";
 	globals.ctx.font = "10px monospace";
 	globals.ctx.textAlign = "center";
-	globals.ctx.textBaseline = "top";
-	globals.ctx.strokeText("name", xPos + 30, yPos - 10);
-	globals.ctx.fillText("name", xPos + 30, yPos - 10);
+	globals.ctx.textBaseline = "bottom";
+	globals.ctx.fillText("name", xPos + 30, yPos - 2);
+	globals.ctx.strokeText("name", xPos + 30, yPos - 2);
     }
 };
 
