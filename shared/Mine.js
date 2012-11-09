@@ -39,9 +39,9 @@ Mine.prototype.draw = function(level) {
     if (xPos > -10 && xPos < 1000 && yPos > -10 && yPos < 500) {
 		console.log("drawing");
 		if (this.delay > 0) {
-			globals.ctx.fillStyle = "#00FF00"; //green if not hot
+			globals.ctx.fillStyle = "#FF0000"; //green if not hot
 		} else {
-			globals.ctx.fillStyle = "#000000"; //black if hot
+			globals.ctx.fillStyle = "#FF0000"; //black if hot
 		}
  		globals.ctx.beginPath();
         globals.ctx.arc(xPos, yPos, 5, 0 , 2 * Math.PI, true);
