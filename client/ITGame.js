@@ -210,7 +210,6 @@ ITGame.prototype.draw = function() {
         // Draw FPS
         globals.ctx.fillStyle = "#ffffff";
         globals.ctx.font = "normal 18px sans-serif";
-        globals.ctx.textBaseline = "top";
         globals.ctx.fillText("FPS: " + this.fps, 500, 5);
 
 		// Draw scores
