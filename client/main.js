@@ -184,10 +184,10 @@ globals.renderMinimap = function()
     renderer.width = 150;
     renderer.height = 150;
     
-    globals.ctx.globalAlpha = 0.5;
+    ctx.globalAlpha = 0.5;
     ctx.drawImage(globals.rawImages.level, 0, 0, 3000, 3000,
 		  0, 0, 150, 150);
-    globals.ctx.globalAlpha = 1;
+    ctx.globalAlpha = 1;
 
     var img = new Image();
     img.src = renderer.toDataURL();
