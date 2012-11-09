@@ -22,11 +22,11 @@ var ITGame = function(team, playerID) {
 				globals.players[id].setAim(data[id].aim);
 			if (data[id].n !== undefined) {
     			console.log("new projectile %d", data.n);
-    			globals.projectiles[data.n] = new Projectile(globals.players[data.i], data.n);
+    			globals.projectiles[data.n] = new Projectile(globals.players[id], data.n);
 			} 
 			if (data[id].m !== undefined) {
 				console.log("new mine %d", data.m);
-				globals.mines[data.m] = new Mine(globals.players[data.i], data.m);
+				globals.mines[data.m] = new Mine(globals.players[id], data.m);
 			}
 	    }
 	});
