@@ -70,7 +70,9 @@ var update = function() {
             if(server.projectiles[projectile].isRocket !== undefined)
             {
                 server.mines[server.m] = new Mine(server.players[pid], server.m, server.projectiles[projectile]);
-                server.diff[pid]['m'] = server.m;			    
+                if (!server.diff[pid])
+                    server.diff[pid] = {};
+                server.diff[pid].m = server.m;			    
                 server.m++;
             }
             
