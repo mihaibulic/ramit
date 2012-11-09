@@ -99,8 +99,16 @@ var ITGame = function(team, playerID) {
 			e = window.event;
 		globals.players[this.player].updateMouse(e);
 	}, this);
+
 	window.addEventListener('keydown', keyEvent);
 	window.addEventListener('keyup', keyEvent);
+    
+    window.addEventListener('oncontextmenu', globals.bind(function(e) {
+        if(!e)
+            e = window.event;
+        e.preventDefault();
+    }, this);
+
 	window.addEventListener('mousedown', mouseEvent);
 	window.addEventListener('mouseup', mouseEvent);
 	window.addEventListener('mousemove', globals.bind(function(e) {
