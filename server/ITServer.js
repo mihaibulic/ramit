@@ -75,7 +75,7 @@ var update = function() {
     }
 	// update all mines
 	for (var mine in server.mines) {
-		var hits = server.mines[mine].update(globals);
+		var hits = server.mines[mine].update(server);
 		if (hits.length > 0) {
 			for (var hit in hits) {
 				server.players[hit].takeHit(server.mines[mine].damage);
