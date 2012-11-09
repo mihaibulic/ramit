@@ -3,7 +3,7 @@
  */
 var ITGame = function(team, playerID) {
     this.level = new Level();
-    
+
     globals.socket = io.connect('ws://www.misquares.com');
     globals.socket.on('setup', globals.bind(function(data) {
 	globals.socket.on('state', function(data) {
@@ -76,11 +76,11 @@ var ITGame = function(team, playerID) {
 	this.team = data.p.t;
 	this.player = data.p.i;
 	for (var pid in data.s) {
-    	globals.players[pid] = new Player(data.s[pid].t, pid);
-        globals.players[pid].tank.x = data.s[pid].x;
-        globals.players[pid].tank.y = data.s[pid].y;
-		globals.players[pid].setAim(data.s[pid].aim);
-    	globals.players[pid].setKeyValue(data.s[pid].key);
+    	    globals.players[pid] = new Player(data.s[pid].t, pid);
+            globals.players[pid].tank.x = data.s[pid].x;
+            globals.players[pid].tank.y = data.s[pid].y;
+	    globals.players[pid].setAim(data.s[pid].aim);
+    	    globals.players[pid].setKeyValue(data.s[pid].key);
 	}
 	
 	// Input events.
@@ -195,6 +195,9 @@ ITGame.prototype.draw = function() {
     for (var pid in globals.players) {
       globals.players[pid].drawDetails(this.level);
     }
+
+    // Draw HUD
+    globals.players[this.player].drawHUD();
 
     //degbug info
     if (globals.queries.debug === "true") {
