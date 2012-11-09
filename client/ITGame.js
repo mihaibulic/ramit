@@ -31,6 +31,7 @@ var ITGame = function(team, playerID) {
 			}
 			if (data.h !== undefined) {
 				for (var n in data.h) {
+					console.log("projectile %d hit something", n);
 					if (data.h[n].t !== undefined) { //hit gate or player
 						var projectile = globals.projectiles[n];
 						var hitter = globals.players[projectile.owner];
