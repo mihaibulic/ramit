@@ -141,7 +141,7 @@ Player.prototype.drawDetails = function(level) {
 	globals.ctx.font = "10px sans-serif";
 	globals.ctx.textAlign = "center";
 	//globals.ctx.strokeText("name", xPos + 30, yPos + 10);
-	globals.ctx.fillText("name", xPos + 30, yPos);
+	globals.ctx.fillText("name", xPos + 30, yPos - 3);
     }
 };
 
