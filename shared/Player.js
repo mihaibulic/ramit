@@ -159,11 +159,13 @@ Player.prototype.drawHUD = function() {
     
     var x;
     var y;
+    var other;
     for (var id in globals.players) {
-	if (this.getCenterDistance(globals.players[id]) < 650) {
-	    x = 830 + ((globals.players[id].tank.x + 30) * 0.05);
-	    y = 330 + ((globals.players[id].tank.y + 30) * 0.05);
-	    globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE;
+	other = globals.players[id];
+	if (this.team === other.team || this.getCenterDistance(other) < 650) {
+	    x = 830 + ((other.tank.x + 30) * 0.05);
+	    y = 330 + ((other.tank.y + 30) * 0.05);
+	    globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[other.team];
 	    globals.ctx.beginPath();
 	    globals.ctx.arc(x, y, 2, 0, 2 * Math.PI);
 	    globals.ctx.closePath();
