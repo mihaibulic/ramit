@@ -153,11 +153,28 @@ Player.prototype.drawDetails = function(level) {
  * Draws the HUD, including HP, score, and the minimap.
  */
 Player.prototype.drawHUD = function() {
-    globals.ctx.drawImage(globals.resources.minimap, 830, 330);
 
-    var x = 150 - (this.tank.x * 0.05);
-    var y = 150 - (this.tank.y * 0.05);
+    /** MINIMAP **/
+    globals.ctx.drawImage(globals.resources.minimap, 830, 330);
+    
+    var x;
+    var y;
+    for (var id in globals.players) {
+	if (this.getCenterDistance(globals.players[id]) < 650) {
+	    x = 830 + ((globals.players[id].tank.x + 30) * 0.05);
+	    y = 330 + ((globals.players[id].tank.y + 30) * 0.05);
+	    globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE;
+	    globals.ctx.beginPath();
+	    globals.ctx.arc(x, y, 2, 0, 2 * Math.PI);
+	    globals.ctx.closePath();
+	    globals.ctx.fill();
+	}
+    }
+
+    x = 150 - ((this.tank.x + 30) * 0.05);
+    y = 150 - ((this.tank.y + 30) * 0.05);
     globals.ctx.drawImage(globals.resources.minimapfade, x, y, 150, 150, 830, 330, 150, 150);
+
 };
 
 /**
@@ -388,4 +405,11 @@ Player.prototype.setKeyValue = function(keyValue) {
     this.keys.down = (keyValue & 2);
     this.keys.left = (keyValue & 4);
     this.keys.right = (keyValue & 8);
+};
+
+Player.prototype.getCenterDistance = function(object) {
+    if (object instanceof Player)
+	return Math.sqrt((this.tank.x - object.tank.x) * (this.tank.x - object.tank.x) +
+			 (this.tank.y - object.tank.y) * (this.tank.y - object.tank.y));
+    return 0;
 };
