@@ -46,6 +46,7 @@ Mine.prototype.draw = function(level) {
  		globals.ctx.beginPath();
         globals.ctx.arc(xPos, yPos, 5, 0 , 2 * Math.PI, true);
         globals.ctx.closePath();
+        globals.ctx.fill();
 
     	if (globals.queries.debug === "true") {
 			globals.ctx.strokeStyle = globals.ctx.fillStyle;
