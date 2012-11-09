@@ -473,7 +473,7 @@ Player.prototype.determineSpawn = function() {
     var rect;
     for (spawn = 0; spawn < 9 && !finished; spawn++) {
 	finished = true;
-	spawn_coords = Players.SPAWN_POINTS[this.team][spawn];
+	spawn_coords = Player.SPAWN_POINTS[this.team][spawn];
 	// Determine the rectangle for the spawn point.
 	rect = new Rectangle({top: spawn_coords.y, bottom: spawn_coords.y + 40,
 			      left: spawn_coords.x, right: spawn_coords.x + 40});
