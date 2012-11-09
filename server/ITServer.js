@@ -82,8 +82,8 @@ var update = function() {
 			}
 			msg = { m: mine, h: hits };
 			io.sockets.emit('splash', msg);
-			delete server.mines[mine];
 			server.players[server.mines[mine].owner].mine.live--;
+			delete server.mines[mine];
 		}
 	}
     if (server.usedDiff)
