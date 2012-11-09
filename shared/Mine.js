@@ -5,8 +5,8 @@ var Mine = function(player, m) {
 	this.owner = player.playerID;
 	this.damage = player.mine.damage;
 	this.range = player.mine.range;
-	this.x = player.tank.x+35; //center of mine
-	this.y = player.tank.y+35;
+	this.x = player.tank.x+30; //center of mine
+	this.y = player.tank.y+30;
 	this.delay = 300; //5 sec delay
 	this.m = m;
 	player.mine.live++;
