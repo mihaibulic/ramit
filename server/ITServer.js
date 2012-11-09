@@ -78,7 +78,7 @@ var update = function() {
 		var hits = server.mines[mine].update(server);
 		if (hits.length > 0) {
 			for (var hit in hits) {
-				server.players[hit].takeHit(server.mines[mine].damage);
+				server.players[hits[hit]].takeHit(server.mines[mine].damage);
 			}
 			msg = { m: mine, h: hits };
 			io.sockets.emit('splash', msg);
