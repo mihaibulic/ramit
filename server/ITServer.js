@@ -146,7 +146,13 @@ io.sockets.on('connection', function(socket) {
         server.diff[id].aim = server.players[id].getAim();
         server.usedDiff = true;
     });
-    
+   
+    socket.on('upgrade', function(data) {
+        if(data.t !== undefined && data.o !== undefined)
+            server.players[id].upgrade(data.t, data.o);
+
+    });
+ 
     // Actions to perform when the player disconnects.
     socket.on('disconnect', function() {
         server.colors[server.players[id].team]--;

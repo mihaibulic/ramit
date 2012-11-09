@@ -328,3 +328,8 @@ Player.prototype.setKeyValue = function(keyValue) {
     this.keys.left = (keyValue & 4);
     this.keys.right = (keyValue & 8);
 };
+
+Player.prototype.upgrade = function(type, object) {
+    
+
+};

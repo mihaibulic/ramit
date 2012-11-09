@@ -37,7 +37,7 @@ if [[ $? -eq 0 ]]; then
 fi
 
 # install node pacakges
-sudo npm install socket.io forever -g
+sudo npm install socket.io forever jshint -g
 cd ${DIR}
 ln -s $HOME/npm/node_modules
 
