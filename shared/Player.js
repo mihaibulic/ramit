@@ -131,17 +131,15 @@ Player.prototype.drawDetails = function(level) {
 	if (color == Player.HEALTH.length) color--;
         globals.ctx.fillStyle = Player.HEALTH[color];
         globals.ctx.globalAlpha = 0.5;
-        globals.ctx.strokeRect(xPos + 10, yPos + 55, 40, 3);
+        globals.ctx.strokeRect(xPos + 10, yPos, 40, 3);
         globals.ctx.fillRect(xPos + 10, yPos + 55, 40 * this.health / this.initHealth, 3);
         globals.ctx.globalAlpha = 1;
 
 	//name
 	globals.ctx.fillStyle = "#FFFFFF";
 	globals.ctx.font = "10px sans-serif";
-	//globals.ctx.textAlign = "center";
-	//globals.ctx.fillText("name", xPos + 30, yPos - 3);
 	globals.ctx.textAlign = "left";
-	globals.ctx.fillText("name", xPos + 10, yPos + 47);
+	globals.ctx.fillText("name", xPos + 10, yPos - 8);
     }
 };
 
