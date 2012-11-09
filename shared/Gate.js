@@ -6,10 +6,10 @@ var Gate = function(team) {
     this.right = 1650;
     if (team == 0) {
 	this.top = 488;
-	this.bottom = 495;
+	this.bottom = 513;
     } else {
-	this.top = 2587;
-	this.bottom = 2520;
+	this.top = 2487;
+	this.bottom = 2512;
     }
 };
 
