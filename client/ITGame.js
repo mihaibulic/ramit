@@ -64,7 +64,7 @@ var ITGame = function(team, playerID) {
 					for (var h in data.s[m].h) {
 						globals.players[data.s[m].h[h]].takeHit(globals.mines[m].damage);
 					}
-					delete globals.mines[data.m];
+					delete globals.mines[m];
 				}
 			}
 	    }
