@@ -155,8 +155,8 @@ Player.prototype.drawDetails = function(level) {
 Player.prototype.drawHUD = function() {
     globals.ctx.drawImage(globals.resources.minimap, 830, 330);
 
-    var x = this.tank.x * 0.05 + 150;
-    var y = this.tank.y * 0.05 + 150;
+    var x = this.tank.x * 0.05;
+    var y = this.tank.y * 0.05;
     globals.ctx.drawImage(globals.resources.minimapfade, x, y, 150, 150, 830, 330, 150, 150);
 };
 
