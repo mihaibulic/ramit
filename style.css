@@ -1,7 +1,16 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    background-image: url('layout/logo.png');
+    background-repeat: no-repeat;
+    background-position: center 22px;
+}
+
 #cnv {
-	cursor: crosshair;
+    cursor: crosshair;
 }
 
 #renderer {
-	display: none;
+    display: none;
 }
