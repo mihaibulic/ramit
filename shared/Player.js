@@ -141,7 +141,7 @@ Player.prototype.drawDetails = function(level) {
 	//globals.ctx.textAlign = "center";
 	//globals.ctx.fillText("name", xPos + 30, yPos - 3);
 	globals.ctx.textAlign = "left";
-	globals.ctx.fillText("name", xPos + 10, yPos + 45);
+	globals.ctx.fillText("name", xPos + 10, yPos + 47);
     }
 };
 
