@@ -14,7 +14,7 @@ var Mine = function(player, m, projectile) {
 	    this.delay = 300; //5 sec delay
 	    player.mine.live++;
     }
-    else // rocket has hit, create mine
+    else 
     {
         this.isRocket = true;
         this.x = projectile.x;
