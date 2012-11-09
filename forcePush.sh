@@ -41,20 +41,14 @@ else
   branch="${3}";
 fi
 
-output=$(find . -name '*.js' -exec jshint {} \;); 
-if [ ${#output} -eq 0 ]; then
-    git add --all
+git add --all
     
-    git commit --allow-empty -a -m "${msg}"
+git commit --allow-empty -a -m "${msg}"
 
-    git fetch ${remote} 
-    git merge ${remote}/${branch}
-    
-    git push ${remote} ${branch}
+git fetch ${remote} 
+git merge ${remote}/${branch}
+  
+git push ${remote} ${branch}
 
-    yes | ssh -i misquares.pem ec2-user@ec2-184-72-242-128.compute-1.amazonaws.com 'cd /var/lib/tomcat6/webapps/ROOT/ramit && git pull github ${branch} &&./deploy.sh'
-else
-    echo "${output}";
-    echo "Cannot push your code because jshint has found errors.";
-fi
+yes | ssh -i misquares.pem ec2-user@ec2-184-72-242-128.compute-1.amazonaws.com 'cd /var/lib/tomcat6/webapps/ROOT/ramit && git pull github ${branch} &&./deploy.sh'
 
