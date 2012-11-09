@@ -10,7 +10,8 @@ var Player = function(team, playerID) {
             up: false,
             down: false,
             left: false,
-            right: false
+            right: false,
+			mine: false
     };
     this.mouse = {
             left: false,
@@ -35,6 +36,11 @@ var Player = function(team, playerID) {
         speed: 1,
         lastFire: 0
     };
+	this.mine = {
+		damage: 20,
+		range: 80,
+		lastMine: 0
+	};
 };
 
 /**
@@ -211,6 +217,9 @@ Player.prototype.updateKeys = function(e) {
         //this.keys.space = value;
         diff.s = value;
         break;
+	case 69: //e
+		diff.e = value;
+		break;
     }
     globals.socket.emit('key', diff);
 };
@@ -221,6 +230,7 @@ Player.prototype.updateKeys = function(e) {
 Player.prototype.update = function(level, diff) {        
     this.move(level, diff);
     this.projectile.lastFire++;
+	this.mine.lastMine++;
 };
 
 /**
