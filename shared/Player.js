@@ -39,7 +39,8 @@ var Player = function(team, playerID) {
 	this.mine = {
 		damage: 20,
 		range: 80,
-		lastMine: 0
+		live: 0,
+		allowed: 1
 	};
 };
 

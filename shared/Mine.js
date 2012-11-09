@@ -9,16 +9,15 @@ var Mine = function(player, m) {
 	this.y = player.tank.y; 
 	this.delay = 300; //5 sec delay
 	this.m = m;
-	player.mine.lastMine = 0;
+	player.mine.live++;
 };
 
 Mine.prototype.update = function(globals) {
 	var hits = [];
 	if (this.delay > 0) {
 		this.delay--;
-		console.log(this.delay);
 		if (this.delay == 0)
-			console.log("MINE IS LIVE!");
+			console.log("MINE %d IS LIVE!", this.m);
 	}
 	else {
 		var mineBox = this.getCollisionBarrier();
