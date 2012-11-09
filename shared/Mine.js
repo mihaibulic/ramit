@@ -7,7 +7,7 @@ var Mine = function(player, m) {
 	this.range = player.mine.range;
 	this.x = player.tank.x; //center of mine
 	this.y = player.tank.y; 
-	this.delay = 30; //5 sec delay
+	this.delay = 3000; //5 sec delay
 	this.m = m;
 	player.mine.lastMine = 0;
 };
