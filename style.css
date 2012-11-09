@@ -14,7 +14,7 @@ html, body {
     height: 500px;
     background-image: url('layout/game.png');
     background-repeat: no-repeat;
-    background-position: center 67px;
+    background-position: center 63px;
 }
 
 #cnv {
