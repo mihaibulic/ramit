@@ -99,8 +99,16 @@ var ITGame = function(team, playerID) {
 			e = window.event;
 		globals.players[this.player].updateMouse(e);
 	}, this);
+
 	window.addEventListener('keydown', keyEvent);
 	window.addEventListener('keyup', keyEvent);
+    
+    window.oncontextmenu = function(e) {
+        if(!e)
+            e = window.event;
+        e.preventDefault();
+    };
+
 	window.addEventListener('mousedown', mouseEvent);
 	window.addEventListener('mouseup', mouseEvent);
 	window.addEventListener('mousemove', globals.bind(function(e) {
@@ -197,7 +205,7 @@ ITGame.prototype.draw = function() {
     
     //draw players info
     for (var pid in globals.players) {
-	if (pid !== this.player) // Only draw if this tank is not the player.
+	if (pid != this.player) // Only draw if this tank is not the player.
 	    globals.players[pid].drawDetails(this.level);
     }
 

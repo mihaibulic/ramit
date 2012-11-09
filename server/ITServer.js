@@ -32,14 +32,23 @@ var update = function() {
         playerDiff = {};
 		var player = server.players[pid];
         player.update(server.level, playerDiff);
-        // check if the player should fire
+        // check if the player should fire projectile
         if (player.projectile.lastFire > 10 && 
             (player.keys.space === true || player.mouse.left === true)) 
         {
-            server.projectiles[server.n] = new Projectile(player);
+            server.projectiles[server.n] = new Projectile(player, server.n);
 			playerDiff.n = server.n;
             server.n++;
         }
+        // check if the player should fire rocket
+        if (player.rocket.allowed > player.rocket.live && player.rocket.lastFire > 15 && player.mouse.right === true)
+        {
+            server.projectiles[server.n] = new Projectile(player, server.n, true);
+			playerDiff.n = server.n;
+            server.n++;
+        }
+        
+        // mine
 		if (player.mine.allowed > player.mine.live && player.keys.mine === true) {
 			server.mines[server.m] = new Mine(player, server.m);
 			playerDiff.m = server.m;
@@ -58,6 +67,14 @@ var update = function() {
         server.projectiles[projectile].update(server.level);
         var target = server.projectiles[projectile].checkHit(server, server.level);
         if (target) { 
+            if(server.projectiles[projectile].isRocket !== undefined)
+            {
+                server.mines[server.m] = new Mine(server.players[pid], server.m, server.projectiles[projectile]);
+                msg = { i: pid, m: server.m };
+                io.sockets.emit('mine', msg);
+                server.m++;
+            }
+            
             if (target !== 1) { 
                 target.takeHit(server.projectiles[projectile].damage);
             }
@@ -76,14 +93,17 @@ var update = function() {
 	for (var mine in server.mines) {
 		var hits = server.mines[mine].update(server);
 		if (hits.length > 0) {
+			if (!server.diff.s) server.diff.s = {};
 			server.diff.s[mine].h = { };
 			for (var hit in hits) {
 				sever.diff.s[mine].h.push(hits[hit]);
 				server.players[hits[hit]].takeHit(server.mines[mine].damage);
 			}
-			if (!server.diff.s) server.diff.s = {};
             server.usedDiff = true;
-			server.players[server.mines[mine].owner].mine.live--;
+            if(server.mines[mine].isRocket === undefined) // this is a mine
+			    server.players[server.mines[mine].owner].mine.live--;
+            else
+			    server.players[server.mines[mine].owner].rocket.live--;
 			delete server.mines[mine];
 		}
 	}
@@ -172,7 +192,13 @@ io.sockets.on('connection', function(socket) {
         server.diff[id].aim = server.players[id].getAim();
         server.usedDiff = true;
     });
-    
+   
+    socket.on('upgrade', function(data) {
+        if(data.t !== undefined && data.o !== undefined)
+            server.players[id].upgrade(data.t, data.o);
+
+    });
+ 
     // Actions to perform when the player disconnects.
     socket.on('disconnect', function() {
         server.colors[server.players[id].team]--;
