@@ -32,6 +32,7 @@ Mine.prototype.update = function(globals) {
 };
 
 Mine.prototype.draw = function(level) {
+	console.log("drawing mine");
 	var xPos = this.x - level.x;
     var yPos = this.y - level.y;
 
