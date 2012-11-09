@@ -70,7 +70,7 @@ var ITGame = function(team, playerID) {
 	globals.socket.on('splash', function(data) {
 		console.log("Mine %d exploded! Damaging %d player(s)!", data.m, data.h.length);
 		for (var h in data.h) {
-			globals.players[data.h[h]].takeHit(globals.mines[data.m].damage);
+			globals.players[h].takeHit(globals.mines[data.m].damage);
 		}
 		delete globals.mines[data.m];
 	});
