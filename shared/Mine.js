@@ -7,7 +7,7 @@ var Mine = function(player, m) {
 	this.range = player.mine.range;
 	this.x = player.tank.x; //center of mine
 	this.y = player.tank.y; 
-	this.delay = 3000; //5 sec delay
+	this.delay = 30; //5 sec delay
 	this.m = m;
 	player.mine.lastMine = 0;
 };
@@ -16,6 +16,7 @@ Mine.prototype.update = function(globals) {
 	var hits = [];
 	if (this.delay > 0) {
 		this.delay--;
+		console.log(this.delay);
 		if (this.delay == 0)
 			console.log("MINE IS LIVE!");
 	}
