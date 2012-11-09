@@ -197,7 +197,7 @@ ITGame.prototype.draw = function() {
     
     //draw players info
     for (var pid in globals.players) {
-	if (pid !== this.player) // Only draw if this tank is not the player.
+	if (pid != this.player) // Only draw if this tank is not the player.
 	    globals.players[pid].drawDetails(this.level);
     }
 
