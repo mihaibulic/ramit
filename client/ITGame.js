@@ -203,20 +203,20 @@ ITGame.prototype.draw = function() {
         globals.ctx.strokeStyle = "#00ff00";
         for (var i = 0; i < this.level.walls.length; i++) {
             globals.ctx.strokeRect(this.level.walls[i].left - this.level.x, 
-                    this.level.walls[i].top - this.level.y, this.level.walls[i].width(), 
-                    this.level.walls[i].height());
+				   this.level.walls[i].top - this.level.y, this.level.walls[i].width(), 
+				   this.level.walls[i].height());
         }
         
         // Draw FPS
         globals.ctx.fillStyle = "#ffffff";
         globals.ctx.font = "normal 18px sans-serif";
         globals.ctx.fillText("FPS: " + this.fps, 500, 5);
-
-		// Draw scores
-		globals.ctx.textBaseline = "top";
-		for (var player in globals.players) {
-			globals.ctx.fillText("Player: " + player + " Score: " + globals.players[player].score, 5, 5 + 20 * player);
-		}
-
+	
+	// Draw scores
+	
+	for (var player in globals.players) {
+	    globals.ctx.fillText("Player: " + player + " Score: " + globals.players[player].score, 5, 5 + 20 * player);
+	}
+	
     }
 };
