@@ -28,6 +28,13 @@ Gate.prototype.draw = function(level) {
 	    globals.ctx.drawImage(globals.resources.gates[this.team], xPos, yPos);
 	globals.ctx.drawImage(globals.resources.gates[2], xPos, yPos);
     }
+
+ if (globals.queries.debug === "true") {
+     globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
+     var rect = this.getCollisionBarrier();
+     globals.ctx.strokeRect(rect.left - level.x, rect.top - level.y, rect.width(),
+			    rect.height());
+ }
 };
 
 Gate.prototype.getCollisionBarrier = function() {
