@@ -7,27 +7,27 @@ var Player = function(team, playerID) {
     this.team = team;
     this.playerID = playerID;
     this.keys = {
-            up: false,
-            down: false,
-            left: false,
-            right: false,
-			mine: false
+        up: false,
+        down: false,
+        left: false,
+        right: false,
+	mine: false
     };
     this.mouse = {
-            left: false,
-            middle: false,
-            right: false
+        left: false,
+        middle: false,
+        right: false
     };
     this.tank = {
-            x: Player.SPAWN_POINT[team].x,
-            y: Player.SPAWN_POINT[team].y,
-            sx: Player.SPAWN_POINT[team].x,
-            sy: Player.SPAWN_POINT[team].y,
-            direction: 0,
-            turretAim: 0
+        x: Player.SPAWN_POINT[team].x,
+        y: Player.SPAWN_POINT[team].y,
+        sx: Player.SPAWN_POINT[team].x,
+        sy: Player.SPAWN_POINT[team].y,
+        direction: 0,
+        turretAim: 0
     };
     this.speed = 4;
-	this.initHealth = 100;
+    this.initHealth = 100;
     this.health = this.initHealth;
     this.score = 0;        //for spending on upgrades
     this.totScore = 0;     //for traking total score, both incremented the same
@@ -36,12 +36,12 @@ var Player = function(team, playerID) {
         speed: 10,
         lastFire: 0
     };
-	this.mine = {
-		damage: 20,
-		range: 80,
-		live: 0,
-		allowed: 1
-	};
+    this.mine = {
+	damage: 20,
+	range: 80,
+	live: 0,
+	allowed: 1
+    };
 };
 
 /**
@@ -154,7 +154,16 @@ Player.prototype.drawDetails = function(level) {
  */
 Player.prototype.drawHUD = function() {
 
-    /** MINIMAP **/
+    // Health Bar
+    var color = Math.floor(this.health / this.initHealth * Player.HEALTH.length);
+    if (color == Player.HEALTH.length) color--;
+    globals.ctx.fillStyle = Player.HEALTH[color];
+    globals.ctx.globalAlpha = 0.75;
+    globals.ctx.strokeRect(10, 10, 200, 30);
+    globals.ctx.fillRect(10, 10, 200 * this.health / this.initHealth, 30);
+    globals.ctx.globalAlpha = 1;
+
+    // Minimap
     globals.ctx.drawImage(globals.resources.minimap, 830, 330);
     
     var x;
@@ -176,7 +185,6 @@ Player.prototype.drawHUD = function() {
     x = 150 - ((this.tank.x + 30) * 0.05);
     y = 150 - ((this.tank.y + 30) * 0.05);
     globals.ctx.drawImage(globals.resources.minimapfade, x, y, 150, 150, 830, 330, 150, 150);
-
 };
 
 /**
@@ -315,26 +323,26 @@ Player.prototype.move = function(level, diff) {
             x = this.tank.x + ((distance - 1) * xDir);
         }
     }
-
-	// check gates
-	for (var g in level.gates) {
-		// ignore own team's gate
-		if (level.gates[g].team !== this.team) {
-			var box = level.gates[g].getCollisionBarrier();
-			if (rectYMovement.intersects(box)) {
-				// Moving up/down collided with a gate, move up to the gate but no
-				// farther.
-				distance = tankBox.getYDistance(box);
-				y = this.tank.y + ((distance - 1) * yDir);
-			}
-			if (rectXMovement.intersects(box)) {
-				// Moving left/right collided with a gate, move up to the gate but no
-				// farther.
-				distance = tankBox.getXDistance(box);
-				x = this.tank.x + ((distance - 1) * xDir);
-			}
-		}
+    
+    // check gates
+    for (var g in level.gates) {
+	// ignore own team's gate
+	if (level.gates[g].team !== this.team) {
+	    var box = level.gates[g].getCollisionBarrier();
+	    if (rectYMovement.intersects(box)) {
+		// Moving up/down collided with a gate, move up to the gate but no
+		// farther.
+		distance = tankBox.getYDistance(box);
+		y = this.tank.y + ((distance - 1) * yDir);
+	    }
+	    if (rectXMovement.intersects(box)) {
+		// Moving left/right collided with a gate, move up to the gate but no
+		// farther.
+		distance = tankBox.getXDistance(box);
+		x = this.tank.x + ((distance - 1) * xDir);
+	    }
 	}
+    }
     
     if (diff && this.tank.x !== x)
         diff.x = x;
