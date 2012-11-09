@@ -1,15 +1,26 @@
 /*
  * The Mine class
  */
-var Mine = function(player, m) {
+var Mine = function(player, m, projectile) {
 	this.owner = player.playerID;
 	this.damage = player.mine.damage;
 	this.range = player.mine.range;
-	this.x = player.tank.x+30; //center of mine
-	this.y = player.tank.y+30;
-	this.delay = 300; //5 sec delay
 	this.m = m;
-	player.mine.live++;
+	
+    if(projectile === undefined)
+    {
+        this.x = player.tank.x+30; //center of mine
+    	this.y = player.tank.y+30;
+	    this.delay = 300; //5 sec delay
+	    player.mine.live++;
+    }
+    else // rocket has hit, create mine
+    {
+        this.isRocket = true;
+        this.x = projectile.x;
+    	this.y = projectile.y;
+	    this.delay = 0; 
+    }
 };
 
 Mine.prototype.update = function(globals) {
@@ -21,7 +32,7 @@ Mine.prototype.update = function(globals) {
 	}
 	else {
 		var mineBox = this.getCollisionBarrier();
-		for (player in globals.players) {
+		for (var player in globals.players) {
 			var playerBox = globals.players[player].getCollisionBarrier();
 			var dist = Math.sqrt(Math.pow(mineBox.getYDistance(playerBox), 2) + 
 									Math.pow(mineBox.getXDistance(playerBox), 2));

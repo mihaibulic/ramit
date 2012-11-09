@@ -32,15 +32,25 @@ var update = function() {
         playerDiff = {};
 		var player = server.players[pid];
         player.update(server.level, playerDiff);
-        // check if the player should fire
+        // check if the player should fire projectile
         if (player.projectile.lastFire > 10 && 
             (player.keys.space === true || player.mouse.left === true)) 
         {
-            server.projectiles[server.n] = new Projectile(player);
+            server.projectiles[server.n] = new Projectile(player, server.n);
             msg = { i: pid, n: server.n };
             io.sockets.emit('fire', msg);
             server.n++;
         }
+        // check if the player should fire rocket
+        if (player.rocket.allowed > player.rocket.live && player.rocket.lastFire > 15 && player.mouse.right === true)
+        {
+            server.projectiles[server.n] = new Projectile(player, server.n, true);
+            msg = { i: pid, n: server.n };
+            io.sockets.emit('fire', msg);
+            server.n++;
+        }
+        
+        // mine
 		if (player.mine.allowed > player.mine.live && player.keys.mine === true) {
 			server.mines[server.m] = new Mine(player, server.m);
 			msg = { i: pid, m: server.m };
@@ -60,6 +70,14 @@ var update = function() {
         server.projectiles[projectile].update(server.level);
         var target = server.projectiles[projectile].checkHit(server, server.level);
         if (target) { 
+            if(server.projectiles[projectile].isRocket !== undefined)
+            {
+                server.mines[server.m] = new Mine(server.players[pid], server.m, server.projectiles[projectile]);
+                msg = { i: pid, m: server.m };
+                io.sockets.emit('mine', msg);
+                server.m++;
+            }
+            
             if (target !== 1) { 
                 target.takeHit(server.projectiles[projectile].damage);
             }
@@ -82,7 +100,12 @@ var update = function() {
 			}
 			msg = { m: mine, h: hits };
 			io.sockets.emit('splash', msg);
-			server.players[server.mines[mine].owner].mine.live--;
+
+            if(server.mines[mine].isRocket === undefined) // this is a mine
+			    server.players[server.mines[mine].owner].mine.live--;
+            else
+			    server.players[server.mines[mine].owner].rocket.live--;
+                 
 			delete server.mines[mine];
 		}
 	}

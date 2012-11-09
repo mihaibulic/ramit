@@ -17,7 +17,8 @@ pids
 logs
 results
 doItAll.sh
-
+.metadata
+.settings
 node_modules
 npm-debug.log
 deploy.sh
