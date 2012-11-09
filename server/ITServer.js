@@ -37,14 +37,12 @@ var update = function() {
             (player.keys.space === true || player.mouse.left === true)) 
         {
             server.projectiles[server.n] = new Projectile(player);
-            msg = { i: pid, n: server.n };
-            io.sockets.emit('fire', msg);
+			playerDiff.n = server.n;
             server.n++;
         }
 		if (player.mine.allowed > player.mine.live && player.keys.mine === true) {
 			server.mines[server.m] = new Mine(player, server.m);
-			msg = { i: pid, m: server.m };
-			io.sockets.emit('mine', msg);
+			playerDiff.m = server.m;
 			server.m++;
 		}
         // Copy the differences found into the server's diff object.

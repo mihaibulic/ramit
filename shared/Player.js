@@ -241,7 +241,6 @@ Player.prototype.updateKeys = function(e) {
 Player.prototype.update = function(level, diff) {        
     this.move(level, diff);
     this.projectile.lastFire++;
-	this.mine.lastMine++;
 };
 
 /**
