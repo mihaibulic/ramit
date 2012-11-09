@@ -132,7 +132,7 @@ Player.prototype.drawDetails = function(level) {
         globals.ctx.fillStyle = Player.HEALTH[color];
         globals.ctx.globalAlpha = 0.5;
         globals.ctx.strokeRect(xPos + 10, yPos + 5, 40, 3);
-        globals.ctx.fillRect(xPos + 10, yPos + 55, 40 * this.health / this.initHealth, 3);
+        globals.ctx.fillRect(xPos + 10, yPos + 5, 40 * this.health / this.initHealth, 3);
         globals.ctx.globalAlpha = 1;
 
 	//name
