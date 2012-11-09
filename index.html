@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title> RAM IT!</title>
-	<script type="text/javascript" src="ramit_client.js"></script>
-	<script type="text/javascript" src="socket.io.js"></script>
-	<link rel="stylesheet" type="text/css" href="style.css" />
+  <title> RAM IT!</title>
+  <script type="text/javascript" src="ramit_client.js"></script>
+  <script type="text/javascript" src="socket.io.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-	<div id="main">
-		<canvas width="1000" height="500" id="cnv">Error: can't display canvas</canvas>
-		<canvas id="renderer">Error: can't display canvas</canvas>
-	    <!--
-	    	<iframe id="bug" style="visibility: hidden;" src="https://docs.google.com/spreadsheet/embeddedform?formkey=dGhpVEdYOEo5bTQyMVAzY2NrRHJuSUE6MQ" width="1000" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
-	    -->
-    </div>	
+  <div id="logo"></div>
+  <div id="main">
+    <canvas width="1000" height="500" id="cnv">Error: can't display canvas</canvas>
+    <canvas id="renderer"></canvas>
+    <!--
+	<iframe id="bug" style="visibility: hidden;" src="https://docs.google.com/spreadsheet/embeddedform?formkey=dGhpVEdYOEo5bTQyMVAzY2NrRHJuSUE6MQ" width="1000" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+	-->
+  </div>	
+  
+  <script>
+    if(globals.queries['debug'] === "true")
+    {
+    var bug = document.createElement("iframe");
+    bug.src = "https://docs.google.com/spreadsheet/embeddedform?formkey=dGhpVEdYOEo5bTQyMVAzY2NrRHJuSUE6MQ";
+    bug.width = "1000"; 
+    bug.height = "800";
+    bug.frameborder = "0";
+    bug.marginheight = "0"; 
+    bug.marginwidth="0";
     
-    <script>
-    	if(globals.queries['debug'] === "true")
-    	{
-    		var bug = document.createElement("iframe");
-    		bug.src = "https://docs.google.com/spreadsheet/embeddedform?formkey=dGhpVEdYOEo5bTQyMVAzY2NrRHJuSUE6MQ";
-    		bug.width = "1000"; 
-    		bug.height = "800";
-    		bug.frameborder = "0";
-    		bug.marginheight = "0"; 
-    		bug.marginwidth="0";
-    		
-    		document.getElementById("main").appendChild(bug);
-    		//document.getElementById("bug").style.visibility = "visible";
-    	}
-    </script>
+    document.getElementById("main").appendChild(bug);
+    //document.getElementById("bug").style.visibility = "visible";
+    }
+  </script>
 </body>
 </html>
