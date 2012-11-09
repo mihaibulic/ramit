@@ -7,6 +7,16 @@ html, body {
     background-position: center 22px;
 }
 
+#main {
+    margin: 0;
+    padding: 90px 27px 27px 27px;
+    width: 1000px;
+    height: 500px;
+    background-image: url('layout/game.png');
+    background-repeat: no-repeat;
+    background-position: center 67px;
+}
+
 #cnv {
     cursor: crosshair;
 }
