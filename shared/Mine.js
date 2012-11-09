@@ -16,6 +16,8 @@ Mine.prototype.update = function(globals) {
 	var hits = [];
 	if (this.delay > 0) {
 		this.delay--;
+		if (this.delay == 0)
+			console.log("MINE IS LIVE!");
 	}
 	else {
 		var mineBox = this.getCollisionBarrier();
@@ -35,9 +37,7 @@ Mine.prototype.draw = function(level) {
 	var xPos = this.x - level.x;
     var yPos = this.y - level.y;
 
-	console.log("%d, %d", xPos, yPos);
     if (xPos > -10 && xPos < 1000 && yPos > -10 && yPos < 500) {
-		console.log("drawing");
 		if (this.delay > 0) {
 			globals.ctx.fillStyle = "#00FF00"; //green if not hot
 		} else {
