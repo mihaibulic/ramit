@@ -37,6 +37,7 @@ Mine.prototype.draw = function(level) {
 
 	console.log("%d, %d", xPos, yPos);
     if (xPos > -10 && xPos < 1000 && yPos > -10 && yPos < 500) {
+		console.log("drawing");
 		if (this.delay > 0) {
 			globals.ctx.fillStyle = "#00FF00"; //green if not hot
 		} else {
@@ -48,7 +49,7 @@ Mine.prototype.draw = function(level) {
 
     	if (globals.queries.debug === "true") {
 			globals.ctx.strokeStyle = globals.ctx.fillStyle;
-			globals.ctx.strokeRect(xPos, yPos, rect.width(), rect.height());
+			globals.ctx.strokeRect(xPos, yPos, 10, 10);
  			globals.ctx.beginPath();
 			globals.ctx.arc(xPos, yPos, (this.range + 5)/2, 0, 2 * Math.PI, true);
         	globals.ctx.closePath();
