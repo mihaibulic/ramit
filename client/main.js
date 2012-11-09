@@ -6,14 +6,16 @@ var globals = {
     rawImages: {
         level: new Image(),
         tanks: new Image(),
-	gates: new Image()
+	gates: new Image(),
+	minimapfade: new Image(),
     },
     resources: {
         level: null,
         tanks: null,
         turrets: null,
 	gates: null,
-	minimap: null
+	minimap: null,
+	minimapfade: null
     },
     canvas: null,
     ctx: null,
@@ -81,7 +83,9 @@ globals.load = function(callback) {
 	    globals.renderMinimap();
 	} else if (target === "gates")
 	    globals.renderGates();
-       
+	else
+	    globals.resources[target] = globals.rawImages[target];
+    
         globals.resourceLoaded();
     };
  
