@@ -165,7 +165,7 @@ Player.prototype.drawHUD = function() {
     globals.ctx.fillStyle = Player.HEALTH[color];
     globals.ctx.globalAlpha = 0.75;
     globals.ctx.strokeRect(10, 10, 200, 30);
-    globals.ctx.fillRect(10, 10, 200 * this.health / this.initHealth, 30);
+    globals.ctx.fillRect(10, 10, 200 * this.health / this.initHealth, 15);
     globals.ctx.globalAlpha = 1;
 
     // Minimap
