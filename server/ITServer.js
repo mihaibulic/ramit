@@ -97,7 +97,7 @@ var update = function() {
 			server.diff.s[mine] = {};
 			server.diff.s[mine].h = {};
 			for (var hit in hits) {
-				sever.diff.s[mine].h.push(hits[hit]);
+				server.diff.s[mine].h.push(hits[hit]);
 				server.players[hits[hit]].takeHit(server.mines[mine].damage);
 			}
             server.usedDiff = true;
