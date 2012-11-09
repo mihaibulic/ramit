@@ -150,6 +150,13 @@ Player.prototype.drawDetails = function(level) {
 };
 
 /**
+ * Draws the HUD, including HP, score, and the minimap.
+ */
+Player.prototype.drawHUD = function() {
+    globals.ctx.drawImage(globals.resources.minimap, 830, 330);
+};
+
+/**
  * Updates the player's turret's aim.
  * @param {Event} e The mouse event triggering the call.
  */

@@ -12,7 +12,8 @@ var globals = {
         level: null,
         tanks: null,
         turrets: null,
-		gates: null
+	gates: null,
+	minimap: null
     },
     canvas: null,
     ctx: null,
@@ -75,9 +76,10 @@ globals.load = function(callback) {
         // Perform any special tasks on the image if need be.
         if (target === "tanks")
             globals.renderTanks();
-        else if (target === "level")
+        else if (target === "level") {
             globals.renderLevelTiles();
-	else if (target === "gates")
+	    globals.renderMinimap();
+	} else if (target === "gates")
 	    globals.renderGates();
        
         globals.resourceLoaded();
@@ -168,6 +170,31 @@ globals.renderLevelTiles = function() {
     };
     
     render(0, 0);
+};
+
+/**
+ * Renders the minimap's image.
+ */
+globals.renderMinimap = function()
+{
+    // We're loading one more image.
+    globals.remainingResources += 1;
+    var renderer = document.getElementById('renderer');
+    var ctx = renderer.getContext('2d');
+    renderer.width = 150;
+    renderer.height = 150;
+    
+    globals.ctx.globalAlpha = 0.5;
+    ctx.drawImage(globals.rawImages.level, 0, 0, 3000, 3000,
+		  0, 0, 150, 150);
+    globals.ctx.globalAlpha = 1;
+
+    var img = new Image();
+    img.src = renderer.toDataURL();
+    img.onload = function() {
+        globals.resources.minimap = img;
+        globals.resourceLoaded();
+    };
 };
 
 /**
