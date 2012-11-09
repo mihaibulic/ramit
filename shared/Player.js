@@ -138,7 +138,7 @@ Player.prototype.drawDetails = function(level) {
 	//name
 	globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
 	globals.ctx.fillStyle = "#FFFFFF";
-	globals.ctx.font = "10px monospace";
+	globals.ctx.font = "12px sans-serif";
 	globals.ctx.textAlign = "center";
 	globals.ctx.textBaseline = "bottom";
 	globals.ctx.fillText("name", xPos + 30, yPos - 2);
