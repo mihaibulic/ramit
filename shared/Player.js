@@ -218,6 +218,7 @@ Player.prototype.updateKeys = function(e) {
         diff.s = value;
         break;
 	case 69: //e
+		console.log("pressing e");
 		diff.e = value;
 		break;
     }
