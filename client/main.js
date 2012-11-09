@@ -12,7 +12,7 @@ var globals = {
         level: null,
         tanks: null,
         turrets: null,
-	gates: null
+		gates: null
     },
     canvas: null,
     ctx: null,

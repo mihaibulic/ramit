@@ -9,6 +9,7 @@ var Mine = function(player, m) {
 	this.y = player.y; 
 	this.delay = 3000; //5 sec delay
 	this.m = m;
+	player.mine.lastMine = 0;
 };
 
 Mine.prototype.update = function(globals) {
@@ -36,9 +37,9 @@ Mine.prototype.draw = function(level) {
 
     if (xPos > -10 && xPos < 1000 && yPos > -10 && yPos < 500) {
 		if (this.delay > 0) {
-			globals.ctx.fillStyle = "#00FF00";
+			globals.ctx.fillStyle = "#00FF00"; //green if not hot
 		} else {
-			globals.ctx.fillStyle = "#000000";
+			globals.ctx.fillStyle = "#000000"; //black if hot
 		}
  		globals.ctx.beginPath();
         globals.ctx.arc(xPos, yPos, rect.width()/2, 0 , 2 * Math.PI, true);
