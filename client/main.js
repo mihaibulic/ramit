@@ -2,21 +2,25 @@
  * An object of global variables and functions for use throughout the program.
  */
 var globals = {
-        NUMBER_OF_PLAYERS: 2,
-        rawImages: {
-            level: new Image(),
-            tanks: new Image()
-        },
-        resources: {
-          level: null,
-            tanks: null,
-            turrets: null
-        },
-        canvas: null,
-        ctx: null,
-        remainingResources: 0,
-        projectiles: {},
-        players: {}
+    NUMBER_OF_PLAYERS: 2,
+    rawImages: {
+        level: new Image(),
+        tanks: new Image(),
+	gates: new Image()
+    },
+    resources: {
+        level: null,
+        tanks: null,
+        turrets: null,
+	gates: null,
+	minimap: null
+    },
+    canvas: null,
+    ctx: null,
+    remainingResources: 0,
+    projectiles: {},
+	mines: {},
+    players: {}
 };
 
 /**
@@ -72,8 +76,11 @@ globals.load = function(callback) {
         // Perform any special tasks on the image if need be.
         if (target === "tanks")
             globals.renderTanks();
-        else if (target === "level")
+        else if (target === "level") {
             globals.renderLevelTiles();
+	    globals.renderMinimap();
+	} else if (target === "gates")
+	    globals.renderGates();
        
         globals.resourceLoaded();
     };
@@ -85,6 +92,46 @@ globals.load = function(callback) {
             globals.rawImages[img].src = "images/" + img + ".png";
         }
     }
+};
+
+/**
+ * Renders the gates image into three separate images.
+ */
+globals.renderGates = function() {
+    globals.remainingResources += 3;
+    globals.resources.gates = [];
+
+    var renderer = document.getElementById('renderer');
+    var ctx = renderer.getContext('2d');
+    
+    var positions = [[0, 0, 300, 15, 0, 5, 300, 15],
+		     [0, 15, 300, 15, 0, 5, 300, 15],
+		     [300, 0, 6, 25, 0, 0, 6, 25],
+		     [306, 0, 6, 25, 294, 0, 6, 25]];
+    var render = function(i) {
+	renderer.width = 300;
+	renderer.height = 25;
+	ctx.clearRect(0, 0, 300, 15);
+	ctx.drawImage(globals.rawImages.gates, positions[i][0], positions[i][1],
+		      positions[i][2], positions[i][3], positions[i][4],
+		      positions[i][5], positions[i][6], positions[i][7]);
+	if (i == 2) {
+	    ctx.drawImage(globals.rawImages.gates, positions[3][0],
+		      positions[3][1], positions[3][2], positions[3][3],
+		      positions[3][4], positions[3][5], positions[3][6],
+		      positions[3][7]);
+	}
+
+	var img = new Image();
+        img.src = renderer.toDataURL();
+        img.onload = function() {
+            globals.resources.gates[i] = img;
+            globals.resourceLoaded();
+            if (i < 2)
+                render(i + 1);
+        };
+    };
+    render(0);
 };
 
 /**
@@ -123,6 +170,31 @@ globals.renderLevelTiles = function() {
     };
     
     render(0, 0);
+};
+
+/**
+ * Renders the minimap's image.
+ */
+globals.renderMinimap = function()
+{
+    // We're loading one more image.
+    globals.remainingResources += 1;
+    var renderer = document.getElementById('renderer');
+    var ctx = renderer.getContext('2d');
+    renderer.width = 150;
+    renderer.height = 150;
+    
+    ctx.globalAlpha = 0.5;
+    ctx.drawImage(globals.rawImages.level, 0, 0, 3000, 3000,
+		  0, 0, 150, 150);
+    ctx.globalAlpha = 1;
+
+    var img = new Image();
+    img.src = renderer.toDataURL();
+    img.onload = function() {
+        globals.resources.minimap = img;
+        globals.resourceLoaded();
+    };
 };
 
 /**

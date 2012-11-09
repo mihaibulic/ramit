@@ -10,7 +10,8 @@ var Player = function(team, playerID) {
             up: false,
             down: false,
             left: false,
-            right: false
+            right: false,
+			mine: false
     };
     this.mouse = {
             left: false,
@@ -35,6 +36,12 @@ var Player = function(team, playerID) {
         speed: 10,
         lastFire: 0
     };
+	this.mine = {
+		damage: 20,
+		range: 80,
+		live: 0,
+		allowed: 1
+	};
 };
 
 /**
@@ -46,6 +53,8 @@ Player.DIAGONAL_CONST = Math.sqrt(0.5);
  * The color of the collision bound for each team.
  */
 Player.COLLISION_BOUND_STROKE = ["#0000FF", "#FF0000"];
+
+Player.HEALTH = ["#FF0000", "#FFFF00", "#00FF00"];
 
 /**
  * The spawn points for each team.
@@ -106,13 +115,6 @@ Player.prototype.draw = function(level) {
         globals.ctx.drawImage(
                 globals.resources.turrets[this.team][this.tank.turretAim],
                 xPos - 7, yPos - 7);
-        // health bar
-        globals.ctx.fillStyle = "#00FF00";
-        globals.ctx.strokeStyle = "#00FF00";
-        globals.ctx.globalAlpha = 0.5;
-        globals.ctx.strokeRect(xPos + 10, yPos + 40, 40, 10);
-        globals.ctx.fillRect(xPos + 10, yPos + 40, 40 * this.health / this.initHealth, 10);
-        globals.ctx.globalAlpha = 1;
     }
 
     if (globals.queries.debug === "true") {
@@ -121,6 +123,37 @@ Player.prototype.draw = function(level) {
         globals.ctx.strokeRect(rect.left - level.x, rect.top - level.y, rect.width(),
                 rect.height());
     }
+};
+
+/**
+ * Draws a tanks information, such as it's health and name.
+ */
+Player.prototype.drawDetails = function(level) {
+    var xPos = this.tank.x - level.x;
+    var yPos = this.tank.y - level.y;
+    if (xPos > -60 && xPos < 1000 && yPos > -60 && yPos < 500) {
+	// health bar
+        globals.ctx.strokeStyle = "#00FF00";
+	var color = Math.floor(this.health / this.initHealth * Player.HEALTH.length);
+	if (color == Player.HEALTH.length) color--;
+        globals.ctx.fillStyle = Player.HEALTH[color];
+        globals.ctx.globalAlpha = 0.5;
+        globals.ctx.strokeRect(xPos + 10, yPos + 2, 40, 3);
+        globals.ctx.fillRect(xPos + 10, yPos + 2, 40 * this.health / this.initHealth, 3);
+        globals.ctx.globalAlpha = 1;
+
+	//name
+	globals.ctx.fillStyle = "#FFFFFF";
+	globals.ctx.font = "10px sans-serif";
+	globals.ctx.fillText("Player " + this.playerID, xPos + 10, yPos + 1);
+    }
+};
+
+/**
+ * Draws the HUD, including HP, score, and the minimap.
+ */
+Player.prototype.drawHUD = function() {
+    globals.ctx.drawImage(globals.resources.minimap, 830, 330);
 };
 
 /**
@@ -191,6 +224,9 @@ Player.prototype.updateKeys = function(e) {
         //this.keys.space = value;
         diff.s = value;
         break;
+	case 69: //e
+		diff.e = value;
+		break;
     }
     globals.socket.emit('key', diff);
 };
@@ -201,6 +237,7 @@ Player.prototype.updateKeys = function(e) {
 Player.prototype.update = function(level, diff) {        
     this.move(level, diff);
     this.projectile.lastFire++;
+	this.mine.lastMine++;
 };
 
 /**
@@ -241,7 +278,8 @@ Player.prototype.move = function(level, diff) {
     //The collision box after the tank moves in the X direction.
     var rectXMovement = this.getCollisionBarrier({x: x, y: this.tank.y});
     var distance;
-    for (var i = 0; i < level.walls.length; i++) {
+	//check walls
+    for (var i in level.walls) {
         if (rectYMovement.intersects(level.walls[i])) {
             // Moving up/down collided with a wall, move up to the wall but no
             // farther.
@@ -255,6 +293,26 @@ Player.prototype.move = function(level, diff) {
             x = this.tank.x + ((distance - 1) * xDir);
         }
     }
+
+	// check gates
+	for (var g in level.gates) {
+		// ignore own team's gate
+		if (level.gates[g].team !== this.team) {
+			var box = level.gates[g].getCollisionBarrier();
+			if (rectYMovement.intersects(box)) {
+				// Moving up/down collided with a gate, move up to the gate but no
+				// farther.
+				distance = tankBox.getYDistance(box);
+				y = this.tank.y + ((distance - 1) * yDir);
+			}
+			if (rectXMovement.intersects(box)) {
+				// Moving left/right collided with a gate, move up to the gate but no
+				// farther.
+				distance = tankBox.getXDistance(box);
+				x = this.tank.x + ((distance - 1) * xDir);
+			}
+		}
+	}
     
     if (diff && this.tank.x !== x)
         diff.x = x;

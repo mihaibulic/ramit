@@ -10,13 +10,16 @@ var server = {
     numberOfPlayers: 0,
     players: {},
     projectiles: {},
+	mines: {}, //will include all splash weapons
+	gates: [new Gate(0), new Gate(1)],
     socketToId: {},
     playerIDQueue: [7,6,5,4,3,2,1,0],
     colors: [0,0],
     level: new Level(),
     diff: {},
     usedDiff: false,
-    n: 0
+    n: 0,
+	m: 0
 };
 
 /**
@@ -25,43 +28,64 @@ var server = {
 var update = function() {
     var playerDiff;
     var msg;
-    for (var player in server.players) {
+    for (var pid in server.players) {
         playerDiff = {};
-        server.players[player].update(server.level, playerDiff);
+		var player = server.players[pid];
+        player.update(server.level, playerDiff);
         // check if the player should fire
-        if (server.players[player].projectile.lastFire > 10 && 
-            (server.players[player].keys.space === true || server.players[player].mouse.left === true)) 
+        if (player.projectile.lastFire > 10 && 
+            (player.keys.space === true || player.mouse.left === true)) 
         {
-            server.projectiles[server.n] = new Projectile(server.players[player]);
-            msg = { i: player, n: server.n };
+            server.projectiles[server.n] = new Projectile(player);
+            msg = { i: pid, n: server.n };
             io.sockets.emit('fire', msg);
             server.n++;
         }
+		if (player.mine.allowed > player.mine.live && player.keys.mine === true) {
+			server.mines[server.m] = new Mine(player, server.m);
+			msg = { i: pid, m: server.m };
+			io.sockets.emit('mine', msg);
+			server.m++;
+		}
         // Copy the differences found into the server's diff object.
         for (var diff in playerDiff) {
-            if (!server.diff[player])
-                server.diff[player] = {};
-            server.diff[player][diff] = playerDiff[diff];
+            if (!server.diff[pid])
+                server.diff[pid] = {};
+            server.diff[pid][diff] = playerDiff[diff];
             server.usedDiff = true;
         }
     }
+	// update and check for hits in projectiles
     for (var projectile in server.projectiles) {
         server.projectiles[projectile].update(server.level);
         var target = server.projectiles[projectile].checkHit(server, server.level);
-        if (target >= -1) { 
-            if (target >= 0) { 
-                server.players[target].takeHit(server.projectiles[projectile].damage);
+        if (target) { 
+            if (target !== 1) { 
+                target.takeHit(server.projectiles[projectile].damage);
             }
             var hitter = server.players[server.projectiles[projectile].owner];
             if (hitter) {
                 hitter.score++;
                 hitter.totScore++;
             }
-            msg = { i: target, n: projectile };
+            msg = { n: projectile, t: target.team, i: target.playerID };
             io.sockets.emit('hit', msg);
-            delete server.projectiles[projectile];
+        	delete server.projectiles[projectile];
         }
     }
+	// update all mines
+	for (var mine in server.mines) {
+		var hits = server.mines[mine].update(server);
+		if (hits.length > 0) {
+			for (var hit in hits) {
+				server.players[hits[hit]].takeHit(server.mines[mine].damage);
+			}
+			msg = { m: mine, h: hits };
+			io.sockets.emit('splash', msg);
+			server.players[server.mines[mine].owner].mine.live--;
+			delete server.mines[mine];
+		}
+	}
     if (server.usedDiff)
         io.sockets.emit('state', server.diff);
     server.diff = {};
@@ -120,7 +144,8 @@ io.sockets.on('connection', function(socket) {
             server.players[id].keys.right = data.r;
         if (data.s !== undefined)
             server.players[id].keys.space = data.s;
-        
+		if (data.e !== undefined)
+			server.players[id].keys.mine = data.e;
         if (!server.diff[id])
             server.diff[id] = {};
         server.diff[id].key = server.players[id].getKeyValue();

@@ -27,10 +27,15 @@ Projectile.prototype.draw = function(level) {
         globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[this.team];
 
         globals.ctx.beginPath();
-        globals.ctx.arc(xPos, yPos, rect.width()/2, 0 , 2 * Math.PI, true);
+        globals.ctx.arc(xPos+5, yPos+5, rect.width()/2, 0 , 2 * Math.PI, true);
         globals.ctx.closePath();
 
         globals.ctx.fill();
+
+    	if (globals.queries.debug === "true") {
+			globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
+			globals.ctx.strokeRect(xPos, yPos, rect.width(), rect.height());
+		}
     }
 };
 
@@ -48,22 +53,30 @@ Projectile.prototype.move = function(level) {
  * Returns -1 if hit wall, PlayerID if hit player, undefined if no hit
  */
 Projectile.prototype.checkHit = function(globals, level) {
-    console.log("CHECKING HIT %d, %d", this.x, this.y);
     var box = this.getCollisionBarrier();
     //check walls
     for (var i in level.walls) {
         if (box.intersects(level.walls[i])) {
             console.log("HIT WALL");
-            return -1;
+            return 1;
         }
     }
     //check players of other teams
     for (var player in globals.players) {
         if (globals.players[player].team != this.team && 
                 box.intersects(globals.players[player].getCollisionBarrier())) {
-            return player;
+			console.log("HIT PLAYER");
+            return globals.players[player];
         }
     }
+	//check gates 
+	for (var g in level.gates) {
+		if (this.team !== level.gates[g].team && 
+				box.intersects(level.gates[g].getCollisionBarrier())) {
+			console.log("HIT GATE");
+			return level.gates[g];
+		}
+	}
 };
 
 Projectile.prototype.getCollisionBarrier = function(location) {
