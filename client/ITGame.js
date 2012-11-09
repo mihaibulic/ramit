@@ -186,12 +186,12 @@ ITGame.prototype.draw = function() {
 	/*//draw mines
 	for (var mine in globals.mines) {
 		globals.mines[mine].draw(this.level);
-	}
+	}*/
 
     //draw gates
     for (var g in this.level.gates) {
 	this.level.gates[g].draw(this.level);
-    }*/
+    }
     
     //draw players info
     for (var pid in globals.players) {

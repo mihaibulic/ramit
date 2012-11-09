@@ -51,7 +51,7 @@ var update = function() {
         for (var diff in playerDiff) {
             if (!server.diff[player])
                 server.diff[player] = {};
-            server.diff[player][diff] = playerDiff[diff];
+            server.diff[pid][diff] = playerDiff[diff];
             server.usedDiff = true;
         }
     }
