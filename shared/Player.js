@@ -2,9 +2,15 @@
  * A player of the IT game.
  * @param {Number} team The team number the player is on.
  * @param {Number} playerID The player's ID number.
+ * @param {Number} opt_spawn An optional value designating the spawn point.
  */
-var Player = function(team, playerID) {
+var Player = function(team, playerID, opt_spawn) {
     this.team = team;
+
+    if (!opt_spawn && opt_spawn !== 0)
+	opt_spawn = this.determine_spawn();
+    this.starting_spawn = opt_spawn;
+
     this.playerID = playerID;
     this.keys = {
         up: false,
@@ -19,10 +25,10 @@ var Player = function(team, playerID) {
         right: false
     };
     this.tank = {
-        x: Player.SPAWN_POINT[team].x,
-        y: Player.SPAWN_POINT[team].y,
-        sx: Player.SPAWN_POINT[team].x,
-        sy: Player.SPAWN_POINT[team].y,
+        x: Player.SPAWN_POINTS[team][opt_spawn].x,
+        y: Player.SPAWN_POINTS[team][opt_spawn].y,
+        sx: Player.SPAWN_POINTS[team][opt_spawn].x,
+        sy: Player.SPAWN_POINTS[team][opt_spawn].y,
         direction: 0,
         turretAim: 0
     };
@@ -64,7 +70,14 @@ Player.HEALTH = ["#FF0000", "#FFFF00", "#00FF00"];
 /**
  * The spawn points for each team.
  */
-Player.SPAWN_POINT = [ { x: 470, y: 250 }, { x: 470, y: 2690 } ];
+Player.SPAWN_POINTS = [
+    [{x: 470, y: 250},{x: 470, y: 150},{x: 470, y: 350},
+     {x: 370, y: 250},{x: 370, y: 150},{x: 370, y: 350},
+     {x: 570, y: 250},{x: 570, y: 150},{x: 570, y: 350}],
+    [{x: 470, y: 2690},{x: 470, y: 2790},{x: 470, y: 2590},
+     {x: 370, y: 2690},{x: 370, y: 2790},{x: 370, y: 2590},
+     {x: 570, y: 2690},{x: 570, y: 2790},{x: 570, y: 2590}]
+];
 
 /**
  * Draw's the player's information.
@@ -400,8 +413,9 @@ Player.prototype.setAim = function(aim) {
 Player.prototype.takeHit = function(damage) {
     this.health -= damage;
     if (this.health <= 0) {
-        this.tank.x = Player.SPAWN_POINT[this.team].x;
-        this.tank.y = Player.SPAWN_POINT[this.team].y;
+	var spawn = this.determine_spawn();
+        this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
+        this.tank.y = Player.SPAWN_POINTS[this.team][spawn].y;
         this.health = this.initHealth;
     }
 };
@@ -449,4 +463,31 @@ Player.prototype.getCenterDistance = function(object) {
 	return Math.sqrt((this.tank.x - object.tank.x) * (this.tank.x - object.tank.x) +
 			 (this.tank.y - object.tank.y) * (this.tank.y - object.tank.y));
     return 0;
+};
+
+Player.prototype.determineSpawn = function() {
+    var spawn;
+    var finished = false;
+    var tank;
+    var spawn_coords;
+    var rect;
+    for (spawn = 0; spawn < 9 && !finished; spawn++) {
+	finished = true;
+	spawn_coords = Players.SPAWN_POINTS[this.team][spawn];
+	// Determine the rectangle for the spawn point.
+	rect = new Rectangle({top: spawn_coords.y, bottom: spawn_coords.y + 40,
+			      left: spawn_coords.x, right: spawn_coords.x + 40});
+	for (var id in globals.players) {
+	    tank = globals.players[id];
+	    if (tank === this) // Don't compare me to myself.
+		continue;
+	    // If the tank is on the spawn point, move to the next one.
+	    if (tank.getCollisionBarrier().intersects(rect)) {
+		finished = false;
+		break;
+	    }
+	}
+    }
+    // Exiting the for loop incremented it by one.
+    return --spawn;
 };

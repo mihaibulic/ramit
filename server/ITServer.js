@@ -157,7 +157,7 @@ io.sockets.on('connection', function(socket) {
     var id = server.playerIDQueue.pop();
     server.socketToId[socket.id] = id;
     server.players[id] = new Player(color, id);
-    
+
     // Actions to perform when the player presses or releases a key.
     socket.on('key', function(data) {
         if (data.u !== undefined)
@@ -219,7 +219,7 @@ io.sockets.on('connection', function(socket) {
     });
     
     // Broadcast to the other players that there is a new player.
-    var playerInfo = {t: color, i: id};
+    var playerInfo = {t: color, i: id, s: server.players[id].starting_spawn};
     socket.broadcast.emit('join', playerInfo);
     socket.emit('setup', {p: playerInfo, s: getAbsoluteState()});
 });

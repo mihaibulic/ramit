@@ -71,7 +71,7 @@ var ITGame = function(team, playerID) {
 	});
 	
 	globals.socket.on('join', function(data) {
-	    globals.players[data.i] = new Player(data.t, data.i);
+	    globals.players[data.i] = new Player(data.t, data.i, data.s);
 	});
 	globals.socket.on('leave', function(data) {
 	    delete globals.players[data.i];
