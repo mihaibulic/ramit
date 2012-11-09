@@ -1,6 +1,7 @@
 /*
  * The Mine class
  */
+/*
 var Mine = function(player, m) {
 	this.owner = player.playerID;
 	this.damage = player.mine.damage;
@@ -58,4 +59,4 @@ Mine.prototype.draw = function(level) {
 Mine.prototype.getCollisionBarrier = function() {
 	return new Rectangle( { right: this.x + 5, left: this.x - 5, 
 			top: this.y - 5, bottom: this.y + 5} );
-};
+};*/

@@ -14,10 +14,8 @@ var ITGame = function(team, playerID) {
 				globals.players[id].keys.left = (data[id].key&4);
 				globals.players[id].keys.right = (data[id].key&8);
 			}
-			if (data[id].x !== undefined) {
-				console.log("id: %d", id);
+			if (data[id].x !== undefined) 
 				globals.players[id].tank.x = data[id].x;
-			}
 			if (data[id].y !== undefined)
 				globals.players[id].tank.y = data[id].y;
 			if (data[id].aim !== undefined)
@@ -63,7 +61,7 @@ var ITGame = function(team, playerID) {
         }
         delete globals.projectiles[data.n];
 	});
-	
+	/*
 	//mine messages
 	globals.socket.on('mine', function(data) {
 		console.log("new mine %d", data.m);
@@ -75,7 +73,7 @@ var ITGame = function(team, playerID) {
 			globals.players[data.h[h]].takeHit(globals.mines[data.m]);
 		}
 		delete globals.mines[data.m];
-	});
+	});*/
 
 	this.team = data.p.t;
 	this.player = data.p.i;
