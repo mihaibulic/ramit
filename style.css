@@ -2,6 +2,7 @@ html, body {
     margin: 0;
     padding: 0;
     background-color: #fff;
+    color: #888;
 }
 
 #logo {
@@ -24,6 +25,7 @@ html, body {
     background-image: url('layout/game.png');
     background-repeat: no-repeat;
     background-position: center 63px;
+    color: #fff;
 }
 
 #cnv {
@@ -32,4 +34,9 @@ html, body {
 
 #renderer {
     display: none;
+}
+
+#footer {
+    width: 100%;
+    text-align: center;
 }
