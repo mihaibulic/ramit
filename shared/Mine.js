@@ -34,23 +34,21 @@ Mine.prototype.update = function(globals) {
 Mine.prototype.draw = function(level) {
 	var xPos = this.x - level.x;
     var yPos = this.y - level.y;
-	console.log("%d, %d", xPos, yPos);
     if (xPos > -10 && xPos < 1000 && yPos > -10 && yPos < 500) {
-	console.log("drawing mine");
 		if (this.delay > 0) {
 			globals.ctx.fillStyle = "#00FF00"; //green if not hot
 		} else {
 			globals.ctx.fillStyle = "#000000"; //black if hot
 		}
  		globals.ctx.beginPath();
-        globals.ctx.arc(xPos, yPos, rect.width()/2, 0 , 2 * Math.PI, true);
+        globals.ctx.arc(xPos, yPos, 5, 0 , 2 * Math.PI, true);
         globals.ctx.closePath();
 
     	if (globals.queries.debug === "true") {
 			globals.ctx.strokeStyle = globals.ctx.fillStyle;
 			globals.ctx.strokeRect(xPos, yPos, rect.width(), rect.height());
  			globals.ctx.beginPath();
-			globals.ctx.arc(xPos, yPos, this.range + 5, 0, 2 * Math.PI, true);
+			globals.ctx.arc(xPos, yPos, (this.range + 5)/2, 0, 2 * Math.PI, true);
         	globals.ctx.closePath();
 		}
 	}
