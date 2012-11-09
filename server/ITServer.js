@@ -10,7 +10,7 @@ var server = {
     numberOfPlayers: 0,
     players: {},
     projectiles: {},
-	//mines: {}, //will include all splash weapons
+	mines: {}, //will include all splash weapons
 	gates: [new Gate(0), new Gate(1)],
     socketToId: {},
     playerIDQueue: [7,6,5,4,3,2,1,0],
@@ -40,13 +40,13 @@ var update = function() {
             msg = { i: pid, n: server.n };
             io.sockets.emit('fire', msg);
             server.n++;
-        }/*
+        }
 		if (player.mine.lastMine > 600 && player.keys.mine === true) {
 			server.mines[server.m] = new Mine(player, server.m);
 			msg = { i: pid, m: server.m };
 			io.sockets.emit('mine', msg);
 			server.m++;
-		}*/
+		}
         // Copy the differences found into the server's diff object.
         for (var diff in playerDiff) {
             if (!server.diff[pid])
@@ -73,7 +73,7 @@ var update = function() {
         	delete server.projectiles[projectile];
         }
     }
-	/*// update all mines
+	// update all mines
 	for (var mine in server.mines) {
 		var hits = server.mines[mine].update(globals);
 		if (hits.length > 0) {
@@ -83,7 +83,7 @@ var update = function() {
 			msg = { m: mine, h: hits };
 			io.sockets.emit('splash', msg);
 		}
-	}*/
+	}
     if (server.usedDiff)
         io.sockets.emit('state', server.diff);
     server.diff = {};
@@ -142,9 +142,8 @@ io.sockets.on('connection', function(socket) {
             server.players[id].keys.right = data.r;
         if (data.s !== undefined)
             server.players[id].keys.space = data.s;
-		/*if (data.e !== undefined)
+		if (data.e !== undefined)
 			server.players[id].keys.mine = data.e;
-        */
         if (!server.diff[id])
             server.diff[id] = {};
         server.diff[id].key = server.players[id].getKeyValue();

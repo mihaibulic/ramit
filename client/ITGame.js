@@ -61,7 +61,7 @@ var ITGame = function(team, playerID) {
         }
         delete globals.projectiles[data.n];
 	});
-	/*
+
 	//mine messages
 	globals.socket.on('mine', function(data) {
 		console.log("new mine %d", data.m);
@@ -73,7 +73,7 @@ var ITGame = function(team, playerID) {
 			globals.players[data.h[h]].takeHit(globals.mines[data.m]);
 		}
 		delete globals.mines[data.m];
-	});*/
+	});
 
 	this.team = data.p.t;
 	this.player = data.p.i;
@@ -138,9 +138,9 @@ ITGame.prototype.update = function() {
     for (var projectile in globals.projectiles) {
         globals.projectiles[projectile].update();
     }
-	/*for (var mine in globals.mines) {
+	for (var mine in globals.mines) {
 		globals.mines[mine].update(); //ignores hits
-	}*/
+	}
 };
 
 /**
@@ -183,10 +183,10 @@ ITGame.prototype.draw = function() {
         globals.projectiles[projn].draw(this.level);
     }
 
-	/*//draw mines
+	//draw mines
 	for (var mine in globals.mines) {
 		globals.mines[mine].draw(this.level);
-	}*/
+	}
 
     //draw gates
     for (var g in this.level.gates) {
