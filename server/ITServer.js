@@ -41,7 +41,7 @@ var update = function() {
             io.sockets.emit('fire', msg);
             server.n++;
         }
-		if (player.mine.lastMine > 600 && player.keys.mine === true) {
+		if (player.mine.lastMine > 10 && player.keys.mine === true) {
 			server.mines[server.m] = new Mine(player, server.m);
 			msg = { i: pid, m: server.m };
 			io.sockets.emit('mine', msg);
