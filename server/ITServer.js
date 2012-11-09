@@ -10,8 +10,8 @@ var server = {
     numberOfPlayers: 0,
     players: {},
     projectiles: {},
-	mines: {}, //will include all splash weapons
-	gates: [new Gate(0), new Gate(1)],
+    mines: {}, //will include all splash weapons
+    gates: [new Gate(0), new Gate(1)],
     socketToId: {},
     playerIDQueue: [7,6,5,4,3,2,1,0],
     colors: [0,0],
@@ -19,8 +19,11 @@ var server = {
     diff: {},
     usedDiff: false,
     n: 0,
-	m: 0
+    m: 0
 };
+
+// Define globals as an alias of server to make the shared code more compatible.
+var globals = server;
 
 /**
  * Updates the game and sends out a 'diff' message to the players.
@@ -30,30 +33,30 @@ var update = function() {
     var msg;
     for (var pid in server.players) {
         playerDiff = {};
-		var player = server.players[pid];
+	var player = server.players[pid];
         player.update(server.level, playerDiff);
         // check if the player should fire projectile
         if (player.projectile.lastFire > 10 && 
             (player.keys.space === true || player.mouse.left === true)) 
         {
             server.projectiles[server.n] = new Projectile(player, server.n);
-			playerDiff.n = server.n;
+	    playerDiff.n = server.n;
             server.n++;
         }
         // check if the player should fire rocket
         if (player.rocket.allowed > player.rocket.live && player.rocket.lastFire > 15 && player.mouse.right === true)
         {
             server.projectiles[server.n] = new Projectile(player, server.n, true);
-			playerDiff.n = server.n;
+	    playerDiff.n = server.n;
             server.n++;
         }
         
         // mine
-		if (player.mine.allowed > player.mine.live && player.keys.mine === true) {
-			server.mines[server.m] = new Mine(player, server.m);
-			playerDiff.m = server.m;
-			server.m++;
-		}
+	if (player.mine.allowed > player.mine.live && player.keys.mine === true) {
+	    server.mines[server.m] = new Mine(player, server.m);
+	    playerDiff.m = server.m;
+	    server.m++;
+	}
         // Copy the differences found into the server's diff object.
         for (var diff in playerDiff) {
             if (!server.diff[pid])
@@ -62,7 +65,7 @@ var update = function() {
             server.usedDiff = true;
         }
     }
-	// update and check for hits in projectiles
+    // update and check for hits in projectiles
     for (var projectile in server.projectiles) {
         server.projectiles[projectile].update(server.level);
         var target = server.projectiles[projectile].checkHit(server, server.level);
@@ -84,31 +87,31 @@ var update = function() {
                 hitter.score++;
                 hitter.totScore++;
             }
-			if (!server.diff.h) server.diff.h = {};
+	    if (!server.diff.h) server.diff.h = {};
             server.diff.h[projectile] = { t: target.team, i: target.playerID };
             server.usedDiff = true;
         	delete server.projectiles[projectile];
         }
     }
-	// update all mines
-	for (var mine in server.mines) {
-		var hits = server.mines[mine].update(server);
-		if (hits.length > 0) {
-			if (!server.diff.s) server.diff.s = {};
-			server.diff.s[mine] = {};
-			server.diff.s[mine].h = [];
-			for (var hit in hits) {
-				server.diff.s[mine].h.push(hits[hit]);
-				server.players[hits[hit]].takeHit(server.mines[mine].damage);
-			}
+    // update all mines
+    for (var mine in server.mines) {
+	var hits = server.mines[mine].update(server);
+	if (hits.length > 0) {
+	    if (!server.diff.s) server.diff.s = {};
+	    server.diff.s[mine] = {};
+	    server.diff.s[mine].h = [];
+	    for (var hit in hits) {
+		server.diff.s[mine].h.push(hits[hit]);
+		server.players[hits[hit]].takeHit(server.mines[mine].damage);
+	    }
             server.usedDiff = true;
             if(server.mines[mine].isRocket === undefined) // this is a mine
-			    server.players[server.mines[mine].owner].mine.live--;
+		server.players[server.mines[mine].owner].mine.live--;
             else
-			    server.players[server.mines[mine].owner].rocket.live--;
-			delete server.mines[mine];
-		}
+		server.players[server.mines[mine].owner].rocket.live--;
+	    delete server.mines[mine];
 	}
+    }
     if (server.usedDiff)
         io.sockets.emit('state', server.diff);
     server.diff = {};

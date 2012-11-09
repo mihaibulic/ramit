@@ -314,7 +314,8 @@ Player.prototype.move = function(level, diff) {
     //The collision box after the tank moves in the X direction.
     var rectXMovement = this.getCollisionBarrier({x: x, y: this.tank.y});
     var distance;
-	//check walls
+    
+    //check walls
     for (var i in level.walls) {
         if (rectYMovement.intersects(level.walls[i])) {
             // Moving up/down collided with a wall, move up to the wall but no
@@ -348,6 +349,26 @@ Player.prototype.move = function(level, diff) {
 		x = this.tank.x + ((distance - 1) * xDir);
 	    }
 	}
+    }
+
+    // check other tanks
+    var barrier;
+    for (var p in globals.players) {
+	if (globals.players[p] === this) // Do not collide with myself
+	    continue;
+	barrier =  globals.players[p].getCollisonBarrier();
+        if (rectYMovement.intersects(barrier)) {
+            // Moving up/down collided with a wall, move up to the wall but no
+            // farther.
+            distance = tankBox.getYDistance(barrier);
+            y = this.tank.y + ((distance - 1) * yDir);
+        }
+        if (rectXMovement.intersects(barrier)) {
+            // Moving left/right collided with a wall, move up to the wall but no
+            // farther.
+            distance = tankBox.getXDistance(barrier);
+            x = this.tank.x + ((distance - 1) * xDir);
+        }
     }
     
     if (diff && this.tank.x !== x)
