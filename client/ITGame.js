@@ -210,12 +210,12 @@ ITGame.prototype.draw = function() {
         // Draw FPS
         globals.ctx.fillStyle = "#ffffff";
         globals.ctx.font = "normal 18px sans-serif";
-        globals.ctx.fillText("FPS: " + this.fps, 500, 5);
+        globals.ctx.fillText("FPS: " + this.fps, 500, 20);
 	
 	// Draw scores
 	
 	for (var player in globals.players) {
-	    globals.ctx.fillText("Player: " + player + " Score: " + globals.players[player].score, 5, 5 + 20 * player);
+	    globals.ctx.fillText("Player: " + player + " Score: " + globals.players[player].score, 5, 25 + 20 * player);
 	}
 	
     }
