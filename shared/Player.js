@@ -8,7 +8,7 @@ var Player = function(team, playerID, opt_spawn) {
     this.team = team;
 
     if (!opt_spawn && opt_spawn !== 0)
-	opt_spawn = this.determine_spawn();
+	opt_spawn = this.determineSpawn();
     this.starting_spawn = opt_spawn;
 
     this.playerID = playerID;
@@ -413,7 +413,7 @@ Player.prototype.setAim = function(aim) {
 Player.prototype.takeHit = function(damage) {
     this.health -= damage;
     if (this.health <= 0) {
-	var spawn = this.determine_spawn();
+	var spawn = this.determineSpawn();
         this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
         this.tank.y = Player.SPAWN_POINTS[this.team][spawn].y;
         this.health = this.initHealth;
