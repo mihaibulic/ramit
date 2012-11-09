@@ -53,7 +53,7 @@ Mine.prototype.draw = function(level) {
 			globals.ctx.strokeStyle = globals.ctx.fillStyle;
 			globals.ctx.strokeRect(xPos-5, yPos-5, 10, 10);
  			globals.ctx.beginPath();
-			globals.ctx.arc(xPos, yPos, (this.range + 5)/2, 0, 2 * Math.PI, true);
+			globals.ctx.arc(xPos, yPos, this.range + 5, 0, 2 * Math.PI, true);
         	globals.ctx.closePath();
 			globals.ctx.stroke();
 		}
