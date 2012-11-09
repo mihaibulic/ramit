@@ -61,10 +61,12 @@ var ITGame = function(team, playerID) {
 			if (data.s !== undefined) {
 				for (var m in data.s) {
 					console.log("Mine %d exploded! Damaging %d player(s)!", m, data.s[m].h.length);
-					for (var h in data.s[m].h) {
-						globals.players[data.s[m].h[h]].takeHit(globals.mines[m].damage);
+					if (globals.mines[m]) {
+						for (var h in data.s[m].h) {
+							globals.players[data.s[m].h[h]].takeHit(globals.mines[m].damage);
+						}
+						delete globals.mines[m];
 					}
-					delete globals.mines[m];
 				}
 			}
 	    }
