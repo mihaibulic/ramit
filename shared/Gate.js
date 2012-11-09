@@ -24,12 +24,13 @@ Gate.prototype.draw = function(level) {
     var yPos = this.top - level.y - 5;
     
     if (xPos > -300 && xPos < 1000 && yPos > -20 && yPos < 500) {
-	if (this.health > 0)
-		globals.ctx.globalAlpha = this.health / 100;
-	    globals.ctx.drawImage(globals.resources.gates[this.team], xPos, yPos);
-		globals.ctx.globalAlpha = 1;
+		if (this.health > 0) {
+			globals.ctx.globalAlpha = this.health / 100;
+	   		globals.ctx.drawImage(globals.resources.gates[this.team], xPos, yPos);
+			globals.ctx.globalAlpha = 1;
+    	}
 		globals.ctx.drawImage(globals.resources.gates[2], xPos, yPos);
-    }
+	}
 
  if (globals.queries.debug === "true") {
      globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
