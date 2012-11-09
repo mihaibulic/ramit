@@ -144,7 +144,7 @@ Player.prototype.drawDetails = function(level) {
 	//name
 	globals.ctx.fillStyle = "#FFFFFF";
 	globals.ctx.font = "10px sans-serif";
-	globals.ctx.fillText("Player " + this.playerID, xPos + 10, yPos);
+	globals.ctx.fillText("Player " + this.playerID, xPos + 10, yPos + 2);
     }
 };
 
