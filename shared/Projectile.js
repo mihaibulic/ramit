@@ -31,6 +31,11 @@ Projectile.prototype.draw = function(level) {
         globals.ctx.closePath();
 
         globals.ctx.fill();
+
+    	if (globals.queries.debug === "true") {
+			globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
+			globals.ctx.strokeRect(xPos, yPos, rect.width(), rect.height());
+		}
     }
 };
 

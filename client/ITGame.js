@@ -191,11 +191,12 @@ ITGame.prototype.draw = function() {
         globals.ctx.font = "normal 18px sans-serif";
         globals.ctx.textBaseline = "top";
         globals.ctx.fillText("FPS: " + this.fps, 500, 5);
-    }
-    globals.ctx.fillStyle = "#ffffff";
-    globals.ctx.font = "normal 18px sans-serif";
-    globals.ctx.textBaseline = "top";
-    for (var player in globals.players) {
-        globals.ctx.fillText("Player: " + player + " Score: " + globals.players[player].score, 5, 5 + 20 * player);
+
+		// Draw scores
+		globals.ctx.textBaseline = "top";
+		for (var player in globals.players) {
+			globals.ctx.fillText("Player: " + player + " Score: " + globals.players[player].score, 5, 5 + 20 * player);
+		}
+
     }
 };
