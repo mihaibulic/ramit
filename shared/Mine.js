@@ -14,7 +14,7 @@ var Mine = function(player, m, projectile) {
 	    this.delay = 300; //5 sec delay
 	    player.mine.live++;
     }
-    else // rocket has hit, create mine
+    else 
     {
         this.isRocket = true;
         this.x = projectile.x;
@@ -37,7 +37,7 @@ Mine.prototype.update = function(globals) {
 			var dist = Math.sqrt(Math.pow(mineBox.getYDistance(playerBox), 2) + 
 									Math.pow(mineBox.getXDistance(playerBox), 2));
 			if (dist < this.range) {
-				hits[hits.length] = player;
+				hits.push(player);
 			}
 		}
 	}

@@ -70,8 +70,9 @@ var update = function() {
             if(server.projectiles[projectile].isRocket !== undefined)
             {
                 server.mines[server.m] = new Mine(server.players[pid], server.m, server.projectiles[projectile]);
-                msg = { i: pid, m: server.m };
-                io.sockets.emit('mine', msg);
+                if (!server.diff[pid])
+                    server.diff[pid] = {};
+                server.diff[pid].m = server.m;			    
                 server.m++;
             }
             
@@ -93,17 +94,18 @@ var update = function() {
 	for (var mine in server.mines) {
 		var hits = server.mines[mine].update(server);
 		if (hits.length > 0) {
+			if (!server.diff.s) server.diff.s = {};
+			server.diff.s[mine] = {};
+			server.diff.s[mine].h = [];
 			for (var hit in hits) {
+				server.diff.s[mine].h.push(hits[hit]);
 				server.players[hits[hit]].takeHit(server.mines[mine].damage);
 			}
-			msg = { m: mine, h: hits };
-			io.sockets.emit('splash', msg);
-
+            server.usedDiff = true;
             if(server.mines[mine].isRocket === undefined) // this is a mine
 			    server.players[server.mines[mine].owner].mine.live--;
             else
 			    server.players[server.mines[mine].owner].rocket.live--;
-                 
 			delete server.mines[mine];
 		}
 	}
