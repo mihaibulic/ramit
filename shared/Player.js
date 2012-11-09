@@ -356,7 +356,7 @@ Player.prototype.move = function(level, diff) {
     for (var p in globals.players) {
 	if (globals.players[p] === this) // Do not collide with myself
 	    continue;
-	barrier =  globals.players[p].getCollisonBarrier();
+	barrier =  globals.players[p].getCollisionBarrier();
         if (rectYMovement.intersects(barrier)) {
             // Moving up/down collided with a wall, move up to the wall but no
             // farther.
