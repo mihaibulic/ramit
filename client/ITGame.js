@@ -107,7 +107,7 @@ var ITGame = function(team, playerID) {
         if(!e)
             e = window.event;
         e.preventDefault();
-    }, this);
+    }, this));
 
 	window.addEventListener('mousedown', mouseEvent);
 	window.addEventListener('mouseup', mouseEvent);
