@@ -38,6 +38,8 @@ Gate.prototype.draw = function(level) {
 };
 
 Gate.prototype.getCollisionBarrier = function() {
+    if (this.health === 0)
+	return new Rectangle();
     return new Rectangle(this);
 };
 
