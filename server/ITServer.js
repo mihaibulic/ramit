@@ -82,6 +82,7 @@ var update = function() {
 			}
 			msg = { m: mine, h: hits };
 			io.sockets.emit('splash', msg);
+			delete server.mines[mine];
 		}
 	}
     if (server.usedDiff)
