@@ -103,11 +103,11 @@ var ITGame = function(team, playerID) {
 	window.addEventListener('keydown', keyEvent);
 	window.addEventListener('keyup', keyEvent);
     
-    window.addEventListener('oncontextmenu', globals.bind(function(e) {
+    window.oncontextmenu = function(e) {
         if(!e)
             e = window.event;
         e.preventDefault();
-    }, this));
+    };
 
 	window.addEventListener('mousedown', mouseEvent);
 	window.addEventListener('mouseup', mouseEvent);
