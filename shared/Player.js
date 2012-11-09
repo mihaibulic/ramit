@@ -158,7 +158,30 @@ Player.prototype.drawDetails = function(level) {
  * Draws the HUD, including HP, score, and the minimap.
  */
 Player.prototype.drawHUD = function() {
+
+    /** MINIMAP **/
     globals.ctx.drawImage(globals.resources.minimap, 830, 330);
+    
+    var x;
+    var y;
+    var other;
+    for (var id in globals.players) {
+	other = globals.players[id];
+	if (this.team === other.team || this.getCenterDistance(other) < 650) {
+	    x = 830 + ((other.tank.x + 30) * 0.05);
+	    y = 330 + ((other.tank.y + 30) * 0.05);
+	    globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[other.team];
+	    globals.ctx.beginPath();
+	    globals.ctx.arc(x, y, 2, 0, 2 * Math.PI);
+	    globals.ctx.closePath();
+	    globals.ctx.fill();
+	}
+    }
+
+    x = 150 - ((this.tank.x + 30) * 0.05);
+    y = 150 - ((this.tank.y + 30) * 0.05);
+    globals.ctx.drawImage(globals.resources.minimapfade, x, y, 150, 150, 830, 330, 150, 150);
+
 };
 
 /**
@@ -242,7 +265,6 @@ Player.prototype.updateKeys = function(e) {
 Player.prototype.update = function(level, diff) {        
     this.move(level, diff);
     this.projectile.lastFire++;
-	this.mine.lastMine++;
 };
 
 /**
@@ -392,7 +414,9 @@ Player.prototype.setKeyValue = function(keyValue) {
     this.keys.right = (keyValue & 8);
 };
 
-Player.prototype.upgrade = function(type, object) {
-    
-
+Player.prototype.getCenterDistance = function(object) {
+    if (object instanceof Player)
+	return Math.sqrt((this.tank.x - object.tank.x) * (this.tank.x - object.tank.x) +
+			 (this.tank.y - object.tank.y) * (this.tank.y - object.tank.y));
+    return 0;
 };

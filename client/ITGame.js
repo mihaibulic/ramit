@@ -3,6 +3,7 @@
  */
 var ITGame = function(team, playerID) {
     this.level = new Level();
+	var level = this.level;
 
     globals.socket = io.connect('ws://www.misquares.com');
     globals.socket.on('setup', globals.bind(function(data) {
@@ -20,6 +21,42 @@ var ITGame = function(team, playerID) {
 				globals.players[id].tank.y = data[id].y;
 			if (data[id].aim !== undefined)
 				globals.players[id].setAim(data[id].aim);
+			if (data[id].n !== undefined) {
+    			console.log("new projectile %d", data[id].n);
+    			globals.projectiles[data[id].n] = new Projectile(globals.players[id], data[id].n);
+			} 
+			if (data[id].m !== undefined) {
+				console.log("new mine %d", data[id].m);
+				globals.mines[data[id].m] = new Mine(globals.players[id], data[id].m);
+			}
+			if (data.h !== undefined) {
+				for (var n in data.h) {
+					console.log("projectile %d hit something", n);
+					if (data.h[n].t !== undefined) { //hit gate or player
+						var projectile = globals.projectiles[n];
+						var hitter = globals.players[projectile.owner];
+						if (hitter) {
+							//hitter still in game
+							hitter.score++;
+							hitter.totScore++;
+						}
+						if (data.h[n].i !== undefined) {
+							//hit player
+							var hit = globals.players[data.h[n].i];
+							hit.takeHit(projectile.damage);
+							console.log("projectile %d hit player %d health %d", n, data.h[n].i, hit.health);
+						} else {
+							//hit gate
+							var hit = level.gates[data.h[n].t];
+							hit.takeHit(projectile.damage);
+							console.log("projectile %d hit gate %d health %d", n, data.h[n].t, hit.health);
+						}
+					} else {
+						console.log("projectile %d hit a wall", n);
+					} 
+					delete globals.projectiles[n];
+				}
+			}
 	    }
 	});
 	
@@ -30,43 +67,6 @@ var ITGame = function(team, playerID) {
 	    delete globals.players[data.i];
 	});
 
-	//projectile messages
-	globals.socket.on('fire', function(data) {
-    	console.log("new projectile %d", data.n);
-    	globals.projectiles[data.n] = new Projectile(globals.players[data.i], data.n);
-	});
-	var level = this.level;
-	globals.socket.on('hit', function(data) {
-		if (data.t || data.t == 0) {
-			var projectile = globals.projectiles[data.n];
-			var hitter = globals.players[projectile.owner];
-			if (hitter) {
-				//hitter still in game
-				hitter.score++;
-				hitter.totScore++;
-			}
-			if (data.i || data.i === 0) {
-				//hit player
-				var hit = globals.players[data.i];
-				hit.takeHit(projectile.damage);
-				console.log("projectile %d hit player %d health %d", data.n, data.i, hit.health);
-			} else {
-				//hit gate
-				var hit = level.gates[data.t];
-				hit.takeHit(projectile.damage);
-				console.log("projectile %d hit gate %d health %d", data.n, data.t, hit.health);
-			}
-		} else {
-			console.log("projectile %d hit a wall", data.n);
-        }
-        delete globals.projectiles[data.n];
-	});
-
-	//mine messages
-	globals.socket.on('mine', function(data) {
-		console.log("new mine %d", data.m);
-		globals.mines[data.m] = new Mine(globals.players[data.i], data.m);
-	});
 	globals.socket.on('splash', function(data) {
 		console.log("Mine %d exploded! Damaging %d player(s)!", data.m, data.h.length);
 		for (var h in data.h) {

@@ -37,24 +37,21 @@ var update = function() {
             (player.keys.space === true || player.mouse.left === true)) 
         {
             server.projectiles[server.n] = new Projectile(player, server.n);
-            msg = { i: pid, n: server.n };
-            io.sockets.emit('fire', msg);
+			playerDiff.n = server.n;
             server.n++;
         }
         // check if the player should fire rocket
         if (player.rocket.allowed > player.rocket.live && player.rocket.lastFire > 15 && player.mouse.right === true)
         {
             server.projectiles[server.n] = new Projectile(player, server.n, true);
-            msg = { i: pid, n: server.n };
-            io.sockets.emit('fire', msg);
+			playerDiff.n = server.n;
             server.n++;
         }
         
         // mine
 		if (player.mine.allowed > player.mine.live && player.keys.mine === true) {
 			server.mines[server.m] = new Mine(player, server.m);
-			msg = { i: pid, m: server.m };
-			io.sockets.emit('mine', msg);
+			playerDiff.m = server.m;
 			server.m++;
 		}
         // Copy the differences found into the server's diff object.
@@ -86,8 +83,9 @@ var update = function() {
                 hitter.score++;
                 hitter.totScore++;
             }
-            msg = { n: projectile, t: target.team, i: target.playerID };
-            io.sockets.emit('hit', msg);
+			if (!server.diff.h) server.diff.h = {};
+            server.diff.h[projectile] = { t: target.team, i: target.playerID };
+            server.usedDiff = true;
         	delete server.projectiles[projectile];
         }
     }
