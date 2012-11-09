@@ -134,6 +134,15 @@ Player.prototype.drawDetails = function(level) {
         globals.ctx.strokeRect(xPos + 10, yPos + 55, 40, 3);
         globals.ctx.fillRect(xPos + 10, yPos + 55, 40 * this.health / this.initHealth, 3);
         globals.ctx.globalAlpha = 1;
+
+	//name
+	globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
+	globals.ctx.fillStyle = "#FFFFFF";
+	globals.ctx.font = "8px monospace";
+	globals.ctx.textAlign = "center";
+	globals.ctx.textBaseline = "top";
+	globals.ctx.fillText("name", xPos + 30, yPos - 10
+	globals.ctx.fillText("name", xPos + 30, yPos - 10);
     }
 };
 
