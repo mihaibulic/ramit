@@ -4,6 +4,8 @@ var Rocket = function(player, r) {
   this.owner = player.playerID;
   this.projectile = new Projectile(player, r);
   this.splash = [];
+
+  player.rocket.lastFire = 0;
 };
 
 Rocket.prototype.draw = function(level) {
@@ -30,6 +32,7 @@ Rocket.prototype.checkHit = function(globals, level) {
     hit = this.projectile.checkHit(globals, level);
 
     if(hit !== undefined) {
+      console.log("rocket has hit");
       this.splash = new Splash(this.projectile.x, this.projectile.y, this.range, this.damage);
       hit = this.splash.getHits(globals);
       delete this.projectile;
