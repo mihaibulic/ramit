@@ -1,8 +1,8 @@
-var Rocket = function(player, n) {
+var Rocket = function(player, r) {
   this.range = player.rocket.range;
   this.damage = player.rocket.damage;
   this.owner = player.playerID;
-  this.projectile = new Projectile(player, n);
+  this.projectile = new Projectile(player, r);
   this.splash = [];
 };
 

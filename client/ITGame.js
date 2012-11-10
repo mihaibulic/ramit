@@ -211,6 +211,11 @@ ITGame.prototype.draw = function() {
     globals.projectiles[projn].draw(this.level);
   }
 
+  //draw rockets
+  for(var rock in globals.rockets) {
+    globals.rockets[rock].draw(this.level);
+  }
+
   //draw mines
   for (var mine in globals.mines) {
     globals.mines[mine].draw(this.level);
