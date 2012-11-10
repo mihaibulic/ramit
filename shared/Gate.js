@@ -4,7 +4,7 @@ var Gate = function(team) {
   this.team = team;
   this.left = 1350;
   this.right = 1650;
-  if (team == 0) {
+  if (team === 0) {
     this.top = 493;
     this.bottom = 508;
   } else {

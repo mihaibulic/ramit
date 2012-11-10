@@ -7,7 +7,7 @@ var globals = {
     level: new Image(),
     tanks: new Image(),
     gates: new Image(),
-    minimapfade: new Image(),
+    minimapfade: new Image()
   },
   resources: {
     level: null,

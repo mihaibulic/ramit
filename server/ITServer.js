@@ -10,6 +10,7 @@ var server = {
   numberOfPlayers: 0,
   players: {},
   projectiles: {},
+  rockets: {},
   mines: {}, //will include all splash weapons
   gates: [new Gate(0), new Gate(1)],
   socketToId: {},
@@ -19,7 +20,8 @@ var server = {
   diff: {},
   usedDiff: false,
   n: 0,
-  m: 0
+  m: 0,
+  r: 0
 };
 
 // Define globals as an alias of server to make the shared code more compatible.
@@ -48,9 +50,9 @@ var update = function() {
         player.rocket.lastFire > 15 &&
         player.mouse.right === true)
     {
-      server.projectiles[server.n] = new Projectile(player, server.n, true);
-      playerDiff.n = server.n;
-      server.n++;
+      server.rockets[server.r] = new Rocket(player, server.r);
+      playerDiff.r = server.r;
+      server.r++;
     }
 
     // mine
@@ -72,18 +74,6 @@ var update = function() {
     server.projectiles[projectile].update(server.level);
     var target = server.projectiles[projectile].checkHit(server, server.level);
     if (target) {
-      if(server.projectiles[projectile].isRocket !== undefined)
-      {
-        var pid = server.projectiles[projectile].owner;
-        server.mines[server.m] =
-          new Mine(server.players[pid], server.m, server.projectiles[projectile]);
-        if (!server.diff[pid])
-          server.diff[pid] = {};
-        server.diff[pid].m = server.m;
-        server.diff[pid].mn = projectile;
-        server.m++;
-      }
-
       if (target !== 1) {
         target.takeHit(server.projectiles[projectile].damage);
       }
@@ -98,6 +88,26 @@ var update = function() {
       delete server.projectiles[projectile];
     }
   }
+
+  // update all rockets
+  for(var r in server.rockets) {
+    var rocket = server.rockets[r];
+    rocket.update(server.level);
+    var rhits = rocket.checkHit(server, server.level);
+    if (rhits.length > 0) {
+      if (!server.diff.rh) server.diff.rh = {};
+      server.diff.rh[r] = {};
+      server.diff.rh[r].h = [];
+      for (var rhit in rhits) {
+        server.diff.rh[r].h.push(rhits[rhit]);
+        server.players[rhits[rhit]].takeHit(rocket.damage);
+      }
+      server.usedDiff = true;
+      server.players[rocket.owner].rocket.live--;
+      delete server.rockets[r];
+    }
+  }
+
   // update all mines
   for (var mine in server.mines) {
     var hits = server.mines[mine].update(server);
@@ -110,10 +120,7 @@ var update = function() {
         server.players[hits[hit]].takeHit(server.mines[mine].damage);
       }
       server.usedDiff = true;
-      if(server.mines[mine].isRocket === undefined) // this is a mine
-        server.players[server.mines[mine].owner].mine.live--;
-      else
-        server.players[server.mines[mine].owner].rocket.live--;
+      server.players[server.mines[mine].owner].mine.live--;
       delete server.mines[mine];
     }
   }

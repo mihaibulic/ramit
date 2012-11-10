@@ -25,12 +25,13 @@ var ITGame = function(team, playerID) {
           console.log("new projectile %d", data[id].n);
           globals.projectiles[data[id].n] = new Projectile(globals.players[id], data[id].n);
         }
+        if (data[id].r !== undefined) {
+          console.log("new rocket %d", data[id].r);
+          globals.rockets[data[id].r] = new Rocket(globals.players[id], data[id].r);
+        }
         if (data[id].m !== undefined) {
           console.log("new mine %d", data[id].m);
-          if(data[id].mn === undefined)
-            globals.mines[data[id].m] = new Mine(globals.players[id], data[id].m);
-          else
-            globals.mines[data[id].m] = new Mine(globals.players[id], data[id].m, globals.projectiles[data[id].mn]);
+          globals.mines[data[id].m] = new Mine(globals.players[id], data[id].m);
         }
         if (data.h !== undefined) {
           for (var n in data.h) {
@@ -43,14 +44,15 @@ var ITGame = function(team, playerID) {
                   hitter.score++;
                   hitter.totScore++;
                 }
+                var hit = [];
                 if (data.h[n].i !== undefined) {
                   //hit player
-                  var hit = globals.players[data.h[n].i];
+                  hit = globals.players[data.h[n].i];
                   hit.takeHit(projectile.damage);
                   console.log("projectile %d hit player %d health %d", n, data.h[n].i, hit.health);
                 } else {
                   //hit gate
-                  var hit = level.gates[data.h[n].t];
+                  hit = level.gates[data.h[n].t];
                   hit.takeHit(projectile.damage);
                   console.log("projectile %d hit gate %d health %d", n, data.h[n].t, hit.health);
                 }
@@ -59,6 +61,17 @@ var ITGame = function(team, playerID) {
               console.log("projectile %d hit a wall", n);
             }
             delete globals.projectiles[n];
+          }
+        }
+        if (data.rh !== undefined) {
+          for (var r in data.rh) {
+            console.log("Rocket %d exploded! Damaging %d player(s)!", r, data.rh[r].h.length);
+            if (globals.rockets[r]) {
+              for (var rh in data.rh[r].h) {
+                globals.players[data.rh[r].h[rh]].takeHit(globals.rockets[r].damage);
+              }
+              delete globals.rockets[r];
+            }
           }
         }
         if (data.s !== undefined) {
@@ -209,7 +222,7 @@ ITGame.prototype.draw = function() {
   }
 
   //draw players info
-  for (var pid in globals.players) {
+  for (pid in globals.players) {
     if (pid != this.player) // Only draw if this tank is not the player.
       globals.players[pid].drawDetails(this.level);
   }

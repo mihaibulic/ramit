@@ -50,6 +50,9 @@ var Player = function(team, playerID, opt_spawn) {
   };
   this.rocket = {
     lastFire: 0,
+    range: 60,
+    damage: 10,
+    speed: 7,
     live: 0,
     allowed: 1
   };
