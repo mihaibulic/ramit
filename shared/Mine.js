@@ -3,33 +3,32 @@
  */
 var Mine = function(player, m) {
   this.owner = player.playerID;
-  this.damage = player.mine.damage;
-  this.range = player.mine.range;
   this.m = m;
   this.x = player.tank.x+30; //center of mine
   this.y = player.tank.y+30;
+  this.range = player.mine.range;
+  this.damage = player.mine.damage;
   this.delay = 300; //5 sec delay
+  this.splash = [];
+
   player.mine.live++;
 };
 
 Mine.prototype.update = function(globals) {
   var hits = [];
+
   if (this.delay > 0) {
     this.delay--;
-    if (this.delay === 0)
-      console.log("MINE %d IS LIVE!", this.m);
   }
   else {
-    var mineBox = this.getCollisionBarrier();
-    for (var player in globals.players) {
-      var playerBox = globals.players[player].getCollisionBarrier();
-      var dist = Math.sqrt(Math.pow(mineBox.getYDistance(playerBox), 2) +
-                           Math.pow(mineBox.getXDistance(playerBox), 2));
-      if (dist < this.range) {
-        hits.push(player);
-      }
+    if(this.delay === 0) {
+      this.splash = new Splash(this.x, this.y, this.range.range, this.damage);
+      console.log("MINE %d IS LIVE!", this.m);
     }
+
+    hits = splash.getHits(globals);
   }
+
   return hits;
 };
 
