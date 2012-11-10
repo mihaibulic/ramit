@@ -14,8 +14,8 @@ Splash.prototype.getHits = function(globals) {
   var hitBox = this.getCollisionBarrier();
   for (var player in globals.players) {
     var playerBox = globals.players[player].getCollisionBarrier();
-    var dist = Math.sqrt(Math.pow(mineBox.getYDistance(playerBox), 2) +
-                         Math.pow(mineBox.getXDistance(playerBox), 2));
+    var dist = Math.sqrt(Math.pow(hitBox.getYDistance(playerBox), 2) +
+                         Math.pow(hitBox.getXDistance(playerBox), 2));
     if (dist < this.range) {
       hits.push(player);
     }
