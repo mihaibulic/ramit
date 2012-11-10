@@ -30,7 +30,7 @@ Rocket.prototype.checkHit = function(globals, level) {
     hit = this.projectile.checkHit(globals, level);
 
     if(hit !== undefined) {
-      splash = new Splash(this.projectile.x, this.projectile.y, this.range, this.damage);
+      this.splash = new Splash(this.projectile.x, this.projectile.y, this.range, this.damage);
       hit = this.splash.getHits(globals);
       delete this.projectile;
     }
