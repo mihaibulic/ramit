@@ -5,7 +5,7 @@ var Rocket = function(player, r) {
   this.projectile = new Projectile(player, r);
   this.splash = [];
 
-  console.log("rocket fire from (" + player.x + ", " + player.y);
+  console.log("rocket fire from (" + player.tank.x + ", " + player.tank.y);
 
   player.rocket.lastFire = 0;
 };
