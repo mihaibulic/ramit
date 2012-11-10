@@ -1,97 +1,97 @@
 var Projectile = function(player, n, isRocket) {
-    var speed = player.projectile.speed;
-    var turretLength = 30;
-    this.n = n;
-    var degrees = player.tank.turretAim * 2;
-    var rads = degrees * Math.PI / 180;
-    this.vx = Math.cos(rads);
-    this.vy = Math.sin(rads);
-    // (tank center) + (turret offset)
-    this.x = (player.tank.x + 25) + (this.vx * turretLength);
-    this.y = (player.tank.y + 25) + (this.vy * turretLength);
-    this.vx *= speed;
-    this.vy *= speed;
-    this.team = player.team;
-    this.owner = player.playerID; // for score tracking
-    this.damage = player.projectile.damage;
+  var speed = player.projectile.speed;
+  var turretLength = 30;
+  this.n = n;
+  var degrees = player.tank.turretAim * 2;
+  var rads = degrees * Math.PI / 180;
+  this.vx = Math.cos(rads);
+  this.vy = Math.sin(rads);
+  // (tank center) + (turret offset)
+  this.x = (player.tank.x + 25) + (this.vx * turretLength);
+  this.y = (player.tank.y + 25) + (this.vy * turretLength);
+  this.vx *= speed;
+  this.vy *= speed;
+  this.team = player.team;
+  this.owner = player.playerID; // for score tracking
+  this.damage = player.projectile.damage;
 
-    if(isRocket === undefined)
-    {
-        player.projectile.lastFire = 0;
-    }
-    else
-    {
-        this.isRocket = isRocket;
-        player.rocket.live++;
-        player.rocket.lastFire = 0;
-    }
+  if(isRocket === undefined)
+  {
+    player.projectile.lastFire = 0;
+  }
+  else
+  {
+    this.isRocket = isRocket;
+    player.rocket.live++;
+    player.rocket.lastFire = 0;
+  }
 };
 
 Projectile.prototype.draw = function(level) {
-    var xPos = this.x - level.x;
-    var yPos = this.y - level.y;
+  var xPos = this.x - level.x;
+  var yPos = this.y - level.y;
 
-    if (xPos > -20 && xPos < 1000 && yPos > -20 && yPos < 500) {
-        var rect = this.getCollisionBarrier();
+  if (xPos > -20 && xPos < 1000 && yPos > -20 && yPos < 500) {
+    var rect = this.getCollisionBarrier();
 
-        globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[this.team];
+    globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[this.team];
 
-        globals.ctx.beginPath();
-        globals.ctx.arc(xPos+5, yPos+5, rect.width()/2, 0 , 2 * Math.PI, true);
-        globals.ctx.closePath();
+    globals.ctx.beginPath();
+    globals.ctx.arc(xPos+5, yPos+5, rect.width()/2, 0 , 2 * Math.PI, true);
+    globals.ctx.closePath();
 
-        globals.ctx.fill();
+    globals.ctx.fill();
 
-    	if (globals.queries.debug === "true") {
-			globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
-			globals.ctx.strokeRect(xPos, yPos, rect.width(), rect.height());
-		}
+    if (globals.queries.debug === "true") {
+      globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
+      globals.ctx.strokeRect(xPos, yPos, rect.width(), rect.height());
     }
+  }
 };
 
 Projectile.prototype.update = function(level) {
-    this.move(level);    
+  this.move(level);
 };
 
 Projectile.prototype.move = function(level) {
-    this.x = this.x + this.vx;
-    this.y = this.y + this.vy;
-    //client does no collision detection
+  this.x = this.x + this.vx;
+  this.y = this.y + this.vy;
+  //client does no collision detection
 };
 
 /**
  * Returns -1 if hit wall, PlayerID if hit player, undefined if no hit
  */
 Projectile.prototype.checkHit = function(globals, level) {
-    var box = this.getCollisionBarrier();
-    //check walls
-    for (var i in level.walls) {
-        if (box.intersects(level.walls[i])) {
-            console.log("HIT WALL");
-            return 1;
-        }
+  var box = this.getCollisionBarrier();
+  //check walls
+  for (var i in level.walls) {
+    if (box.intersects(level.walls[i])) {
+      console.log("HIT WALL");
+      return 1;
     }
-    //check players of other teams
-    for (var player in globals.players) {
-        if (globals.players[player].team != this.team && 
-                box.intersects(globals.players[player].getCollisionBarrier())) {
-			console.log("HIT PLAYER");
-            return globals.players[player];
-        }
+  }
+  //check players of other teams
+  for (var player in globals.players) {
+    if (globals.players[player].team != this.team &&
+        box.intersects(globals.players[player].getCollisionBarrier())) {
+      console.log("HIT PLAYER");
+      return globals.players[player];
     }
-	//check gates 
-	for (var g in level.gates) {
-		if (this.team !== level.gates[g].team && 
-				box.intersects(level.gates[g].getCollisionBarrier())) {
-			console.log("HIT GATE");
-			return level.gates[g];
-		}
-	}
+  }
+  //check gates
+  for (var g in level.gates) {
+    if (this.team !== level.gates[g].team &&
+        box.intersects(level.gates[g].getCollisionBarrier())) {
+      console.log("HIT GATE");
+      return level.gates[g];
+    }
+  }
 };
 
 Projectile.prototype.getCollisionBarrier = function(location) {
-    if (!location)
-        location = this;
-    return new Rectangle({left: location.x, right: location.x + 10,
-        top: location.y, bottom: location.y + 10});
+  if (!location)
+    location = this;
+  return new Rectangle({left: location.x, right: location.x + 10,
+                        top: location.y, bottom: location.y + 10});
 };
