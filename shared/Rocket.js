@@ -24,7 +24,7 @@ Rocket.prototype.move = function(level) {
 };
 
 Rocket.prototype.checkHit = function(globals, level) {
-  var hit = [];
+  var hit;
 
   if(this.projectile !== undefined) {
     hit = this.projectile.checkHit(globals, level);

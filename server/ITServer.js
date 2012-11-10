@@ -91,19 +91,18 @@ var update = function() {
 
   // update all rockets
   for(var r in server.rockets) {
-    var rocket = server.rockets[r];
-    rocket.update(server.level);
-    var rhits = rocket.checkHit(server, server.level);
-    if (rhits.length > 0) {
+    server.rockets[r].update(server.level);
+    var rhits = server.rockets[r].checkHit(server, server.level);
+    if (rhits !== undefined && rhits.length > 0) {
       if (!server.diff.rh) server.diff.rh = {};
       server.diff.rh[r] = {};
       server.diff.rh[r].h = [];
       for (var rhit in rhits) {
         server.diff.rh[r].h.push(rhits[rhit]);
-        server.players[rhits[rhit]].takeHit(rocket.damage);
+        server.players[rhits[rhit]].takeHit(server.rockets[r].damage);
       }
       server.usedDiff = true;
-      server.players[rocket.owner].rocket.live--;
+      server.players[server.rockets[r].owner].rocket.live--;
       delete server.rockets[r];
     }
   }
