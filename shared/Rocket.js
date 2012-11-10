@@ -7,19 +7,19 @@ var Rocket = function(player, r) {
 };
 
 Rocket.prototype.draw = function(level) {
-  if(this. projectile !== undefined)
+  if(this.projectile !== undefined)
     this.projectile.draw(level);
   // else
     // draw rocket blast
 };
 
 Rocket.prototype.update = function(level) {
-  if(this. projectile !== undefined)
+  if(this.projectile !== undefined)
     this.projectile.update(level);
 };
 
 Rocket.prototype.move = function(level) {
-  if(this. projectile !== undefined)
+  if(this.projectile !== undefined)
     this.projectile.move(level);
 };
 
@@ -40,7 +40,7 @@ Rocket.prototype.checkHit = function(globals, level) {
 };
 
 Rocket.prototype.getCollisionBarrier = function(location) {
-  if(this. projectile !== undefined)
+  if(this.projectile !== undefined)
     return this.projectile.getCollisionBarrier(location);
   else
     return this.splash.getCollisionBarrer();
