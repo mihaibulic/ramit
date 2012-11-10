@@ -93,7 +93,7 @@ var update = function() {
   for(var r in server.rockets) {
     server.rockets[r].update(server.level);
     var rhits = server.rockets[r].checkHit(server, server.level);
-    if (rhits !== undefined && rhits.length > 0) {
+    if (rhits !== undefined) {
       if (!server.diff.rh) server.diff.rh = {};
       server.diff.rh[r] = {};
       server.diff.rh[r].h = [];
