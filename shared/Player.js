@@ -36,7 +36,7 @@ var Player = function(team, playerID, opt_spawn) {
   this.initHealth = 100;
   this.health = this.initHealth;
   this.score = 0;                                //for spending on upgrades
-  this.totScore = 0;             //for traking total score, both incremented the same
+  this.totalScore = 0;             //for traking total score, both incremented the same
   this.projectile = {
     damage: 5,
     speed: 10,
@@ -404,7 +404,7 @@ Player.prototype.getAim = function() {
 };
 
 /**
- * @param aim The direction the turret is aiming.
+ * @param aim {Number} The direction the turret is aiming.
  */
 Player.prototype.setAim = function(aim) {
   this.tank.turretAim = aim;
@@ -412,15 +412,30 @@ Player.prototype.setAim = function(aim) {
 
 /**
  * Causes damage to tank. Kills tank if dead (returns to spawn point)
+ * @param damage {Number} The amount of damage the player has taken.
+ * @returns {Number} The number of points the hit earned.
  */
 Player.prototype.takeHit = function(damage) {
   this.health -= damage;
+  var points = damage;
   if (this.health <= 0) {
     var spawn = this.determineSpawn();
     this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
     this.tank.y = Player.SPAWN_POINTS[this.team][spawn].y;
     this.health = this.initHealth;
+    points += 25;
   }
+
+  return points;
+};
+
+/**
+ * Adds points to the player's score.
+ * @param {Number} amount The amount of points earned.
+ */
+Player.prototype.addPoints = function(amount) {
+  this.score += amount;
+  this.totalScore += amount;
 };
 
 /**
@@ -465,6 +480,9 @@ Player.prototype.getCenterDistance = function(object) {
   if (object instanceof Player)
     return Math.sqrt((this.tank.x - object.tank.x) * (this.tank.x - object.tank.x) +
                      (this.tank.y - object.tank.y) * (this.tank.y - object.tank.y));
+  if (object instanceof Explosion)
+    return Math.sqrt((this.tank.x + 30 - object.x) * (this.tank.x + 30 - object.x) +
+                     (this.tank.y + 30 - object.y) * (this.tank.y + 30 - object.y));
   return 0;
 };
 

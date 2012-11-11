@@ -33,14 +33,15 @@ var globals = server;
 var update = function() {
   var playerDiff;
   var msg;
+
+  // Players
   for (var pid in server.players) {
     playerDiff = {};
     var player = server.players[pid];
     player.update(server.level, playerDiff);
     // check if the player should fire projectile
     if (player.projectile.lastFire > 10 &&
-        (player.keys.space === true || player.mouse.left === true))
-    {
+        (player.keys.space === true || player.mouse.left === true)) {
       server.projectiles[server.n] = new Projectile(player, server.n);
       playerDiff.n = server.n;
       server.n++;
@@ -48,8 +49,7 @@ var update = function() {
     // check if the player should fire rocket
     if (player.rocket.allowed > player.rocket.live &&
         player.rocket.lastFire > 15 &&
-        player.mouse.right === true)
-    {
+        player.mouse.right === true) {
       server.rockets[server.r] = new Rocket(player, server.r);
       playerDiff.r = server.r;
       server.r++;
@@ -69,22 +69,17 @@ var update = function() {
       server.usedDiff = true;
     }
   }
+
   // update and check for hits in projectiles
   for (var projectile in server.projectiles) {
     server.projectiles[projectile].update(server.level);
     var target = server.projectiles[projectile].checkHit(server, server.level);
     if (target) {
-      if (target !== 1) {
+
+      if (target.takeHit)
         target.takeHit(server.projectiles[projectile].damage);
-      }
-      var hitter = server.players[server.projectiles[projectile].owner];
-      if (hitter) {
-        hitter.score++;
-        hitter.totScore++;
-      }
-      if (!server.diff.h) server.diff.h = {};
-      server.diff.h[projectile] = { t: target.team, i: target.playerID };
-      server.usedDiff = true;
+
+
       delete server.projectiles[projectile];
     }
   }

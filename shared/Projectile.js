@@ -1,3 +1,8 @@
+/**
+ * A Projectile is a weapon that it shot from the turret.
+ * @param {Player} player The player that shot the projectile.
+ * @param {Number} n An id for the projectile.
+ */
 var Projectile = function(player, n) {
   var speed = player.projectile.speed;
   var turretLength = 30;
@@ -17,6 +22,10 @@ var Projectile = function(player, n) {
   player.projectile.lastFire = 0;
 };
 
+/**
+ * Draws the projectile.
+ * @param {Level} level The state of the level.
+ */
 Projectile.prototype.draw = function(level) {
   var xPos = this.x - level.x;
   var yPos = this.y - level.y;
@@ -39,26 +48,28 @@ Projectile.prototype.draw = function(level) {
   }
 };
 
+/**
+ * Updates the projectile.
+ * @param {Level} level The state of the level.
+ */
 Projectile.prototype.update = function(level) {
-  this.move(level);
-};
-
-Projectile.prototype.move = function(level) {
   this.x = this.x + this.vx;
   this.y = this.y + this.vy;
-  //client does no collision detection
 };
 
 /**
- * Returns -1 if hit wall, PlayerID if hit player, undefined if no hit
+ * Checks if the projectile has hit something.
+ * @param {Level} level The state of the level.
+ * @returns {Object | Number} The object that was hit or null if nothing was
+ *     hit.
  */
-Projectile.prototype.checkHit = function(globals, level) {
+Projectile.prototype.checkHit = function(level) {
   var box = this.getCollisionBarrier();
   //check walls
   for (var i in level.walls) {
     if (box.intersects(level.walls[i])) {
       console.log("HIT WALL");
-      return 1;
+      return {};
     }
   }
   //check players of other teams
@@ -77,8 +88,12 @@ Projectile.prototype.checkHit = function(globals, level) {
       return level.gates[g];
     }
   }
+  return null;
 };
 
+/**
+ * @returns {Rectangle} A box describing the location of the projectile.
+ */
 Projectile.prototype.getCollisionBarrier = function(location) {
   if (!location)
     location = this;

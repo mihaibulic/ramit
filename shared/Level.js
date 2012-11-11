@@ -1,3 +1,6 @@
+/**
+ * The state object for the Level.
+ */
 var Level = function() {
   this.x = 0;
   this.y = 0;

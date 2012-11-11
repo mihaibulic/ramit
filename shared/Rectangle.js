@@ -15,6 +15,7 @@ var Rectangle = function(box) {
 };
 
 /**
+ * Checks if two rectangles are intersecting.
  * @param rect The other rectangle to check.
  * @returns {Boolean} true if the rectangles are intersecting.
  */

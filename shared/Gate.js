@@ -1,4 +1,7 @@
-
+/**
+ * A Gate protecting the player's base.
+ * @param {Number} team The team number for the gate.
+ */
 var Gate = function(team) {
   this.health = 1000;
   this.team = team;
@@ -13,11 +16,21 @@ var Gate = function(team) {
   }
 };
 
+/**
+ * Damage the gate.
+ * @param {Number} The amount of damage the gate receives.
+ * @returns {Number} The number of points earned for the hit.
+ */
 Gate.prototype.takeHit = function(damage) {
   this.health -= damage;
   if (this.health < 0) this.health = 0;
+  return 0;
 };
 
+/**
+ * Draws the gate.
+ * @param {Level} level The state of the level.
+ */
 Gate.prototype.draw = function(level) {
   var box = this.getCollisionBarrier();
   var xPos = this.left - level.x;
@@ -40,6 +53,9 @@ Gate.prototype.draw = function(level) {
   }
 };
 
+/**
+ * @returns {Rectangle} A box describing the location of the gate.
+ */
 Gate.prototype.getCollisionBarrier = function() {
   if (this.health === 0)
     return new Rectangle();
