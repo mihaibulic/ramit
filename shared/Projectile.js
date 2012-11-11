@@ -162,9 +162,9 @@ Projectile.prototype.update = function() {
   }
 
   if (globals.diff) {
-    if (globals.diff.q)
+    if (!globals.diff.q)
       globals.diff.q = {};
-    if (globals.diff.q[this.id])
+    if (!globals.diff.q[this.id])
       globals.diff.q[this.id] = {};
 
     if (this.vx)
