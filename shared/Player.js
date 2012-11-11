@@ -91,7 +91,7 @@ var Player = function(team, playerID, opt_state) {
     lastFire: 0,
     coolDown: 120
   };
-  this.special[Player.SpecialType.ROCKET = this.projectile[Projectile.Type.ROCKET];//this is a hack
+  this.special[Player.SpecialType.ROCKET] = this.projectile[Projectile.Type.ROCKET];//this is a hack
   this.special[Player.SpecialType.EMP] = {
     range: 60,
     damage: 30,
