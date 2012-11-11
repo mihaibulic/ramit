@@ -89,7 +89,7 @@ Projectile.prototype.getAbsoluteState = function() {
 
 /**
  * Draws the projectile.
- * @param [int] team for drawing only friendly mines
+ * @param {int} team for drawing only friendly mines
  */
 Projectile.prototype.draw = function(team) {
   var xPos = this.x - globals.level.x;

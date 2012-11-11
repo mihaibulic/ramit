@@ -52,8 +52,27 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
 
 /**
  * Draws the explosion on the screen.
- * @returns {Boolean}
+ * @returns {Boolean} true when complete
  */
 Explosion.prototype.draw = function() {
-  // nothing yet, but will eventually be fantastic explosion;
+  var xPos = this.x - globals.level.x;
+  var yPos = this.y - globals.level.y;
+
+  if (this.damage < 0) //EMT/medic
+    globals.ctx.strokeStyle = "#00FF00";
+  else if (this.damage === 0) // EMP 
+    globals.ctx.strokeStyle = "#440077";
+  else //normal
+    globals.ctx.strokeStyle = "#FFFFFF";
+  globals.ctx.lineWidth = 5;
+  globals.ctx.beginPath();
+  globals.ctx.arc(xPos, yPos, (this.animationFrame + 1) / 5 * this.range, 0 , 2 * Math.PI);
+  globals.ctx.closePath();
+  globals.ctx.stroke();
+
+  globals.ctx.lineWidth = 1;
+  this.animationFrame++;
+  if (this.animationFrame > 5)
+    return true;
+  return false;
 };
