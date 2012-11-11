@@ -89,8 +89,9 @@ Projectile.prototype.getAbsoluteState = function() {
 
 /**
  * Draws the projectile.
+ * @param [int] team for drawing only friendly mines
  */
-Projectile.prototype.draw = function() {
+Projectile.prototype.draw = function(team) {
   var xPos = this.x - globals.level.x;
   var yPos = this.y - globals.level.y;
 
@@ -98,12 +99,14 @@ Projectile.prototype.draw = function() {
     var rect = this.getCollisionBarrier();
 
     globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[this.team];
+    
+    if (this.type !== Projectile.Type.MINE || this.team === team) {
+      globals.ctx.beginPath();
+      globals.ctx.arc(xPos, yPos, rect.width() / 2, 0 , 2 * Math.PI);
+      globals.ctx.closePath();
 
-    globals.ctx.beginPath();
-    globals.ctx.arc(xPos, yPos, rect.width() / 2, 0 , 2 * Math.PI);
-    globals.ctx.closePath();
-
-    globals.ctx.fill();
+      globals.ctx.fill();
+    }
 
     if (globals.queries.debug === "true") {
       globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
