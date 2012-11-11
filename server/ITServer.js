@@ -55,7 +55,7 @@ var update = function() {
     }
 
     // Rocket
-    if (player.projectile[Projectile.Type.NORMAL].lastFire > 120 &&
+    if (player.projectile[Projectile.Type.ROCKET].lastFire > 120 &&
         (player.mouse.right === true)) {
       globals.projectiles[Projectile.nextID] =
         new Projectile(player, Projectile.Type.ROCKET, Projectile.nextID);
