@@ -100,7 +100,7 @@ var getAbsoluteState = function() {
   state.b = {};
   for (id in globals.level.gates) {
     // TODO: Add HQ stuff
-    state.b[id] = global.level.gates[id].health;
+    state.b[id] = globals.level.gates[id].health;
   }
   return state;
 };
