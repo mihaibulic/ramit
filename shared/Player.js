@@ -305,24 +305,24 @@ Player.prototype.updateKeys = function(e) {
   var value = e.type === "keydown";
   switch (e.keyCode) {
   case 87: // W
-    //this.keys.up = value;
-    if (this.keys.up !== value)
+    if (this.keys.up != value)
       diff.u = value;
+    this.keys.up = value;
     break;
   case 65: // A
-    //this.keys.left = value;
     if (this.keys.left != value)
       diff.l = value;
+    this.keys.left = value;
     break;
   case 83: // S
-    //this.keys.down = value;
     if (this.keys.down != value)
       diff.d = value;
+    this.keys.down = value;
     break;
   case 68: // D
-    //this.keys.right = value;
     if (this.keys.right != value)
       diff.r = value;
+    this.keys.right = value;
     break;
   case 32: // Space
     if (this.keys.space != value)
