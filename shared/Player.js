@@ -76,8 +76,8 @@ var Player = function(team, playerID, opt_state) {
     coolDown: 10
   };
   this.projectile[Projectile.Type.MINE] = {
-    range: 1000,
-    damage: 200,
+    range: 80,
+    damage: 20,
     speed: 0,
     live: 0,
     allowed: 5,
@@ -86,7 +86,7 @@ var Player = function(team, playerID, opt_state) {
   };
   this.projectile[Projectile.Type.ROCKET] = {
     range: 60,
-    damage: 50,
+    damage: 30,
     speed: 7,
     lastFire: 0,
     coolDown: 120
