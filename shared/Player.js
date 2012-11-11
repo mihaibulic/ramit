@@ -502,7 +502,7 @@ Player.prototype.setAim = function(aim) {
 };
 
 Player.prototype.canFire = function(type) {
-  return this.projectile[type].lastFire >= coolDown;
+  return this.projectile[type].lastFire >= this.projectile[type].coolDown;
 };
 
 /**
