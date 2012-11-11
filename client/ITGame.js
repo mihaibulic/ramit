@@ -11,6 +11,11 @@ var ITGame = function(team, playerID) {
 
     globals.socket.on('leave', function(data) {
       delete globals.players[data.i];
+      // Remove all projectiles owned by this player.
+      for (var qid in globals.projectiles) {
+        if (globals.projectiles[qid].owner === data.i)
+          delete globals.projectiles[qid];
+      }
     });
 
     this.loadState(data.s);

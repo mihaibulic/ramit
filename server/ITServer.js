@@ -185,6 +185,11 @@ io.sockets.on('connection', function(socket) {
       clearInterval(globals.interval);
       globals.interval = null;
     }
+    // Remove all projectiles owned by this player.
+    for (var qid in globals.projectiles) {
+      if (globals.projectiles[qid].owner === id)
+        delete globals.projectiles[qid];
+    }
     // Notify the other players that a player has left.
     socket.broadcast.emit('leave', {i: id});
     globals.playerIDQueue.push(id);
