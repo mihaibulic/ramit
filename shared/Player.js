@@ -222,7 +222,7 @@ Player.prototype.draw = function() {
       xPos - 7, yPos - 7);
     // Draw the shield.
     if (this.hasShield) {
-      var grad = globals.ctx.createRadialGradient(30, 30, 10, 30, 30, 60);
+      var grad = globals.ctx.createRadialGradient(xPos+30, yPos+30, 10, xPos+30, yPos+30, 60);
       grad.addColorStop(0, Player.TEAM_COLOR_LIGHT[this.team]);
       grad.addColorStop(1, Player.TEAM_COLOR[this.team]);
       globals.ctx.fillStyle = grad;
