@@ -505,10 +505,7 @@ Player.prototype.setAim = function(aim) {
 Player.prototype.takeHit = function(damage, ownerTeam) {
   this.health -= damage;
   var points = damage;
-  if (ownerTeam === this.team) {
-    console.log("FRIENDLY FIRE!");
-    points *= -1;
-  }
+ 
   if (this.health <= 0) {
     var spawn = this.determineSpawn();
     this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
@@ -536,6 +533,10 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
     globals.diff.p[this.playerID].h = this.health;
   }
 
+  if (ownerTeam === this.team) {
+    console.log("FRIENDLY FIRE!");
+    points *= -1;
+  }
   return points;
 };
 
