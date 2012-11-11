@@ -360,6 +360,7 @@ Player.prototype.updateKeys = function(e) {
 Player.prototype.update = function() {
   this.move();
   this.projectile[Projectile.Type.NORMAL].lastFire++;
+  this.projectile[Projectile.Type.MINE].lastFire++;
   this.projectile[Projectile.Type.ROCKET].lastFire++;
 };
 
