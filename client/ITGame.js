@@ -204,6 +204,11 @@ ITGame.prototype.draw = function() {
                           -1 * levelX + 1000, -1 * levelY + 1000);
   }
 
+  //draw mines
+  for (var mine in globals.mines) {
+    globals.mines[mine].draw(this.level);
+  }
+
   //draw players
   for (var pid in globals.players) {
     globals.players[pid].draw(this.level);
@@ -217,11 +222,6 @@ ITGame.prototype.draw = function() {
   //draw rockets
   for(var rock in globals.rockets) {
     globals.rockets[rock].draw(this.level);
-  }
-
-  //draw mines
-  for (var mine in globals.mines) {
-    globals.mines[mine].draw(this.level);
   }
 
   //draw gates

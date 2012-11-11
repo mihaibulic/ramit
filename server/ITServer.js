@@ -107,22 +107,6 @@ var update = function() {
     }
   }
 
-  // update all mines
-  for (var mine in server.mines) {
-    var hits = server.mines[mine].update(server);
-    if (hits.length > 0) {
-      if (!server.diff.s) server.diff.s = {};
-      server.diff.s[mine] = {};
-      server.diff.s[mine].h = [];
-      for (var hit in hits) {
-        server.diff.s[mine].h.push(hits[hit]);
-        server.players[hits[hit]].takeHit(server.mines[mine].damage);
-      }
-      server.usedDiff = true;
-      server.players[server.mines[mine].owner].mine.live--;
-      delete server.mines[mine];
-    }
-  }
   if (server.usedDiff)
     io.sockets.emit('state', server.diff);
   server.diff = {};
