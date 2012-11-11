@@ -100,7 +100,7 @@ Projectile.prototype.draw = function() {
     globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[this.team];
 
     globals.ctx.beginPath();
-    globals.ctx.arc(xPos, yPos, rect.width() / 2, 0 , 2 * Math.PI, true);
+    globals.ctx.arc(xPos, yPos, rect.width() / 2, 0 , 2 * Math.PI);
     globals.ctx.closePath();
 
     globals.ctx.fill();
