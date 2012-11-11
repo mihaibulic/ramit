@@ -222,15 +222,21 @@ Player.prototype.drawDetails = function() {
  * Draws the HUD, including HP, score, and the minimap.
  */
 Player.prototype.drawHUD = function() {
-
   // Health Bar
   var color = Math.floor(this.health / this.maxHealth * Player.HEALTH.length);
   if (color == Player.HEALTH.length) color--;
   globals.ctx.fillStyle = Player.HEALTH[color];
   globals.ctx.globalAlpha = 0.75;
-  globals.ctx.strokeRect(10, 10, 200, 20);
-  globals.ctx.fillRect(10, 10, 200 * this.health / this.maxHealth, 20);
+  globals.ctx.strokeRect(20, 20, 200, 20);
+  globals.ctx.fillRect(20, 20, 200 * this.health / this.maxHealth, 20);
   globals.ctx.globalAlpha = 1;
+
+  // Draw Score
+  globals.ctx.fillStyle = "#ffffff";
+  globals.ctx.textAlign = "right";
+  globals.ctx.font = "24px sans-serif";
+  globals.ctx.fillText("$" + (this.totalScore - this.scoreSpent), 20, 44);
+  globals.ctx.textAlign = "left";
 
   // Minimap
   globals.ctx.drawImage(globals.resources.minimap, 830, 330);
