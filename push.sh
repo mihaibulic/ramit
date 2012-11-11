@@ -43,15 +43,20 @@ fi
 
 output=$(find . -name '*.js' -exec jshint {} \;); 
 if [ ${#output} -eq 0 ]; then
+    echo "git add --all"
     git add --all
     
+    echo "git commit --allow-empty -a -m <msg>"
     git commit --allow-empty -a -m "${msg}"
 
+    echo "git fetch"
     git fetch ${remote} 
+    echo "git merge"
     git merge ${remote}/${branch}
-    
+    echo "git push"
     git push ${remote} ${branch}
 
+    echo "ssh"
     yes | ssh -i misquares.pem ec2-user@ec2-184-72-242-128.compute-1.amazonaws.com 'cd /var/lib/tomcat6/webapps/ROOT/ramit && git pull github ${branch} &&./deploy.sh'
 else
     echo "${output}";
