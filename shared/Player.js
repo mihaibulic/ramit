@@ -38,7 +38,7 @@ var Player = function(team, playerID, opt_state) {
     this.speed = opt_state.s;
     // TODO: Special weapon
     this.totalScore = opt_state.p;
-    this.scoreSpent = opt_state.c;
+    this.totalSpent = opt_state.c;
   } else {
     this.name = "Player " + playerID;
     this.team = team;
@@ -50,7 +50,7 @@ var Player = function(team, playerID, opt_state) {
     aim = 0;
     this.speed = 4;
     this.totalScore = 0;
-    this.scoreSpent = 0;
+    this.totalSpent = 0;
   }
 
   this.tank = {
@@ -103,7 +103,7 @@ Player.prototype.getAbsoluteState = function() {
   p.s = this.speed;
   p.w = 0; // TODO: weapon
   p.p = this.totalScore;
-  p.c = this.scoreSpent;
+  p.c = this.totalSpent;
   return p;
 };
 
@@ -236,7 +236,7 @@ Player.prototype.drawHUD = function() {
   globals.ctx.fillStyle = "#ffffff";
   globals.ctx.textAlign = "right";
   globals.ctx.font = "24px serif";
-  globals.ctx.fillText("$" + (this.totalScore - this.scoreSpent), 980, 35);
+  globals.ctx.fillText("$" + (this.totalScore - this.totalSpent), 980, 35);
   globals.ctx.textAlign = "left";
 
   // Minimap
@@ -342,7 +342,6 @@ Player.prototype.updateKeys = function(e) {
     this.keys.mine = value;
     break;
   case 81: // q
-    console.log("QQQQQQQQQQQQQQQQQQQQQ");
     if((!!this.keys.all_mines) !== value)
       diff.q = value;
     this.keys.all_mines = value;
@@ -505,10 +504,7 @@ Player.prototype.setAim = function(aim) {
 Player.prototype.takeHit = function(damage, ownerTeam) {
   this.health -= damage;
   var points = damage;
-  if (ownerTeam === this.team) {
-    console.log("FRIENDLY FIRE!");
-    points *= -1;
-  }
+ 
   if (this.health <= 0) {
     var spawn = this.determineSpawn();
     this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
@@ -536,6 +532,10 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
     globals.diff.p[this.playerID].h = this.health;
   }
 
+  if (ownerTeam === this.team) {
+    console.log("FRIENDLY FIRE!");
+    points *= -1;
+  }
   return points;
 };
 
@@ -545,8 +545,8 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
  */
 Player.prototype.addPoints = function(amount) {
   this.totalScore += amount;
-  if (this.totalScore - this.totalSpent < 0) 
-    this.totalScore += this.totalSpent - this.totalScore;
+  if (this.totalScore < this.totalSpent) 
+    this.totalScore = this.totalSpent;
 
   if (globals.diff) {
     if (!globals.diff.p)
