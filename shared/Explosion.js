@@ -32,7 +32,7 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
       var player = globals.players[id];
       var distance = player.getCenterDistance(this);
       if (distance < range && player !== target) {
-        owner.addPoints(player.takeHit(0.25 * damage + 0.75 * (1 - distance / range) * damage));
+        owner.addPoints(player.takeHit(Math.round(0.25 * damage + 0.75 * (1 - distance / range) * damage)));
       }
     }
   }
@@ -58,12 +58,12 @@ Explosion.prototype.draw = function() {
   var xPos = this.x - globals.level.x;
   var yPos = this.y - globals.level.y;
   range = this.range;
-  if (this.range === 0) 
+  if (this.range === 0)
     range = 5;
 
   if (this.damage < 0) //EMT/medic
     globals.ctx.strokeStyle = "#00FF00";
-  else if (this.damage === 0) // EMP 
+  else if (this.damage === 0) // EMP
     globals.ctx.strokeStyle = "#440077";
   else //normal
     globals.ctx.strokeStyle = "#FFFFFF";
