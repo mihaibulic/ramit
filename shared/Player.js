@@ -115,7 +115,7 @@ Player.DIAGONAL_CONST = Math.sqrt(0.5);
 /**
  * The color of the collision bound for each team.
  */
-Player.COLLISION_BOUND_STROKE = ["#00AAFF", "#FF0000"];
+Player.TEAM_COLOR = ["#00AAFF", "#FF0000"];
 
 Player.HEALTH = ["#FF0000", "#FFFF00", "#00FF00"];
 
@@ -188,7 +188,7 @@ Player.prototype.draw = function() {
   }
 
   if (globals.queries.debug === "true") {
-    globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
+    globals.ctx.strokeStyle = Player.TEAM_COLOR[this.team];
     var rect = this.getCollisionBarrier();
     globals.ctx.strokeRect(rect.left - globals.level.x, rect.top - globals.level.y, rect.width(),
                            rect.height());
@@ -251,7 +251,7 @@ Player.prototype.drawHUD = function() {
     if (this.team === other.team || this.getCenterDistance(other) < 650) {
       x = 830 + ((other.tank.x + 30) * 0.05);
       y = 330 + ((other.tank.y + 30) * 0.05);
-      globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[other.team];
+      globals.ctx.fillStyle = Player.TEAM_COLOR[other.team];
       globals.ctx.beginPath();
       globals.ctx.arc(x, y, 2, 0, 2 * Math.PI);
       globals.ctx.closePath();

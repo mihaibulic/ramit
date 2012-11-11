@@ -98,8 +98,8 @@ Projectile.prototype.draw = function(team) {
   if (xPos > -10 && xPos < 1010 && yPos > -10 && yPos < 510) {
     var rect = this.getCollisionBarrier();
 
-    globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[this.team];
-    
+    globals.ctx.fillStyle = Player.TEAM_COLOR[this.team];
+
     if (this.type !== Projectile.Type.MINE || this.team === team) {
       globals.ctx.beginPath();
       globals.ctx.arc(xPos, yPos, rect.width() / 2, 0 , 2 * Math.PI);
@@ -109,7 +109,7 @@ Projectile.prototype.draw = function(team) {
     }
 
     if (globals.queries.debug === "true") {
-      globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
+      globals.ctx.strokeStyle = Player.TEAM_COLOR[this.team];
       globals.ctx.strokeRect(rect.left - globals.level.x,
                              rect.top - globals.level.y, rect.width(),
                              rect.height());
