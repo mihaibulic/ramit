@@ -25,7 +25,7 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
   this.range = range;
 
   if (target && target.takeHit)
-    owner.addPoints(target.takeHit(damage));
+    owner.addPoints(target.takeHit(damage, ownerTeam));
 
   if (range > 0) {
     for (var id in globals.players) {
