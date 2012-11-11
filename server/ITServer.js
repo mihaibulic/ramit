@@ -76,6 +76,7 @@ var update = function() {
     }
 
     if (player.projectile[Projectile.Type.MINE].live > 0 && player.keys.all_mines === true) {
+      console.log("ALL GO BOOM");
       for (var m in globals.mines) {
         var mine = globals.mines[mine];
         if (player === mine.owner) {
@@ -186,10 +187,8 @@ io.sockets.on('connection', function(socket) {
       globals.players[id].keys.space = data.s;
     if (data.e !== undefined)
       globals.players[id].keys.mine = data.e;
-    if (data.q !== undefined) {
-      console.log("QQQQQQQQQQQQ");
+    if (data.q !== undefined)
       globals.players[id].keys.all_mines = data.q;
-    }
 
     if (!globals.diff.p)
       globals.diff.p = {};
