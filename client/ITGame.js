@@ -41,7 +41,7 @@ var ITGame = function(team, playerID) {
       if (!e)
         e = window.event;
       globals.players[this.player].updateAim(e);
-    }, this));
+    }, this);
 
     window.addEventListener('contextmenu', function(e) {
       if(!e)

@@ -16,7 +16,7 @@ var globals = {
   playerIDQueue: [7,6,5,4,3,2,1,0],
   teams: [0,0],
   level: new Level(),
-  diff: {},
+  diff: {}
 };
 
 /**
@@ -49,7 +49,7 @@ var explodeAll = function(owner, justMines) {
       }
     }
   }
-}
+};
 
 /*
  * Updates the game and sends out a 'diff' message to the players.
