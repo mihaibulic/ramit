@@ -98,6 +98,13 @@ var update = function() {
       Projectile.nextID++;
     }
 
+    // Shield
+    var shieldDetails = player.special[Player.SpecialType.SHIELD]
+    if (shieldDetails.lastFire > shieldDetails.coolDown  &&
+        (player.mouse.right === true)) {
+      player.armShield();
+    }
+
     // TODO: EMP and Medic
   }
 

@@ -108,18 +108,16 @@ var Player = function(team, playerID, opt_state) {
   this.special[Player.SpecialType.SHIELD] = {
     duration: 3 * 60,
     lastFire: 0,
-    coolDown: 10 * 60
+    coolDown: 10 * 60,
   }
+
+  this.hasShield = 0
 
   if (globals.diff) {
     if (!globals.diff.p)
       globals.diff.p = {};
     globals.diff.p[this.playerID] = this.getAbsoluteState();
   }
-
-  this.hasShield = 0;
-  this.lastUsedShield = 0;
-  this.shieldDuration = 60;
 };
 
 Player.SpecialType = { ROCKET: 1, EMP: 2, MEDIC: 3, SHEILD: 4 };
@@ -629,6 +627,18 @@ Player.prototype.addPoints = function(amount) {
       globals.diff.p[this.playerID] = {};
 
     globals.diff.p[this.playerID].p = this.totalScore;
+  }
+};
+
+Player.prototype.armShield = function() {
+  this.hasShield = this.special[Player.SpecialType.SHIELD].duration;
+  if (globals.diff) {
+    if (!globals.diff.p)
+      globals.diff.p = {};
+    if (!globals.diff.p[this.playerID])
+      globals.diff.p[this.playerID] = {};
+
+    globals.diff.p[this.playerID].d = this.hasShield;
   }
 };
 
