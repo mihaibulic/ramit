@@ -543,6 +543,8 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
  */
 Player.prototype.addPoints = function(amount) {
   this.totalScore += amount;
+  if (this.totalScore - this.totalSpent < 0) 
+    this.totalScore += this.totalSpent - this.totalScore;
 
   if (globals.diff) {
     if (!globals.diff.p)
