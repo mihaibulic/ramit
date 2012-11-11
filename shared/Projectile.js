@@ -55,8 +55,8 @@ var Projectile = function(player, type, id, opt_state) {
 
   if (type === Projectile.Type.MINE)
     player.projectile[type].live++;
-  else
-    player.projectile[type].lastFire = 0;
+  
+  player.projectile[type].lastFire = 0;
 
   if (globals.diff) {
     if (!globals.diff.q)
