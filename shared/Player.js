@@ -223,8 +223,8 @@ Player.prototype.draw = function() {
     // Draw the shield.
     if (this.hasShield) {
       var grad = globals.ctx.createRadialGradient(0, 0, 60, 0, 0, 10);
-      grad.setColorStop(0, Player.TEAM_COLOR[this.team]);
-      grad.setColorStop(1, Player.TEAM_COLOR_LIGHT[this.team]);
+      grad.addColorStop(0, Player.TEAM_COLOR[this.team]);
+      grad.addColorStop(1, Player.TEAM_COLOR_LIGHT[this.team]);
       globals.ctx.globalAlpha = 0.5;
       globals.ctx.fillStyle = grad;
       globals.ctx.beginPath();
