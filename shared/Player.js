@@ -498,11 +498,14 @@ Player.prototype.setAim = function(aim) {
 /**
  * Causes damage to tank. Kills tank if dead (returns to spawn point)
  * @param damage {Number} The amount of damage the player has taken.
+ * @param ownerTeam {Number} For point tracking negative for wrong team.
  * @returns {Number} The number of points the hit earned.
  */
-Player.prototype.takeHit = function(damage) {
+Player.prototype.takeHit = function(damage, ownerTeam) {
   this.health -= damage;
   var points = damage;
+  if (ownerTeam === this.team)
+    points *= -1;
   if (this.health <= 0) {
     var spawn = this.determineSpawn();
     this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;

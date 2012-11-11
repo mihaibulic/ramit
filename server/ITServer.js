@@ -162,6 +162,16 @@ io.sockets.on('connection', function(socket) {
   globals.socketToId[socket.id] = id;
   globals.players[id] = new Player(team, id);
 
+  // Actions to perform on name changes.
+  socket.on('name', function(data) {
+    globals.player[id].name = data;
+    if (!globals.diff.p)
+      globals.diff.p = {};
+    if (!globals.diff.p[id])
+      globals.diff.p[id] = {};
+    globals.diff.p[id].n = data;
+  });
+
   // Actions to perform when the player presses or releases a key.
   socket.on('key', function(data) {
     if (data.u !== undefined)
