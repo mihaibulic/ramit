@@ -107,7 +107,9 @@ Projectile.prototype.draw = function() {
 
     if (globals.queries.debug === "true") {
       globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
-      globals.ctx.strokeRect(rect.left, rect.top, rect.width(), rect.height());
+      globals.ctx.strokeRect(rect.left - globals.level.x,
+                             rect.top - globals.level.y, rect.width(),
+                             rect.height());
     }
   }
 };
