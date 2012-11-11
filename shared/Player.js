@@ -310,6 +310,7 @@ Player.prototype.updateKeys = function(e) {
     this.keys.up = value;
     break;
   case 65: // A
+    window.console.log(this.keys.left);
     if (this.keys.left != value)
       diff.l = value;
     this.keys.left = value;
