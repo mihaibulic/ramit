@@ -508,6 +508,8 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
   if (ownerTeam === this.team) {
     console.log("FRIENDLY FIRE!");
     points *= -1;
+  } else {
+    console.log("ENEMY FIRE!");
   }
   if (this.health <= 0) {
     var spawn = this.determineSpawn();
