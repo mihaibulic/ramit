@@ -67,7 +67,8 @@ var Player = function(team, playerID, opt_state) {
     range: 0,
     damage: 5,
     speed: 10,
-    lastFire: 0
+    lastFire: 0,
+    coolDown: 10
   };
   this.projectile[Projectile.Type.MINE] = {
     range: 80,
@@ -75,13 +76,15 @@ var Player = function(team, playerID, opt_state) {
     speed: 0,
     live: 0,
     allowed: 5,
-    lastFire: 0
+    lastFire: 0,
+    coolDown: 15
   };
   this.projectile[Projectile.Type.ROCKET] = {
     range: 60,
     damage: 10,
     speed: 7,
-    lastFire: 0
+    lastFire: 0,
+    coolDown: 120
   };
 
   if (globals.diff) {
@@ -496,6 +499,10 @@ Player.prototype.getAim = function() {
  */
 Player.prototype.setAim = function(aim) {
   this.tank.turretAim = aim;
+};
+
+Player.prototype.canFire = function(type) {
+  return this.projectile[type].lastFire >= coolDown;
 };
 
 /**
