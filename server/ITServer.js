@@ -35,7 +35,7 @@ globals.isObjectEmpty = function(object) {
  * @param {int} pid of player
  * @param {boolean} justMines
  */
-var explodeAll = function(owner, justMines) }
+var explodeAll = function(owner, justMines) {
   for (var qid in globals.projectiles) {
     var projectile = globals.projectiles[qid];
     if (projectile.owner === owner) {
