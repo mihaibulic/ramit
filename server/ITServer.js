@@ -102,6 +102,7 @@ var update = function() {
     var shieldDetails = player.special[Player.SpecialType.SHIELD]
     if (shieldDetails.lastFire > shieldDetails.coolDown &&
         (player.mouse.right === true)) {
+      window.console.log("ARM SHIELD!");
       player.armShield();
     }
 
