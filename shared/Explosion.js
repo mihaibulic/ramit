@@ -66,7 +66,7 @@ Explosion.prototype.draw = function() {
   else if (this.damage === 0) // EMP
     globals.ctx.strokeStyle = "#440077";
   else //normal
-    globals.ctx.strokeStyle = "#FFFFFF";
+    globals.ctx.strokeStyle = "#FF6600";
   globals.ctx.lineWidth = 5;
   globals.ctx.beginPath();
   globals.ctx.arc(xPos, yPos, (this.animationFrame + 1) / 5 * range, 0 , 2 * Math.PI);
