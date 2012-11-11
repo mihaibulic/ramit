@@ -24,17 +24,23 @@ var Gate = function(team) {
 Gate.prototype.takeHit = function(damage) {
   this.health -= damage;
   if (this.health < 0) this.health = 0;
+
+  if (globals.diff) {
+    if (!globals.diff.b)
+      globals.diff.b = [];
+    globals.diff.b[this.team] = this.health;
+  }
+
   return 0;
 };
 
 /**
  * Draws the gate.
- * @param {Level} level The state of the level.
  */
-Gate.prototype.draw = function(level) {
+Gate.prototype.draw = function() {
   var box = this.getCollisionBarrier();
-  var xPos = this.left - level.x;
-  var yPos = this.top - level.y - 5;
+  var xPos = this.left - globals.level.x;
+  var yPos = this.top - globals.level.y - 5;
 
   if (xPos > -300 && xPos < 1000 && yPos > -20 && yPos < 500) {
     if (this.health > 0) {
@@ -48,7 +54,7 @@ Gate.prototype.draw = function(level) {
   if (globals.queries.debug === "true") {
     globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
     var rect = this.getCollisionBarrier();
-    globals.ctx.strokeRect(rect.left - level.x, rect.top - level.y, rect.width(),
+    globals.ctx.strokeRect(rect.left - globals.level.x, rect.top - globals.level.y, rect.width(),
                            rect.height());
   }
 };

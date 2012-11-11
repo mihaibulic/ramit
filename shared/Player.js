@@ -2,16 +2,15 @@
  * A player of the IT game.
  * @param {Number} team The team number the player is on.
  * @param {Number} playerID The player's ID number.
- * @param {Number} opt_spawn An optional value designating the spawn point.
+ * @param {Object} opt_state A state object to build this object from.
  */
-var Player = function(team, playerID, opt_spawn) {
-  this.team = team;
-
-  if (!opt_spawn && opt_spawn !== 0)
-    opt_spawn = this.determineSpawn();
-  this.starting_spawn = opt_spawn;
+var Player = function(team, playerID, opt_state) {
+  var x;
+  var y;
+  var aim;
 
   this.playerID = playerID;
+
   this.keys = {
     up: false,
     down: false,
@@ -24,38 +23,86 @@ var Player = function(team, playerID, opt_spawn) {
     middle: false,
     right: false
   };
+
+  if (opt_state) {
+    this.name = opt_state.n;
+    this.team = opt_state.t;
+    x = opt_state.x;
+    y = opt_state.y;
+    this.health = opt_state.h;
+    this.maxHealth = opt_state.m;
+    aim = opt_state.a;
+    this.setKeyValue(opt_state.k);
+    this.speed = opt_state.s;
+    // TODO: Special weapon
+    this.totalScore = opt_state.p;
+    this.scoreSpent = opt_state.c;
+  } else {
+    this.name = "Player " + playerID;
+    this.team = team;
+    var spawn = this.determineSpawn();
+    x = Player.SPAWN_POINTS[team][spawn].x;
+    y = Player.SPAWN_POINTS[team][spawn].y;
+    this.health = this.maxHealth;
+    this.maxHealth = 100;
+    aim = 0;
+    this.speed = 4;
+    this.totalScore = 0;
+    this.scoreSpent = 0;
+  }
+
   this.tank = {
-    x: Player.SPAWN_POINTS[team][opt_spawn].x,
-    y: Player.SPAWN_POINTS[team][opt_spawn].y,
-    sx: Player.SPAWN_POINTS[team][opt_spawn].x,
-    sy: Player.SPAWN_POINTS[team][opt_spawn].y,
+    x: x,
+    y: y,
+    sx: x,
+    sy: y,
     direction: 0,
-    turretAim: 0
+    turretAim: aim
   };
-  this.speed = 4;
-  this.initHealth = 100;
-  this.health = this.initHealth;
-  this.score = 0;                                //for spending on upgrades
-  this.totalScore = 0;             //for traking total score, both incremented the same
-  this.projectile = {
+
+  this.projectile = {};
+  this.projectile[Projectile.Type.NORMAL] = {
+    range: 0,
     damage: 5,
     speed: 10,
     lastFire: 0
   };
-  this.mine = {
-    damage: 20,
+  this.projectile[Projectile.Type.MINE] = {
     range: 80,
+    damage: 20,
+    speed: 0,
     live: 0,
     allowed: 1
   };
-  this.rocket = {
-    lastFire: 0,
+  this.projectile[Projectile.Type.ROCKET] = {
     range: 60,
     damage: 10,
     speed: 7,
-    live: 0,
-    allowed: 1
+    lastFire: 0
   };
+
+  if (globals.diff) {
+    if (!globals.diff.p)
+      globals.diff.p = {};
+    globals.diff.p[this.playerID] = this.getAbsoluteState();
+  }
+};
+
+Player.prototype.getAbsoluteState = function() {
+  var p = {};
+  p.n = this.name;
+  p.t = this.team;
+  p.x = this.tank.x;
+  p.y = this.tank.y;
+  p.h = this.health;
+  p.m = this.maxHealth;
+  p.a = this.getAim();
+  p.k = this.getKeyValue();
+  p.s = this.speed;
+  p.w = 0; // TODO: weapon
+  p.p = this.totalScore;
+  p.c = this.scoreSpent;
+  return p;
 };
 
 /**
@@ -86,9 +133,9 @@ Player.SPAWN_POINTS = [
  * Draw's the player's information.
  * @param {Object} level An object describing the state of the level.
  */
-Player.prototype.draw = function(level) {
-  var xPos = this.tank.x - level.x;
-  var yPos = this.tank.y - level.y;
+Player.prototype.draw = function() {
+  var xPos = this.tank.x - globals.level.x;
+  var yPos = this.tank.y - globals.level.y;
 
   // Determine a numeric value for which keys are pressed and move the tank.
   keyValue = this.getKeyValue();
@@ -141,7 +188,7 @@ Player.prototype.draw = function(level) {
   if (globals.queries.debug === "true") {
     globals.ctx.strokeStyle = Player.COLLISION_BOUND_STROKE[this.team];
     var rect = this.getCollisionBarrier();
-    globals.ctx.strokeRect(rect.left - level.x, rect.top - level.y, rect.width(),
+    globals.ctx.strokeRect(rect.left - globals.level.x, rect.top - globals.level.y, rect.width(),
                            rect.height());
   }
 };
@@ -149,18 +196,18 @@ Player.prototype.draw = function(level) {
 /**
  * Draws a tanks information, such as it's health and name.
  */
-Player.prototype.drawDetails = function(level) {
-  var xPos = this.tank.x - level.x;
-  var yPos = this.tank.y - level.y;
+Player.prototype.drawDetails = function() {
+  var xPos = this.tank.x - globals.level.x;
+  var yPos = this.tank.y - globals.level.y;
   if (xPos > -60 && xPos < 1000 && yPos > -60 && yPos < 500) {
     // health bar
     globals.ctx.strokeStyle = "#00FF00";
-    var color = Math.floor(this.health / this.initHealth * Player.HEALTH.length);
+    var color = Math.floor(this.health / this.maxHealth * Player.HEALTH.length);
     if (color == Player.HEALTH.length) color--;
     globals.ctx.fillStyle = Player.HEALTH[color];
     globals.ctx.globalAlpha = 0.5;
     globals.ctx.strokeRect(xPos + 10, yPos + 2, 40, 3);
-    globals.ctx.fillRect(xPos + 10, yPos + 2, 40 * this.health / this.initHealth, 3);
+    globals.ctx.fillRect(xPos + 10, yPos + 2, 40 * this.health / this.maxHealth, 3);
     globals.ctx.globalAlpha = 1;
 
     //name
@@ -176,12 +223,12 @@ Player.prototype.drawDetails = function(level) {
 Player.prototype.drawHUD = function() {
 
   // Health Bar
-  var color = Math.floor(this.health / this.initHealth * Player.HEALTH.length);
+  var color = Math.floor(this.health / this.maxHealth * Player.HEALTH.length);
   if (color == Player.HEALTH.length) color--;
   globals.ctx.fillStyle = Player.HEALTH[color];
   globals.ctx.globalAlpha = 0.75;
   globals.ctx.strokeRect(10, 10, 200, 20);
-  globals.ctx.fillRect(10, 10, 200 * this.health / this.initHealth, 20);
+  globals.ctx.fillRect(10, 10, 200 * this.health / this.maxHealth, 20);
   globals.ctx.globalAlpha = 1;
 
   // Minimap
@@ -286,8 +333,8 @@ Player.prototype.updateKeys = function(e) {
 /**
  * Update the state of the Player.
  */
-Player.prototype.update = function(level, diff) {
-  this.move(level, diff);
+Player.prototype.update = function() {
+  this.move();
   this.rocket.lastFire++;
   this.projectile.lastFire++;
 };
@@ -295,7 +342,7 @@ Player.prototype.update = function(level, diff) {
 /**
  * Move the tank.
  */
-Player.prototype.move = function(level, diff) {
+Player.prototype.move = function() {
   var speed = (this.tank.direction % 2 === 0) ? this.speed : Player.DIAGONAL_CONST * this.speed;
   var x = this.tank.x;
   var y = this.tank.y;
@@ -332,26 +379,26 @@ Player.prototype.move = function(level, diff) {
   var distance;
 
   //check walls
-  for (var i in level.walls) {
-    if (rectYMovement.intersects(level.walls[i])) {
+  for (var i in globals.level.walls) {
+    if (rectYMovement.intersects(globals.level.walls[i])) {
       // Moving up/down collided with a wall, move up to the wall but no
       // farther.
-      distance = tankBox.getYDistance(level.walls[i]);
+      distance = tankBox.getYDistance(globals.level.walls[i]);
       y = this.tank.y + ((distance - 1) * yDir);
     }
-    if (rectXMovement.intersects(level.walls[i])) {
+    if (rectXMovement.intersects(globals.level.walls[i])) {
       // Moving left/right collided with a wall, move up to the wall but no
       // farther.
-      distance = tankBox.getXDistance(level.walls[i]);
+      distance = tankBox.getXDistance(globals.level.walls[i]);
       x = this.tank.x + ((distance - 1) * xDir);
     }
   }
 
   // check gates
-  for (var g in level.gates) {
+  for (var g in globals.level.gates) {
     // ignore own team's gate
-    if (level.gates[g].team !== this.team) {
-      var box = level.gates[g].getCollisionBarrier();
+    if (globals.level.gates[g].team !== this.team) {
+      var box = globals.level.gates[g].getCollisionBarrier();
       if (rectYMovement.intersects(box)) {
         // Moving up/down collided with a gate, move up to the gate but no
         // farther.
@@ -387,13 +434,29 @@ Player.prototype.move = function(level, diff) {
     }
   }
 
-  if (diff && this.tank.x !== x)
-    diff.x = x;
-  if (diff && this.tank.y !== y)
-    diff.y = y;
-
   this.tank.x = x;
   this.tank.y = y;
+
+  // Update the diff for this player.
+  if (globals.diff) {
+    var diff = {};
+    if (this.tank.x !== x)
+      diff.x = x;
+    if (this.tank.y !== y)
+      diff.y = y;
+
+    if (!globals.isEmptyObject(diff)) {
+      if (!globals.diff.p)
+        globals.diff.p = {};
+      if (!globals.diff.p[this.playerID])
+        globals.diff.p[this.playerID] = {};
+
+      if (diff.x)
+        globals.diff.p[this.playerID].x = diff.x;
+      if (diff.y)
+        globals.diff.p[this.playerID].y = diff.y;
+    }
+  }
 };
 
 /**
@@ -422,8 +485,17 @@ Player.prototype.takeHit = function(damage) {
     var spawn = this.determineSpawn();
     this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
     this.tank.y = Player.SPAWN_POINTS[this.team][spawn].y;
-    this.health = this.initHealth;
+    this.health = this.maxHealth;
     points += 25;
+  }
+
+  if (globals.diff) {
+    if (!globals.diff.p)
+      globals.diff.p = {};
+    if (!globals.diff.p[this.playerID])
+      globals.diff.p[this.playerID] = {};
+
+    globals.diff.p[this.playerID].h = this.health;
   }
 
   return points;
@@ -434,8 +506,16 @@ Player.prototype.takeHit = function(damage) {
  * @param {Number} amount The amount of points earned.
  */
 Player.prototype.addPoints = function(amount) {
-  this.score += amount;
   this.totalScore += amount;
+
+  if (globals.diff) {
+    if (!globals.diff.p)
+      globals.diff.p = {};
+    if (!globals.diff.p[this.playerID])
+      globals.diff.p[this.playerID] = {};
+
+    globals.diff.p[this.playerID].p = this.totalScore;
+  }
 };
 
 /**
