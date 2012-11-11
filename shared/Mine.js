@@ -2,26 +2,38 @@
  * The Mine class
  */
 var Mine = function(player, m) {
+  //owner is for awarding points
   this.owner = player.playerID;
+  //team is for activating for enemies only
+  //and drawing for friendlies only
   this.team = player.team;
+  //keeps track of how many mines the owner has active
+  //decremented when the mine explodes
+  player.mine.live++; 
+
+  //m is the number of the mine
   this.m = m;
-  this.x = player.tank.x+30; //center of mine
+
+  //x,y of center of the mine
+  this.x = player.tank.x+30;
   this.y = player.tank.y+30;
+
+  //these are saved for creating an Explosion
   this.range = player.mine.range;
   this.damage = player.mine.damage;
-
-  player.mine.live++;
 };
 
 Mine.RADIUS = 10;
 
+// Draws the mine for friendlies.
+// In debug mode, draws collision box and range for everyone.
 Mine.prototype.draw = function(level, yourTeam) {
   var xPos = this.x - level.x;
   var yPos = this.y - level.y;
 
   if (xPos > -10 && xPos < 1000 && yPos > -10 && yPos < 500) {
     globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[this.team];
-    if (yourTeam === this.team) { //mines are invisible to enemies!
+    if (yourTeam === this.team) {
       globals.ctx.beginPath();
       globals.ctx.arc(xPos, yPos, Mine.RADIUS, 0 , 2 * Math.PI, true);
       globals.ctx.closePath();
@@ -43,3 +55,4 @@ Mine.prototype.getCollisionBarrier = function() {
   return new Rectangle( { right: this.x + Mine.RADIUS, left: this.x - Mine.RADIUS,
                           top: this.y - Mine.RADIUS, bottom: this.y + Mine.RADIUS} );
 };
+
