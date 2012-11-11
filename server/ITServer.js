@@ -77,7 +77,7 @@ var update = function() {
     }
 
     if (player.projectile[Projectile.Type.MINE].live > 0 && player.keys.all_mines === true) {
-      for (var m : globals.mines) {
+      for (var m in globals.mines) {
         console.log("checking mine " + m);
         var mine = globals.mines[mine];
         if (player === mine.owner) {
