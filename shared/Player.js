@@ -222,13 +222,13 @@ Player.prototype.draw = function() {
       xPos - 7, yPos - 7);
     // Draw the shield.
     if (this.hasShield) {
-      var grad = globals.ctx.createRadialGradient(0, 0, 60, 0, 0, 10);
-      grad.setColorStop(0, Player.TEAM_COLOR[this.team]);
-      grad.setColorStop(1, Player.TEAM_COLOR_LIGHT[this.team]);
-      globals.ctx.globalAlpha = 0.5;
+      var grad = globals.ctx.createRadialGradient(xPos+30, yPos+30, 10, xPos+30, yPos+30, 60);
+      grad.addColorStop(0, Player.TEAM_COLOR_LIGHT[this.team]);
+      grad.addColorStop(1, Player.TEAM_COLOR[this.team]);
       globals.ctx.fillStyle = grad;
+      globals.ctx.globalAlpha = 0.4;
       globals.ctx.beginPath();
-      globals.ctx.arc(xPos - 10, yPos - 10, 30, 0, 2 * Math.PI);
+      globals.ctx.arc(xPos + 30, yPos + 30, 35, 0, 2 * Math.PI);
       globals.ctx.closePath();
       globals.ctx.fill();
       globals.ctx.globalAlpha = 1;
