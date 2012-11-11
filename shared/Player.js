@@ -74,7 +74,7 @@ var Player = function(team, playerID, opt_state) {
     damage: 20,
     speed: 0,
     live: 0,
-    allowed: 1
+    allowed: 5
   };
   this.projectile[Projectile.Type.ROCKET] = {
     range: 60,
@@ -215,7 +215,7 @@ Player.prototype.drawDetails = function() {
     //name
     globals.ctx.fillStyle = "#FFFFFF";
     globals.ctx.font = "10px sans-serif";
-    globals.ctx.fillText("Player " + this.playerID, xPos + 10, yPos + 1);
+    globals.ctx.fillText(this.name, xPos + 10, yPos + 1);
   }
 };
 
@@ -342,6 +342,7 @@ Player.prototype.updateKeys = function(e) {
     this.keys.mine = value;
     break;
   case 81: // q
+    console.log("QQQQQQQQQQQQQQQQQQQQQ");
     if((!!this.keys.all_mines) !== value)
       diff.q = value;
     this.keys.all_mines = value;
