@@ -186,8 +186,10 @@ io.sockets.on('connection', function(socket) {
       globals.players[id].keys.space = data.s;
     if (data.e !== undefined)
       globals.players[id].keys.mine = data.e;
-    if (data.q !== undefined)
+    if (data.q !== undefined) {
+      console.log("QQQQQQQQQQQQ");
       globals.players[id].keys.all_mines = data.q;
+    }
 
     if (!globals.diff.p)
       globals.diff.p = {};
