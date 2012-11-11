@@ -434,9 +434,6 @@ Player.prototype.move = function() {
     }
   }
 
-  this.tank.x = x;
-  this.tank.y = y;
-
   // Update the diff for this player.
   if (globals.diff) {
     var diff = {};
@@ -457,6 +454,9 @@ Player.prototype.move = function() {
         globals.diff.p[this.playerID].y = diff.y;
     }
   }
+
+  this.tank.x = x;
+  this.tank.y = y;
 };
 
 /**
