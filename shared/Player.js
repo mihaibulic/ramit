@@ -311,26 +311,26 @@ Player.prototype.updateKeys = function(e) {
     break;
   case 65: // A
     //this.keys.left = value;
-    if (this.keys.left !== value)
+    if (this.keys.left != value)
       diff.l = value;
     break;
   case 83: // S
     //this.keys.down = value;
-    if (this.keys.down !== value)
+    if (this.keys.down != value)
       diff.d = value;
     break;
   case 68: // D
     //this.keys.right = value;
-    if (this.keys.right !== value)
+    if (this.keys.right != value)
       diff.r = value;
     break;
   case 32: // Space
-    if (this.keys.space !== value)
+    if (this.keys.space != value)
       diff.s = value;
     this.keys.space = value;
     break;
   case 69: //e
-    if (this.keys.mine !== value)
+    if (this.keys.mine != value)
       diff.e = value;
     this.keys.mine = value;
     break;
