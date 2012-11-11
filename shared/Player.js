@@ -225,7 +225,7 @@ Player.prototype.draw = function() {
       var grad = globals.ctx.createRadialGradient(0, 0, 60, 0, 0, 10);
       grad.addColorStop(0, Player.TEAM_COLOR[this.team]);
       grad.addColorStop(1, Player.TEAM_COLOR_LIGHT[this.team]);
-      globals.ctx.globalAlpha = 0.5;
+      globals.ctx.globalAlpha = 1;
       globals.ctx.fillStyle = grad;
       globals.ctx.beginPath();
       globals.ctx.arc(xPos - 10, yPos - 10, 30, 0, 2 * Math.PI);
