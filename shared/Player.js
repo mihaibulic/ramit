@@ -18,7 +18,12 @@ var Player = function(team, playerID, opt_state) {
     right: false,
     mine: false,
     all_mines: false,
-    space: false
+    space: false,
+    shift: false,
+    1: false,
+    2: false,
+    3: false,
+    4: false
   };
   this.mouse = {
     left: false,
@@ -72,7 +77,7 @@ var Player = function(team, playerID, opt_state) {
   };
   this.projectile[Projectile.Type.MINE] = {
     range: 80,
-    damage: 20,
+    damage: 30,
     speed: 0,
     live: 0,
     allowed: 5,
@@ -80,12 +85,31 @@ var Player = function(team, playerID, opt_state) {
     coolDown: 15
   };
   this.projectile[Projectile.Type.ROCKET] = {
-    range: 60,
-    damage: 10,
+    range: 40,
+    damage: 20,
     speed: 7,
     lastFire: 0,
     coolDown: 120
   };
+  this.special = {};
+  this.special[Player.SpecialType.ROCKET] = this.projectile[Projectile.Type.ROCKET];//this is a hack
+  this.special[Player.SpecialType.EMP] = {
+    range: 60,
+    damage: 30,
+    lastFire: 0,
+    coolDown: 5 * 60
+  }
+  this.special[Player.SpecialType.MEDIC] = {
+    range: 80,
+    damage: -30,
+    lastFire: 0,
+    coolDown: 5 * 60
+  }
+  this.special[Player.SpecialType.SHIELD] = {
+    duration: 3 * 60,
+    lastFire: 0,
+    coolDown: 10 * 60
+  }
 
   if (globals.diff) {
     if (!globals.diff.p)
@@ -93,6 +117,8 @@ var Player = function(team, playerID, opt_state) {
     globals.diff.p[this.playerID] = this.getAbsoluteState();
   }
 };
+
+Player.SpecialType = { ROCKET: 1, EMP: 2, MEDIC: 3, SHEILD: 4 };
 
 Player.prototype.getAbsoluteState = function() {
   var p = {};
