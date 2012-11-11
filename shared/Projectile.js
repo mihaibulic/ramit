@@ -94,13 +94,13 @@ Projectile.prototype.draw = function() {
   var xPos = this.x - globals.level.x;
   var yPos = this.y - globals.level.y;
 
-  if (xPos > -20 && xPos < 1000 && yPos > -20 && yPos < 500) {
+  if (xPos > -10 && xPos < 1010 && yPos > -10 && yPos < 510) {
     var rect = this.getCollisionBarrier();
 
     globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[this.team];
 
     globals.ctx.beginPath();
-    globals.ctx.arc(xPos, yPos, rect.width()/2, 0 , 2 * Math.PI, true);
+    globals.ctx.arc(xPos, yPos, rect.width() / 2, 0 , 2 * Math.PI, true);
     globals.ctx.closePath();
 
     globals.ctx.fill();
@@ -184,6 +184,9 @@ Projectile.prototype.update = function() {
  * @returns {Rectangle} A box describing the location of the projectile.
  */
 Projectile.prototype.getCollisionBarrier = function() {
-  return new Rectangle({left: this.x, right: this.x + 10,
-                        top: this.y, bottom: this.y + 10});
+  if (this.type === Projectile.Type.MINE)
+    return new Rectangle({left: this.x - 10, right: this.x + 10,
+                          top: this.y - 10, bottom: this.y + 10});
+  return new Rectangle({left: this.x - 5, right: this.x + 5,
+                        top: this.y - 5, bottom: this.y + 5});
 };
