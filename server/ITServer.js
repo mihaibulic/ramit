@@ -78,10 +78,10 @@ var update = function() {
 
     if (player.projectile[Projectile.Type.MINE].live > 0 && player.keys.all_mines === true) {
       for (var m in globals.mines) {
-        console.log("checking mine " + m):
+        console.log("checking mine " + m);
         var mine = globals.mines[mine];
         if (player === mine.owner) {
-        console.log("blowing mine " + m):
+        console.log("blowing mine " + m);
           new Explosion(mine.x, mine.y, mine.range, player, {}, mine.damage, mine);
           delete globals.projectile[m];
           delete globals.mines[m];
