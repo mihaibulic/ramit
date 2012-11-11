@@ -30,6 +30,27 @@ globals.isObjectEmpty = function(object) {
   return true;
 };
 
+/**
+ * Explodes projectiles of a player
+ * @param {int} pid of player
+ * @param {boolean} justMines
+ */
+var explodeAll = function(owner, justMines) {
+  for (var qid in globals.projectiles) {
+    var projectile = globals.projectiles[qid];
+    if (projectile.owner === owner) {
+      if (projectile.type === Projectile.Type.MINE) {
+        new Explosion(this.x, this.y, this.range, globals.players[this.owner],
+                    target, this.damage, this);
+        delete globals.mine[qid];
+      }
+      if  (!justMines || projectile.type === Projectile.Type.MINE) {
+        delete globals.projectiles[qid];
+      }
+    }
+  }
+}
+
 /*
  * Updates the game and sends out a 'diff' message to the players.
  */
@@ -52,6 +73,18 @@ var update = function() {
       globals.projectiles[Projectile.nextID] =
         new Projectile(player, Projectile.Type.MINE, Projectile.nextID);
       Projectile.nextID++;
+    }
+
+    if (player.projectile[Projectile.Type.MINE].live > 0 && player.keys.all_mines === true) {
+      for (var m in globals.mines) {
+        var mine = globals.mines[mine];
+        if (player === mine.owner) {
+          new Explosion(mine.x, mine.y, mine.range, player, {}, mine.damage, mine);
+          delete globals.projectile[m];
+          delete globals.mines[m];
+        }
+        player.projectile[Projectile.Type.MINE].live--;
+      }
     }
 
     // Rocket
@@ -153,6 +186,8 @@ io.sockets.on('connection', function(socket) {
       globals.players[id].keys.space = data.s;
     if (data.e !== undefined)
       globals.players[id].keys.mine = data.e;
+    if (data.q !== undefined)
+      globals.players[id].keys.all_mines = data.q;
 
     if (!globals.diff.p)
       globals.diff.p = {};

@@ -30,21 +30,19 @@ var ITGame = function(team, playerID) {
         e = window.event;
       globals.players[this.player].updateKeys(e);
     }, this);
+
     var mouseEvent = globals.bind(function(e) {
       if(!e)
         e = window.event;
       globals.players[this.player].updateMouse(e);
     }, this);
 
-    window.addEventListener('keydown', keyEvent);
-    window.addEventListener('keyup', keyEvent);
-    window.addEventListener('mousedown', mouseEvent);
-    window.addEventListener('mouseup', mouseEvent);
-    window.addEventListener('mousemove', globals.bind(function(e) {
+    var mouseMove = globals.bind(function(e) {
       if (!e)
         e = window.event;
       globals.players[this.player].updateAim(e);
     }, this));
+
     window.addEventListener('contextmenu', function(e) {
       if(!e)
         e = window.event;
@@ -55,6 +53,11 @@ var ITGame = function(team, playerID) {
     if (globals.queries.name !== undefined) {
       globals.socket.emit('name', globals.queries.name);
     }
+    window.addEventListener('keydown', keyEvent);
+    window.addEventListener('keyup', keyEvent);
+    window.addEventListener('mousedown', mouseEvent);
+    window.addEventListener('mouseup', mouseEvent);
+    window.addEventListener('mousemove', mouseMove);
 
     // FPS Stuff
     this.fps = 0;
@@ -239,3 +242,8 @@ ITGame.prototype.draw = function() {
     globals.ctx.fillText("FPS: " + this.fps, 500, 20);
   }
 };
+
+ITGame.prototype.message = function(msg) {
+
+};
+

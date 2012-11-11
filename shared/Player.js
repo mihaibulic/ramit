@@ -17,6 +17,7 @@ var Player = function(team, playerID, opt_state) {
     left: false,
     right: false,
     mine: false,
+    all_mines: false,
     space: false
   };
   this.mouse = {
@@ -340,6 +341,11 @@ Player.prototype.updateKeys = function(e) {
       diff.e = value;
     this.keys.mine = value;
     break;
+  case 81: // q
+    if((!!this.keys.all_mines) !== value)
+      diff.q = value;
+    this.keys.all_mines = value;
+    break;
   }
 
   if (!globals.isObjectEmpty(diff))
@@ -492,11 +498,14 @@ Player.prototype.setAim = function(aim) {
 /**
  * Causes damage to tank. Kills tank if dead (returns to spawn point)
  * @param damage {Number} The amount of damage the player has taken.
+ * @param ownerTeam {Number} For point tracking negative for wrong team.
  * @returns {Number} The number of points the hit earned.
  */
-Player.prototype.takeHit = function(damage) {
+Player.prototype.takeHit = function(damage, ownerTeam) {
   this.health -= damage;
   var points = damage;
+  if (ownerTeam === this.team)
+    points *= -1;
   if (this.health <= 0) {
     var spawn = this.determineSpawn();
     this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
