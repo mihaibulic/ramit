@@ -81,12 +81,12 @@ var update = function() {
         console.log("checking mine " + m);
         var mine = globals.mines[mine];
         if (player === mine.owner) {
-        console.log("blowing mine " + m);
+          console.log("blowing mine " + m);
           new Explosion(mine.x, mine.y, mine.range, player, {}, mine.damage, mine);
           delete globals.projectile[m];
           delete globals.mines[m];
+          player.projectile[Projectile.Type.MINE].live--;
         }
-        player.projectile[Projectile.Type.MINE].live--;
       }
       console.log("live mines: " + player.projectile[Projectile.Type.MINE].live);
     }
