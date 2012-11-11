@@ -83,7 +83,7 @@ var update = function() {
         if (player.playerID === mine.owner) {
           console.log("blowing mine " + m);
           new Explosion(mine.x, mine.y, mine.range, player, {}, mine.damage, mine);
-          delete globals.projectile[m];
+          delete globals.projectiles[m];
           delete globals.mines[m];
           player.projectile[Projectile.Type.MINE].live--;
         }
