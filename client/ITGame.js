@@ -203,7 +203,8 @@ ITGame.prototype.draw = function() {
 
   // Explosions
   for (var eid in globals.explosions) {
-    globals.explosions[eid].draw();
+    if (globals.explosions[eid].draw())
+      delete globals.explosions[eid];
   }
 
   //draw players info
