@@ -234,7 +234,7 @@ Player.prototype.drawHUD = function() {
   // Draw Score
   globals.ctx.fillStyle = "#ffffff";
   globals.ctx.textAlign = "right";
-  globals.ctx.font = "24px Tahoma, Geneva, sans-serif";
+  globals.ctx.font = "24px serif";
   globals.ctx.fillText("$" + (this.totalScore - this.scoreSpent), 980, 44);
   globals.ctx.textAlign = "left";
 
