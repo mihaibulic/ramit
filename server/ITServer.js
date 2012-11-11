@@ -71,15 +71,15 @@ var update = function() {
     // Mine
     if (player.projectile[Projectile.Type.MINE].allowed > player.projectile[Projectile.Type.MINE].live &&
         player.keys.mine === true) {
-      globals.projectiles[Projectile.nextID] =
-        new Projectile(player, Projectile.Type.MINE, Projectile.nextID);
+      globals.projectiles[Projectile.nextID] = new Projectile(player, Projectile.Type.MINE, Projectile.nextID);
+      globals.mines[Projectile.nextID] = globals.projectiles[Projectile.nextID];
       Projectile.nextID++;
     }
 
     if (player.projectile[Projectile.Type.MINE].live > 0 && player.keys.all_mines === true) {
       for (var m in globals.mines) {
         console.log("checking mine " + m);
-        var mine = globals.mines[mine];
+        var mine = globals.mines[m];
         if (player === mine.owner) {
           console.log("blowing mine " + m);
           new Explosion(mine.x, mine.y, mine.range, player, {}, mine.damage, mine);
