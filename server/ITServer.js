@@ -54,6 +54,18 @@ var update = function() {
       Projectile.nextID++;
     }
 
+    if (player.projectile[Projectile.Type.MINE].live > 0 && player.keys.all_mines === true) {
+      for (var m in globals.mines) {
+        var mine = globals.mines[mine];
+        if (player === mine.owner) {
+          new Explosion(mine.x, mine.y, mine.range, player, {}, mine.damage, mine);
+          delete globals.projectile[m];
+          delete globals.mines[m];
+        }
+        player.projectile[Projectile.Type.MINE].live--;
+      }
+    }
+
     // Rocket
     if (player.projectile[Projectile.Type.ROCKET].lastFire > 120 &&
         (player.mouse.right === true)) {
@@ -143,6 +155,8 @@ io.sockets.on('connection', function(socket) {
       globals.players[id].keys.space = data.s;
     if (data.e !== undefined)
       globals.players[id].keys.mine = data.e;
+    if (data.q !== undefined)
+      globals.players[id].keys.all_mines = data.q;
 
     if (!globals.diff.p)
       globals.diff.p = {};
