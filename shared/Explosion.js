@@ -57,6 +57,9 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
 Explosion.prototype.draw = function() {
   var xPos = this.x - globals.level.x;
   var yPos = this.y - globals.level.y;
+  range = this.range;
+  if (this.range === 0) 
+    range = 5;
 
   if (this.damage < 0) //EMT/medic
     globals.ctx.strokeStyle = "#00FF00";
