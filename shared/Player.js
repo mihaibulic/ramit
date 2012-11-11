@@ -342,7 +342,6 @@ Player.prototype.updateKeys = function(e) {
     this.keys.mine = value;
     break;
   case 81: // q
-    console.log("QQQQQQQQQQQQQQQQQQQQQ");
     if((!!this.keys.all_mines) !== value)
       diff.q = value;
     this.keys.all_mines = value;
