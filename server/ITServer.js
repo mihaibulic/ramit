@@ -44,7 +44,7 @@ var explodeAll = function(owner, justMines) {
                     target, this.damage, this);
         delete globals.mine[qid];
       }
-      if  (!justMines || projectile.type === Projectile.Type.MINE)) {
+      if  (!justMines || projectile.type === Projectile.Type.MINE) {
         delete globals.projectiles[qid];
       }
     }
