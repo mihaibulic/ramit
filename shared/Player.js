@@ -72,41 +72,42 @@ var Player = function(team, playerID, opt_state) {
     range: 0,
     damage: 5,
     speed: 10,
-    lastFire: 0
+    lastFire: 0,
+    coolDown: 10
   };
   this.projectile[Projectile.Type.MINE] = {
-    range: 80,
-    damage: 20,
+    range: 1000,
+    damage: 200,
     speed: 0,
     live: 0,
     allowed: 5,
     lastFire: 0,
-    fireRate: 
+    coolDown: 15
   };
   this.projectile[Projectile.Type.ROCKET] = {
     range: 60,
     damage: 50,
     speed: 7,
     lastFire: 0,
-    fireRate: 2 * 60
+    coolDown: 120
   };
   this.special[Player.SpecialType.ROCKET = this.projectile[Projectile.Type.ROCKET];//this is a hack
   this.special[Player.SpecialType.EMP] = {
     range: 60,
     damage: 30,
     lastFire: 0,
-    fireRate: 5 * 60
+    coolDown: 5 * 60
   }
   this.special[Player.SpecialType.MEDIC] = {
     range: 80,
     damage: -30,
     lastFire: 0,
-    fireRate: 5 * 60
+    coolDown: 5 * 60
   }
   this.special[Player.SpecialType.SHIELD] = {
     duration: 3 * 60,
     lastFire: 0,
-    fireRate: 10 * 60
+    coolDown: 10 * 60
   }
 
   if (globals.diff) {
@@ -523,6 +524,10 @@ Player.prototype.getAim = function() {
  */
 Player.prototype.setAim = function(aim) {
   this.tank.turretAim = aim;
+};
+
+Player.prototype.canFire = function(type) {
+  return this.projectile[type].lastFire >= this.projectile[type].coolDown;
 };
 
 /**
