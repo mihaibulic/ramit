@@ -78,7 +78,7 @@ ITGame.prototype.loadState = function(data) {
         continue;
       }
 
-      var player = globals.player[id];
+      var player = globals.players[id];
       if (data.p[id].x !== undefined)
         player.tank.x = data.p[id].x;
       if (data.p[id].y !== undefined)
