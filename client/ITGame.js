@@ -51,6 +51,11 @@ var ITGame = function(team, playerID) {
       e.preventDefault();
     });
 
+    // Sets the player's name if specified.
+    if (globals.queries.name !== undefined) {
+      globals.socket.emit('name', globals.queries.name);
+    }
+
     // FPS Stuff
     this.fps = 0;
     this.count = 0;
@@ -86,6 +91,8 @@ ITGame.prototype.loadState = function(data) {
       }
 
       var player = globals.players[id];
+      if (data.p[id].n !== undefined)
+        player.name = data.p[id].n;
       if (data.p[id].x !== undefined)
         player.tank.x = data.p[id].x;
       if (data.p[id].y !== undefined)
