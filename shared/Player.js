@@ -16,7 +16,8 @@ var Player = function(team, playerID, opt_state) {
     down: false,
     left: false,
     right: false,
-    mine: false
+    mine: false,
+    space: false
   };
   this.mouse = {
     left: false,
@@ -305,29 +306,40 @@ Player.prototype.updateKeys = function(e) {
   switch (e.keyCode) {
   case 87: // W
     //this.keys.up = value;
-    diff.u = value;
+    if (this.keys.up !== value)
+      diff.u = value;
     break;
   case 65: // A
     //this.keys.left = value;
-    diff.l = value;
+    if (this.keys.left !== value)
+      diff.l = value;
     break;
   case 83: // S
     //this.keys.down = value;
-    diff.d = value;
+    if (this.keys.down !== value)
+      diff.d = value;
     break;
   case 68: // D
     //this.keys.right = value;
-    diff.r = value;
+    if (this.keys.right !== value)
+      diff.r = value;
     break;
   case 32: // Space
-    //this.keys.space = value;
-    diff.s = value;
+    if (this.keys.space !== value)
+      diff.s = value;
+    this.keys.space = value;
     break;
   case 69: //e
-    diff.e = value;
+    if (this.keys.mine !== value)
+      diff.e = value;
+    this.keys.mine = value;
     break;
   }
-  globals.socket.emit('key', diff);
+
+  if (!globals.isObjectEmpty(diff)) {
+    window.console.log("SENT A KEY");
+    globals.socket.emit('key', diff);
+  }
 };
 
 /**
