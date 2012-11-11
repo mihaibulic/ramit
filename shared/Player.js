@@ -227,6 +227,7 @@ Player.prototype.drawHUD = function() {
   var color = Math.floor(this.health / this.maxHealth * Player.HEALTH.length);
   if (color == Player.HEALTH.length) color--;
   globals.ctx.fillStyle = Player.HEALTH[color];
+  globals.ctx.strokeStyle = Player.HEALTH[color];
   globals.ctx.globalAlpha = 0.75;
   globals.ctx.strokeRect(20, 20, 200, 20);
   globals.ctx.fillRect(20, 20, 200 * this.health / this.maxHealth, 20);
@@ -504,7 +505,7 @@ Player.prototype.setAim = function(aim) {
 Player.prototype.takeHit = function(damage, ownerTeam) {
   this.health -= damage;
   var points = damage;
- 
+
   if (this.health <= 0) {
     var spawn = this.determineSpawn();
     this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
@@ -545,7 +546,7 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
  */
 Player.prototype.addPoints = function(amount) {
   this.totalScore += amount;
-  if (this.totalScore < this.totalSpent) 
+  if (this.totalScore < this.totalSpent)
     this.totalScore = this.totalSpent;
 
   if (globals.diff) {
