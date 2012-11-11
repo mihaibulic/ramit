@@ -336,10 +336,8 @@ Player.prototype.updateKeys = function(e) {
     break;
   }
 
-  if (!globals.isObjectEmpty(diff)) {
-    window.console.log("SENT A KEY");
+  if (!globals.isObjectEmpty(diff))
     globals.socket.emit('key', diff);
-  }
 };
 
 /**
@@ -499,6 +497,16 @@ Player.prototype.takeHit = function(damage) {
     this.tank.y = Player.SPAWN_POINTS[this.team][spawn].y;
     this.health = this.maxHealth;
     points += 25;
+
+    if (globals.diff) {
+      if (!globals.diff.p)
+        globals.diff.p = {};
+      if (!globals.diff.p[this.playerID])
+        globals.diff.p[this.playerID] = {};
+
+      globals.diff.p[this.playerID].x = this.tank.x;
+      globals.diff.p[this.playerID].y = this.tank.y;
+    }
   }
 
   if (globals.diff) {
