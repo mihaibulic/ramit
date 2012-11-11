@@ -21,6 +21,7 @@ var ITGame = function(team, playerID) {
     var keyEvent = globals.bind(function(e) {
       if (!e)
         e = window.event;
+      window.console.log("KEY EVENT!!!");
       globals.players[this.player].updateKeys(e);
     }, this);
     var mouseEvent = globals.bind(function(e) {
