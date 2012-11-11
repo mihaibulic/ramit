@@ -335,8 +335,8 @@ Player.prototype.updateKeys = function(e) {
  */
 Player.prototype.update = function() {
   this.move();
-  this.rocket.lastFire++;
-  this.projectile.lastFire++;
+  this.projectile[Projectile.Type.NORMAL].lastFire++;
+  this.projectile[Projectile.Type.ROCKET].lastFire++;
 };
 
 /**
