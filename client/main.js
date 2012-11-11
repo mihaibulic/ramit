@@ -28,6 +28,17 @@ var globals = {
 };
 
 /**
+ * Checks if an object is empty.
+ * @param {Object} The object to check.
+ * @returns {Boolean} If the object is empty.
+ */
+globals.isObjectEmpty = function(object) {
+  for (var x in object)
+    return false;
+  return true;
+};
+
+/**
  * An object containing the query strings.
  */
 globals.queries = (function() {

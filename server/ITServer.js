@@ -24,7 +24,7 @@ var globals = {
  * @param {Object} The object to check.
  * @returns {Boolean} If the object is empty.
  */
-globals.isEmptyObject = function(object) {
+globals.isObjectEmpty = function(object) {
   for (var x in object)
     return false;
   return true;

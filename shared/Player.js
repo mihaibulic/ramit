@@ -445,7 +445,7 @@ Player.prototype.move = function() {
     if (this.tank.y !== y)
       diff.y = y;
 
-    if (!globals.isEmptyObject(diff)) {
+    if (!globals.isObjectEmpty(diff)) {
       if (!globals.diff.p)
         globals.diff.p = {};
       if (!globals.diff.p[this.playerID])
