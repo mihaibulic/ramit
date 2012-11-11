@@ -191,6 +191,10 @@ io.sockets.on('connection', function(socket) {
       globals.players[id].keys.mine = data.e;
     if (data.q !== undefined)
       globals.players[id].keys.all_mines = data.q;
+    if (data.w !== undefined)
+      globals.players[id].keys.shirt = data.w;
+    if (data.m !== undefined)
+      globals.players[id].mounted = data.m;
 
     if (!globals.diff.p)
       globals.diff.p = {};

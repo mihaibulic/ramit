@@ -41,7 +41,8 @@ var Player = function(team, playerID, opt_state) {
     aim = opt_state.a;
     this.setKeyValue(opt_state.k);
     this.speed = opt_state.s;
-    // TODO: Special weapon
+    this.mounted = opt_state.w;
+    this.
     this.totalScore = opt_state.p;
     this.totalSpent = opt_state.c;
   } else {
@@ -54,6 +55,7 @@ var Player = function(team, playerID, opt_state) {
     this.health = this.maxHealth;
     aim = 0;
     this.speed = 4;
+    this.mounted = Player.SpecialType.ROCKET;
     this.totalScore = 0;
     this.totalSpent = 0;
   }
@@ -341,6 +343,7 @@ Player.prototype.updateMouse = function(e) {
 Player.prototype.updateKeys = function(e) {
   var diff = {};
   var value = !!(e.type === "keydown");
+  var mounting = false;
   switch (e.keyCode) {
   case 87: // W
     if ((!!this.keys.up) !== value)
@@ -367,15 +370,44 @@ Player.prototype.updateKeys = function(e) {
       diff.s = value;
     this.keys.space = value;
     break;
-  case 69: //e
+  case 69: //e mine
     if ((!!this.keys.mine) !== value)
       diff.e = value;
     this.keys.mine = value;
     break;
-  case 81: // q
+  case 81: // q all_mines
     if((!!this.keys.all_mines) !== value)
       diff.q = value;
     this.keys.all_mines = value;
+    break;
+  case 16: //shift fire_special
+    if ((!!this.keys.shift) !== value)
+      diff.w = value;
+    this.keys.shift = value;
+    break;
+  case 49: //1
+    if(value) {
+      diff.m = 1;
+      this.keys.m = 1;
+    }
+    break;
+  case 50: //2
+    if(value) {
+      diff.m = 2;
+      this.keys.m = 2;
+    }
+    break;
+  case 51: //3
+    if(value) {
+      diff.m = 3;
+      this.keys.m = 3;
+    }
+    break;
+  case 52: //4
+    if(value) {
+      diff.m = 4;
+      this.keys.m = 4;
+    }
     break;
   }
 
@@ -569,7 +601,6 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
   }
 
   if (ownerTeam === this.team) {
-    console.log("FRIENDLY FIRE!");
     points *= -1;
   }
   return points;

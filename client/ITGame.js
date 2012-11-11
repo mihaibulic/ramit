@@ -110,6 +110,10 @@ ITGame.prototype.loadState = function(data) {
         player.setKeyValue(data.p[id].k);
       if (data.p[id].s !== undefined)
         player.speed = data.p[id].s;
+      if (data.p[id].w !== undefined)
+        player.mounted = data.p[id].w;
+      if (data.p[id].d !== undefined)
+        player.
       // TODO: Weapon changes
       if (data.p[id].p !== undefined)
         player.totalScore = data.p[id].p;
