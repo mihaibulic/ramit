@@ -111,6 +111,8 @@ ITGame.prototype.loadState = function(data) {
       if (data.p[id].s !== undefined)
         player.speed = data.p[id].s;
       // TODO: Weapon changes
+      if (data.p[id].d !== undefined)
+        player.hasShield = data.p[id].d;
       if (data.p[id].p !== undefined)
         player.totalScore = data.p[id].p;
       if (data.p[id].c !== undefined)
