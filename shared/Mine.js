@@ -20,8 +20,8 @@ Mine.prototype.draw = function(level, yourTeam) {
   var yPos = this.y - level.y;
 
   if (xPos > -10 && xPos < 1000 && yPos > -10 && yPos < 500) {
+    globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[this.team];
     if (yourTeam === this.team) { //mines are invisible to enemies!
-      globals.ctx.fillStyle = Player.COLLISION_BOUND_STROKE[this.team];
       globals.ctx.beginPath();
       globals.ctx.arc(xPos, yPos, Mine.RADIUS, 0 , 2 * Math.PI, true);
       globals.ctx.closePath();
