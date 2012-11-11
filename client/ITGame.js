@@ -136,7 +136,7 @@ ITGame.prototype.loadState = function(data) {
   // Explosions
   if (data.e) {
     for (var id in data.e) {
-      globals.explosions.push(new Explosion(null, null, null, null, null, null, null, data.e[id]));
+      globals.explosions.push(new Explosion(null, null, null, null, null, null, null, null, data.e[id]));
       if (data.e[id].i !== undefined) {
         delete globals.projectiles[data.e[id].i];
         delete globals.mines[data.e[id].i];
