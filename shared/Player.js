@@ -17,6 +17,7 @@ var Player = function(team, playerID, opt_state) {
     left: false,
     right: false,
     mine: false,
+    all_mines: false,
     space: false
   };
   this.mouse = {
@@ -339,6 +340,11 @@ Player.prototype.updateKeys = function(e) {
     if ((!!this.keys.mine) !== value)
       diff.e = value;
     this.keys.mine = value;
+    break;
+  case 81: // q
+    if((!!this.keys.all_mines) !== value)
+      diff.q = value;
+    this.keys.all_mines = value;
     break;
   }
 
