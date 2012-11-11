@@ -42,7 +42,7 @@ var Player = function(team, playerID, opt_state) {
     this.setKeyValue(opt_state.k);
     this.speed = opt_state.s;
     this.mounted = opt_state.w;
-    this.
+    this.hasShield = opt_state.d;
     this.totalScore = opt_state.p;
     this.totalSpent = opt_state.c;
   } else {
@@ -56,6 +56,7 @@ var Player = function(team, playerID, opt_state) {
     aim = 0;
     this.speed = 4;
     this.mounted = Player.SpecialType.ROCKET;
+    this.hasShield = 0;
     this.totalScore = 0;
     this.totalSpent = 0;
   }
@@ -112,8 +113,6 @@ var Player = function(team, playerID, opt_state) {
     lastFire: 0,
     coolDown: 10 * 60,
   }
-
-  this.hasShield = 0
 
   if (globals.diff) {
     if (!globals.diff.p)
