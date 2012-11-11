@@ -41,7 +41,7 @@ var ITGame = function(team, playerID) {
       if (!e)
         e = window.event;
       globals.players[this.player].updateAim(e);
-    }, this));
+    }, this);
 
     window.addEventListener('contextmenu', function(e) {
       if(!e)
@@ -49,6 +49,10 @@ var ITGame = function(team, playerID) {
       e.preventDefault();
     });
 
+    // Sets the player's name if specified.
+    if (globals.queries.name !== undefined) {
+      globals.socket.emit('name', globals.queries.name);
+    }
     window.addEventListener('keydown', keyEvent);
     window.addEventListener('keyup', keyEvent);
     window.addEventListener('mousedown', mouseEvent);
@@ -90,6 +94,8 @@ ITGame.prototype.loadState = function(data) {
       }
 
       var player = globals.players[id];
+      if (data.p[id].n !== undefined)
+        player.name = data.p[id].n;
       if (data.p[id].x !== undefined)
         player.tank.x = data.p[id].x;
       if (data.p[id].y !== undefined)
