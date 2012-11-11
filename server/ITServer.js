@@ -61,7 +61,7 @@ var update = function() {
     var player = globals.players[pid];
     player.update();
     // Shoot
-    if (player.projectile[Projectile.Type.NORMAL].lastFire > 10 &&
+    if (player.canFire(Projectile.Type.NORMAL) &&
         (player.keys.space === true || player.mouse.left === true)) {
       globals.projectiles[Projectile.nextID] =
         new Projectile(player, Projectile.Type.NORMAL, Projectile.nextID);
@@ -69,7 +69,7 @@ var update = function() {
     }
 
     // Mine
-    if (player.projectile[Projectile.Type.MINE].lastFire > 20) {
+    if (player.canFire(Projectile.Type.MINE)) {
       if (player.projectile[Projectile.Type.MINE].allowed > player.projectile[Projectile.Type.MINE].live &&
         player.keys.mine === true) {
         globals.projectiles[Projectile.nextID] = new Projectile(player, Projectile.Type.MINE, Projectile.nextID);
@@ -77,10 +77,10 @@ var update = function() {
         Projectile.nextID++;
       }
 
-      if (player.projectile[Projectile.Type.MINE].live > 0 && player.keys.all_mines === true) {
+      if (player.keys.all_mines === true) {
         for (var m in globals.mines) {
           var mine = globals.mines[m];
-          if (player.playerID === mine.owner) {
+          if (player.playerID === mine.owner && player.projectile[Projectile.Type.MINE].live > 0) {
             new Explosion(mine.x, mine.y, mine.range, player, {}, mine.damage, mine);
             delete globals.projectiles[m];
             delete globals.mines[m];

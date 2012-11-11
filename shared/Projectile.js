@@ -16,13 +16,7 @@ var Projectile = function(player, type, id, opt_state) {
     this.damage = opt_state.d;
     this.vx = opt_state.vx;
     this.vy = opt_state.vy;
-
-    if (!this.vx && !this.vy)
-      this.type = Projectile.Type.MINE;
-    else if (this.range)
-      this.type = Projectile.Type.ROCKET;
-    else
-      this.type = Projectile.Type.NORMAL;
+    this.type = opt_state.t;
 
     return;
   }
@@ -78,6 +72,7 @@ Projectile.nextID = 0;
 Projectile.prototype.getAbsoluteState = function() {
   var q = {};
   q.i = this.owner;
+  q.t = this.type;
   q.x = this.x;
   q.y = this.y;
   q.r = this.range;
