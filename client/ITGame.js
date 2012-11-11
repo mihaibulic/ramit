@@ -206,7 +206,7 @@ ITGame.prototype.draw = function() {
 
   //draw mines
   for (var mine in globals.mines) {
-    globals.mines[mine].draw(this.level);
+    globals.mines[mine].draw(this.level, this.team);
   }
 
   //draw players
