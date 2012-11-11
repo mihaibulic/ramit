@@ -56,6 +56,10 @@ if [ ${#output} -eq 0 ]; then
     echo "git push"
     git push ${remote} ${branch}
 
+    echo "cats meow"
+    cat shared/*.js client/*.js > ramit_client.js
+    cat shared/*.js server/*.js > ramit_server.js
+
     echo "ssh"
     yes | ssh -i misquares.pem ec2-user@ec2-184-72-242-128.compute-1.amazonaws.com 'cd /var/lib/tomcat6/webapps/ROOT/ramit && git pull github ${branch} &&./deploy.sh'
 else
