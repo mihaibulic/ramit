@@ -305,6 +305,7 @@ Player.prototype.updateKeys = function(e) {
   var value = e.type === "keydown";
   switch (e.keyCode) {
   case 87: // W
+    window.console.log(this.keys.up);
     if (this.keys.up != value)
       diff.u = value;
     this.keys.up = value;
