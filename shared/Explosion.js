@@ -50,6 +50,8 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
   }
 };
 
+Explosion.Type = { PROJECTILE: 0, MEDIC: 1, EMP: 2 };
+
 /**
  * Draws the explosion on the screen.
  * @returns {Boolean} true when complete
