@@ -7,7 +7,7 @@ var ITGame = function(team, playerID) {
 
     globals.socket.on('state', globals.bind(function(data) {
       this.loadState(data);
-    }), this);
+    }, this));
 
     globals.socket.on('leave', function(data) {
       delete globals.players[data.i];
