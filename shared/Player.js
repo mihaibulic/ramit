@@ -110,8 +110,10 @@ var Player = function(team, playerID, opt_state) {
   this.special[Player.SpecialType.SHIELD] = {
     duration: 3 * 60,
     lastFire: 0,
-    coolDown: 10 * 60
+    coolDown: 10 * 60,
   }
+
+  this.hasShield = 0
 
   if (globals.diff) {
     if (!globals.diff.p)
@@ -134,6 +136,7 @@ Player.prototype.getAbsoluteState = function() {
   p.k = this.getKeyValue();
   p.s = this.speed;
   p.w = 0; // TODO: weapon
+  p.d = this.hasShield;
   p.p = this.totalScore;
   p.c = this.totalSpent;
   return p;
@@ -147,7 +150,9 @@ Player.DIAGONAL_CONST = Math.sqrt(0.5);
 /**
  * The color of the collision bound for each team.
  */
-Player.TEAM_COLOR = ["#00AAFF", "#FF0000"];
+Player.TEAM_COLOR = ["#0000FF", "#FF0000"];
+
+Player.TEAM_COLOR_LIGHT = ["#00AAFF", "#FFAA00"];
 
 Player.HEALTH = ["#FF0000", "#FFFF00", "#00FF00"];
 
@@ -217,6 +222,19 @@ Player.prototype.draw = function() {
     globals.ctx.drawImage(
       globals.resources.turrets[this.team][this.tank.turretAim],
       xPos - 7, yPos - 7);
+    // Draw the shield.
+    if (this.hasShield) {
+      var grad = globals.ctx.createRadialGradient(xPos+30, yPos+30, 10, xPos+30, yPos+30, 60);
+      grad.addColorStop(0, Player.TEAM_COLOR_LIGHT[this.team]);
+      grad.addColorStop(1, Player.TEAM_COLOR[this.team]);
+      globals.ctx.fillStyle = grad;
+      globals.ctx.globalAlpha = 0.4;
+      globals.ctx.beginPath();
+      globals.ctx.arc(xPos + 30, yPos + 30, 35, 0, 2 * Math.PI);
+      globals.ctx.closePath();
+      globals.ctx.fill();
+      globals.ctx.globalAlpha = 1;
+    }
   }
 
   if (globals.queries.debug === "true") {
@@ -283,7 +301,10 @@ Player.prototype.drawHUD = function() {
     if (this.team === other.team || this.getCenterDistance(other) < 650) {
       x = 830 + ((other.tank.x + 30) * 0.05);
       y = 330 + ((other.tank.y + 30) * 0.05);
-      globals.ctx.fillStyle = Player.TEAM_COLOR[other.team];
+      if (other.team)
+        globals.ctx.fillStyle = Player.TEAM_COLOR[other.team];
+      else
+        globals.ctx.fillStyle = Player.TEAM_COLOR_LIGHT[other.team];
       globals.ctx.beginPath();
       globals.ctx.arc(x, y, 2, 0, 2 * Math.PI);
       globals.ctx.closePath();
@@ -423,6 +444,18 @@ Player.prototype.update = function() {
   this.projectile[Projectile.Type.NORMAL].lastFire++;
   this.projectile[Projectile.Type.MINE].lastFire++;
   this.projectile[Projectile.Type.ROCKET].lastFire++;
+  this.lastUsedShield++;
+
+  if (this.hasShield) {
+    this.hasShield--;
+    if (globals.diff && !this.hasShield) {
+      if (!globals.diff.p)
+        globals.diff.p = {};
+      if (!globals.diff.p[this.playerID])
+        globals.diff.p[this.playerID] = {};
+      globals.diff.p[this.playerID].d = 0;
+    }
+  }
 };
 
 /**
@@ -570,6 +603,9 @@ Player.prototype.canFire = function(type) {
  * @returns {Number} The number of points the hit earned.
  */
 Player.prototype.takeHit = function(damage, ownerTeam) {
+  if (this.hasShield)
+    return 0;
+
   this.health -= damage;
   var points = damage;
 
@@ -625,16 +661,35 @@ Player.prototype.addPoints = function(amount) {
   }
 };
 
+Player.prototype.armShield = function() {
+  this.hasShield = this.special[Player.SpecialType.SHIELD].duration;
+  if (globals.diff) {
+    if (!globals.diff.p)
+      globals.diff.p = {};
+    if (!globals.diff.p[this.playerID])
+      globals.diff.p[this.playerID] = {};
+
+    globals.diff.p[this.playerID].d = this.hasShield;
+  }
+};
+
 /**
  * Returns a rectangle representing the collidable area for the provided
  * location. If no location is provided, it will use the location of the tank
  * by default.
  * @param {Object} location An object that holds the location of the tank.
+ * @param {Boolean} useShield Return the barrier of the shield if there is one.
  * @returns {Rectangle} A rectangle of the collidable area of the tank.
  */
-Player.prototype.getCollisionBarrier = function(location) {
+Player.prototype.getCollisionBarrier = function(location, useShield) {
   if (!location)
     location = this.tank;
+
+  if (useShield && this.hasShield) {
+    return new Rectangle({left: location.x + 5, right: location.x + 55,
+                          top: location.y + 5, bottom: location.y + 55});
+  }
+
   return new Rectangle({left: location.x + 10, right: location.x + 50,
                         top: location.y + 10, bottom: location.y + 50});
 };
