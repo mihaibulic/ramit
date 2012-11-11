@@ -169,9 +169,7 @@ ITGame.prototype.update = function() {
   for (var rocket in globals.rockets) {
     globals.rockets[rocket].update();
   }
-  for (var mine in globals.mines) {
-    globals.mines[mine].update(globals); //ignores hits
-  }
+  //mines do not update
 };
 
 /**
