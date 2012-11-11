@@ -164,7 +164,7 @@ io.sockets.on('connection', function(socket) {
 
   // Actions to perform on name changes.
   socket.on('name', function(data) {
-    globals.player[id].name = data;
+    globals.players[id].name = data;
     if (!globals.diff.p)
       globals.diff.p = {};
     if (!globals.diff.p[id])
