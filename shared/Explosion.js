@@ -7,10 +7,11 @@
  * @param {Player} target The player that was directly hit by the weapon.
  * @param {Number} damage The amount of damage that the target takes when hit. All
  *     players in range of the explosion take a portion of the damage.
+ * @param {Boolean} true if friendly fire is ON (can hurt teammates)
  * @param {Projectile} opt_projectile The projectile which exploded.
  * @param {Object} opt_state A state object to build the explosion with.
  */
-var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt_state) {
+var Explosion = function(x, y, range, owner, target, damage, opt_ff, opt_projectile, opt_state) {
   this.animationFrame = 0;
 
   if (opt_state) {
@@ -19,6 +20,9 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     this.range = opt_state.r;
     return;
   }
+
+  // ff is on by default
+  this.ff = opt_ff ? !!opt_ff : true;
 
   this.x = x;
   this.y = y;
@@ -30,9 +34,11 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
   if (range > 0) {
     for (var id in globals.players) {
       var player = globals.players[id];
-      var distance = player.getCenterDistance(this);
-      if (distance < range && player !== target) {
-        owner.addPoints(player.takeHit(Math.round(0.25 * damage + 0.75 * (1 - distance / range) * damage), owner.team));
+      if((this.ff && player !== target) || (!this.ff && player.team !== target.team)) {
+        var distance = player.getCenterDistance(this);
+        if (distance < range) {
+          owner.addPoints(player.takeHit(Math.round(0.25 * damage + 0.75 * (1 - distance / range) * damage), owner.team));
+        }
       }
     }
   }
