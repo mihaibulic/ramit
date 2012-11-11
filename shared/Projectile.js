@@ -116,7 +116,6 @@ Projectile.prototype.draw = function(team) {
     }
   }
 };
-
 /**
  * Updates the projectile.
  * @returns {Boolean} If the projectile has exploded.

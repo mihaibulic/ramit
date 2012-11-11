@@ -30,6 +30,27 @@ globals.isObjectEmpty = function(object) {
   return true;
 };
 
+/**
+ * Explodes projectiles of a player
+ * @param {int} pid of player
+ * @param {boolean} justMines
+ */
+var explodeAll = function(owner, justMines) {
+  for (var qid in globals.projectiles) {
+    var projectile = globals.projectiles[qid];
+    if (projectile.owner === owner) {
+      if (projectile.type === Projectile.Type.MINE) {
+        new Explosion(this.x, this.y, this.range, globals.players[this.owner],
+                    target, this.damage, this);
+        delete globals.mine[qid];
+      }
+      if  (!justMines || projectile.type === Projectile.Type.MINE) {
+        delete globals.projectiles[qid];
+      }
+    }
+  }
+}
+
 /*
  * Updates the game and sends out a 'diff' message to the players.
  */

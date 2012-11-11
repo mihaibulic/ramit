@@ -236,3 +236,8 @@ ITGame.prototype.draw = function() {
     globals.ctx.fillText("FPS: " + this.fps, 500, 20);
   }
 };
+
+ITGame.prototype.message = function(msg) {
+
+};
+
