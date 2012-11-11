@@ -72,7 +72,7 @@ var update = function() {
     if (player.projectile[Projectile.Type.MINE].allowed > player.projectile[Projectile.Type.MINE].live &&
         player.keys.mine === true) {
       globals.projectiles[Projectile.nextID] = new Projectile(player, Projectile.Type.MINE, Projectile.nextID);
-      globals.mines[Projectile.nextID] = globals.projectiles[projID];
+      globals.mines[Projectile.nextID] = globals.projectiles[Projectile.nextID];
       Projectile.nextID++;
     }
 
