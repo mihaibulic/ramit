@@ -235,7 +235,7 @@ Player.prototype.drawHUD = function() {
   globals.ctx.fillStyle = "#ffffff";
   globals.ctx.textAlign = "right";
   globals.ctx.font = "24px serif";
-  globals.ctx.fillText("$" + (this.totalScore - this.scoreSpent), 980, 44);
+  globals.ctx.fillText("$" + (this.totalScore - this.scoreSpent), 980, 35);
   globals.ctx.textAlign = "left";
 
   // Minimap
