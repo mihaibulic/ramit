@@ -233,7 +233,7 @@ ITGame.prototype.draw = function() {
   }
 };
 
-ITGame.prototype.message(msg) {
+ITGame.prototype.message = function(msg) {
 
 };
 
