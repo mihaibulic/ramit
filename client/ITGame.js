@@ -46,6 +46,7 @@ var ITGame = function(team, playerID) {
 
     //Blur event
     document.body.onblur = function(e) {
+      console.log("CLEAR");
       globals.socket.emit("key", {u:0,l:0,r:0,d:0,s:0,e:0,q:0});
       globals.socket.emit("mouse", {l:0,m:0,r:0});
     };
