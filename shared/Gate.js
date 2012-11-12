@@ -59,11 +59,11 @@ Gate.prototype.updateHealth = function(health) {
 };
 
 Gate.prototype.update = function() {
-  if (this.lastAttack > 0) this.lastAttack--;
+  if (this.underAttack > 0) this.underAttack--;
 };
 
 Gate.prototype.isUnderAttack = function() {
-  return (this.lastAttack > 0);
+  return (this.underAttack > 0);
 };
 
 /**
@@ -86,9 +86,9 @@ Gate.prototype.draw = function() {
       }
 
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
-        if (this.lastAttack > 960 && this.detailsFadeFrames < 30)
+        if (this.underAttack > 960 && this.detailsFadeFrames < 30)
           this.detailsFadeFrames++;
-        if (this.lastAttack < 30 && this.detailsFadeFrames > 0)
+        if (this.underAttack < 30 && this.detailsFadeFrames > 0)
           this.detailsFadeFrames--;
 
         var alpha = this.detailsFadeFrames / 30;
