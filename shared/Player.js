@@ -444,7 +444,9 @@ Player.prototype.update = function() {
   this.move();
   this.projectile[Projectile.Type.NORMAL].lastFire++;
   this.projectile[Projectile.Type.MINE].lastFire++;
-  this.projectile[Projectile.Type.ROCKET].lastFire++;
+  this.special[Player.SpecialType.ROCKET].lastFire++;
+  this.special[Player.SpecialType.EMP].lastFire++;
+  this.special[Player.SpecialType.MEDIC].lastFire++;
   if (!this.hasShield)
     this.special[Player.SpecialType.SHIELD].lastFire++;
 
