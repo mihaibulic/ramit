@@ -118,10 +118,10 @@ var update = function() {
       delete globals.projectiles[projectile];
   }
 
-  lastAbsolute++;
+  this.lastAbsolute++;
 
-  if(lastAbsolute >= 300) {
-    lastAbsolute = 0;
+  if (this.lastAbsolute >= 300) {
+    this.lastAbsolute = 0;
     var absoluteState = this.getAbsoluteState();
     for (var d in globals.diff) {
       absoluteState[d] = globals.diff[d]; 
