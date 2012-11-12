@@ -445,10 +445,13 @@ Player.prototype.updateKeys = function(e) {
     }
     break;
   }
-  if (diff.m !== undefined)
-    console.log("I want to mount " + diff.m);
-  if (!globals.isObjectEmpty(diff))
+  if (!globals.isObjectEmpty(diff)) {
+    diff.u = this.keys.up;
+    diff.d = this.keys.down;
+    diff.l = this.keys.left;
+    diff.r = this.keys.right;
     globals.socket.emit('key', diff);
+  }
 };
 
 /**
