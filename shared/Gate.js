@@ -4,6 +4,7 @@
  */
 var Gate = function(team, hq) {
   this.hq = hq;
+  this.team = team;
   this.lastAttack = 1000;
   if (this.hq) {
     this.name = (team === 0 ? "Blue HQ" : "Red HQ");
@@ -14,7 +15,6 @@ var Gate = function(team, hq) {
   } else {
     this.name = (team === 0 ? "Blue Gate" : "Red Gate");
     this.health = 1000;
-    this.team = team;
     this.left = 1350;
     this.right = 1650;
     if (team === 0) {
