@@ -94,7 +94,7 @@ Gate.prototype.draw = function() {
         globals.ctx.fillRect(xPos, yPos, box.width(), box.height());
       }
 
-      if (globals.queries['debug'] === "true" || this.isUnderAttack()) {
+      if (globals.queries.debug === "true" || this.isUnderAttack()) {
         // Fade In/Out
         var alpha = this.detailsFadeFrames / 20;
 
