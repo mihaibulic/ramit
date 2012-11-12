@@ -452,7 +452,7 @@ Player.prototype.update = function() {
   if (this.health <= 0) {
     this.deathCounter++;
     if(this.deathCounter >= 120) {
-      respawn();
+      this.respawn();
     }
   }
   else {
