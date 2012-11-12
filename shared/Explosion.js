@@ -9,11 +9,10 @@
  *     players in range of the explosion take a portion of the damage.
  *     If negative, won't affect opposing team
  * @param {Projectile} opt_projectile The projectile which exploded.
- * @param {Boolean} true if friendly fire is ON (can hurt teammates)
- * @param {Boolean} true if friendly fire is ON (can hurt teammates)
+ * @param {Boolean} opt_one_team, true if you want to affect only one team
  * @param {Object} opt_state A state object to build the explosion with.
  */
-var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt_ff, opt_state) {
+var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt_one_team, opt_state) {
   this.animationFrame = 0;
 
   if (opt_state) {
@@ -24,8 +23,8 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
   }
 
   // affect everyone by default
-  this.affect_enemies = (damage > 0);
-  this.affect_friendlies = (opt_ff !== undefined ? Boolean(opt_ff) : true);
+  this.affect_enemies = (Boolean(opt_one_team) && damage > 0) || !opt_one_team;
+  this.affect_friendlies = (Boolean(opt_one_team) && damage < 0) || !opt_one_team; 
 
   this.x = x;
   this.y = y;
