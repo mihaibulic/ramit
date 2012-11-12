@@ -54,12 +54,18 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
 
 Gate.prototype.updateHealth = function(health) {
   if (health !== this.health)
-    this.underAttack = 1000;
+    this.underAttack = 600;
   this.health = health;
 };
 
 Gate.prototype.update = function() {
   if (this.underAttack > 0) this.underAttack--;
+  // Fade In/Out
+  if (this.underAttack < 20 && this.detailsFadeFrames > 0)
+    this.detailsFadeFrames--;
+  else if (this.underAttack > 0 && this.detailsFadeFrames < 20)
+    this.detailsFadeFrames++;
+
 };
 
 Gate.prototype.isUnderAttack = function() {
@@ -86,13 +92,8 @@ Gate.prototype.draw = function() {
       }
 
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
-
-        if (this.underAttack > 960 && this.detailsFadeFrames < 30)
-          this.detailsFadeFrames++;
-        if (this.underAttack < 30 && this.detailsFadeFrames > 0)
-          this.detailsFadeFrames--;
-
-        var alpha = this.detailsFadeFrames / 30;
+        // Fade In/Out
+        var alpha = this.detailsFadeFrames / 20;
 
         // health bar
         globals.ctx.strokeStyle = "#00FF00";
