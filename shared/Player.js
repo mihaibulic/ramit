@@ -431,7 +431,8 @@ Player.prototype.updateKeys = function(e) {
     }
     break;
   }
-
+  if (diff.m !== undefined)
+    console.log("I want to mount " + diff.m);
   if (!globals.isObjectEmpty(diff))
     globals.socket.emit('key', diff);
 };
