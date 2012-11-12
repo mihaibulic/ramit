@@ -116,7 +116,7 @@ Gate.prototype.draw = function() {
     }
   }
   if (!this.hq) //draw gate outside things
-    globals.ctx.drawImage(globals.resources.gates[2], xPos, yPos);
+    globals.ctx.drawImage(globals.resources.gates[2], pos.right, pos.top+5);
   if (globals.queries.debug === "true") {
     globals.ctx.strokeStyle = Player.TEAM_COLOR[this.team];
     var rect = this.getCollisionBarrier();
