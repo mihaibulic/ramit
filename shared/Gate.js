@@ -5,7 +5,7 @@
 var Gate = function(team, hq) {
   this.hq = Boolean(hq);
   this.lastAttack = 1000;
-  if (hq) {
+  if (this.hq) {
     this.name = (team === 0 ? "Blue HQ" : "Red HQ");
     this.left = 2500;
     this.right = 2600;
@@ -75,7 +75,7 @@ Gate.prototype.draw = function() {
 
   if (xPos > -300 && xPos < 1000 && yPos > -20 && yPos < 500) {
     if (this.health > 0) {
-      if (!hq) {
+      if (!this.hq) {
         globals.ctx.globalAlpha = this.health / 100;
         globals.ctx.drawImage(globals.resources.gates[this.team], xPos, yPos);
         globals.ctx.globalAlpha = 1;
