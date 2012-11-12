@@ -75,7 +75,7 @@ var Player = function(team, playerID, opt_state) {
   this.projectile[Projectile.Type.NORMAL] = {
     range: 0,
     damage: 5,
-    speed: 10,
+    speed: 5,
     lastFire: 0,
     coolDown: 10
   };
