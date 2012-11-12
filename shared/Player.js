@@ -217,11 +217,11 @@ Player.prototype.draw = function() {
   if (xPos > -60 && xPos < 1000 && yPos > -60 && yPos < 500) {
     // Draw the tank.
     globals.ctx.drawImage(
-      globals.resources.tanks[(this.deathCounter > 0 ? 3 : this.team)][this.tank.direction],
+      globals.resources.tanks[(this.deathCounter > 0 ? 2 : this.team)][this.tank.direction],
       xPos, yPos);
     // Draw the turret.
     globals.ctx.drawImage(
-      globals.resources.turrets[(this.deathCounter > 0 ? 3 : this.team)][this.tank.turretAim],
+      globals.resources.turrets[(this.deathCounter > 0 ? 2 : this.team)][this.tank.turretAim],
       xPos - 7, yPos - 7);
     // Draw the shield.
     if (this.hasShield) {

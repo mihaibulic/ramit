@@ -274,7 +274,7 @@ globals.renderTanks = function()
       globals.resourceLoaded();
       if (++i < 180) {
         renderTurret(num);
-      } else if (++num < globals.NUMBER_OF_PLAYERS) {
+      } else if (++num < globals.NUMBER_OF_PLAYERS + 1) {
         i = 0;
         renderTank(num);
       }
