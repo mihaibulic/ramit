@@ -34,7 +34,7 @@ var Player = function(team, playerID, opt_state) {
   if (opt_state) {
     this.name = opt_state.n;
     this.team = opt_state.t;
-    this.color = this.team;
+    this.color = opt_state.t;
     x = opt_state.x;
     y = opt_state.y;
     this.deathCounter = 0;
@@ -636,6 +636,8 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
     this.health = this.maxHealth;
 
   if (this.health <= 0) {
+    console.log("OMGZ I JUS DIED");
+    this.health = 0;
     this.deathCounter = 1;
     this.color = 2;
     points += 25;
