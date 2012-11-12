@@ -112,7 +112,7 @@ var Player = function(team, playerID, opt_state) {
   this.special[Player.SpecialType.SHIELD] = {
     duration: 3 * 60,
     lastFire: 0,
-    coolDown: 10 * 60,
+    coolDown: 5 * 60,
   }
 
   if (globals.diff) {
@@ -337,7 +337,7 @@ Player.prototype.updateMouse = function(e) {
 
   if (!e.which && e.button)
   {
-    if (e.button & 1) e.which = 1;                      // Left
+    if (e.button & 1) e.which = 1;      // Left
     else if (e.button & 4) e.which = 2; // Middle
     else if (e.button & 2) e.which = 3; // Right
   }
@@ -444,7 +444,8 @@ Player.prototype.update = function() {
   this.projectile[Projectile.Type.NORMAL].lastFire++;
   this.projectile[Projectile.Type.MINE].lastFire++;
   this.projectile[Projectile.Type.ROCKET].lastFire++;
-  this.special[Player.SpecialType.SHIELD]++;
+  if (!this.hasShield)
+    this.special[Player.SpecialType.SHIELD].lastFire++;
 
   if (this.hasShield) {
     this.hasShield--;
@@ -663,6 +664,7 @@ Player.prototype.addPoints = function(amount) {
 
 Player.prototype.armShield = function() {
   this.hasShield = this.special[Player.SpecialType.SHIELD].duration;
+  this.special[Player.SpecialType.SHIELD].lastFire = 0;
   if (globals.diff) {
     if (!globals.diff.p)
       globals.diff.p = {};

@@ -144,7 +144,7 @@ Projectile.prototype.update = function() {
       if (target.getCollisionBarrier().intersects(this.getCollisionBarrier())) {
         this.vx = this.vy = 0;
         new Explosion(this.x, this.y, this.range, globals.players[this.owner],
-                      target, this.damage, this);
+                      target, this.damage, this, true);
         hit = true;
         break;
       }
@@ -157,7 +157,7 @@ Projectile.prototype.update = function() {
       if (globals.level.walls[wid].intersects(this.getCollisionBarrier())) {
         this.vx = this.vy = 0;
         new Explosion(this.x, this.y, this.range, globals.players[this.owner],
-                      null, this.damage, this);
+                      null, this.damage, this, true);
         hit = true;
         break;
       }

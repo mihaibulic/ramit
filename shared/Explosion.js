@@ -11,7 +11,7 @@
  * @param {Projectile} opt_projectile The projectile which exploded.
  * @param {Object} opt_state A state object to build the explosion with.
  */
-var Explosion = function(x, y, range, owner, target, damage, opt_ff, opt_projectile, opt_state) {
+var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt_ff, opt_state) {
   this.animationFrame = 0;
 
   if (opt_state) {
@@ -34,9 +34,11 @@ var Explosion = function(x, y, range, owner, target, damage, opt_ff, opt_project
   if (range > 0) {
     for (var id in globals.players) {
       var player = globals.players[id];
-      if((this.ff && player !== target) || (!this.ff && player.team !== target.team)) {
+      if((this.ff && player !== target) || (!this.ff && player.team !== target.team)) { 
+        console.log("checking against player " + player);
         var distance = player.getCenterDistance(this);
         if (distance < range) {
+          console.log("BOOM");
           owner.addPoints(player.takeHit(Math.round(0.25 * damage + 0.75 * (1 - distance / range) * damage), owner.team));
         }
       }
