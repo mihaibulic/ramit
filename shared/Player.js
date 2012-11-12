@@ -242,6 +242,13 @@ Player.prototype.draw = function() {
     var rect = this.getCollisionBarrier();
     globals.ctx.strokeRect(rect.left - globals.level.x, rect.top - globals.level.y, rect.width(),
                            rect.height());
+
+    if (this.hasShield) {
+      var rect = this.getCollisionBarrier(null, true);
+      globals.ctx.strokeRect(rect.left - globals.level.x, rect.top - globals.level.y, rect.width(),
+                             rect.height());
+
+    }
   }
 };
 
@@ -696,8 +703,8 @@ Player.prototype.getCollisionBarrier = function(location, useShield) {
     location = this.tank;
 
   if (useShield && this.hasShield) {
-    return new Rectangle({left: location.x + 5, right: location.x + 55,
-                          top: location.y + 5, bottom: location.y + 55});
+    return new Rectangle({left: location.x + 2, right: location.x + 58,
+                          top: location.y + 2, bottom: location.y + 58});
   }
 
   return new Rectangle({left: location.x + 10, right: location.x + 50,
