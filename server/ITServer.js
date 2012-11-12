@@ -94,7 +94,7 @@ var update = function() {
     console.log(player.mounted + " is mounted");
     if (player.special[player.mounted].lastFire > player.special[player.mounted].coolDown &&
         (player.mouse.right === true || player.keys.shift === true)) {
-        if (player.mounted === Player.specialType.ROCKET) {
+        if (player.mounted === Player.SpecialType.ROCKET) {
           globals.projectiles[Projectile.nextID] =
             new Projectile(player, Projectile.Type.ROCKET, Projectile.nextID);
           Projectile.nextID++;
