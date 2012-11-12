@@ -6,6 +6,7 @@ var Gate = function(team, hq) {
   this.hq = hq;
   this.team = team;
   this.lastAttack = 1000;
+  this.detailsFadeFrames = 0;
   this.health = 1000;
   if (this.hq) {
     this.name = (team === 0 ? "Blue HQ" : "Red HQ");
@@ -85,19 +86,27 @@ Gate.prototype.draw = function() {
       }
 
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
+        if (this.lastAttack > 960 && this.detailsFadeFrames < 30)
+          this.detailsFadeFrames++;
+        if (this.lastAttack < 30 && this.detailsFadeFrames > 0)
+          this.detailsFadeFrames--;
+
+        var alpha = this.detailsFadeFrames / 30;
+
         // health bar
         globals.ctx.strokeStyle = "#00FF00";
         var color = Math.floor(this.health / 1000 * Player.HEALTH.length);
         if (color == Player.HEALTH.length) color--;
         globals.ctx.fillStyle = Player.HEALTH[color];
-        globals.ctx.globalAlpha = 0.5;
+        globals.ctx.globalAlpha = 0.5 * alpha;
         globals.ctx.strokeRect(xPos + 100, yPos-2, 100, 3);
         globals.ctx.fillRect(xPos + 100, yPos-2, 100 * this.health / 1000, 3);
-        globals.ctx.globalAlpha = 1;
-         //name
+        globals.ctx.globalAlpha = alpha;
+        // name
         globals.ctx.fillStyle = "#FFFFFF";
         globals.ctx.font = "10px sans-serif";
         globals.ctx.fillText(this.name, 1450-globals.level.x, yPos - 3);
+        globals.ctx.globalAlpha = 1;
       }
     }
     if (!this.hq) //draw gate outside things
