@@ -93,7 +93,7 @@ Gate.prototype.draw = function() {
           this.detailsFadeFrames--;
 
         var alpha = this.detailsFadeFrames / 30;
-        window.console.log(alpha);
+
         // health bar
         globals.ctx.strokeStyle = "#00FF00";
         var color = Math.floor(this.health / 1000 * Player.HEALTH.length);
