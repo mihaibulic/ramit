@@ -81,7 +81,7 @@ Explosion.prototype.draw = function() {
   if (this.range === 0)
     range = 5;
 
-  if (this.damage < 0) //medic {
+  if (this.damage < 0) { //medic
     console.log("draw med");
     globals.ctx.strokeStyle = Player.HEALTH[2];
   }
