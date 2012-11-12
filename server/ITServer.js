@@ -103,7 +103,7 @@ var update = function() {
                   (player.mounted === Player.SpecialType.MEDIC)) {
         new Explosion(player.tank.x + 30, player.tank.y +30, 
                     player.special[player.mounted].range, 
-                    player, null, player.special[player.mounted].damage, true);
+                    player, null, player.special[player.mounted].damage, null, true);
       } else if (player.mounted === Player.SpecialType.SHIELD) {
         player.armShield();
       }
