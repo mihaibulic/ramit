@@ -42,7 +42,7 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
   if (range > 0) {
     for (var id in globals.players) {
       var player = globals.players[id];
-      if(canAffect(player, owner, target)) { 
+      if (this.canAffect(player, owner, target)) { 
         var distance = player.getCenterDistance(this);
         if (distance < range) 
           owner.addPoints(player.takeHit(Math.round(0.25 * damage + 0.75 * (1 - distance / range) * damage), owner.team));
