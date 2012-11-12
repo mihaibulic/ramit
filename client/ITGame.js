@@ -50,6 +50,21 @@ var ITGame = function(team, playerID) {
       globals.socket.emit("key", {u:0,l:0,r:0,d:0,s:0,e:0,q:0});
       globals.socket.emit("mouse", {l:0,m:0,r:0});
     };
+    window.onblur = function(e) {
+      console.log("CLEAR2");
+      globals.socket.emit("key", {u:0,l:0,r:0,d:0,s:0,e:0,q:0});
+      globals.socket.emit("mouse", {l:0,m:0,r:0});
+    };
+    window.addEventListener('blur', function(e) {
+      console.log("CLEAR3");
+      globals.socket.emit("key", {u:0,l:0,r:0,d:0,s:0,e:0,q:0});
+      globals.socket.emit("mouse", {l:0,m:0,r:0});
+    });
+    globals.ctx.onblur = function(e) {
+      console.log("CLEAR4");
+      globals.socket.emit("key", {u:0,l:0,r:0,d:0,s:0,e:0,q:0});
+      globals.socket.emit("mouse", {l:0,m:0,r:0});
+    };
     // Context Menu Event
     window.addEventListener('contextmenu', function(e) {
       if(!e)
