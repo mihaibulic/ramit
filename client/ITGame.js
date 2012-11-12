@@ -205,14 +205,14 @@ ITGame.prototype.draw = function() {
                           -1 * levelX + 1000, -1 * levelY + 1000);
   }
 
-  //draw players
-  for (var pid in globals.players) {
-    globals.players[pid].draw();
-  }
-
   //draw projectiles (including mines)
   for (var qid in globals.projectiles) {
     globals.projectiles[qid].draw(this.team);
+  }
+
+  //draw players
+  for (var pid in globals.players) {
+    globals.players[pid].draw();
   }
 
   //draw gates
