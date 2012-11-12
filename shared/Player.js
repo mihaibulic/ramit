@@ -94,7 +94,7 @@ var Player = function(team, playerID, opt_state) {
     lastFire: 0,
     coolDown: 120
   };
-  
+
   this.special = {};
   this.special[Player.SpecialType.ROCKET] = this.projectile[Projectile.Type.ROCKET];//this is a hack
   this.special[Player.SpecialType.EMP] = {
@@ -611,7 +611,12 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
     return 0;
 
   this.health -= damage;
-  var points = damage;
+  var points = 0;
+  if (damage > 0)
+    points += damage;
+
+  if (this.health >= this.maxHealth)
+    this.health = this.maxHealth;
 
   if (this.health <= 0) {
     var spawn = this.determineSpawn();
