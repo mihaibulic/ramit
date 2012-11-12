@@ -86,10 +86,14 @@ Explosion.prototype.draw = function() {
     console.log("draw med");
     globals.ctx.strokeStyle = Player.HEALTH[2];
   }
-  else if (this.damage === 0) // EMP
+  else if (this.damage === 0) { // EMP
     globals.ctx.strokeStyle = "#770077";
-  else //normal
+    console.log("draw 0");
+  }
+  else { //normal
     globals.ctx.strokeStyle = "#FFFF00";
+    console.log("draw norm");
+  }
   globals.ctx.lineWidth = 5;
   globals.ctx.beginPath();
   globals.ctx.arc(xPos, yPos, (this.animationFrame + 1) / 5 * range, 0 , 2 * Math.PI);
