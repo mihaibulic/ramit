@@ -45,10 +45,15 @@ var ITGame = function(team, playerID) {
 
 
     //Blur event
-    document.body.onblur = function(e) {
+    var blur = function(e) {
       globals.socket.emit("key", {u:0,l:0,r:0,d:0,s:0,e:0,q:0});
       globals.socket.emit("mouse", {l:0,m:0,r:0});
     };
+
+    document.getElementById("cnv").addEventListener('blur', blur);
+    document.getElementById("renderer").addEventListener('blur', blur);
+    window.addEventListener('blur', blur);
+
     // Context Menu Event
     window.addEventListener('contextmenu', function(e) {
       if(!e)

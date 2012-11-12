@@ -77,8 +77,9 @@ var update = function() {
         globals.mines[Projectile.nextID] = globals.projectiles[Projectile.nextID];
         Projectile.nextID++;
       }
-
+        
       if (player.keys.all_mines === true) {
+        console.log("Player #" + player.playerID + " has " + player.projectile[Projectile.Type.MINE].live + " live mines BEFORE");
         for (var m in globals.mines) {
           var mine = globals.mines[m];
           if (player.playerID === mine.owner) {
@@ -88,6 +89,8 @@ var update = function() {
             player.projectile[Projectile.Type.MINE].live--;
           }
         }
+        player.keys.all_mines = false;
+        console.log("Player #" + player.playerID + " has " + player.projectile[Projectile.Type.MINE].live + " live mines AFTER");
       }
     }
 
