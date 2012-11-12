@@ -106,7 +106,7 @@ Gate.prototype.draw = function() {
   if (globals.queries.debug === "true") {
     globals.ctx.strokeStyle = Player.TEAM_COLOR[this.team];
     var rect = this.getCollisionBarrier();
-    globals.ctx.strokeRect(xPos, yPos + (!this.hq ? 2 : 0), rect.width(), rect.height());
+    globals.ctx.strokeRect(xPos, yPos + (!this.hq ? 5 : 0), rect.width(), rect.height());
   }
 };
 
