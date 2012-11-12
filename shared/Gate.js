@@ -52,6 +52,16 @@ Gate.prototype.draw = function() {
       globals.ctx.globalAlpha = 1;
     }
     globals.ctx.drawImage(globals.resources.gates[2], xPos, yPos);
+
+    // health bar
+    globals.ctx.strokeStyle = "#00FF00";
+    var color = Math.floor(this.health / 1000 * Player.HEALTH.length);
+    if (color == Player.HEALTH.length) color--;
+    globals.ctx.fillStyle = Player.HEALTH[color];
+    globals.ctx.globalAlpha = 0.5;
+    globals.ctx.strokeRect(xPos + 10, yPos + 2, 40, 3);
+    globals.ctx.fillRect(xPos + 10, yPos + 2, 40 * this.health / 1000, 3);
+    globals.ctx.globalAlpha = 1;
   }
 
   if (globals.queries.debug === "true") {
