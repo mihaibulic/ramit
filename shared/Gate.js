@@ -14,6 +14,7 @@ var Gate = function(team) {
     this.top = 2492;
     this.bottom = 2507;
   }
+  this.lastAttack = 1000;
 };
 
 /**
@@ -23,6 +24,7 @@ var Gate = function(team) {
  * @returns {Number} The number of points earned for the hit.
  */
 Gate.prototype.takeHit = function(damage, ownerTeam) {
+  this.lastAttack = 0;
   this.health -= damage;
   if (this.health < 0) this.health = 0;
 
@@ -36,6 +38,14 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
     return -1 * damage;
   return 0;
 };
+
+Gate.prototype.update = function() {
+  this.lastAttack++:
+};
+
+Gate.prototype.isUnderAttack() {
+  return (this.lastAttack < 1000);
+}
 
 /**
  * Draws the gate.
@@ -52,14 +62,16 @@ Gate.prototype.draw = function() {
       globals.ctx.globalAlpha = 1;
 
       // health bar
-      globals.ctx.strokeStyle = "#00FF00";
-      var color = Math.floor(this.health / 1000 * Player.HEALTH.length);
-      if (color == Player.HEALTH.length) color--;
-      globals.ctx.fillStyle = Player.HEALTH[color];
-      globals.ctx.globalAlpha = 0.5;
-      globals.ctx.strokeRect(1450-globals.level.x, yPos-2, 100, 3);
-      globals.ctx.fillRect(1450-globals.level.x, yPos-2, 100 * this.health / 1000, 3);
-      globals.ctx.globalAlpha = 1;
+      if (globals.queries.debug === "true" || this.isUnderAttack()) {
+        globals.ctx.strokeStyle = "#00FF00";
+        var color = Math.floor(this.health / 1000 * Player.HEALTH.length);
+        if (color == Player.HEALTH.length) color--;
+        globals.ctx.fillStyle = Player.HEALTH[color];
+        globals.ctx.globalAlpha = 0.5;
+        globals.ctx.strokeRect(1450-globals.level.x, yPos-2, 100, 3);
+        globals.ctx.fillRect(1450-globals.level.x, yPos-2, 100 * this.health / 1000, 3);
+        globals.ctx.globalAlpha = 1;
+      }
     }
     globals.ctx.drawImage(globals.resources.gates[2], xPos, yPos);
 
