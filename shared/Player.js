@@ -335,7 +335,7 @@ Player.prototype.updateMouse = function(e) {
 
   if (!e.which && e.button)
   {
-    if (e.button & 1) e.which = 1;                      // Left
+    if (e.button & 1) e.which = 1;      // Left
     else if (e.button & 4) e.which = 2; // Middle
     else if (e.button & 2) e.which = 3; // Right
   }
@@ -412,7 +412,7 @@ Player.prototype.update = function() {
   this.projectile[Projectile.Type.NORMAL].lastFire++;
   this.projectile[Projectile.Type.MINE].lastFire++;
   this.projectile[Projectile.Type.ROCKET].lastFire++;
-  this.special[Player.SpecialType.SHIELD]++;
+  this.special[Player.SpecialType.SHIELD].lastFire++;
 
   if (this.hasShield) {
     this.hasShield--;
