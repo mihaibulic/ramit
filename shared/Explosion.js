@@ -7,17 +7,12 @@
  * @param {Player} target The player that was directly hit by the weapon.
  * @param {Number} damage The amount of damage that the target takes when hit. All
  *     players in range of the explosion take a portion of the damage.
+ *     If negative, won't affect opposing team
  * @param {Projectile} opt_projectile The projectile which exploded.
  * @param {Boolean} true if friendly fire is ON (can hurt teammates)
  * @param {Boolean} true if friendly fire is ON (can hurt teammates)
  * @param {Object} opt_state A state object to build the explosion with.
  */
-
-// affect own (if dmg is negative)
-// affect enemy (if ff is off)
-// affect both (DEFAULT)
-
-
 var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt_ff, opt_state) {
   this.animationFrame = 0;
 
@@ -70,7 +65,7 @@ Explosion.Type = { PROJECTILE: 0, MEDIC: 1, EMP: 2 };
  * @returns true iff the player should be hit by the splash, false otherwise
  */
 Explosion.prototype.canAffect = function(player, owner, target) {
- return (player !== target &&
+ return (player !== owner && player !== target &&
           ((player.team === owner.team && this.affect_friendlies) ||
           (player.team !== owner.team && this.affect_enemies)));
 };
