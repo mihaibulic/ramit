@@ -45,26 +45,15 @@ var ITGame = function(team, playerID) {
 
 
     //Blur event
-    document.body.onblur = function(e) {
-      alert("CLEAR");
+    var blur = function(e) {
       globals.socket.emit("key", {u:0,l:0,r:0,d:0,s:0,e:0,q:0});
       globals.socket.emit("mouse", {l:0,m:0,r:0});
     };
-    window.onblur = function(e) {
-      alert("CLEAR2");
-      globals.socket.emit("key", {u:0,l:0,r:0,d:0,s:0,e:0,q:0});
-      globals.socket.emit("mouse", {l:0,m:0,r:0});
-    };
-    window.addEventListener('blur', function(e) {
-      alert("CLEAR3");
-      globals.socket.emit("key", {u:0,l:0,r:0,d:0,s:0,e:0,q:0});
-      globals.socket.emit("mouse", {l:0,m:0,r:0});
-    });
-    globals.ctx.onblur = function(e) {
-      alert("CLEAR4");
-      globals.socket.emit("key", {u:0,l:0,r:0,d:0,s:0,e:0,q:0});
-      globals.socket.emit("mouse", {l:0,m:0,r:0});
-    };
+
+    document.getElementById("cnv").addEventListener('blur', blur);
+    document.getElementById("renderer").addEventListener('blur', blur);
+    window.addEventListener('blur', blur);
+
     // Context Menu Event
     window.addEventListener('contextmenu', function(e) {
       if(!e)
