@@ -122,7 +122,7 @@ var Player = function(team, playerID, opt_state) {
   }
 };
 
-Player.SpecialType = { ROCKET: 1, EMP: 2, MEDIC: 3, SHEILD: 4 };
+Player.SpecialType = { ROCKET: 1, EMP: 2, MEDIC: 3, SHIELD: 4 };
 
 Player.prototype.getAbsoluteState = function() {
   var p = {};
