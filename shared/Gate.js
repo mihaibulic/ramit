@@ -80,6 +80,7 @@ Gate.prototype.draw = function() {
         globals.ctx.drawImage(globals.resources.gates[this.team], xPos, yPos);
         globals.ctx.globalAlpha = 1;
       } else {
+        globals.ctx.fillStyle = Player.TEAM_COLOR[this.team];
         globals.ctx.fillRect(xPos, yPos, box.width(), bow.height());
       }
 
