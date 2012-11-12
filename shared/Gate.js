@@ -45,7 +45,7 @@ Gate.prototype.update = function() {
 
 Gate.prototype.isUnderAttack() {
   return (this.lastAttack < 1000);
-}
+};
 
 /**
  * Draws the gate.
