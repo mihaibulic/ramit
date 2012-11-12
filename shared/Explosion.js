@@ -16,6 +16,7 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
   this.animationFrame = 0;
 
   if (opt_state) {
+    this.type = opt_state.t;
     this.x = opt_state.x;
     this.y = opt_state.y;
     this.range = opt_state.r;
@@ -51,6 +52,12 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     var e = {};
     if (opt_projectile)
       e.i = opt_projectile.id;
+    var type = Explosion.Type.PROJECTILE;
+    if (damage < 0) 
+      type = Explosion.Type.MEDIC;
+    else if (opt_one_team)
+      type = Explosion.Type.EMP;
+    e.t = type;
     e.x = this.x;
     e.y = this.y;
     e.r = this.range;
@@ -82,17 +89,14 @@ Explosion.prototype.draw = function() {
   if (this.range === 0)
     range = 5;
 
-  if (this.damage < 0) { //medic
-    console.log("draw med");
+  if (this.type === Explosion.Type.MEDIC) { //medic
     globals.ctx.strokeStyle = Player.HEALTH[2];
   }
-  else if (this.damage === 0) { // EMP
+  else if (this.type === Explosion.Type.EMP) { // EMP
     globals.ctx.strokeStyle = "#770077";
-    console.log("draw 0");
   }
   else { //normal
     globals.ctx.strokeStyle = "#FFFF00";
-    console.log("draw norm");
   }
   globals.ctx.lineWidth = 5;
   globals.ctx.beginPath();
