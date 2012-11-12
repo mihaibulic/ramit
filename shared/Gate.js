@@ -81,6 +81,7 @@ Gate.prototype.draw = function() {
   var yPos = this.top - globals.level.y - 5;
   var width = box.width();
   var height = box.height();
+  console.log(xPos + ", " + yPos);
 
   if (xPos > -1 * width && xPos < width && yPos > -1 * height && yPos < height) {
     if (this.health > 0) {
