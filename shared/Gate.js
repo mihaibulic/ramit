@@ -98,20 +98,20 @@ Gate.prototype.draw = function() {
         // Fade In/Out
         var alpha = this.detailsFadeFrames / 20;
 
-        xPos += (this.width / 2) - 50;
+        dataXPos += xPos + (this.width / 2) - 50;
         // health bar
         globals.ctx.strokeStyle = "#00FF00";
         var color = Math.floor(this.health / 1000 * Player.HEALTH.length);
         if (color == Player.HEALTH.length) color--;
         globals.ctx.fillStyle = Player.HEALTH[color];
         globals.ctx.globalAlpha = 0.5 * alpha;
-        globals.ctx.strokeRect(xPos, yPos-2, 100, 3);
-        globals.ctx.fillRect(xPos, yPos-2, 100 * this.health / 1000, 3);
+        globals.ctx.strokeRect(dataXPos, yPos-2, 100, 3);
+        globals.ctx.fillRect(dataXPos, yPos-2, 100 * this.health / 1000, 3);
         globals.ctx.globalAlpha = alpha;
         // name
         globals.ctx.fillStyle = "#FFFFFF";
         globals.ctx.font = "10px sans-serif";
-        globals.ctx.fillText(this.name, xPos, yPos - 3);
+        globals.ctx.fillText(this.name, dataXPos, yPos - 3);
         globals.ctx.globalAlpha = 1;
       }
     }
