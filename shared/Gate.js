@@ -86,11 +86,11 @@ Gate.prototype.draw = function() {
     if (this.health > 0) {
       if (!this.hq) {
         globals.ctx.globalAlpha = this.health / 100; //fades away for the last 100 hp
-        globals.ctx.drawImage(globals.resources.gates[this.team], xPos, yPos);
+        globals.ctx.drawImage(globals.resources.gates[this.team], pos.left, pos.top);
         globals.ctx.globalAlpha = 1;
       } else {
         globals.ctx.fillStyle = Player.TEAM_COLOR[this.team];
-        globals.ctx.fillRect(xPos, yPos, width, height);
+        globals.ctx.fillRect(pos.left, pos.top, width, height);
       }
 
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
