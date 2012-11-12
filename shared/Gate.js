@@ -3,7 +3,7 @@
  * @param {Number} team The team number for the gate.
  */
 var Gate = function(team, hq) {
-  this.hq = Boolean(hq);
+  this.hq = hq;
   this.lastAttack = 1000;
   if (this.hq) {
     this.name = (team === 0 ? "Blue HQ" : "Red HQ");
