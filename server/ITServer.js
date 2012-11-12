@@ -88,6 +88,7 @@ var update = function() {
             player.projectile[Projectile.Type.MINE].live--;
           }
         }
+        console.log("Player #" + player + " has " + player.projectile[Projectil.Type.MINE].live + " live mines");
       }
     }
 
