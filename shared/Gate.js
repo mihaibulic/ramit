@@ -6,6 +6,7 @@ var Gate = function(team, hq) {
   this.hq = hq;
   this.team = team;
   this.lastAttack = 1000;
+  this.health = 1000;
   if (this.hq) {
     this.name = (team === 0 ? "Blue HQ" : "Red HQ");
     this.left = 2500;
@@ -14,7 +15,6 @@ var Gate = function(team, hq) {
     this.bottom = (team === 0 ? 400 : 2700);
   } else {
     this.name = (team === 0 ? "Blue Gate" : "Red Gate");
-    this.health = 1000;
     this.left = 1350;
     this.right = 1650;
     if (team === 0) {
@@ -81,7 +81,7 @@ Gate.prototype.draw = function() {
         globals.ctx.globalAlpha = 1;
       } else {
         globals.ctx.fillStyle = Player.TEAM_COLOR[this.team];
-        globals.ctx.fillRect(xPos, yPos, box.width(), bow.height());
+        globals.ctx.fillRect(xPos, yPos, box.width(), box.height());
       }
 
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
@@ -106,8 +106,7 @@ Gate.prototype.draw = function() {
   if (globals.queries.debug === "true") {
     globals.ctx.strokeStyle = Player.TEAM_COLOR[this.team];
     var rect = this.getCollisionBarrier();
-    globals.ctx.strokeRect(rect.left - globals.level.x, rect.top - globals.level.y, rect.width(),
-                           rect.height());
+    globals.ctx.strokeRect(xPos, yPos, rect.width(), rect.height());
   }
 };
 
