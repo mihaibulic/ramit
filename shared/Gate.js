@@ -81,7 +81,7 @@ Gate.prototype.draw = function() {
         globals.ctx.globalAlpha = 1;
       } else {
         globals.ctx.fillStyle = Player.TEAM_COLOR[this.team];
-        globals.ctx.fillRect(xPos, yPos, box.width(), bow.height());
+        globals.ctx.fillRect(xPos, yPos, box.width(), box.height());
       }
 
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
