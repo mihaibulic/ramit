@@ -90,12 +90,26 @@ var update = function() {
       }
     }
 
-    // Rocket
-    if (player.projectile[Projectile.Type.ROCKET].lastFire > 120 &&
-        (player.mouse.right === true)) {
-      globals.projectiles[Projectile.nextID] =
-        new Projectile(player, Projectile.Type.ROCKET, Projectile.nextID);
-      Projectile.nextID++;
+    // Special
+    console.log(player.mounted + " mounted");
+    if (player.special[player.mounted] === undefined)
+      console.log(player.mounted + " does not exist");
+    if (player.special[player.mounted] && 
+        player.special[player.mounted].lastFire > player.special[player.mounted].coolDown &&
+        (player.mouse.right === true || player.keys.shift === true)) {
+      console.log("firing special weapon " + player.mounted);
+      if (player.mounted === Player.SpecialType.ROCKET) {
+        globals.projectiles[Projectile.nextID] =
+          new Projectile(player, Projectile.Type.ROCKET, Projectile.nextID);
+        Projectile.nextID++;
+      } else if ((player.mounted === Player.SpecialType.EMP) ||
+                  (player.mounted === Player.SpecialType.MEDIC)) {
+        new Explosion(player.tank.x + 30, player.tank.y +30, 
+                    player.special[player.mounted].range, 
+                    player, null, player.special[player.mounted].damage, true);
+      } else if (player.mounted === Player.SpecialType.SHIELD) {
+        //sheild stuff
+      }
     }
 
     // Shield
@@ -126,7 +140,6 @@ var update = function() {
 var getAbsoluteState = function() {
   var id;
   var state = {};
-  // TODO: Copy/paste into classes.
   // Players
   state.p = {};
   for (id in globals.players)
@@ -198,7 +211,10 @@ io.sockets.on('connection', function(socket) {
       globals.players[id].keys.mine = data.e;
     if (data.q !== undefined)
       globals.players[id].keys.all_mines = data.q;
-
+    if (data.w !== undefined)
+      globals.players[id].keys.shift = data.w;
+    if (data.m !== undefined)
+      globals.players[id].mounted = data.m;
     if (!globals.diff.p)
       globals.diff.p = {};
     if (!globals.diff.p[id])

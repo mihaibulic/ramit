@@ -43,6 +43,14 @@ var ITGame = function(team, playerID) {
       globals.players[this.player].updateAim(e);
     }, this);
 
+
+    //Blur event
+    window.body.onblur = function(e) {
+      window.console.log("BLUR");
+      globals.socket.emit("key", {u:0,l:0,r:0,d:0,s:0,e:0,q:0});
+      globals.socket.emit("mouse", {l:0,m:0,r:0});
+    };
+    // Context Menu Event
     window.addEventListener('contextmenu', function(e) {
       if(!e)
         e = window.event;
@@ -111,7 +119,8 @@ ITGame.prototype.loadState = function(data) {
         player.setKeyValue(data.p[id].k);
       if (data.p[id].s !== undefined)
         player.speed = data.p[id].s;
-      // TODO: Weapon changes
+      if (data.p[id].w !== undefined)
+        player.mounted = data.p[id].w;
       if (data.p[id].d !== undefined)
         player.hasShield = data.p[id].d;
       if (data.p[id].p !== undefined)
