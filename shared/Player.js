@@ -330,6 +330,8 @@ Player.prototype.drawHUD = function() {
  * @param {Event} e The mouse event triggering the call.
  */
 Player.prototype.updateAim = function(e) {
+  if (this.deathCounter > 0) return;
+
   var canvasPos = globals.canvas.getBoundingClientRect();
   var centerPoint = {x: canvasPos.left + 500, y: canvasPos.top + 250};
   var r = Math.atan2(e.clientY - centerPoint.y, e.clientX - centerPoint.x) * 180 / Math.PI;
@@ -340,6 +342,8 @@ Player.prototype.updateAim = function(e) {
 };
 
 Player.prototype.updateMouse = function(e) {
+  if (this.deathCounter > 0) return;
+
   var diff = {};
   var value = e.type === "mousedown";
 
@@ -370,6 +374,8 @@ Player.prototype.updateMouse = function(e) {
  * @param {Event} e The key event triggering the call.
  */
 Player.prototype.updateKeys = function(e) {
+  if (this.deathCounter > 0) return;
+
   var diff = {};
   var value = Boolean(e.type === "keydown");
   var mounting = false;
@@ -661,13 +667,14 @@ Player.prototype.respawn = function() {
     this.projectile[Projectile.Type.MINE].lastFire = this.projectile[Projectile.Type.MINE].coolDown;
     this.special[Player.SpecialType.ROCKET].lastFire = this.special[Player.SpecialType.ROCKET].coolDown;
     this.special[Player.SpecialType.EMP].lastFire = this.special[Player.SpecialType.EMP].coolDown;
-    this.special[Player.SpecialType.MEDIC].lastFire = this.special[Player.SpecialType.MINE].coolDown;
+    this.special[Player.SpecialType.MEDIC].lastFire = this.special[Player.SpecialType.MEDIC].coolDown;
     this.special[Player.SpecialType.SHIELD].lastFire = this.special[Player.SpecialType.SHIELD].coolDown;
     this.hasShield = 0;
+    
+    var spawn = this.determineSpawn();
     this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
     this.tank.y = Player.SPAWN_POINTS[this.team][spawn].y;
     this.health = this.maxHealth;
-    var spawn = this.determineSpawn();
 
     if (globals.diff) {
       if (!globals.diff.p)
