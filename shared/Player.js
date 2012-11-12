@@ -330,7 +330,7 @@ Player.prototype.drawHUD = function() {
  * @param {Event} e The mouse event triggering the call.
  */
 Player.prototype.updateAim = function(e) {
-  if (this.deathCounter > 0) return;
+  if (this.health <= 0) return;
 
   var canvasPos = globals.canvas.getBoundingClientRect();
   var centerPoint = {x: canvasPos.left + 500, y: canvasPos.top + 250};
@@ -342,7 +342,7 @@ Player.prototype.updateAim = function(e) {
 };
 
 Player.prototype.updateMouse = function(e) {
-  if (this.deathCounter > 0) return;
+  if (this.health <= 0) return;
 
   var diff = {};
   var value = e.type === "mousedown";
@@ -374,7 +374,7 @@ Player.prototype.updateMouse = function(e) {
  * @param {Event} e The key event triggering the call.
  */
 Player.prototype.updateKeys = function(e) {
-  if (this.deathCounter > 0) return;
+  if (this.health <= 0) return;
 
   var diff = {};
   var value = Boolean(e.type === "keydown");
