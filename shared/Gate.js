@@ -76,22 +76,21 @@ Gate.prototype.isUnderAttack = function() {
  * Draws the gate.
  */
 Gate.prototype.draw = function() {
-  var box = this.getCollisionBarrier();
+  var pos = Rectangle.getPos(this);
   var xPos = this.left - globals.level.x;
   var yPos = this.top - globals.level.y - 5;
   var width = this.right - this.left;
   var height = this.bottom - this.top;
-  console.log(xPos + ", " + yPos);
 
-  if (xPos > (-2 * width) && xPos < width + 1000 && yPos > -1 * height && yPos < height + 500) {
+  if (pos.draw) {
     if (this.health > 0) {
       if (!this.hq) {
-        globals.ctx.globalAlpha = this.health / 100;
+        globals.ctx.globalAlpha = this.health / 100; //fades away for the last 100 hp
         globals.ctx.drawImage(globals.resources.gates[this.team], xPos, yPos);
         globals.ctx.globalAlpha = 1;
       } else {
         globals.ctx.fillStyle = Player.TEAM_COLOR[this.team];
-        globals.ctx.fillRect(xPos, yPos, box.width(), box.height());
+        globals.ctx.fillRect(xPos, yPos, width, height);
       }
 
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
