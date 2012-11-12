@@ -92,21 +92,22 @@ var update = function() {
 
     // Special
     console.log(player.mounted + " mounted");
-    if (player.special[player.mounted].lastFire > player.special[player.mounted].coolDown &&
+    if (player.special[player.mounted] && 
+        player.special[player.mounted].lastFire > player.special[player.mounted].coolDown &&
         (player.mouse.right === true || player.keys.shift === true)) {
-        console.log("firing special weapon " + player.mounted);
-        if (player.mounted === Player.SpecialType.ROCKET) {
-          globals.projectiles[Projectile.nextID] =
-            new Projectile(player, Projectile.Type.ROCKET, Projectile.nextID);
-          Projectile.nextID++;
-        } else if ((player.mounted === Player.SpecialType.EMP) ||
-                    (player.mounted === Player.SpecialType.MEDIC)) {
-          new Explosion(player.tank.x + 30, player.tank.y +30, 
-                      player.special[player.mounted].range, 
-                      player, null, player.special[player.mounted].damage, true);
-        } else if (player.mounted === Player.SpecialType.SHIELD) {
-          //sheild stuff
-        }
+      console.log("firing special weapon " + player.mounted);
+      if (player.mounted === Player.SpecialType.ROCKET) {
+        globals.projectiles[Projectile.nextID] =
+          new Projectile(player, Projectile.Type.ROCKET, Projectile.nextID);
+        Projectile.nextID++;
+      } else if ((player.mounted === Player.SpecialType.EMP) ||
+                  (player.mounted === Player.SpecialType.MEDIC)) {
+        new Explosion(player.tank.x + 30, player.tank.y +30, 
+                    player.special[player.mounted].range, 
+                    player, null, player.special[player.mounted].damage, true);
+      } else if (player.mounted === Player.SpecialType.SHIELD) {
+        //sheild stuff
+      }
     }
 
     // Shield
