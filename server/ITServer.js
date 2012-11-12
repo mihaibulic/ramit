@@ -11,8 +11,6 @@ var globals = {
   numberOfPlayers: 0,
   players: {},
   projectiles: {},
-  rockets: {},
-  mines: {}, //will include all splash weapons
   socketToId: {},
   playerIDQueue: [7,6,5,4,3,2,1,0],
   teams: [0,0],
@@ -37,17 +35,17 @@ globals.isObjectEmpty = function(object) {
  * @param {int} pid of player
  * @param {boolean} justMines
  */
-var explodeAll = function(owner, justMines) {
-  for (var qid in globals.projectiles) {
-    var projectile = globals.projectiles[qid];
-    if (projectile.owner === owner) {
+var explodeAll = function(player, justMines) {
+  for (var p in globals.projectiles) {
+    var projectile = globals.projectiles[p];
+    if (player.playerID === projectile.owner) {
       if (projectile.type === Projectile.Type.MINE) {
-        new Explosion(this.x, this.y, this.range, globals.players[this.owner],
-                    target, this.damage, this, false);
-        delete globals.mine[qid];
+        new Explosion(projectile.x, projectile.y, projectile.range, player, {}, projectile.damage, projectile, false);
+        player.projectile[Projectile.Type.MINE].live--;
       }
-      if  (!justMines || projectile.type === Projectile.Type.MINE) {
-        delete globals.projectiles[qid];
+      
+      if (!justMines || projectile.type === Projectile.Type.MINE) {
+        delete globals.projectiles[p];
       }
     }
   }
@@ -74,21 +72,12 @@ var update = function() {
       if (player.projectile[Projectile.Type.MINE].allowed > player.projectile[Projectile.Type.MINE].live &&
         player.keys.mine === true) {
         globals.projectiles[Projectile.nextID] = new Projectile(player, Projectile.Type.MINE, Projectile.nextID);
-        globals.mines[Projectile.nextID] = globals.projectiles[Projectile.nextID];
         Projectile.nextID++;
       }
         
       if (player.keys.all_mines === true) {
         console.log("Player #" + player.playerID + " has " + player.projectile[Projectile.Type.MINE].live + " live mines BEFORE");
-        for (var m in globals.mines) {
-          var mine = globals.mines[m];
-          if (player.playerID === mine.owner) {
-            new Explosion(mine.x, mine.y, mine.range, player, {}, mine.damage, mine, false);
-            delete globals.projectiles[m];
-            delete globals.mines[m];
-            player.projectile[Projectile.Type.MINE].live--;
-          }
-        }
+        explodeAll(player, true);
         player.keys.all_mines = false;
         console.log("Player #" + player.playerID + " has " + player.projectile[Projectile.Type.MINE].live + " live mines AFTER");
       }
@@ -153,10 +142,6 @@ var getAbsoluteState = function() {
   state.q = {};
   for (id in globals.projectiles)
     state.q[id] = globals.projectiles[id].getAbsoluteState();
-  // Mines
-  state.m = {};
-  for (id in globals.mines)
-    state.m[id] = globals.mines[id].getAbsoluteState();
   // Base
   state.b = {};
   for (id in globals.level.gates) {

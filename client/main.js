@@ -21,7 +21,6 @@ var globals = {
   ctx: null,
   remainingResources: 0,
   projectiles: {},
-  mines: {},
   explosions: [],
   players: {},
   level: new Level()

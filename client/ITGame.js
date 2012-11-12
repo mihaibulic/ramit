@@ -15,7 +15,6 @@ var ITGame = function(team, playerID) {
       for (var qid in globals.projectiles) {
         if (globals.projectiles[qid].owner === data.i) {
           delete globals.projectiles[qid];
-          delete globals.mines[qid];
         }
       }
     });
@@ -138,8 +137,6 @@ ITGame.prototype.loadState = function(data) {
     for (id in data.q) {
       if (!globals.projectiles[id]) {
         globals.projectiles[id] = new Projectile(null, null, id, data.q[id]);
-        if (globals.projectiles[id].type === Projectile.Type.MINE)
-          globals.mines[id] = globals.projectiles[id];
         continue;
       }
 
@@ -155,7 +152,6 @@ ITGame.prototype.loadState = function(data) {
       globals.explosions.push(new Explosion(null, null, null, null, null, null, null, null, data.e[id]));
       if (data.e[id].i !== undefined) {
         delete globals.projectiles[data.e[id].i];
-        delete globals.mines[data.e[id].i];
       }
     }
   }
@@ -209,20 +205,14 @@ ITGame.prototype.draw = function() {
                           -1 * levelX + 1000, -1 * levelY + 1000);
   }
 
-  //draw mines
-  for (var mine in globals.mines) {
-    globals.mines[mine].draw(this.team);
-  }
-
   //draw players
   for (var pid in globals.players) {
     globals.players[pid].draw();
   }
 
-  //draw projectiles
+  //draw projectiles (including mines)
   for (var qid in globals.projectiles) {
-    if (globals.projectiles[qid].type !== Projectile.Type.MINE)
-      globals.projectiles[qid].draw();
+    globals.projectiles[qid].draw(this.team);
   }
 
   //draw gates
