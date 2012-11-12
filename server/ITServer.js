@@ -99,7 +99,7 @@ var update = function() {
     }
 
     // Shield
-    var shieldDetails = player.special[Player.SpecialType.SHIELD]
+    var shieldDetails = player.special[Player.SpecialType.SHIELD];
     if (shieldDetails.lastFire > shieldDetails.coolDown &&
         (player.mouse.right === true)) {
       player.armShield();

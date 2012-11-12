@@ -7,10 +7,17 @@
  * @param {Player} target The player that was directly hit by the weapon.
  * @param {Number} damage The amount of damage that the target takes when hit. All
  *     players in range of the explosion take a portion of the damage.
- * @param {Boolean} true if friendly fire is ON (can hurt teammates)
  * @param {Projectile} opt_projectile The projectile which exploded.
+ * @param {Boolean} true if friendly fire is ON (can hurt teammates)
+ * @param {Boolean} true if friendly fire is ON (can hurt teammates)
  * @param {Object} opt_state A state object to build the explosion with.
  */
+
+// affect own (if dmg is negative)
+// affect enemy (if ff is off)
+// affect both (DEFAULT)
+
+
 var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt_ff, opt_state) {
   this.animationFrame = 0;
 
@@ -21,8 +28,9 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     return;
   }
 
-  // ff is on by default
-  this.ff = opt_ff ? !!opt_ff : true;
+  // affect everyone by default
+  this.affect_enemies = (damage > 0);
+  this.affect_friendlies = (opt_ff ? !!opt_ff : true);
 
   this.x = x;
   this.y = y;
@@ -34,13 +42,10 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
   if (range > 0) {
     for (var id in globals.players) {
       var player = globals.players[id];
-      if((this.ff && player !== target) || (!this.ff && player.team !== target.team)) { 
-        console.log("checking against player " + player);
+      if(canAffect(player, owner, target)) { 
         var distance = player.getCenterDistance(this);
-        if (distance < range) {
-          console.log("BOOM");
+        if (distance < range) 
           owner.addPoints(player.takeHit(Math.round(0.25 * damage + 0.75 * (1 - distance / range) * damage), owner.team));
-        }
       }
     }
   }
@@ -59,6 +64,17 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
 };
 
 Explosion.Type = { PROJECTILE: 0, MEDIC: 1, EMP: 2 };
+
+/**
+ * Checks if this player can be hit by the splash of an explosion
+ * @returns true iff the player should be hit by the splash, false otherwise
+ */
+Explosion.prototype.canAffect = function(player, owner, target) {
+ return (player !== target &&
+          ((player.team === owner.team && this.affect_friendlies) ||
+          (player.team !== owner.team && this.affect_enemies)));
+};
+
 
 /**
  * Draws the explosion on the screen.

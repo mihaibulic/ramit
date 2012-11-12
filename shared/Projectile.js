@@ -120,10 +120,11 @@ Projectile.prototype.update = function() {
   this.y += this.vy;
 
   var hit = false;
-
+  var target;
+  
   // Collisions with Players
   for (var pid in globals.players) {
-    var target = globals.players[pid];
+    target = globals.players[pid];
     if (target.team === this.team)
       continue;
     if (target.getCollisionBarrier().intersects(this.getCollisionBarrier())) {
@@ -138,7 +139,7 @@ Projectile.prototype.update = function() {
   // Collisions with Gates
   if (!hit) {
     for (var gid in globals.level.gates) {
-      var target = globals.level.gates[gid];
+      target = globals.level.gates[gid];
       if (target.team === this.team)
         continue;
       if (target.getCollisionBarrier().intersects(this.getCollisionBarrier())) {

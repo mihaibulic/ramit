@@ -98,20 +98,20 @@ var Player = function(team, playerID, opt_state) {
     damage: 30,
     lastFire: 0,
     coolDown: 5 * 60
-  }
+  };
   this.special[Player.SpecialType.MEDIC] = {
     range: 80,
     damage: -30,
     lastFire: 0,
     coolDown: 5 * 60
-  }
+  };
   this.special[Player.SpecialType.SHIELD] = {
     duration: 3 * 60,
     lastFire: 0,
-    coolDown: 5 * 60,
-  }
+    coolDown: 5 * 60
+  };
 
-  this.hasShield = 0
+  this.hasShield = 0;
 
   if (globals.diff) {
     if (!globals.diff.p)
@@ -361,40 +361,40 @@ Player.prototype.updateMouse = function(e) {
  */
 Player.prototype.updateKeys = function(e) {
   var diff = {};
-  var value = !!(e.type === "keydown");
+  var value = Boolean(e.type === "keydown");
   switch (e.keyCode) {
   case 87: // W
-    if ((!!this.keys.up) !== value)
+    if (Boolean(this.keys.up) !== value)
       diff.u = value;
     this.keys.up = value;
     break;
   case 65: // A
-    if ((!!this.keys.left) !== value)
+    if (Boolean(this.keys.left) !== value)
       diff.l = value;
     this.keys.left = value;
     break;
   case 83: // S
-    if ((!!this.keys.down) !== value)
+    if (Boolean(this.keys.down) !== value)
       diff.d = value;
     this.keys.down = value;
     break;
   case 68: // D
-    if ((!!this.keys.right) !== value)
+    if (Boolean(this.keys.right) !== value)
       diff.r = value;
     this.keys.right = value;
     break;
   case 32: // Space
-    if ((!!this.keys.space) !== value)
+    if (Boolean(this.keys.space) !== value)
       diff.s = value;
     this.keys.space = value;
     break;
   case 69: //e
-    if ((!!this.keys.mine) !== value)
+    if (Boolean(this.keys.mine) !== value)
       diff.e = value;
     this.keys.mine = value;
     break;
   case 81: // q
-    if((!!this.keys.all_mines) !== value)
+    if(Boolean(this.keys.all_mines) !== value)
       diff.q = value;
     this.keys.all_mines = value;
     break;
