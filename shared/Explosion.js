@@ -89,10 +89,10 @@ Explosion.prototype.draw = function() {
   if (this.range === 0)
     range = 5;
 
-  if (this.type === Explosion.type.MEDIC) { //medic
+  if (this.type === Explosion.Type.MEDIC) { //medic
     globals.ctx.strokeStyle = Player.HEALTH[2];
   }
-  else if (this.type === Explosion.type.EMP) { // EMP
+  else if (this.type === Explosion.Type.EMP) { // EMP
     globals.ctx.strokeStyle = "#770077";
   }
   else { //normal
