@@ -5,7 +5,7 @@
 var Gate = function(team, hq) {
   this.hq = hq;
   this.team = team;
-  this.lastAttack = 1000;
+  this.underAttack = 0;
   this.detailsFadeFrames = 0;
   this.health = 1000;
   if (this.hq) {
@@ -54,16 +54,16 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
 
 Gate.prototype.updateHealth = function(health) {
   if (health !== this.health)
-    this.lastAttack = 0;
+    this.underAttack = 1000;
   this.health = health;
 };
 
 Gate.prototype.update = function() {
-  if (this.lastAttack < 5 * 60) this.lastAttack++;
+  if (this.lastAttack > 0) this.lastAttack--;
 };
 
 Gate.prototype.isUnderAttack = function() {
-  return (this.lastAttack < 5 * 60);
+  return (this.lastAttack > 0);
 };
 
 /**
