@@ -9,8 +9,8 @@ var Gate = function(team, hq) {
     this.name = (team === 0 ? "Blue HQ" : "Red HQ");
     this.left = 2500;
     this.right = 2600;
-    this.top = (team === 0 ? 300 : 2400);
-    this.bottom = (team === 0 ? 400 : 2500);
+    this.top = (team === 0 ? 300 : 2600);
+    this.bottom = (team === 0 ? 400 : 2700);
   } else {
     this.name = (team === 0 ? "Blue Gate" : "Red Gate");
     this.health = 1000;
