@@ -91,7 +91,7 @@ Explosion.prototype.draw = function() {
   }
   else { //normal
     globals.ctx.strokeStyle = "#FFFF00";
-    consol.log("draw norm");
+    console.log("draw norm");
   }
   globals.ctx.lineWidth = 5;
   globals.ctx.beginPath();
