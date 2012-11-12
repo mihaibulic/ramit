@@ -30,7 +30,7 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
 
   if (globals.diff) {
     if (!globals.diff.b)
-      globals.diff.b = [];
+      globals.diff.b = {};
     globals.diff.b[this.team] = this.health;
   }
 
