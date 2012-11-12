@@ -95,7 +95,6 @@ var update = function() {
         player.special[player.mounted].lastFire > player.special[player.mounted].coolDown &&
         (player.mouse.right === true || player.keys.shift === true)) {
       console.log("firing special weapon " + player.mounted);
-      player.special[player.mounted].lastFire = 0;
       if (player.mounted === Player.SpecialType.ROCKET) {
         globals.projectiles[Projectile.nextID] =
           new Projectile(player, Projectile.Type.ROCKET, Projectile.nextID);
@@ -104,20 +103,12 @@ var update = function() {
                   (player.mounted === Player.SpecialType.MEDIC)) {
         new Explosion(player.tank.x + 30, player.tank.y +30, 
                     player.special[player.mounted].range, 
-                    player, null, player.special[player.mounted].damage, null, true);
+                    player, null, player.special[player.mounted].damage, true);
       } else if (player.mounted === Player.SpecialType.SHIELD) {
-        //sheild stuff
+        player.armShield();
       }
+      player.special[player.mounted].lastFire = 0;
     }
-
-    // Shield
-    var shieldDetails = player.special[Player.SpecialType.SHIELD];
-    if (shieldDetails.lastFire > shieldDetails.coolDown &&
-        (player.mouse.right === true)) {
-      player.armShield();
-    }
-
-    // TODO: EMP and Medic
   }
 
   // update and check for hits in projectiles
