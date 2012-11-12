@@ -42,7 +42,7 @@ var explodeAll = function(owner, justMines) {
     if (projectile.owner === owner) {
       if (projectile.type === Projectile.Type.MINE) {
         new Explosion(this.x, this.y, this.range, globals.players[this.owner],
-                    target, this.damage, this);
+                    target, this.damage, this, true);
         delete globals.mine[qid];
       }
       if  (!justMines || projectile.type === Projectile.Type.MINE) {
@@ -81,7 +81,7 @@ var update = function() {
         for (var m in globals.mines) {
           var mine = globals.mines[m];
           if (player.playerID === mine.owner && player.projectile[Projectile.Type.MINE].live > 0) {
-            new Explosion(mine.x, mine.y, mine.range, player, {}, mine.damage, mine);
+            new Explosion(mine.x, mine.y, mine.range, player, {}, mine.damage, mine, true);
             delete globals.projectiles[m];
             delete globals.mines[m];
             player.projectile[Projectile.Type.MINE].live--;
