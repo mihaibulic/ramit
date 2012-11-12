@@ -121,7 +121,7 @@ var update = function() {
   this.lastAbsolute++;
 
   if (this.lastAbsolute >= 300) {
-    console.log(("AB STATE: " + new Date()).getTime());
+    console.log("AB STATE: " + (new Date()).getTime());
     this.lastAbsolute = 0;
     var absoluteState = this.getAbsoluteState();
     for (var d in globals.diff) {
@@ -131,6 +131,7 @@ var update = function() {
     io.sockets.emit('state', absoluteState);
   }
   else if(!globals.isObjectEmpty(globals.diff)) {
+    console.log("emitting state diff: " + (new Date()).getTime());
     io.sockets.emit('state', globals.diff);
   }
 
