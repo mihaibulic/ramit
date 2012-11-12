@@ -24,7 +24,6 @@ var Gate = function(team) {
  * @returns {Number} The number of points earned for the hit.
  */
 Gate.prototype.takeHit = function(damage, ownerTeam) {
-  this.lastAttack = 0;
   this.health -= damage;
   if (this.health < 0) this.health = 0;
 
@@ -37,6 +36,12 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
   if (this.team === ownerTeam)
     return -1 * damage;
   return 0;
+};
+
+Gate.prototype.updateHealth = function(health) {
+  if (health !== this.health)
+    this.lastAttack = 0;
+  this.health = health;
 };
 
 Gate.prototype.update = function() {
