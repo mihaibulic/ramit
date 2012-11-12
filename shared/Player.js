@@ -684,6 +684,7 @@ Player.prototype.respawn = function() {
 
       globals.diff.p[this.playerID].x = this.tank.x;
       globals.diff.p[this.playerID].y = this.tank.y;
+      globals.diff.p[this.playerID].h = this.health;
     }
 };
 
