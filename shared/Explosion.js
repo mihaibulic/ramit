@@ -94,7 +94,7 @@ Explosion.prototype.draw = function() {
     globals.ctx.strokeStyle = "#770077";
   }
   else { //normal
-    globals.ctx.strokeStyle = "#FFFFFF";
+    globals.ctx.strokeStyle = "#FFFF00";
   }
   globals.ctx.lineWidth = 5;
   globals.ctx.beginPath();
