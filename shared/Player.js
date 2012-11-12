@@ -108,7 +108,7 @@ var Player = function(team, playerID, opt_state) {
   this.special[Player.SpecialType.SHIELD] = {
     duration: 3 * 60,
     lastFire: 0,
-    coolDown: 10 * 60,
+    coolDown: 5 * 60,
   }
 
   this.hasShield = 0
@@ -412,7 +412,7 @@ Player.prototype.update = function() {
   this.projectile[Projectile.Type.NORMAL].lastFire++;
   this.projectile[Projectile.Type.MINE].lastFire++;
   this.projectile[Projectile.Type.ROCKET].lastFire++;
-  if (!this.hasShield)
+  if (this.hasShield)
     this.special[Player.SpecialType.SHIELD].lastFire++;
 
   if (this.hasShield) {
