@@ -91,6 +91,7 @@ var update = function() {
     }
 
     // Special
+    console.log(player.mounted + " mounted");
     if (player.special[player.mounted].lastFire > player.special[player.mounted].coolDown &&
         (player.mouse.right === true || player.keys.shift === true)) {
         console.log("firing special weapon " + player.mounted);
