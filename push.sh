@@ -59,7 +59,7 @@ else
   branch="${3}";
 fi
 
-echo "cats meow"
+echo "cats meow, dogs bark, buckeyes lose, spartans lose, woverines win"
 cat shared/*.js client/*.js > ramit_client.js
 cat shared/*.js server/*.js > ramit_server.js
 

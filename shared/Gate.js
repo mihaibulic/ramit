@@ -110,7 +110,7 @@ Gate.prototype.draw = function() {
         // name
         globals.ctx.fillStyle = "#FFFFFF";
         globals.ctx.font = "10px sans-serif";
-        globals.ctx.fillText(this.name, 1450-globals.level.x, yPos - 3);
+        globals.ctx.fillText(this.name, xPos + 100, yPos - 3);
         globals.ctx.globalAlpha = 1;
       }
     }
