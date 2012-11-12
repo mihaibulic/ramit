@@ -119,7 +119,7 @@ var update = function() {
   }
 
   globals.lastAbsolute++;
-  if(this.lastAbsolute >= 300) { 
+  if(globals.lastAbsolute >= 300) { 
     var absoluteState = this.getAbsoluteState(); 
     console.log("emitting absolute state: " + globals.lastAbsolute);
     last.lastAbsolute = 0;
