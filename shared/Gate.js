@@ -79,8 +79,8 @@ Gate.prototype.draw = function() {
   var box = this.getCollisionBarrier();
   var xPos = this.left - globals.level.x;
   var yPos = this.top - globals.level.y - 5;
-  var width = box.width();
-  var height = box.height();
+  var width = this.right - this.left;
+  var height = this.bottom - this.top;
   console.log(xPos + ", " + yPos);
 
   if (xPos > (-2 * width) && xPos < width + 1000 && yPos > -1 * height && yPos < height + 500) {
@@ -114,9 +114,9 @@ Gate.prototype.draw = function() {
         globals.ctx.globalAlpha = 1;
       }
     }
-    if (!this.hq) //draw gate outside things
-      globals.ctx.drawImage(globals.resources.gates[2], xPos, yPos);
   }
+  if (!this.hq) //draw gate outside things
+    globals.ctx.drawImage(globals.resources.gates[2], xPos, yPos);
   if (globals.queries.debug === "true") {
     globals.ctx.strokeStyle = Player.TEAM_COLOR[this.team];
     var rect = this.getCollisionBarrier();
