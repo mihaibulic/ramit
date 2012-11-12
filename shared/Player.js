@@ -36,6 +36,7 @@ var Player = function(team, playerID, opt_state) {
     this.team = opt_state.t;
     x = opt_state.x;
     y = opt_state.y;
+    this.deathCounter = 0;
     this.health = opt_state.h;
     this.maxHealth = opt_state.m;
     aim = opt_state.a;
@@ -216,11 +217,11 @@ Player.prototype.draw = function() {
   if (xPos > -60 && xPos < 1000 && yPos > -60 && yPos < 500) {
     // Draw the tank.
     globals.ctx.drawImage(
-      globals.resources.tanks[this.team][this.tank.direction],
+      globals.resources.tanks[(this.deathCounter > 0 ? 3 : this.team)][this.tank.direction],
       xPos, yPos);
     // Draw the turret.
     globals.ctx.drawImage(
-      globals.resources.turrets[this.team][this.tank.turretAim],
+      globals.resources.turrets[(this.deathCounter > 0 ? 3 : this.team)][this.tank.turretAim],
       xPos - 7, yPos - 7);
     // Draw the shield.
     if (this.hasShield) {
@@ -448,24 +449,32 @@ Player.prototype.updateKeys = function(e) {
  * Update the state of the Player.
  */
 Player.prototype.update = function() {
-  this.move();
-  this.projectile[Projectile.Type.NORMAL].lastFire++;
-  this.projectile[Projectile.Type.MINE].lastFire++;
-  this.special[Player.SpecialType.ROCKET].lastFire++;
-  this.special[Player.SpecialType.EMP].lastFire++;
-  this.special[Player.SpecialType.MEDIC].lastFire++;
-  if (this.hasShield === 0)
-    this.special[Player.SpecialType.SHIELD].lastFire++;
-
-  if (this.hasShield) {
-    this.hasShield--;
-    if (globals.diff && !this.hasShield) {
-      if (!globals.diff.p)
-        globals.diff.p = {};
-      if (!globals.diff.p[this.playerID])
-        globals.diff.p[this.playerID] = {};
-      globals.diff.p[this.playerID].d = 0;
+  if (this.health <= 0) {
+    this.deathCounter++;
+    if(this.deathCounter >= 120) {
+      respawn();
     }
+  }
+  else {
+    this.move();
+    this.projectile[Projectile.Type.NORMAL].lastFire++;
+    this.projectile[Projectile.Type.MINE].lastFire++;
+    this.special[Player.SpecialType.ROCKET].lastFire++;
+    this.special[Player.SpecialType.EMP].lastFire++;
+    this.special[Player.SpecialType.MEDIC].lastFire++;
+    if (this.hasShield === 0)
+      this.special[Player.SpecialType.SHIELD].lastFire++;
+
+    if (this.hasShield) {
+      this.hasShield--;
+      if (globals.diff && !this.hasShield) {
+        if (!globals.diff.p)
+          globals.diff.p = {};
+        if (!globals.diff.p[this.playerID])
+          globals.diff.p[this.playerID] = {};
+        globals.diff.p[this.playerID].d = 0;
+      }
+    } 
   }
 };
 
@@ -626,21 +635,8 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
     this.health = this.maxHealth;
 
   if (this.health <= 0) {
-    var spawn = this.determineSpawn();
-    this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
-    this.tank.y = Player.SPAWN_POINTS[this.team][spawn].y;
-    this.health = this.maxHealth;
+    this.deathCounter = 1;
     points += 25;
-
-    if (globals.diff) {
-      if (!globals.diff.p)
-        globals.diff.p = {};
-      if (!globals.diff.p[this.playerID])
-        globals.diff.p[this.playerID] = {};
-
-      globals.diff.p[this.playerID].x = this.tank.x;
-      globals.diff.p[this.playerID].y = this.tank.y;
-    }
   }
 
   if (globals.diff) {
@@ -656,6 +652,25 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
     points *= -1;
   }
   return points;
+};
+
+Player.prototype.respawn = function() {
+    this.deathCounter = 0;
+
+    var spawn = this.determineSpawn();
+    this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
+    this.tank.y = Player.SPAWN_POINTS[this.team][spawn].y;
+    this.health = this.maxHealth;
+
+    if (globals.diff) {
+      if (!globals.diff.p)
+        globals.diff.p = {};
+      if (!globals.diff.p[this.playerID])
+        globals.diff.p[this.playerID] = {};
+
+      globals.diff.p[this.playerID].x = this.tank.x;
+      globals.diff.p[this.playerID].y = this.tank.y;
+    }
 };
 
 /**
