@@ -3,6 +3,7 @@
  * @param {Number} team The team number for the gate.
  */
 var Gate = function(team) {
+  this.name = (team === 0 ? "BLUE GATE" : "RED GATE");
   this.health = 1000;
   this.team = team;
   this.left = 1350;
@@ -66,8 +67,8 @@ Gate.prototype.draw = function() {
       globals.ctx.drawImage(globals.resources.gates[this.team], xPos, yPos);
       globals.ctx.globalAlpha = 1;
 
-      // health bar
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
+        // health bar
         globals.ctx.strokeStyle = "#00FF00";
         var color = Math.floor(this.health / 1000 * Player.HEALTH.length);
         if (color == Player.HEALTH.length) color--;
@@ -76,6 +77,10 @@ Gate.prototype.draw = function() {
         globals.ctx.strokeRect(1450-globals.level.x, yPos-2, 100, 3);
         globals.ctx.fillRect(1450-globals.level.x, yPos-2, 100 * this.health / 1000, 3);
         globals.ctx.globalAlpha = 1;
+         //name
+        globals.ctx.fillStyle = "#FFFFFF";
+        globals.ctx.font = "10px sans-serif";
+        globals.ctx.fillText(this.name, xPos + 10, yPos + 1);
       }
     }
     globals.ctx.drawImage(globals.resources.gates[2], xPos, yPos);
