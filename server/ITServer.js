@@ -122,9 +122,10 @@ var update = function() {
   if(globals.lastAbsolute >= 300) { 
     var absoluteState = getAbsoluteState(); 
     console.log("emitting absolute state: " + globals.lastAbsolute);
-    last.lastAbsolute = 0;
-    for (var d in globals.diff) {
-      absoluteState[d] = globals.diff[d]; 
+    globals.lastAbsolute = 0;
+    
+    if(!globals.isObjectEmpty(globals.diff.e)) {
+      absoluteState.e = globals.diff.e;
     }
 
     io.sockets.emit('state', absoluteState);
