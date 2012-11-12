@@ -412,7 +412,7 @@ Player.prototype.update = function() {
   this.projectile[Projectile.Type.NORMAL].lastFire++;
   this.projectile[Projectile.Type.MINE].lastFire++;
   this.projectile[Projectile.Type.ROCKET].lastFire++;
-  if (this.hasShield)
+  if (!this.hasShield)
     this.special[Player.SpecialType.SHIELD].lastFire++;
 
   if (this.hasShield) {
