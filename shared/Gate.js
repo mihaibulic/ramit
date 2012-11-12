@@ -2,20 +2,29 @@
  * A Gate protecting the player's base.
  * @param {Number} team The team number for the gate.
  */
-var Gate = function(team) {
-  this.name = (team === 0 ? "Blue Gate" : "Red Gate");
-  this.health = 1000;
-  this.team = team;
-  this.left = 1350;
-  this.right = 1650;
-  if (team === 0) {
-    this.top = 493;
-    this.bottom = 508;
-  } else {
-    this.top = 2492;
-    this.bottom = 2507;
-  }
+var Gate = function(team, hq) {
+  this.hq = Boolean(hq);
   this.lastAttack = 1000;
+  if (hq) {
+    this.name = (team === 0 ? "Blue HQ" : "Red HQ");
+    this.left = 2500;
+    this.right = 2600;
+    this.top = (team === 0 ? 300 : 2400);
+    this.bottom = (team === 0 ? 400 : 2500);
+  } else {
+    this.name = (team === 0 ? "Blue Gate" : "Red Gate");
+    this.health = 1000;
+    this.team = team;
+    this.left = 1350;
+    this.right = 1650;
+    if (team === 0) {
+      this.top = 493;
+      this.bottom = 508;
+    } else {
+      this.top = 2492;
+      this.bottom = 2507;
+    }
+  }
 };
 
 /**
@@ -27,6 +36,9 @@ var Gate = function(team) {
 Gate.prototype.takeHit = function(damage, ownerTeam) {
   this.health -= damage;
   if (this.health < 0) this.health = 0;
+  if (this.hq && this.health === 0) {
+    //game over
+  }
 
   if (globals.diff) {
     if (!globals.diff.b)
@@ -63,9 +75,13 @@ Gate.prototype.draw = function() {
 
   if (xPos > -300 && xPos < 1000 && yPos > -20 && yPos < 500) {
     if (this.health > 0) {
-      globals.ctx.globalAlpha = this.health / 100;
-      globals.ctx.drawImage(globals.resources.gates[this.team], xPos, yPos);
-      globals.ctx.globalAlpha = 1;
+      if (!hq) {
+        globals.ctx.globalAlpha = this.health / 100;
+        globals.ctx.drawImage(globals.resources.gates[this.team], xPos, yPos);
+        globals.ctx.globalAlpha = 1;
+      } else {
+        globals.ctx.fillRect(xPos, yPos, box.width(), bow.height());
+      }
 
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
         // health bar
