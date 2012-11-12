@@ -34,7 +34,6 @@ var Player = function(team, playerID, opt_state) {
   if (opt_state) {
     this.name = opt_state.n;
     this.team = opt_state.t;
-    this.color = opt_state.t;
     x = opt_state.x;
     y = opt_state.y;
     this.deathCounter = 0;
@@ -218,11 +217,11 @@ Player.prototype.draw = function() {
   if (xPos > -60 && xPos < 1000 && yPos > -60 && yPos < 500) {
     // Draw the tank.
     globals.ctx.drawImage(
-      globals.resources.tanks[this.color][this.tank.direction],
+      globals.resources.tanks[(this.health > 0 ? this.team : 2)][this.tank.direction],
       xPos, yPos);
     // Draw the turret.
     globals.ctx.drawImage(
-      globals.resources.turrets[this.color][this.tank.turretAim],
+      globals.resources.turrets[(this.health > 0 ? this.team : 2)][this.tank.turretAim],
       xPos - 7, yPos - 7);
     // Draw the shield.
     if (this.hasShield) {
@@ -450,9 +449,7 @@ Player.prototype.updateKeys = function(e) {
  * Update the state of the Player.
  */
 Player.prototype.update = function() {
-  if (this.health <= 0) {
-    console.log("dead " + this.deathCounter + "/120");
-    this.color = 2;
+  if (this.deathCounter > 0) {
     this.deathCounter++;
     if(this.deathCounter >= 120) {
       this.respawn();
@@ -638,9 +635,8 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
     this.health = this.maxHealth;
 
   if (this.health <= 0) {
-    console.log("Dead");
-    this.deathCounter = 1;
     this.health = 0;
+    this.deathCounter = 1;
     points += 25;
   }
 
@@ -660,14 +656,12 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
 };
 
 Player.prototype.respawn = function() {
-    console.log("RESPAWN");
     this.deathCounter = 0;
 
     var spawn = this.determineSpawn();
     this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
     this.tank.y = Player.SPAWN_POINTS[this.team][spawn].y;
     this.health = this.maxHealth;
-    this.color = this.team;
 
     if (globals.diff) {
       if (!globals.diff.p)
