@@ -157,9 +157,9 @@ ITGame.prototype.loadState = function(data) {
   // Base
   if (data.b) {
     if (data.b[0] !== undefined)
-      globals.level.gates[0].health = data.b[0];
+      globals.level.gates[0].updateHealth(data.b[0]);
     if (data.b[1] !== undefined)
-      globals.level.gates[1].health = data.b[1];
+      globals.level.gates[1].updateHealth(data.b[1]);
   }
 };
 
