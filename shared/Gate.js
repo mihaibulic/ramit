@@ -86,13 +86,14 @@ Gate.prototype.draw = function() {
       }
 
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
+
         if (this.underAttack > 960 && this.detailsFadeFrames < 30)
           this.detailsFadeFrames++;
         if (this.underAttack < 30 && this.detailsFadeFrames > 0)
           this.detailsFadeFrames--;
 
         var alpha = this.detailsFadeFrames / 30;
-
+        window.console.log(alpha);
         // health bar
         globals.ctx.strokeStyle = "#00FF00";
         var color = Math.floor(this.health / 1000 * Player.HEALTH.length);
