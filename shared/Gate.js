@@ -45,11 +45,11 @@ Gate.prototype.updateHealth = function(health) {
 };
 
 Gate.prototype.update = function() {
-  if (this.lastAttack < 1000) this.lastAttack++;
+  if (this.lastAttack < 5 * 60) this.lastAttack++;
 };
 
 Gate.prototype.isUnderAttack = function() {
-  return (this.lastAttack < 1000);
+  return (this.lastAttack < 5 * 60);
 };
 
 /**
