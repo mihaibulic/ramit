@@ -93,8 +93,9 @@ var ITGame = function(team, playerID) {
  */
 ITGame.prototype.loadState = function(data) {
   // Players
+  var id;
   if (data.p) {
-    for (var id in data.p) {
+    for (id in data.p) {
       if (!globals.players[id]) {
         globals.players[id] = new Player(null, id, data.p[id]);
         continue;
@@ -129,7 +130,7 @@ ITGame.prototype.loadState = function(data) {
   }
   // Projectiles
   if (data.q) {
-    for (var id in data.q) {
+    for (id in data.q) {
       if (!globals.projectiles[id]) {
         globals.projectiles[id] = new Projectile(null, null, id, data.q[id]);
         if (globals.projectiles[id].type === Projectile.Type.MINE)
@@ -145,7 +146,7 @@ ITGame.prototype.loadState = function(data) {
   }
   // Explosions
   if (data.e) {
-    for (var id in data.e) {
+    for (id in data.e) {
       globals.explosions.push(new Explosion(null, null, null, null, null, null, null, null, data.e[id]));
       if (data.e[id].i !== undefined) {
         delete globals.projectiles[data.e[id].i];

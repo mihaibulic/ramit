@@ -102,18 +102,18 @@ var Player = function(team, playerID, opt_state) {
     damage: 30,
     lastFire: 0,
     coolDown: 5 * 60
-  }
+  };
   this.special[Player.SpecialType.MEDIC] = {
     range: 80,
     damage: -30,
     lastFire: 0,
     coolDown: 5 * 60
-  }
+  };
   this.special[Player.SpecialType.SHIELD] = {
     duration: 3 * 60,
     lastFire: 0,
-    coolDown: 5 * 60,
-  }
+    coolDown: 5 * 60
+  };
 
   if (globals.diff) {
     if (!globals.diff.p)
@@ -122,7 +122,7 @@ var Player = function(team, playerID, opt_state) {
   }
 };
 
-Player.SpecialType = { ROCKET: 1, EMP: 2, MEDIC: 3, SHEILD: 4 };
+Player.SpecialType = { ROCKET: 1, EMP: 2, MEDIC: 3, SHIELD: 4 };
 
 Player.prototype.getAbsoluteState = function() {
   var p = {};
@@ -363,46 +363,46 @@ Player.prototype.updateMouse = function(e) {
  */
 Player.prototype.updateKeys = function(e) {
   var diff = {};
-  var value = !!(e.type === "keydown");
+  var value = Boolean(e.type === "keydown");
   var mounting = false;
   switch (e.keyCode) {
   case 87: // W
-    if ((!!this.keys.up) !== value)
+    if (Boolean(this.keys.up) !== value)
       diff.u = value;
     this.keys.up = value;
     break;
   case 65: // A
-    if ((!!this.keys.left) !== value)
+    if (Boolean(this.keys.left) !== value)
       diff.l = value;
     this.keys.left = value;
     break;
   case 83: // S
-    if ((!!this.keys.down) !== value)
+    if (Boolean(this.keys.down) !== value)
       diff.d = value;
     this.keys.down = value;
     break;
   case 68: // D
-    if ((!!this.keys.right) !== value)
+    if (Boolean(this.keys.right) !== value)
       diff.r = value;
     this.keys.right = value;
     break;
   case 32: // Space
-    if ((!!this.keys.space) !== value)
+    if (Boolean(this.keys.space) !== value)
       diff.s = value;
     this.keys.space = value;
     break;
-  case 69: //e mine
-    if ((!!this.keys.mine) !== value)
+  case 69: //e
+    if (Boolean(this.keys.mine) !== value)
       diff.e = value;
     this.keys.mine = value;
     break;
-  case 81: // q all_mines
-    if((!!this.keys.all_mines) !== value)
+  case 81: // q
+    if(Boolean(this.keys.all_mines) !== value)
       diff.q = value;
     this.keys.all_mines = value;
     break;
   case 16: //shift fire_special
-    if ((!!this.keys.shift) !== value)
+    if (Boolean(this.keys.shift) !== value)
       diff.w = value;
     this.keys.shift = value;
     break;
@@ -444,8 +444,10 @@ Player.prototype.update = function() {
   this.move();
   this.projectile[Projectile.Type.NORMAL].lastFire++;
   this.projectile[Projectile.Type.MINE].lastFire++;
-  this.projectile[Projectile.Type.ROCKET].lastFire++;
-  if (!this.hasShield)
+  this.special[Player.SpecialType.ROCKET].lastFire++;
+  this.special[Player.SpecialType.EMP].lastFire++;
+  this.special[Player.SpecialType.MEDIC].lastFire++;
+  if (this.hasShield === 0)
     this.special[Player.SpecialType.SHIELD].lastFire++;
 
   if (this.hasShield) {
