@@ -24,9 +24,8 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
   }
 
   // affect everyone by default
-  this.affect_enemies = (Boolean(opt_one_team) && damage > 0) || !opt_one_team;
-  this.affect_friendlies = (Boolean(opt_one_team) && damage < 0) || !opt_one_team; 
-  console.log("dmg:" + damage + "\t1team:" + opt_one_team + "\tE:" + this.affect_enemies + "\tF:"+ this.affect_friendlies);
+  this.one_team = (!opt_one_team ? false : true);
+  this.damage = damage;
 
   this.x = x;
   this.y = y;
@@ -72,9 +71,8 @@ Explosion.Type = { PROJECTILE: 0, MEDIC: 1, EMP: 2 };
  * @returns true iff the player should be hit by the splash, false otherwise
  */
 Explosion.prototype.canAffect = function(player, owner, target) {
- return (player !== owner && player !== target &&
-          ((player.team === owner.team && this.affect_friendlies) ||
-          (player.team !== owner.team && this.affect_enemies)));
+  return player !== target && (!this.one_team || (this.damage > 0 && player.team !== owner.team) ||
+          (this.damage < 0 && player.team === owner.team && player !== owner));
 };
 
 
