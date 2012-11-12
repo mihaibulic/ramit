@@ -638,6 +638,8 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
     this.health = this.maxHealth;
 
   if (this.health <= 0) {
+    console.log("Dead");
+    this.deathCounter = 1;
     this.health = 0;
     points += 25;
   }
