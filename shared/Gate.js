@@ -5,7 +5,8 @@
 var Gate = function(team, hq) {
   this.hq = hq;
   this.team = team;
-  this.lastAttack = 1000;
+  this.underAttack = 0;
+  this.detailsFadeFrames = 0;
   this.health = 1000;
   if (this.hq) {
     this.name = (team === 0 ? "Blue HQ" : "Red HQ");
@@ -53,16 +54,16 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
 
 Gate.prototype.updateHealth = function(health) {
   if (health !== this.health)
-    this.lastAttack = 0;
+    this.underAttack = 1000;
   this.health = health;
 };
 
 Gate.prototype.update = function() {
-  if (this.lastAttack < 5 * 60) this.lastAttack++;
+  if (this.underAttack > 0) this.underAttack--;
 };
 
 Gate.prototype.isUnderAttack = function() {
-  return (this.lastAttack < 5 * 60);
+  return (this.underAttack > 0);
 };
 
 /**
@@ -85,19 +86,28 @@ Gate.prototype.draw = function() {
       }
 
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
+
+        if (this.underAttack > 960 && this.detailsFadeFrames < 30)
+          this.detailsFadeFrames++;
+        if (this.underAttack < 30 && this.detailsFadeFrames > 0)
+          this.detailsFadeFrames--;
+
+        var alpha = this.detailsFadeFrames / 30;
+
         // health bar
         globals.ctx.strokeStyle = "#00FF00";
         var color = Math.floor(this.health / 1000 * Player.HEALTH.length);
         if (color == Player.HEALTH.length) color--;
         globals.ctx.fillStyle = Player.HEALTH[color];
-        globals.ctx.globalAlpha = 0.5;
+        globals.ctx.globalAlpha = 0.5 * alpha;
         globals.ctx.strokeRect(xPos + 100, yPos-2, 100, 3);
         globals.ctx.fillRect(xPos + 100, yPos-2, 100 * this.health / 1000, 3);
-        globals.ctx.globalAlpha = 1;
-         //name
+        globals.ctx.globalAlpha = alpha;
+        // name
         globals.ctx.fillStyle = "#FFFFFF";
         globals.ctx.font = "10px sans-serif";
         globals.ctx.fillText(this.name, 1450-globals.level.x, yPos - 3);
+        globals.ctx.globalAlpha = 1;
       }
     }
     if (!this.hq) //draw gate outside things
