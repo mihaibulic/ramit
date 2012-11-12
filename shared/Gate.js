@@ -79,8 +79,10 @@ Gate.prototype.draw = function() {
   var box = this.getCollisionBarrier();
   var xPos = this.left - globals.level.x;
   var yPos = this.top - globals.level.y - 5;
+  var width = box.width();
+  var height = box.height();
 
-  if (xPos > -300 && xPos < 1000 && yPos > -20 && yPos < 500) {
+  if (xPos > -1 * width && xPos < width && yPos > -1 * height && yPos < height) {
     if (this.health > 0) {
       if (!this.hq) {
         globals.ctx.globalAlpha = this.health / 100;
