@@ -17,7 +17,8 @@ var globals = {
   playerIDQueue: [7,6,5,4,3,2,1,0],
   teams: [0,0],
   level: new Level(),
-  diff: {}
+  diff: {},
+  LastAbsolute: 0
 };
 
 /**
@@ -117,10 +118,22 @@ var update = function() {
       delete globals.projectiles[projectile];
   }
 
-  if (!globals.isObjectEmpty(globals.diff))
-    io.sockets.emit('state', globals.diff);
-  globals.diff = {};
+  this.lastAbsolute++;
 
+  if (this.lastAbsolute >= 300) {
+    this.lastAbsolute = 0;
+    var absoluteState = this.getAbsoluteState();
+    for (var d in globals.diff) {
+      absoluteState[d] = globals.diff[d]; 
+    }
+
+    io.sockets.emit('state', absoluteState);
+  }
+  else if(!globals.isObjectEmpty(globals.diff)) {
+    io.sockets.emit('state', globals.diff);
+  }
+
+  globals.diff = {};
 };
 
 /**
