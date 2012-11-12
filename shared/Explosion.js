@@ -81,10 +81,12 @@ Explosion.prototype.draw = function() {
   if (this.range === 0)
     range = 5;
 
-  if (this.damage < 0) //EMT/medic
-    globals.ctx.strokeStyle = "#00FF00";
+  if (this.damage < 0) { //medic
+    console.log("draw med");
+    globals.ctx.strokeStyle = Player.HEALTH[2];
+  }
   else if (this.damage === 0) // EMP
-    globals.ctx.strokeStyle = "#440077";
+    globals.ctx.strokeStyle = "#770077";
   else //normal
     globals.ctx.strokeStyle = "#FFFF00";
   globals.ctx.lineWidth = 5;
