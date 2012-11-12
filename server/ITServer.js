@@ -81,7 +81,7 @@ var update = function() {
       if (player.keys.all_mines === true) {
         for (var m in globals.mines) {
           var mine = globals.mines[m];
-          if (player.playerID === mine.owner && player.projectile[Projectile.Type.MINE].live > 0) {
+          if (player.playerID === mine.owner) {
             new Explosion(mine.x, mine.y, mine.range, player, {}, mine.damage, mine, false);
             delete globals.projectiles[m];
             delete globals.mines[m];
