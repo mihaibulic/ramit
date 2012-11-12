@@ -664,10 +664,11 @@ Player.prototype.respawn = function() {
     this.special[Player.SpecialType.MEDIC].lastFire = this.special[Player.SpecialType.MEDIC].coolDown;
     this.special[Player.SpecialType.SHIELD].lastFire = this.special[Player.SpecialType.SHIELD].coolDown;
     this.hasShield = 0;
+    
+    var spawn = this.determineSpawn();
     this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
     this.tank.y = Player.SPAWN_POINTS[this.team][spawn].y;
     this.health = this.maxHealth;
-    var spawn = this.determineSpawn();
 
     if (globals.diff) {
       if (!globals.diff.p)
