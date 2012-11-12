@@ -73,4 +73,5 @@ Rectangle.getPos = function(rect) {
   pos.top = rect.top - globals.level.y;
   pos.bottom = rect.bottom - globals.level.y;
   pos.draw = (pos.right > 0 && pos.left < 1000 && pos.bottom > 0 && pos.top < 500);
+  return pos;
 };
