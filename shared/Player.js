@@ -451,6 +451,7 @@ Player.prototype.updateKeys = function(e) {
  */
 Player.prototype.update = function() {
   if (this.health <= 0) {
+    this.color = 2;
     this.deathCounter++;
     if(this.deathCounter >= 120) {
       this.respawn();
@@ -636,10 +637,7 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
     this.health = this.maxHealth;
 
   if (this.health <= 0) {
-    console.log("OMGZ I JUS DIED");
     this.health = 0;
-    this.deathCounter = 1;
-    this.color = 2;
     points += 25;
   }
 
