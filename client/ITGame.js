@@ -170,7 +170,7 @@ ITGame.prototype.update = function() {
   globals.level.x = globals.players[this.player].tank.x - 470;
   globals.level.y = globals.players[this.player].tank.y - 220;
   for (var gid in globals.level.gates) {
-    globals.level.gates[gid]update();
+    globals.level.gates[gid].update();
   }
 };
 
