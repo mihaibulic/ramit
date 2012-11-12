@@ -26,6 +26,7 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
   // affect everyone by default
   this.affect_enemies = (Boolean(opt_one_team) && damage > 0) || !opt_one_team;
   this.affect_friendlies = (Boolean(opt_one_team) && damage < 0) || !opt_one_team; 
+  console.log("dmg: " + damage + ", 1 team is " + opt_one_team + ", E: " + this.affect_enemies + "/F: "+ this.affect_friendles);
 
   this.x = x;
   this.y = y;
