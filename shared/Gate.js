@@ -100,10 +100,9 @@ Gate.prototype.draw = function() {
         globals.ctx.fillText(this.name, 1450-globals.level.x, yPos - 3);
       }
     }
-    globals.ctx.drawImage(globals.resources.gates[2], xPos, yPos);
-
- }
-
+    if (this.hq) //draw gate outside things
+      globals.ctx.drawImage(globals.resources.gates[2], xPos, yPos);
+  }
   if (globals.queries.debug === "true") {
     globals.ctx.strokeStyle = Player.TEAM_COLOR[this.team];
     var rect = this.getCollisionBarrier();
