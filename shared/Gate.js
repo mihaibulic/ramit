@@ -43,7 +43,7 @@ Gate.prototype.update = function() {
   this.lastAttack++;
 };
 
-Gate.prototype.isUnderAttack() {
+Gate.prototype.isUnderAttack = function() {
   return (this.lastAttack < 1000);
 };
 
