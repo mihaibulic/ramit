@@ -242,6 +242,13 @@ Player.prototype.draw = function() {
     var rect = this.getCollisionBarrier();
     globals.ctx.strokeRect(rect.left - globals.level.x, rect.top - globals.level.y, rect.width(),
                            rect.height());
+
+    if (this.hasShield) {
+      var rect = this.getCollisionBarrier(null, true);
+      globals.ctx.strokeRect(rect.left - globals.level.x, rect.top - globals.level.y, rect.width(),
+                             rect.height());
+
+    }
   }
 };
 
