@@ -703,8 +703,8 @@ Player.prototype.getCollisionBarrier = function(location, useShield) {
     location = this.tank;
 
   if (useShield && this.hasShield) {
-    return new Rectangle({left: location.x + 5, right: location.x + 55,
-                          top: location.y + 5, bottom: location.y + 55});
+    return new Rectangle({left: location.x, right: location.x + 60,
+                          top: location.y, bottom: location.y + 60});
   }
 
   return new Rectangle({left: location.x + 10, right: location.x + 50,
