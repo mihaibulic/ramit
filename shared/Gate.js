@@ -98,7 +98,7 @@ Gate.prototype.draw = function() {
         // Fade In/Out
         var alpha = this.detailsFadeFrames / 20;
 
-        var dataXPos += xPos + (this.width / 2) - 50;
+        var dataXPos = xPos + (this.width / 2) - 50;
         // health bar
         globals.ctx.strokeStyle = "#00FF00";
         var color = Math.floor(this.health / 1000 * Player.HEALTH.length);
