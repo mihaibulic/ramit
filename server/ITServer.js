@@ -121,6 +121,7 @@ var update = function() {
   this.lastAbsolute++;
 
   if (this.lastAbsolute >= 300) {
+    console.log(("AB STATE: " + new Date()).getTime());
     this.lastAbsolute = 0;
     var absoluteState = this.getAbsoluteState();
     for (var d in globals.diff) {
