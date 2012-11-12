@@ -217,7 +217,6 @@ Player.prototype.draw = function() {
   // If the tank will not be displayed on the screen, do not bother drawing it.
   if (xPos > -60 && xPos < 1000 && yPos > -60 && yPos < 500) {
     // Draw the tank.
-    console.log("color: " + this.color);
     globals.ctx.drawImage(
       globals.resources.tanks[this.color][this.tank.direction],
       xPos, yPos);
@@ -637,6 +636,7 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
     this.health = this.maxHealth;
 
   if (this.health <= 0) {
+    console.log("OMGZ I JUS DIED");
     this.health = 0;
     this.deathCounter = 1;
     this.color = 2;
