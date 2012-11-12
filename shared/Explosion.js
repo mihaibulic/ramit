@@ -11,7 +11,7 @@
  * @param {Projectile} opt_projectile The projectile which exploded.
  * @param {Object} opt_state A state object to build the explosion with.
  */
-var Explosion = function(x, y, range, owner, target, damage, opt_ff, opt_projectile, opt_state) {
+var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt_ff, opt_state) {
   this.animationFrame = 0;
 
   if (opt_state) {
