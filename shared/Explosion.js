@@ -25,7 +25,7 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
 
   // affect everyone by default
   this.affect_enemies = (damage > 0);
-  this.affect_friendlies = (opt_ff ? !!opt_ff : true);
+  this.affect_friendlies = (opt_ff !== undefined ? Boolean(opt_ff) : true);
 
   this.x = x;
   this.y = y;
