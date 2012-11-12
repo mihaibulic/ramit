@@ -92,6 +92,8 @@ var update = function() {
 
     // Special
     console.log(player.mounted + " mounted");
+    if (player.special[player.mounted] === undefined)
+      console.log(player.mounted + " does not exist");
     if (player.special[player.mounted] && 
         player.special[player.mounted].lastFire > player.special[player.mounted].coolDown &&
         (player.mouse.right === true || player.keys.shift === true)) {
