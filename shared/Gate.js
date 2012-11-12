@@ -40,7 +40,7 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
 };
 
 Gate.prototype.update = function() {
-  this.lastAttack++;
+  if (this.lastAttack < 1000) this.lastAttack++;
 };
 
 Gate.prototype.isUnderAttack = function() {
