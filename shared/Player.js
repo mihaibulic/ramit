@@ -464,17 +464,16 @@ Player.prototype.update = function() {
     this.special[Player.SpecialType.MEDIC].lastFire++;
     if (this.hasShield === 0)
       this.special[Player.SpecialType.SHIELD].lastFire++;
-
-    if (this.hasShield) {
-      this.hasShield--;
-      if (globals.diff && !this.hasShield) {
-        if (!globals.diff.p)
-          globals.diff.p = {};
-        if (!globals.diff.p[this.playerID])
-          globals.diff.p[this.playerID] = {};
-        globals.diff.p[this.playerID].d = 0;
-      }
-    } 
+  }
+  if (this.hasShield) {
+    this.hasShield--;
+    if (globals.diff && !this.hasShield) {
+      if (!globals.diff.p)
+        globals.diff.p = {};
+      if (!globals.diff.p[this.playerID])
+        globals.diff.p[this.playerID] = {};
+      globals.diff.p[this.playerID].d = 0;
+    }
   }
 };
 
@@ -658,10 +657,17 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
 Player.prototype.respawn = function() {
     this.deathCounter = 0;
 
-    var spawn = this.determineSpawn();
+    this.projectile[Projectile.Type.NORMAL].lastFire = this.projectile[Projectile.Type.NORMAL].coolDown;
+    this.projectile[Projectile.Type.MINE].lastFire = this.projectile[Projectile.Type.MINE].coolDown;
+    this.special[Player.SpecialType.ROCKET].lastFire = this.special[Player.SpecialType.ROCKET].coolDown;
+    this.special[Player.SpecialType.EMP].lastFire = this.special[Player.SpecialType.EMP].coolDown;
+    this.special[Player.SpecialType.MEDIC].lastFire = this.special[Player.SpecialType.MINE].coolDown;
+    this.special[Player.SpecialType.SHIELD].lastFire = this.special[Player.SpecialType.SHIELD].coolDown;
+    this.hasShield = 0;
     this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
     this.tank.y = Player.SPAWN_POINTS[this.team][spawn].y;
     this.health = this.maxHealth;
+    var spawn = this.determineSpawn();
 
     if (globals.diff) {
       if (!globals.diff.p)
