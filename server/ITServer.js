@@ -115,15 +115,13 @@ var update = function() {
     var absoluteState = getAbsoluteState(); 
     globals.lastAbsolute = 0;
     
-    if(!globals.isObjectEmpty(globals.diff.e)) {
+    if(!globals.isObjectEmpty(globals.diff.e)) 
       absoluteState.e = globals.diff.e;
-    }
 
     io.sockets.emit('state', absoluteState);
   }
-  else if(!globals.isObjectEmpty(globals.diff)) {
+  else if(!globals.isObjectEmpty(globals.diff)) 
     io.sockets.emit('state', globals.diff);
-  }
 
   globals.diff = {};
 };

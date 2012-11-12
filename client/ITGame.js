@@ -157,10 +157,10 @@ ITGame.prototype.loadState = function(data) {
   }
   // Base
   if (data.b) {
-    if (data.b[0] !== undefined)
-      globals.level.gates[0].updateHealth(data.b[0]);
-    if (data.b[1] !== undefined)
-      globals.level.gates[1].updateHealth(data.b[1]);
+    for (var b in data.b) {
+      if (data.b[b] !== undefined)
+        globals.level.gates[b].updateHealth(data.b[b]);
+    }
   }
 };
 
