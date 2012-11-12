@@ -451,6 +451,7 @@ Player.prototype.updateKeys = function(e) {
  */
 Player.prototype.update = function() {
   if (this.health <= 0) {
+    console.log("dead " + this.deathCounter + "/120");
     this.color = 2;
     this.deathCounter++;
     if(this.deathCounter >= 120) {
@@ -657,6 +658,7 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
 };
 
 Player.prototype.respawn = function() {
+    console.log("RESPAWN");
     this.deathCounter = 0;
 
     var spawn = this.determineSpawn();
