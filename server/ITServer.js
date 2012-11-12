@@ -118,12 +118,11 @@ var update = function() {
       delete globals.projectiles[projectile];
   }
 
-  this.lastAbsolute++;
-
-  if (this.lastAbsolute >= 300) {
-    console.log("AB STATE: " + (new Date()).getTime());
-    this.lastAbsolute = 0;
-    var absoluteState = this.getAbsoluteState();
+  globals.lastAbsolute++;
+  if(globals.lastAbsolute >= 300) { 
+    var absoluteState = this.getAbsoluteState(); 
+    console.log("emitting absolute state: " + globals.lastAbsolute);
+    last.lastAbsolute = 0;
     for (var d in globals.diff) {
       absoluteState[d] = globals.diff[d]; 
     }
@@ -131,7 +130,7 @@ var update = function() {
     io.sockets.emit('state', absoluteState);
   }
   else if(!globals.isObjectEmpty(globals.diff)) {
-    console.log("emitting state diff: " + (new Date()).getTime());
+    console.log("emitting state diff: " + globals.lastAbsolute);
     io.sockets.emit('state', globals.diff);
   }
 
