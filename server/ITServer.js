@@ -18,7 +18,7 @@ var globals = {
   teams: [0,0],
   level: new Level(),
   diff: {},
-  LastAbsolute: 0
+  lastAbsolute: 0
 };
 
 /**
