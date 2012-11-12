@@ -90,12 +90,21 @@ var update = function() {
       }
     }
 
-    // Rocket
-    if (player.projectile[Projectile.Type.ROCKET].lastFire > 120 &&
-        (player.mouse.right === true)) {
-      globals.projectiles[Projectile.nextID] =
-        new Projectile(player, Projectile.Type.ROCKET, Projectile.nextID);
-      Projectile.nextID++;
+    // Special
+    if (player.special[player.mounted].lastFire > player.special[player.mounted].coolDown &&
+        (player.mouse.right === true || player.keys.shift === true)) {
+        if (player.mounted === Player.specialType.ROCKET) {
+          globals.projectiles[Projectile.nextID] =
+            new Projectile(player, Projectile.Type.ROCKET, Projectile.nextID);
+          Projectile.nextID++;
+        } else if ((player.mounted === Player.SpecialType.EMP) ||
+                    (player.mounted === Player.SpecialType.MEDIC)) {
+          new Explosion(player.tank.x + 30, player.tank.y +30, 
+                      player.special[player.mounted].range, 
+                      player, null, player.special[player.mounted].damage, true);
+        } else if (player.mounted === Player.SpecialType.SHIELD) {
+          //sheild stuff
+        }
     }
 
     // Shield
@@ -127,7 +136,6 @@ var update = function() {
 var getAbsoluteState = function() {
   var id;
   var state = {};
-  // TODO: Copy/paste into classes.
   // Players
   state.p = {};
   for (id in globals.players)

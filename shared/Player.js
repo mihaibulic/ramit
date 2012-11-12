@@ -94,6 +94,7 @@ var Player = function(team, playerID, opt_state) {
     lastFire: 0,
     coolDown: 120
   };
+  
   this.special = {};
   this.special[Player.SpecialType.ROCKET] = this.projectile[Projectile.Type.ROCKET];//this is a hack
   this.special[Player.SpecialType.EMP] = {
@@ -134,7 +135,7 @@ Player.prototype.getAbsoluteState = function() {
   p.a = this.getAim();
   p.k = this.getKeyValue();
   p.s = this.speed;
-  p.w = 0; // TODO: weapon
+  p.w = this.mounted;
   p.d = this.hasShield;
   p.p = this.totalScore;
   p.c = this.totalSpent;
