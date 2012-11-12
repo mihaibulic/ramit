@@ -50,19 +50,20 @@ Gate.prototype.draw = function() {
       globals.ctx.globalAlpha = this.health / 100;
       globals.ctx.drawImage(globals.resources.gates[this.team], xPos, yPos);
       globals.ctx.globalAlpha = 1;
+
+      // health bar
+      globals.ctx.strokeStyle = "#00FF00";
+      var color = Math.floor(this.health / 1000 * Player.HEALTH.length);
+      if (color == Player.HEALTH.length) color--;
+      globals.ctx.fillStyle = Player.HEALTH[color];
+      globals.ctx.globalAlpha = 0.5;
+      globals.ctx.strokeRect(1450-globals.level.x, yPos-2, 100, 3);
+      globals.ctx.fillRect(1450-globals.level.x, yPos-2, 100 * this.health / 1000, 3);
+      globals.ctx.globalAlpha = 1;
     }
     globals.ctx.drawImage(globals.resources.gates[2], xPos, yPos);
 
-    // health bar
-    globals.ctx.strokeStyle = "#00FF00";
-    var color = Math.floor(this.health / 1000 * Player.HEALTH.length);
-    if (color == Player.HEALTH.length) color--;
-    globals.ctx.fillStyle = Player.HEALTH[color];
-    globals.ctx.globalAlpha = 0.5;
-    globals.ctx.strokeRect(xPos + 85, yPos, 100, 3);
-    globals.ctx.fillRect(xPos + 85, yPos, 100 * this.health / 1000, 3);
-    globals.ctx.globalAlpha = 1;
-  }
+ }
 
   if (globals.queries.debug === "true") {
     globals.ctx.strokeStyle = Player.TEAM_COLOR[this.team];
