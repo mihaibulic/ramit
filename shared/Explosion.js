@@ -14,7 +14,6 @@
  */
 var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt_one_team, opt_state) {
   this.animationFrame = 0;
-
   if (opt_state) {
     this.type = opt_state.t;
     this.x = opt_state.x;

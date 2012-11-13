@@ -77,7 +77,7 @@ globals.load = function(callback) {
   globals.resourceLoaded = function() {
     globals.remainingResources--;
     // Nothing else needs to be loaded. Call the callback.
-    if (globals.remainingResources === 0 && !!callback)
+    if (globals.remainingResources === 0 && Boolean(callback))
       callback();
   };
 
@@ -110,8 +110,6 @@ globals.load = function(callback) {
       globals.rawImages[img].src = "images/" + img + ".png";
     }
   }
-  console.log("load");
-
 };
 
 /**

@@ -246,7 +246,6 @@ ITGame.prototype.update = function() {
  * Draw the game state to the canvas.
  */
 ITGame.prototype.draw = function() {
-  console.log("draw");
   if (globals.level.mode === Level.Mode.START) {
     // game starting
     // TODO draw special start screen?
