@@ -151,7 +151,7 @@ var getAbsoluteState = function() {
   var id;
   var state = {};
   // set absolute state
-  stata.a = true;
+  state.a = true;
   // Players
   state.p = {};
   for (id in globals.players)
