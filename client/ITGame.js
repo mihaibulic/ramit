@@ -151,10 +151,10 @@ ITGame.prototype.loadState = function(data) {
       if (data.p[id].p !== undefined)
         player.totalScore = data.p[id].p;
       if (data.p[id].c !== undefined) {
-        if (player.scoreSpent !== data.p[id].c) {
+        if (player.totalSpent !== data.p[id].c) {
           console.log(player.name + " bought an upgrade");
         }
-        player.scoreSpent = data.p[id].c;
+        player.totalSpent = data.p[id].c;
       }
     }
   }
