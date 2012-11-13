@@ -163,6 +163,12 @@ Upgrade.prototype.buy = function(device, type, pid) {
   this.players[pid][device][type]++;
   var diff = this.diff[device][type][this.players[pid][device][type]];
   buyer.totalSpent -= this.cost[device][type][this.players[pid][device][type]];
+  if (globals.diff) {
+    if (!globals.diff.p)
+      globals.diff.p = {};
+    globals.diff.p[this.playerID].c = buyer.totalSpent;
+  }
+
   if (device === Upgrade.Device.TANK) {
     if (type === Upgrade.Type.MAX_HP) {
       buyer.maxHealth += diff;

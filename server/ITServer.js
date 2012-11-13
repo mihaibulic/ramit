@@ -17,7 +17,8 @@ var globals = {
   teams: [0,0],
   level: new Level(),
   diff: {},
-  lastAbsolute: 0
+  lastAbsolute: 0,
+  upgrade = new Upgrade()
 };
 
 /**
@@ -270,8 +271,8 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('upgrade', function(data) {
-    if(data.t !== undefined && data.o !== undefined)
-      globals.players[id].upgrade(data.t, data.o);
+    console.log("upgrade request received: d:" + data.d + " t:" + data.t);
+    globals.upgrade.buy(data.d, data.t, id);
   });
 
   // Actions to perform when the player disconnects.

@@ -30,6 +30,7 @@ var ITGame = function(team, playerID) {
       }
     });
 
+
     this.loadState(data.s);
     this.player = data.i;
     this.team = globals.players[this.player].team;
@@ -149,8 +150,12 @@ ITGame.prototype.loadState = function(data) {
         player.hasShield = data.p[id].d;
       if (data.p[id].p !== undefined)
         player.totalScore = data.p[id].p;
-      if (data.p[id].c !== undefined)
+      if (data.p[id].c !== undefined) {
+        if (player.scoreSpent !== data.p[id].c) }
+          console.log(player.name + " bought an upgrade");
+        }
         player.scoreSpent = data.p[id].c;
+      }
     }
   }
   // Projectiles
