@@ -61,3 +61,17 @@ Rectangle.prototype.getYDistance = function(rect) {
   return Math.min(Math.abs(this.top - rect.bottom),
                   Math.abs(rect.top - this.bottom));
 };
+
+/**
+ * Calculates draw position.
+ * @return {Rectangle} Has additional member 'draw' true if in view
+ */
+Rectangle.getPos = function(rect) {
+  var pos = new Rectangle();
+  pos.left = rect.left - globals.level.x;
+  pos.right = rect.right - globals.level.x;
+  pos.top = rect.top - globals.level.y;
+  pos.bottom = rect.bottom - globals.level.y;
+  pos.draw = (pos.right > 0 && pos.left < 1000 && pos.bottom > 0 && pos.top < 500);
+  return pos;
+};

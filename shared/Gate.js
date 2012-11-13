@@ -83,47 +83,47 @@ Gate.prototype.isUnderAttack = function() {
  * Draws the gate.
  */
 Gate.prototype.draw = function() {
-  var box = this.getCollisionBarrier();
+  var pos = Rectangle.getPos(this);
   var xPos = this.left - globals.level.x;
   var yPos = this.top - globals.level.y - 5;
-  var width = box.width();
-  var height = box.height();
-  console.log(xPos + ", " + yPos);
+  var width = this.right - this.left;
+  var height = this.bottom - this.top;
 
-  if (xPos > -1 * width && xPos < width + 1000 && yPos > -1 * height && yPos < height + 500) {
+  if (pos.draw) {
     if (this.health > 0) {
       if (!this.hq) {
-        globals.ctx.globalAlpha = this.health / 100;
-        globals.ctx.drawImage(globals.resources.gates[this.team], xPos, yPos);
+        globals.ctx.globalAlpha = this.health / 100; //fades away for the last 100 hp
+        globals.ctx.drawImage(globals.resources.gates[this.team], pos.left, pos.top);
         globals.ctx.globalAlpha = 1;
       } else {
         globals.ctx.fillStyle = Player.TEAM_COLOR[this.team];
-        globals.ctx.fillRect(xPos, yPos, box.width(), box.height());
+        globals.ctx.fillRect(pos.left, pos.top, width, height);
       }
 
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
         // Fade In/Out
         var alpha = this.detailsFadeFrames / 20;
 
+        var dataXPos = xPos + (this.hq ? 0 : 100);
         // health bar
         globals.ctx.strokeStyle = "#00FF00";
         var color = Math.floor(this.health / 1000 * Player.HEALTH.length);
         if (color == Player.HEALTH.length) color--;
         globals.ctx.fillStyle = Player.HEALTH[color];
         globals.ctx.globalAlpha = 0.5 * alpha;
-        globals.ctx.strokeRect(xPos + 100, yPos-2, 100, 3);
-        globals.ctx.fillRect(xPos + 100, yPos-2, 100 * this.health / 1000, 3);
+        globals.ctx.strokeRect(dataXPos, yPos-2, 100, 3);
+        globals.ctx.fillRect(dataXPos, yPos-2, 100 * this.health / 1000, 3);
         globals.ctx.globalAlpha = alpha;
         // name
         globals.ctx.fillStyle = "#FFFFFF";
         globals.ctx.font = "10px sans-serif";
-        globals.ctx.fillText(this.name, 1450-globals.level.x, yPos - 3);
+        globals.ctx.fillText(this.name, dataXPos, yPos - 3);
         globals.ctx.globalAlpha = 1;
       }
     }
-    if (!this.hq) //draw gate outside things
-      globals.ctx.drawImage(globals.resources.gates[2], xPos, yPos);
   }
+  if (!this.hq) //draw gate outside things
+    globals.ctx.drawImage(globals.resources.gates[2], pos.left, pos.top-3);
   if (globals.queries.debug === "true") {
     globals.ctx.strokeStyle = Player.TEAM_COLOR[this.team];
     var rect = this.getCollisionBarrier();
