@@ -38,7 +38,7 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
   this.health -= damage;
   if (this.health < 0) this.health = 0;
   if (this.hq && this.health === 0) {
-    console.log("GAME OVER, team #" + h + " has lost");
+    console.log("GAME OVER, team #" + ownerTeam + " has lost");
     globals.level.mode = globals.diff.m = Level.Mode.END;
   }
 
