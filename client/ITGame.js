@@ -172,20 +172,21 @@ ITGame.prototype.loadState = function(data) {
         globals.projectiles[id].y = data.q[id].y;
     }
   }
-  if (Boolean(data.a)) {
-    for (id in globals.projectiles) {
-      if (!data.q[id] ) {
-        // should we create an explosion here?
-        delete globals.projectiles[id];
-      }
-    }
-  }
   // Explosions
   if (data.e) {
     for (id in data.e) {
       globals.explosions.push(new Explosion(null, null, null, null, null, null, null, null, data.e[id]));
       if (data.e[id].i !== undefined) {
         delete globals.projectiles[data.e[id].i];
+      }
+    }
+  }
+  // Clean up dangling projectiles during absolute state
+  if (Boolean(data.a)) {
+    for (id in globals.projectiles) {
+      if (!data.q[id] ) {
+        // should we create an explosion here?
+        delete globals.projectiles[id];
       }
     }
   }
