@@ -189,8 +189,6 @@ var reset = function() {
 
   // send absolute state
   emitState(true); 
-
-  globals.level.mode = Level.Mode.ONGOING;
 };
 
 /**
@@ -302,6 +300,10 @@ io.sockets.on('connection', function(socket) {
     delete globals.socketToId[socket.id];
   });
 
-  // Broadcast to the other players that there is a new player.
-  socket.emit('setup', {i: id, s: getAbsoluteState()});
+  var absState = getAbsoluteState();
+  // Emit to the new player the absolute state
+  socket.emit('setup', {i: id, s: absState});
+  
+  // Broadcast to all other players that a new player has joined
+  socket.broadcast.emit('join', {i: id, p: absState.p[id]});
 });
