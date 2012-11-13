@@ -193,8 +193,8 @@ ITGame.prototype.loadState = function(data) {
         globals.level.gates[g].updateHealth(data.g[g]);
       }
     }
+    console.log("done updating health");
   }
-  console.log("done updating health");
   // Headquarters
   if (data.h) {
     for (var h in data.h) {

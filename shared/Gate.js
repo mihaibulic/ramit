@@ -60,16 +60,16 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
   return 0;
 };
 
-Gate.prototype.updateHealth = function(health) {
-  if (health !== this.health) {
-    console.log("old health: " + this.health + "\t\tnew health: " + health);
-    if (health === 0) {
+Gate.prototype.updateHealth = function(he) {
+  if (he !== this.health) {
+    console.log("old health: " + this.health + "\t\tnew health: " + he);
+    if (he === 0) {
       globals.messages.push((this.team === 0 ? "Blue" : "Red") + " Team's " + (this.hq ? "HQ" : "Gate") + " has been destroyed");
     } else if (!this.isUnderAttack()) {
       globals.messages.push((this.team === 0 ? "Blue" : "Red") + " Team's " + (this.hq ? "HQ" : "Gate") + " is under attack");
     }
     this.underAttack = 600;
-    this.health = health;
+    this.health = he;
   }
 };
 
