@@ -193,7 +193,7 @@ ITGame.prototype.loadState = function(data) {
 ITGame.prototype.update = function() {
   if (globals.level.mode === Level.Mode.START) {
     globals.level = new Level();
-    globals.level.mode = Level.Mode.START;
+    globals.level.mode = Level.Mode.ONGOING;
 
     // reset all players
     for ( var p in globals.players) {
