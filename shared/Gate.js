@@ -84,8 +84,6 @@ Gate.prototype.isUnderAttack = function() {
  */
 Gate.prototype.draw = function() {
   var pos = Rectangle.getPos(this);
-  var xPos = this.left - globals.level.x;
-  var yPos = this.top - globals.level.y - 5;
   var width = this.right - this.left;
   var height = this.bottom - this.top;
 
@@ -104,7 +102,7 @@ Gate.prototype.draw = function() {
         // Fade In/Out
         var alpha = this.detailsFadeFrames / 20;
 
-        var dataXPos = xPos + (this.hq ? 0 : 100);
+        var dataXPos = pos.left + (this.hq ? 0 : 100);
         // health bar
         globals.ctx.strokeStyle = "#00FF00";
         var color = Math.floor(this.health / 1000 * Player.HEALTH.length);
@@ -117,7 +115,7 @@ Gate.prototype.draw = function() {
         // name
         globals.ctx.fillStyle = "#FFFFFF";
         globals.ctx.font = "10px sans-serif";
-        globals.ctx.fillText(this.name, dataXPos, yPos - 3);
+        globals.ctx.fillText(this.name, dataXPos, pos.top - 3);
         globals.ctx.globalAlpha = 1;
       }
     }
@@ -127,7 +125,7 @@ Gate.prototype.draw = function() {
   if (globals.queries.debug === "true") {
     globals.ctx.strokeStyle = Player.TEAM_COLOR[this.team];
     var rect = this.getCollisionBarrier();
-    globals.ctx.strokeRect(xPos, yPos + (!this.hq ? 5 : 0), rect.width(), rect.height());
+    globals.ctx.strokeRect(pos.left, pos.top + (!this.hq ? 5 : 0), rect.width(), rect.height());
   }
 };
 
