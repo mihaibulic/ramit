@@ -23,7 +23,8 @@ var globals = {
   projectiles: {},
   explosions: [],
   players: {},
-  level: new Level()
+  level: new Level(),
+  messages: []
 };
 
 /**

@@ -10,11 +10,12 @@ var ITGame = function(team, playerID) {
     }, this));
 
     globals.socket.on('leave', function(data) {
+      // Set up fade out of player
       console.log(globals.players[data.i].name + " is leaving");
       globals.players[data.i].leaving = true;
       globals.players[data.i].health = 0;
       globals.players[data.i].deathCounter = 1;
-      //delete globals.players[data.i];
+      globals.messages.push(globals.players[data.i].name + " has left");
       // Remove all projectiles and mines owned by this player.
       for (var qid in globals.projectiles) {
         if (globals.projectiles[qid].owner === data.i) {
