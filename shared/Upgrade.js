@@ -134,7 +134,7 @@ Upgrade.prototype.load = function() {
  * @param {Upgrade.Type} Type of upgrade to buy.
  * @param {int} The pid of player buying upgrade.
  */
-Upgrade.prototype.buy(device, type, pid) {
+Upgrade.prototype.buy = function(device, type, pid) {
   var buyer = globals.players[pid];
   if (this.cost[device][type] === undefined)
     console.log(buyer.name + ", that device can't upgrade that way");
