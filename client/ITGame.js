@@ -119,7 +119,8 @@ ITGame.prototype.loadState = function(data) {
   }
   // Game over
   else if (data.m === Level.Mode.END) {
-    //TODO you lost/won screen?
+    globals.level.mode = data.m;
+    return;    //TODO you lost/won screen?
   }
 
   // Players
@@ -189,11 +190,9 @@ ITGame.prototype.loadState = function(data) {
   if (data.g) {
     for (var g in data.g) {
       if (data.g[g] !== undefined) {
-        console.log("updating health for gate #" + g);
         globals.level.gates[g].updateHealth(data.g[g]);
       }
     }
-    console.log("done updating health");
   }
   // Headquarters
   if (data.h) {
@@ -208,6 +207,8 @@ ITGame.prototype.loadState = function(data) {
  * Update the game state.
  */
 ITGame.prototype.update = function() {
+  if (globals.level.mode === Level.Mode.END) return;
+
   globals.level.x = globals.players[this.player].tank.x - 470;
   globals.level.y = globals.players[this.player].tank.y - 220;
   for (var hid in globals.level.hqs) {

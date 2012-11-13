@@ -38,7 +38,6 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
   this.health -= damage;
   if (this.health < 0) this.health = 0;
   if (this.hq && this.health === 0) {
-    console.log("GAME OVER, team #" + ownerTeam + " has lost");
     globals.level.mode = globals.diff.m = Level.Mode.END;
   }
 
@@ -60,16 +59,15 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
   return 0;
 };
 
-Gate.prototype.updateHealth = function(he) {
-  if (he !== this.health) {
-    console.log("old health: " + this.health + "\t\tnew health: " + he);
-    if (he === 0) {
+Gate.prototype.updateHealth = function(health) {
+  if (health !== this.health) {
+    if (health === 0) {
       globals.messages.push((this.team === 0 ? "Blue" : "Red") + " Team's " + (this.hq ? "HQ" : "Gate") + " has been destroyed");
     } else if (!this.isUnderAttack()) {
       globals.messages.push((this.team === 0 ? "Blue" : "Red") + " Team's " + (this.hq ? "HQ" : "Gate") + " is under attack");
     }
     this.underAttack = 600;
-    this.health = he;
+    this.health = health;
   }
 };
 

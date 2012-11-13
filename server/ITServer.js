@@ -56,13 +56,14 @@ var explodeAll = function(player, justMines) {
  * Updates the game and sends out a 'diff' message to the players.
  */
 var update = function() {
-  if (globals.level.mode === Level.Mode.END) {
-    globals.gameoverTimer++;
-
+  if (globals.level.mode === Level.Mode.START) 
+    globals.level.mode = Level.Mode.ONGOING; 
+  else if (globals.level.mode === Level.Mode.END) {
     if (globals.gameoverTimer >= 120) 
       reset();
-    else
-      return; 
+    else {
+      globals.gameoverTimer++;
+    }
   }
 
   // Players
@@ -142,7 +143,6 @@ var emitState = function(override) {
     io.sockets.emit('state', globals.diff);
 
   globals.diff = {};
-
 };
 
 /**
@@ -189,6 +189,8 @@ var reset = function() {
 
   // send absolute state
   emitState(true); 
+
+  globals.level.mode = Level.Mode.ONGOING;
 };
 
 /**
@@ -203,9 +205,8 @@ io.sockets.on('connection', function(socket) {
 
   // If this is the first player, start the game.
   if (globals.numberOfPlayers === 0) {
+    globals.level.mode = globals.diff.m = Level.Mode.START;
     globals.interval = setInterval(update, 1000 / globals.fps);
-    globals.level.mode = Level.Mode.START;
-    globals.diff.m = Level.Mode.START;
   }
 
   // Create the player.

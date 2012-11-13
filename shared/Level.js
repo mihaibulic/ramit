@@ -11,7 +11,7 @@ var Level = function() {
   this.loadLevel();
 };
 
-Level.Mode = {START: 0, END: 1};
+Level.Mode = {START: 0, ONGOING: 1, END: 2};
 
 /**
  * Loads the walls into the level.
@@ -55,4 +55,6 @@ Level.prototype.loadLevel = function() {
   for (var i = 0; i < walls.length; i++) {
     this.walls[i] = new Rectangle(walls[i]);
   }
+
+  this.mode = this.Mode.ONGOING;
 };
