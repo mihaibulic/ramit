@@ -202,6 +202,12 @@ io.sockets.on('connection', function(socket) {
     return;
   }
 
+  // If this is the first player, start the game.
+  if (globals.numberOfPlayers === 0) {
+    reset();
+    globals.interval = setInterval(update, 1000 / globals.fps);
+  }
+
   // Create the player.
   globals.numberOfPlayers++;
   var team = 0;
@@ -298,15 +304,8 @@ io.sockets.on('connection', function(socket) {
   });
   
   var absState = getAbsoluteState();
-  // If this is the first player, start the game.
-  if (globals.numberOfPlayers === 1) {
-    globals.level.mode = globals.diff.m = Level.Mode.START;
-    globals.interval = setInterval(update, 1000 / globals.fps);
-  }
-  else {
-    // Broadcast to all other players that a new player has joined
-    socket.broadcast.emit('join', {i: id, p: absState.p[id]});
-  }
+  // Broadcast to all other players that a new player has joined
+  socket.broadcast.emit('join', {i: id, p: absState.p[id]});
 
   // Emit to new player the absolute state
   socket.emit('setup', {i: id, s: absState});
