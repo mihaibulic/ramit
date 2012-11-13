@@ -21,10 +21,7 @@ var Player = function(team, playerID, opt_state) {
     all_mines: false,
     space: false,
     shift: false,
-    1: false,
-    2: false,
-    3: false,
-    4: false
+    mounted: 1
   };
   this.mouse = {
     left: false,
@@ -387,67 +384,75 @@ Player.prototype.updateKeys = function(e) {
   var mounting = false;
   switch (e.keyCode) {
   case 87: // W
-    if (Boolean(this.keys.up) !== value)
+    if (Boolean(this.keys.up) !== value) {
       diff.u = value;
-    this.keys.up = value;
+      this.keys.up = value;
+    }
     break;
   case 65: // A
-    if (Boolean(this.keys.left) !== value)
+    if (Boolean(this.keys.left) !== value) {
       diff.l = value;
-    this.keys.left = value;
+      this.keys.left = value;
+    }
     break;
   case 83: // S
-    if (Boolean(this.keys.down) !== value)
+    if (Boolean(this.keys.down) !== value) {
       diff.d = value;
-    this.keys.down = value;
+      this.keys.down = value;
+    }
     break;
   case 68: // D
-    if (Boolean(this.keys.right) !== value)
+    if (Boolean(this.keys.right) !== value) {
       diff.r = value;
-    this.keys.right = value;
+      this.keys.right = value;
+    }
     break;
   case 32: // Space
-    if (Boolean(this.keys.space) !== value)
+    if (Boolean(this.keys.space) !== value) {
       diff.s = value;
-    this.keys.space = value;
+      this.keys.space = value;
+    }
     break;
   case 69: //e
-    if (Boolean(this.keys.mine) !== value)
+    if (Boolean(this.keys.mine) !== value) {
       diff.e = value;
-    this.keys.mine = value;
+      this.keys.mine = value;
+    }
     break;
   case 81: // q
-    if(Boolean(this.keys.all_mines) !== value)
+    if(Boolean(this.keys.all_mines) !== value) {
       diff.q = value;
-    this.keys.all_mines = value;
+      this.keys.all_mines = value;
+    }
     break;
   case 16: //shift fire_special
-    if (Boolean(this.keys.shift) !== value)
+    if (Boolean(this.keys.shift) !== value) {
       diff.w = value;
-    this.keys.shift = value;
+      this.keys.shift = value;
+    }
     break;
   case 49: //1
     if(value) {
       diff.m = 1;
-      this.keys.m = 1;
+      this.keys.mounted = 1;
     }
     break;
   case 50: //2
     if(value) {
       diff.m = 2;
-      this.keys.m = 2;
+      this.keys.mounted = 2;
     }
     break;
   case 51: //3
     if(value) {
       diff.m = 3;
-      this.keys.m = 3;
+      this.keys.mounted = 3;
     }
     break;
   case 52: //4
     if(value) {
       diff.m = 4;
-      this.keys.m = 4;
+      this.keys.mounted = 4;
     }
     break;
   }
@@ -456,6 +461,10 @@ Player.prototype.updateKeys = function(e) {
     diff.d = this.keys.down;
     diff.l = this.keys.left;
     diff.r = this.keys.right;
+    diff.e = this.keys.mine;
+    diff.q = this.keys.all_mines;
+    diff.w = this.keys.shift;
+    diff.m = this.keys.mounted;
     globals.socket.emit('key', diff);
   }
 };
