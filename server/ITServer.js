@@ -183,6 +183,7 @@ var reset = function() {
   }
 
   globals.projectiles = null;
+  Projectile.nextID = 0;
 };
 
 /**
