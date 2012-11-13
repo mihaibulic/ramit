@@ -74,8 +74,7 @@ var update = function() {
     // Shoot
     if (player.canFire(Projectile.Type.NORMAL) &&
         (player.keys.space === true || player.mouse.left === true)) {
-      globals.projectiles[Projectile.nextID] =
-        new Projectile(player, Projectile.Type.NORMAL, Projectile.nextID);
+      globals.projectiles[Projectile.nextID] = new Projectile(player, Projectile.Type.NORMAL, Projectile.nextID);
       Projectile.nextID++;
     }
 
@@ -101,8 +100,7 @@ var update = function() {
         (player.mouse.right === true || player.keys.shift === true)) {
       console.log("firing special weapon " + player.mounted);
       if (player.mounted === Player.SpecialType.ROCKET) {
-        globals.projectiles[Projectile.nextID] =
-          new Projectile(player, Projectile.Type.ROCKET, Projectile.nextID);
+        globals.projectiles[Projectile.nextID] = new Projectile(player, Projectile.Type.ROCKET, Projectile.nextID);
         Projectile.nextID++;
       } else if ((player.mounted === Player.SpecialType.EMP) ||
                   (player.mounted === Player.SpecialType.MEDIC)) {
@@ -138,7 +136,8 @@ var emitState = function(override) {
     if(!globals.diff.e)
       absoluteState.e = globals.diff.e;
 
-    io.sockets.emit('state', absoluteState);
+    io.sockets.emit('state', globals.diff);
+    //io.sockets.emit('state', absoluteState);
   }
   else if(!globals.isObjectEmpty(globals.diff))
     io.sockets.emit('state', globals.diff);
