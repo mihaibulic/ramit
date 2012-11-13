@@ -84,8 +84,6 @@ Gate.prototype.isUnderAttack = function() {
  */
 Gate.prototype.draw = function() {
   var pos = Rectangle.getPos(this);
-  var xPos = this.left - globals.level.x;
-  var yPos = this.top - globals.level.y - 5;
   var width = this.right - this.left;
   var height = this.bottom - this.top;
 
@@ -104,30 +102,30 @@ Gate.prototype.draw = function() {
         // Fade In/Out
         var alpha = this.detailsFadeFrames / 20;
 
-        var dataXPos = xPos + (this.hq ? 0 : 100);
+        var dataXPos = pos.left + (this.hq ? 0 : 100);
         // health bar
         globals.ctx.strokeStyle = "#00FF00";
         var color = Math.floor(this.health / 1000 * Player.HEALTH.length);
         if (color == Player.HEALTH.length) color--;
         globals.ctx.fillStyle = Player.HEALTH[color];
         globals.ctx.globalAlpha = 0.5 * alpha;
-        globals.ctx.strokeRect(dataXPos, yPos-2, 100, 3);
-        globals.ctx.fillRect(dataXPos, yPos-2, 100 * this.health / 1000, 3);
+        globals.ctx.strokeRect(dataXPos, pos.top-2, 100, 3);
+        globals.ctx.fillRect(dataXPos, pos.top-2, 100 * this.health / 1000, 3);
         globals.ctx.globalAlpha = alpha;
         // name
         globals.ctx.fillStyle = "#FFFFFF";
         globals.ctx.font = "10px sans-serif";
-        globals.ctx.fillText(this.name, dataXPos, yPos - 3);
+        globals.ctx.fillText(this.name, dataXPos, pos.top - 3);
         globals.ctx.globalAlpha = 1;
       }
     }
   }
   if (!this.hq) //draw gate outside things
-    globals.ctx.drawImage(globals.resources.gates[2], pos.left, pos.top-3);
+    globals.ctx.drawImage(globals.resources.gates[2], pos.left, pos.top);
   if (globals.queries.debug === "true") {
     globals.ctx.strokeStyle = Player.TEAM_COLOR[this.team];
     var rect = this.getCollisionBarrier();
-    globals.ctx.strokeRect(xPos, yPos + (!this.hq ? 5 : 0), rect.width(), rect.height());
+    globals.ctx.strokeRect(pos.left, pos.top + (!this.hq ? 5 : 0), rect.width(), rect.height());
   }
 };
 
