@@ -305,11 +305,14 @@ Player.prototype.drawHUD = function() {
   globals.ctx.font = "15px serif";
   if (globals.messages.length > 0) {
     if (globals.messageCounter > 0) {
-      globals.ctx.fillText(globals.messages[0], 35, 450);
-      globals.messageCounter--;
-    } else {
-      globals.messages.pop();
-      globals.messageCounter = 120;
+      for (var m in globals.messages) {
+        globals.ctx.fillText(globals.messages[m], 35, 460);
+        globals.messageCounter--;
+        if (globals.messageCounter === 0) {
+          delete globals.messages[m];
+          globals.messageCounter = 120;
+        }
+      }
     }
   }
 
