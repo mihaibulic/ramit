@@ -161,7 +161,7 @@ var getAbsoluteState = function() {
   // Gates
   state.g = {};
   for (id in globals.level.gates) 
-    state.b[id] = globals.level.gates[id].health;
+    state.g[id] = globals.level.gates[id].health;
   // Headquarters
   state.h = {};
   for (id in globals.level.hqs) 
