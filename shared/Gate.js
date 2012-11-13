@@ -118,14 +118,14 @@ Gate.prototype.draw = function() {
         globals.ctx.fillText(this.name, dataXPos, pos.top - 3);
         globals.ctx.globalAlpha = 1;
       }
+      if (globals.queries.debug === "true") {
+        globals.ctx.strokeStyle = Player.TEAM_COLOR[this.team];
+        var rect = this.getCollisionBarrier();
+        globals.ctx.strokeRect(pos.left, pos.top + (!this.hq ? 5 : 0), rect.width(), rect.height());
+      }
     }
-  }
-  if (!this.hq) //draw gate outside things
-    globals.ctx.drawImage(globals.resources.gates[2], pos.left, pos.top);
-  if (globals.queries.debug === "true") {
-    globals.ctx.strokeStyle = Player.TEAM_COLOR[this.team];
-    var rect = this.getCollisionBarrier();
-    globals.ctx.strokeRect(pos.left, pos.top + (!this.hq ? 5 : 0), rect.width(), rect.height());
+    if (!this.hq) //draw gate outside things
+      globals.ctx.drawImage(globals.resources.gates[2], pos.left, pos.top);
   }
 };
 
