@@ -69,8 +69,8 @@ Gate.prototype.updateHealth = function(health) {
       globals.messages.push((this.team === 0 ? "Blue" : "Red") + " Team's " + (this.hq ? "HQ" : "Gate") + " is under attack");
     }
     this.underAttack = 600;
+    this.health = health;
   }
-  this.health = health;
 };
 
 Gate.prototype.update = function() {

@@ -65,14 +65,6 @@ var update = function() {
       return; 
   }
 
-  /*for (var h in globals.level.hqs) {
-    if (globals.level.hqs[h].health <= 0) {
-      globals.level.mode = globals.diff.m = Level.Mode.END;
-      console.log("GAME OVER, team #" + h + " has lost");
-      return;
-    }
-  }*/
-
   // Players
   for (var pid in globals.players) {
     var player = globals.players[pid];
