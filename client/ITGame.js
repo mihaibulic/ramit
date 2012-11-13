@@ -10,7 +10,7 @@ var ITGame = function(team, playerID) {
     }, this));
 
     globals.socket.on('leave', function(data) {
-      console.log(globals.players[pid].name + " is leaving");
+      console.log(globals.players[data.i].name + " is leaving");
       globals.players[data.i].leaving = true;
       globals.players[data.i].health = 0;
       //delete globals.players[data.i];
