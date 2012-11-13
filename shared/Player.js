@@ -665,31 +665,32 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
 };
 
 Player.prototype.respawn = function() {
-    this.deathCounter = 0;
+  console.log("Respawning " + this.name);
+  this.deathCounter = 0;
 
-    this.projectile[Projectile.Type.NORMAL].lastFire = this.projectile[Projectile.Type.NORMAL].coolDown;
-    this.projectile[Projectile.Type.MINE].lastFire = this.projectile[Projectile.Type.MINE].coolDown;
-    this.special[Player.SpecialType.ROCKET].lastFire = this.special[Player.SpecialType.ROCKET].coolDown;
-    this.special[Player.SpecialType.EMP].lastFire = this.special[Player.SpecialType.EMP].coolDown;
-    this.special[Player.SpecialType.MEDIC].lastFire = this.special[Player.SpecialType.MEDIC].coolDown;
-    this.special[Player.SpecialType.SHIELD].lastFire = this.special[Player.SpecialType.SHIELD].coolDown;
-    this.hasShield = 0;
-    
-    var spawn = this.determineSpawn();
-    this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
-    this.tank.y = Player.SPAWN_POINTS[this.team][spawn].y;
-    this.health = this.maxHealth;
+  this.projectile[Projectile.Type.NORMAL].lastFire = this.projectile[Projectile.Type.NORMAL].coolDown;
+  this.projectile[Projectile.Type.MINE].lastFire = this.projectile[Projectile.Type.MINE].coolDown;
+  this.special[Player.SpecialType.ROCKET].lastFire = this.special[Player.SpecialType.ROCKET].coolDown;
+  this.special[Player.SpecialType.EMP].lastFire = this.special[Player.SpecialType.EMP].coolDown;
+  this.special[Player.SpecialType.MEDIC].lastFire = this.special[Player.SpecialType.MEDIC].coolDown;
+  this.special[Player.SpecialType.SHIELD].lastFire = this.special[Player.SpecialType.SHIELD].coolDown;
+  this.hasShield = 0;
+  
+  var spawn = this.determineSpawn();
+  this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
+  this.tank.y = Player.SPAWN_POINTS[this.team][spawn].y;
+  this.health = this.maxHealth;
 
-    if (globals.diff) {
-      if (!globals.diff.p)
-        globals.diff.p = {};
-      if (!globals.diff.p[this.playerID])
-        globals.diff.p[this.playerID] = {};
+  if (globals.diff) {
+    if (!globals.diff.p)
+      globals.diff.p = {};
+    if (!globals.diff.p[this.playerID])
+      globals.diff.p[this.playerID] = {};
 
-      globals.diff.p[this.playerID].x = this.tank.x;
-      globals.diff.p[this.playerID].y = this.tank.y;
-      globals.diff.p[this.playerID].h = this.health;
-    }
+    globals.diff.p[this.playerID].x = this.tank.x;
+    globals.diff.p[this.playerID].y = this.tank.y;
+    globals.diff.p[this.playerID].h = this.health;
+  }
 };
 
 /**
