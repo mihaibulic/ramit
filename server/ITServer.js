@@ -291,6 +291,7 @@ io.sockets.on('connection', function(socket) {
 
   // Actions to perform when the player disconnects.
   socket.on('disconnect', function() {
+    console.log(globals.players[id].name + " has left");
     globals.teams[globals.players[id].team]--;
     delete globals.players[id];
     if (--globals.numberOfPlayers === 0) {
