@@ -306,10 +306,13 @@ Player.prototype.drawHUD = function() {
 
   // Event messages
   if (globals.messages.length > 0) {
-    if (globals.messageCounter > 0)
+    if (globals.messageCounter > 0) {
       globals.ctx.fillText(globals.messages[0], 35, 35);
-    else 
+      globals.messageCounter--;
+    } else {
       globals.messages.pop();
+      globals.messageCounter = 60;
+    }
   }
 
   // Minimap
