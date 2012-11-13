@@ -640,15 +640,20 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
   if (this.hasShield)
     return 0;
 
+  var initHealth = this.health;
   this.health -= damage;
   var points = 0;
   if (damage > 0)
     points += damage;
 
-  if (this.health >= this.maxHealth)
+  if (this.health >= this.maxHealth) 
     this.health = this.maxHealth;
 
   if (this.health <= 0) {
+    // only give points for damage caused
+    // no overkill points
+    points += damage;
+    points += initHealth;
     this.health = 0;
     this.deathCounter = 1;
     points += 25;
