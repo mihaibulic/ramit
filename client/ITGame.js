@@ -101,6 +101,7 @@ var ITGame = function(team, playerID) {
  * @param {Object} data The state message.
  */
 ITGame.prototype.loadState = function(data) {
+  // A new game
   if (data.m === Level.Mode.START) {
     globals.level = new Level();
     globals.level.mode = Level.Mode.START;
@@ -113,6 +114,7 @@ ITGame.prototype.loadState = function(data) {
     globals.projectiles = {};
     Projectile.nextID = 0;
   }
+  // Game over
   else if (data.m === Level.Mode.END) {
     //TODO you lost/won screen?
   }
@@ -123,9 +125,10 @@ ITGame.prototype.loadState = function(data) {
     for (id in data.p) {
       if (!globals.players[id]) {
         globals.players[id] = new Player(null, id, data.p[id]);
+        player = globals.players[id];
+        globals.message.push(player.name + " has joined the game for the " + (player.team === 0 ? "Blue" : "Red") + " Team");
         continue;
       }
-
       var player = globals.players[id];
       if (data.p[id].n !== undefined)
         player.name = data.p[id].n;
@@ -133,8 +136,11 @@ ITGame.prototype.loadState = function(data) {
         player.tank.x = data.p[id].x;
       if (data.p[id].y !== undefined)
         player.tank.y = data.p[id].y;
-      if (data.p[id].h !== undefined)
+      if (data.p[id].h !== undefined) {
         player.health = data.p[id].h;
+        if (player.health === 0) 
+          globals.messages.push(player.name + " has been killed");
+      }
       if (data.p[id].m !== undefined)
         player.maxHealth = data.p[id].m;
       if (data.p[id].a !== undefined)
@@ -179,8 +185,9 @@ ITGame.prototype.loadState = function(data) {
   // Gates
   if (data.g) {
     for (var g in data.g) {
-      if (data.g[g] !== undefined)
+      if (data.g[g] !== undefined) {
         globals.level.gates[g].updateHealth(data.g[g]);
+      }
     }
   }
   // Headquarters

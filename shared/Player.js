@@ -284,7 +284,7 @@ Player.prototype.drawDetails = function() {
 };
 
 /**
- * Draws the HUD, including HP, score, and the minimap.
+ * Draws the HUD, including HP, score, event messages and the minimap.
  */
 Player.prototype.drawHUD = function() {
   // Health Bar
@@ -303,6 +303,15 @@ Player.prototype.drawHUD = function() {
   globals.ctx.font = "24px serif";
   globals.ctx.fillText(this.name + ": $" + (this.totalScore - this.totalSpent), 980, 35);
   globals.ctx.textAlign = "left";
+
+  // Event messages
+  if (globals.messages.length > 0) {
+    if (globals.messageCounter > 0)
+      globals.ctx.fillText(globals.messages[0], 35, 35);
+    } else {
+      globals.messages.pop();
+    }
+  }
 
   // Minimap
   globals.ctx.drawImage(globals.resources.minimap, 830, 330);
