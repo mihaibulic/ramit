@@ -109,8 +109,8 @@ Gate.prototype.draw = function() {
         if (color == Player.HEALTH.length) color--;
         globals.ctx.fillStyle = Player.HEALTH[color];
         globals.ctx.globalAlpha = 0.5 * alpha;
-        globals.ctx.strokeRect(dataXPos, yPos-2, 100, 3);
-        globals.ctx.fillRect(dataXPos, yPos-2, 100 * this.health / 1000, 3);
+        globals.ctx.strokeRect(dataXPos, pos.top-2, 100, 3);
+        globals.ctx.fillRect(dataXPos, pos.top-2, 100 * this.health / 1000, 3);
         globals.ctx.globalAlpha = alpha;
         // name
         globals.ctx.fillStyle = "#FFFFFF";
