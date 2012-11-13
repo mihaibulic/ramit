@@ -84,7 +84,7 @@ Upgrade.prototype.load = function() {
   this.diff[d.MINE][t.RANGE] = [ 20 ];
   this.cost[d.MINE][t.DAMAGE] = [ 125 ];
   this.diff[d.MINE][t.DAMAGE] = [ 10 ];
-  this.cost[d.MINE][t.ALLOWED] = [ 500, 1000 ];
+  this.cost[d.MINE][t.ALLOWED] = [ 125, 125 ];
   this.diff[d.MINE][t.ALLOWED] = [ 1, 1 ];
 
   // Rocket upgrades

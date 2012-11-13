@@ -21,7 +21,8 @@ var Player = function(team, playerID, opt_state) {
     all_mines: false,
     space: false,
     shift: false,
-    mounted: 1
+    mounted: 1,
+    u: false
   };
   this.mouse = {
     left: false,
@@ -469,6 +470,15 @@ Player.prototype.updateKeys = function(e) {
     if(value) {
       diff.m = 4;
       this.keys.mounted = 4;
+    }
+    break;
+  case 85:
+    if (value && !this.keys.u) {
+      globals.socket.emit('upgrade', { d: Upgrade.Device.MINE, 
+                                       t: Upgrade.Type.ALLOWED });
+      this.key.u = true;
+    } else if (!value) {
+      this.keys.u = false;
     }
     break;
   }
