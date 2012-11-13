@@ -65,8 +65,8 @@ var update = function() {
       return; 
   }
 
-  for ( var h in globals.hqs) {
-    if (globals.hqs[h].health <= 0) {
+  for (var h in globals.level.hqs) {
+    if (globals.level.hqs[h].health <= 0) {
       globals.gameoverTimer = 1;
       console.log("GAME OVER, team #" + h + " has lost");
       return;
