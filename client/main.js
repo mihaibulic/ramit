@@ -222,7 +222,7 @@ globals.renderMinimap = function()
  */
 globals.renderTanks = function()
 {
-  globals.remainingResources += globals.NUMBER_OF_PLAYERS * 188;
+  globals.remainingResources += (globals.NUMBER_OF_PLAYERS+1) * 188;
   var renderer = document.getElementById('renderer');
   var ctx = renderer.getContext('2d');
   var i = 0;
