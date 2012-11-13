@@ -308,9 +308,8 @@ Player.prototype.drawHUD = function() {
   if (globals.messages.length > 0) {
     if (globals.messageCounter > 0)
       globals.ctx.fillText(globals.messages[0], 35, 35);
-    } else {
+    else 
       globals.messages.pop();
-    }
   }
 
   // Minimap
