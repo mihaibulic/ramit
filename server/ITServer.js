@@ -271,7 +271,7 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('upgrade', function(data) {
-    console.log("upgrade request received from " + globals.players[id] + 
+    console.log("upgrade request received from " + globals.players[id].name + 
                 " d:" + Upgrade.DeviceStrings[data.d] + 
                 " t:" + Upgrade.TypeStrings[data.t]);
     globals.upgrade.buy(data.d, data.t, id);
