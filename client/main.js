@@ -79,7 +79,6 @@ globals.load = function(callback) {
     // Nothing else needs to be loaded. Call the callback.
     if (globals.remainingResources === 0 && Boolean(callback))
       callback();
-    console.log(globals.remainingResources);
   };
 
   var onload = function(e) {
