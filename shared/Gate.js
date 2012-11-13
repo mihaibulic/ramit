@@ -63,13 +63,12 @@ Gate.prototype.updateHealth = function(health) {
   if (health !== this.health) {
     if (health === 0 && !this.hq) {
       globals.messages.push((this.team === 0 ? "Blue" : "Red") + " Team's " + (this.hq ? "HQ" : "Gate") + " has been destroyed");
-    } else if (this.underAttack === 0) {
+    } else if (!this.isUnderAttack()) {
       globals.messages.push((this.team === 0 ? "Blue" : "Red") + " Team's " + (this.hq ? "HQ" : "Gate") + " is under attack");
     }
     this.underAttack = 600;
   }
   this.health = health;
- 
 };
 
 Gate.prototype.update = function() {
@@ -79,7 +78,6 @@ Gate.prototype.update = function() {
     this.detailsFadeFrames--;
   else if (this.underAttack > 0 && this.detailsFadeFrames < 20)
     this.detailsFadeFrames++;
-
 };
 
 Gate.prototype.isUnderAttack = function() {
