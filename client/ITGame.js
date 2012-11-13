@@ -14,7 +14,7 @@ var ITGame = function(team, playerID) {
       if (!globals.players[data.i]) {
         var player = new Player(null, data.i, data.p);
         globals.players[data.i] = player;
-        globals.messages.push(player.name + " has jizoined the game for the " + (player.team === 0 ? "Blue" : "Red") + " Team");
+        globals.messages.push("*****************" + player.name + " has joined the game for the " + (player.team === 0 ? "Blue" : "Red") + " Team");
       }
     });
 
