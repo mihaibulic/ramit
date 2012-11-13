@@ -153,7 +153,6 @@ ITGame.prototype.loadState = function(data) {
       if (data.p[id].c !== undefined) {
         if (player.totalSpent !== data.p[id].c) {
           console.log(player.name + " bought an upgrade");
-          console.log("totalSpent = " + data.p[id].c);
         }
         player.totalSpent = data.p[id].c;
       }
