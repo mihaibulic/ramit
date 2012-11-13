@@ -476,7 +476,7 @@ Player.prototype.updateKeys = function(e) {
     if (value && !this.keys.u) {
       globals.socket.emit('upgrade', { d: Upgrade.Device.MINE, 
                                        t: Upgrade.Type.ALLOWED });
-      this.key.u = true;
+      this.keys.u = true;
       console.log("requesting upgrade");
     } else if (!value) {
       this.keys.u = false;
