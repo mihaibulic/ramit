@@ -18,14 +18,14 @@ var Timer = function(millis, start) {
  * @returns true if timer is done, false otherwise (including if not
  *  started)
  */
-Time.prototype.isExpired = function() {
+Timer.prototype.isExpired = function() {
   return (this.end !== undefined && (new Date()).getTime() >= this.end); 
 };
 
 /**
  * @returns true if the timer has been started
  */
-Time.prototype.isStarted = function() {
+Timer.prototype.isStarted = function() {
   return this.end !== undefined;
 };
 
@@ -33,7 +33,7 @@ Time.prototype.isStarted = function() {
  * @returns {Number} how many millis are left (negative if timer is done).
  *  If timer hasn't been started undefined will be returned
  */
-Time.prototype.timeToExpiration = function() {
+Timer.prototype.timeToExpiration = function() {
   if (this.end === undefined)
     return this.end;
   else
@@ -43,7 +43,7 @@ Time.prototype.timeToExpiration = function() {
 /**
  * Starts the timer
  */
-Time.prototype.start = function() {
+Timer.prototype.start = function() {
   this.start = (new Date()).getTime();
   this.end = this.start + this.length; 
 };
@@ -56,7 +56,7 @@ Time.prototype.start = function() {
  *    is called and 5000ms elapse before start is called again, the
  *    timer will end at 1:00:05pm now.
  */
-Time.prototype.stop = function() {
+Timer.prototype.stop = function() {
   this.length = this.timeToExpiration();
   this.end = undefined;
 };
