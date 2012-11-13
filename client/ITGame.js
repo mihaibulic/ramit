@@ -172,6 +172,14 @@ ITGame.prototype.loadState = function(data) {
         globals.projectiles[id].y = data.q[id].y;
     }
   }
+  if (Boolean(data.a)) {
+    for (id in globals.projectiles) {
+      if (!data.q[id] ) {
+        // should we create an explosion here?
+        delete globals.projectiles[id];
+      }
+    }
+  }
   // Explosions
   if (data.e) {
     for (id in data.e) {

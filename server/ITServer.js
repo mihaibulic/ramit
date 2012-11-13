@@ -136,8 +136,7 @@ var emitState = function(override) {
     if(!globals.diff.e)
       absoluteState.e = globals.diff.e;
 
-    io.sockets.emit('state', globals.diff);
-    //io.sockets.emit('state', absoluteState);
+    io.sockets.emit('state', absoluteState);
   }
   else if(!globals.isObjectEmpty(globals.diff))
     io.sockets.emit('state', globals.diff);
@@ -151,6 +150,8 @@ var emitState = function(override) {
 var getAbsoluteState = function() {
   var id;
   var state = {};
+  // set absolute state
+  stata.a = true;
   // Players
   state.p = {};
   for (id in globals.players)
@@ -167,6 +168,7 @@ var getAbsoluteState = function() {
   state.h = {};
   for (id in globals.level.hqs) 
     state.h[id] = globals.level.hqs[id].health;
+  // set mode
   state.m = globals.level.mode;
   return state;
 };
