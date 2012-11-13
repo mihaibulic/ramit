@@ -216,7 +216,7 @@ Player.prototype.draw = function() {
 
   // If the tank will not be displayed on the screen, do not bother drawing it.
   if (xPos > -60 && xPos < 1000 && yPos > -60 && yPos < 500) {
-    if (this.leaving) globals.ctx.globalAlpha = .5;
+    if (this.leaving) globals.ctx.globalAlpha = 0.5;
     // Draw the tank.
     globals.ctx.drawImage(
       globals.resources.tanks[(this.health > 0 ? this.team : 2)][this.tank.direction],

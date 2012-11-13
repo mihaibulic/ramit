@@ -60,8 +60,12 @@ Upgrade.prototype.load = function() {
   this.diff[d.TANK] = [];
   this.cost[d.TANK][t.MAX_HP] = [ 125, 300, 600 ];
   this.diff[d.TANK][t.MAX_HP] = [ 25, 30, 40 ];
+  this.cost[d.TANK][t.DEFENSE] = [ 125, 300, 600 ];
+  this.diff[d.TANK][t.DEFENSE] = [ -0.1, -0.1, -0.1 ];
   this.cost[d.TANK][t.SPEED] = [ 125, 300, 400 ];
   this.diff[d.TANK][t.SPEED] = [ 1, 1, 1 ];
+  this.cost[d.TANK][t.REWARD] = [ 300, 800, 1500 ];
+  this.diff[d.TANK][t.REWARD] = [ 0.5, 0.4, 0.3 ];
 
   // Projectile upgrades
   this.cost[d.PROJECTILE] = [];

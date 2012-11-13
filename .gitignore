@@ -12,6 +12,7 @@ lib-cov
 *.swp
 .project
 *.out
+*sublime*
 ramit_server.js
 ramit_client.js
 pids
