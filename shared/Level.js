@@ -2,7 +2,7 @@
  * The state object for the Level.
  */
 var Level = function() {
-  this.mode = undefined; 
+  this.mode = null; 
   this.x = 0;
   this.y = 0;
   this.walls = [];
