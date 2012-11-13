@@ -67,7 +67,7 @@ Gate.prototype.updateHealth = function(health) {
     this.underAttack = 600;
   }
   this.health = health;
-  if (this.health === 0 && !this.hq) }
+  if (this.health === 0 && !this.hq) {
     globals.messages.push((this.team === 0 ? "Blue" : "Red") + " Team's Gate has been destroyed");
   }
 };
