@@ -66,6 +66,8 @@ var ITGame = function(team, playerID) {
 
     document.getElementById("cnv").addEventListener('blur', blur);
     document.getElementById("renderer").addEventListener('blur', blur);
+    document.getElementById("cnv").addEventListener('mouseleave', blur);
+    document.getElementById("renderer").addEventListener('mouseleave', blur);
     window.addEventListener('blur', blur);
 
     // Context Menu Event
