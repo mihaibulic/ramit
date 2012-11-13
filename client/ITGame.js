@@ -11,11 +11,9 @@ var ITGame = function(team, playerID) {
 
     globals.socket.on('join', function(data) {
       console.log("join msg rec");
-      if (!globals.players[data.i]) {
-        var player = new Player(null, data.i, data.p);
-        globals.players[data.i] = player;
-        globals.messages.push("*****************" + player.name + " has joined the game for the " + (player.team === 0 ? "Blue" : "Red") + " Team");
-      }
+      var player = new Player(null, data.i, data.p);
+      globals.players[data.i] = player;
+      globals.messages.push("*****************" + player.name + " has joined the game for the " + (player.team === 0 ? "Blue" : "Red") + " Team");
     });
 
     globals.socket.on('leave', function(data) {
