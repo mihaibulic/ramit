@@ -105,22 +105,20 @@ var ITGame = function(team, playerID) {
  */
 ITGame.prototype.loadState = function(data) {
   // A new game
-  if (data.m === Level.Mode.START) {
-    globals.level = new Level();
-    globals.level.mode = Level.Mode.START;
-
-    // reset all players
-    for ( var p in globals.players) {
-      globals.players[p] = new Player(globals.players[p].team, globals.players[p].playerID);
-    }
-
-    globals.projectiles = {};
-    Projectile.nextID = 0;
-  }
-  // Game over
-  else if (data.m === Level.Mode.END) {
+  if(data.m !== undefined) {
     globals.level.mode = data.m;
-    return;    //TODO you lost/won screen?
+    if (data.m === Level.Mode.START) {
+      globals.level = new Level();
+      globals.level.mode = Level.Mode.START;
+
+      // reset all players
+      for ( var p in globals.players) {
+        globals.players[p] = new Player(globals.players[p].team, globals.players[p].playerID);
+      }
+
+      globals.projectiles = {};
+      Projectile.nextID = 0;
+    }
   }
 
   // Players
@@ -232,6 +230,16 @@ ITGame.prototype.update = function() {
  * Draw the game state to the canvas.
  */
 ITGame.prototype.draw = function() {
+  if (globals.level.mode === Level.Mine.START) {
+    // game starting
+    // TODO draw special start screen?
+  }
+  else if (globals.level.mode === Level.Mine.END) {
+    // game ending
+    // TODO draw scores and you are [winner|loser] msg
+    return;
+  }
+
   globals.ctx.fillStyle = "#000000";
   globals.ctx.fillRect(0, 0, 1000, 500);
 
