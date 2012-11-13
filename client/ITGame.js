@@ -132,9 +132,9 @@ ITGame.prototype.loadState = function(data) {
       if (data.p[id].y !== undefined)
         player.tank.y = data.p[id].y;
       if (data.p[id].h !== undefined) {
-        player.health = data.p[id].h;
-        if (player.health === 0) 
+        if (player.health !== data.p[id].h && player.health === 0) 
           globals.messages.push(player.name + " has been killed");
+        player.health = data.p[id].h;
       }
       if (data.p[id].m !== undefined)
         player.maxHealth = data.p[id].m;
