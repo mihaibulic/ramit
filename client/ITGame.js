@@ -230,11 +230,11 @@ ITGame.prototype.update = function() {
  * Draw the game state to the canvas.
  */
 ITGame.prototype.draw = function() {
-  if (globals.level.mode === Level.Mine.START) {
+  if (globals.level.mode === Level.Mode.START) {
     // game starting
     // TODO draw special start screen?
   }
-  else if (globals.level.mode === Level.Mine.END) {
+  else if (globals.level.mode === Level.Mode.END) {
     // game ending
     // TODO draw scores and you are [winner|loser] msg
     return;
