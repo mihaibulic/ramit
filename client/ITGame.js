@@ -104,23 +104,8 @@ var ITGame = function(team, playerID) {
  * @param {Object} data The state message.
  */
 ITGame.prototype.loadState = function(data) {
-  // A new game
-  if(data.m !== undefined) {
+  if(data.m !== undefined) 
     globals.level.mode = data.m;
-    if (data.m === Level.Mode.START) {
-      globals.messages.push("A new game is starting, good luck!");
-      globals.level = new Level();
-      globals.level.mode = Level.Mode.START;
-
-      // reset all players
-      for ( var p in globals.players) {
-        globals.players[p] = new Player(globals.players[p].team, globals.players[p].playerID);
-      }
-
-      globals.projectiles = {};
-      Projectile.nextID = 0;
-    }
-  }
 
   // Players
   var id;
