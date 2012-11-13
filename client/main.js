@@ -292,6 +292,7 @@ window.onload = function() {
   globals.canvas = document.getElementById('cnv');
   globals.ctx = globals.canvas.getContext('2d');
   globals.load(function() {
+    console.log("starting game");
     globals.game = new ITGame(0,0);
   });
 };
