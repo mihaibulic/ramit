@@ -110,6 +110,8 @@ globals.load = function(callback) {
       globals.rawImages[img].src = "images/" + img + ".png";
     }
   }
+  console.log("load");
+
 };
 
 /**
