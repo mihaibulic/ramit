@@ -128,20 +128,29 @@ var update = function() {
       delete globals.projectiles[projectile];
   }
 
+  emitState();
+};
+
+/**
+ * @param {Boolean} if true, absolute state will be sent, 
+ *  regardless of when it was last sent
+ */
+var emitState = function(override) {
   globals.lastAbsolute++;
-  if(globals.lastAbsolute >= 300) { 
-    var absoluteState = getAbsoluteState(); 
+  if(globals.lastAbsolute >= 300 || override) {
+    var absoluteState = getAbsoluteState();
     globals.lastAbsolute = 0;
-    
-    if(!globals.isObjectEmpty(globals.diff.e)) 
+
+    if(!globals.diff.e)
       absoluteState.e = globals.diff.e;
 
     io.sockets.emit('state', absoluteState);
   }
-  else if(!globals.isObjectEmpty(globals.diff)) 
+  else if(!globals.isObjectEmpty(globals.diff))
     io.sockets.emit('state', globals.diff);
 
   globals.diff = {};
+
 };
 
 /**
@@ -174,7 +183,6 @@ var getAbsoluteState = function() {
  */
 var reset = function() {
   globals.gameoverTimer = 0;
-  globals.lastAbsolute = 300; // resend everything
   globals.level = new Level();
 
   // reset all players
@@ -184,6 +192,9 @@ var reset = function() {
 
   globals.projectiles = {};
   Projectile.nextID = 0;
+
+  // send absolute state
+  emitState(true); 
 };
 
 /**
