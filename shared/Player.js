@@ -83,7 +83,7 @@ var Player = function(team, playerID, opt_state) {
     damage: 30,
     speed: 0,
     live: 0,
-    allowed: 5,
+    allowed: 1,
     lastFire: 0,
     coolDown: 15
   };
