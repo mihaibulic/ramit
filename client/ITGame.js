@@ -201,10 +201,6 @@ ITGame.prototype.update = function() {
     globals.level = new Level();
     globals.level.mode = Level.Mode.ONGOING;
 
-    // reset all players
-    for ( var p in globals.players) {
-    }
-
     globals.projectiles = {};
     Projectile.nextID = 0;
     globals.messages.push("A new game is starting, good luck!");
