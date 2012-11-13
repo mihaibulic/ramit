@@ -29,12 +29,12 @@ Upgrade.DeviceStrings = [ "Tank",
 // not all devices may receive all types of upgrades.
 Upgrade.Type = {
   MAX_HP: 0,
-  SPEED: 2,
-  COOLDOWN: 3,
-  RANGE: 4,
-  DAMAGE: 5,
-  ALLOWED: 6,
-  DURATION: 7
+  SPEED: 1,
+  COOLDOWN: 2,
+  RANGE: 3,
+  DAMAGE: 4,
+  ALLOWED: 5,
+  DURATION: 6
 };
 
 // A list of Types to Strings
@@ -44,8 +44,7 @@ Upgrade.TypeStrings = [ "Max HP",
                         "Explosion size",  // These two are wierd because of medic
                         "Power", 
                         "Allowed", 
-                        "Duration", 
-                        "Health" ]; 
+                        "Duration" ]; 
 
 Upgrade.prototype.load = function() {
   // The list of costs
