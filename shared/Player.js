@@ -312,6 +312,7 @@ Player.prototype.drawHUD = function() {
           delete globals.messages[m];
           globals.messageCounter = 120;
         }
+        break;
       }
     }
   }
