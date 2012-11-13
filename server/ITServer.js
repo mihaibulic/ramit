@@ -299,7 +299,7 @@ io.sockets.on('connection', function(socket) {
   socket.emit('setup', {i: id, s: absState});
   
   // If this is the first player, start the game.
-  if (globals.numberOfPlayers === 0) {
+  if (globals.numberOfPlayers === 1) {
     globals.level.mode = globals.diff.m = Level.Mode.START;
     globals.interval = setInterval(update, 1000 / globals.fps);
   }
