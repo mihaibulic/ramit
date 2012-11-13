@@ -133,7 +133,7 @@ var emitState = function(override) {
     var absoluteState = getAbsoluteState();
     globals.lastAbsolute = 0;
 
-    if(!globals.diff.e)
+    if(globals.diff.e)
       absoluteState.e = globals.diff.e;
 
     io.sockets.emit('state', absoluteState);
