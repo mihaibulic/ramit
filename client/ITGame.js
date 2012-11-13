@@ -13,6 +13,7 @@ var ITGame = function(team, playerID) {
       console.log(globals.players[data.i].name + " is leaving");
       globals.players[data.i].leaving = true;
       globals.players[data.i].health = 0;
+      globals.players[data.i].deathCounter = 1;
       //delete globals.players[data.i];
       // Remove all projectiles and mines owned by this player.
       for (var qid in globals.projectiles) {
