@@ -484,14 +484,6 @@ Player.prototype.updateKeys = function(e) {
     break;
   }
   if (!globals.isObjectEmpty(diff)) {
-/*    diff.u = this.keys.up;
-    diff.d = this.keys.down;
-    diff.l = this.keys.left;
-    diff.r = this.keys.right;
-    diff.e = this.keys.mine;
-    diff.q = this.keys.all_mines;
-    diff.w = this.keys.shift;
-    diff.m = this.keys.mounted;*/
     globals.socket.emit('key', diff);
   }
 };
