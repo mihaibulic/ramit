@@ -202,7 +202,7 @@ ITGame.prototype.update = function() {
     globals.level.gates[gid].update();
   }
   for (var pid in globals.players) {
-    if (globals.players[pid].leaving && globals.players[pid].deathCounter >= 120) 
+    if (globals.players[pid].leaving && globals.players[pid].deathCounter >= 90) 
       delete globals.players[pid];
   }
 };
