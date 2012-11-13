@@ -91,7 +91,7 @@ Gate.prototype.draw = function() {
     if (this.health > 0) {
       if (!this.hq) {
         globals.ctx.globalAlpha = this.health / 100; //fades away for the last 100 hp
-        globals.ctx.drawImage(globals.resources.gates[this.team], pos.left, pos.top);
+        globals.ctx.drawImage(globals.resources.gates[this.team], pos.left, pos.top - 5);
         globals.ctx.globalAlpha = 1;
       } else {
         globals.ctx.fillStyle = Player.TEAM_COLOR[this.team];
@@ -121,11 +121,11 @@ Gate.prototype.draw = function() {
       if (globals.queries.debug === "true") {
         globals.ctx.strokeStyle = Player.TEAM_COLOR[this.team];
         var rect = this.getCollisionBarrier();
-        globals.ctx.strokeRect(pos.left, pos.top + (!this.hq ? 5 : 0), rect.width(), rect.height());
+        globals.ctx.strokeRect(pos.left, pos.top, rect.width(), rect.height());
       }
     }
     if (!this.hq) //draw gate outside things
-      globals.ctx.drawImage(globals.resources.gates[2], pos.left, pos.top);
+      globals.ctx.drawImage(globals.resources.gates[2], pos.left, pos.top - 5);
   }
 };
 
