@@ -108,6 +108,7 @@ ITGame.prototype.loadState = function(data) {
   if(data.m !== undefined) {
     globals.level.mode = data.m;
     if (data.m === Level.Mode.START) {
+      globals.messages.push("A new game is starting, good luck!");
       globals.level = new Level();
       globals.level.mode = Level.Mode.START;
 
@@ -205,7 +206,23 @@ ITGame.prototype.loadState = function(data) {
  * Update the game state.
  */
 ITGame.prototype.update = function() {
-  if (globals.level.mode === Level.Mode.END) return;
+  if (data.m === Level.Mode.START) {
+    globals.level = new Level();
+    globals.level.mode = Level.Mode.START;
+
+    // reset all players
+    for ( var p in globals.players) {
+      globals.players[p] = new Player(globals.players[p].team, globals.players[p].playerID);
+    }
+
+    globals.projectiles = {};
+    Projectile.nextID = 0;
+    globals.messages.push("A new game is starting, good luck!");
+  }
+  else if (globals.level.mode === Level.Mode.END) {
+    globals.messages.push("Gameover!");
+    return;
+  }
 
   globals.level.x = globals.players[this.player].tank.x - 470;
   globals.level.y = globals.players[this.player].tank.y - 220;
