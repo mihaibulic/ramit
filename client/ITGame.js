@@ -206,7 +206,7 @@ ITGame.prototype.loadState = function(data) {
  * Update the game state.
  */
 ITGame.prototype.update = function() {
-  if (data.m === Level.Mode.START) {
+  if (globals.level.mode === Level.Mode.START) {
     globals.level = new Level();
     globals.level.mode = Level.Mode.START;
 
