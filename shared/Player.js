@@ -111,7 +111,7 @@ var Player = function(team, playerID, opt_state) {
     coolDown: 5 * 60
   };
   this.special[Player.SpecialType.SHIELD] = {
-    duration: 3 * 60,
+    duration: 5 * 60,
     lastFire: 0,
     coolDown: 5 * 60
   };
