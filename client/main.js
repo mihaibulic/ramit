@@ -25,7 +25,7 @@ var globals = {
   players: {},
   level: new Level(),
   messages: [],
-  messageCounter: 60
+  messageCounter: 120
 };
 
 /**

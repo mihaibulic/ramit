@@ -309,7 +309,7 @@ Player.prototype.drawHUD = function() {
       globals.messageCounter--;
     } else {
       globals.messages.pop();
-      globals.messageCounter = 60;
+      globals.messageCounter = 120;
     }
   }
 
