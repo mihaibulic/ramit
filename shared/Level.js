@@ -56,5 +56,5 @@ Level.prototype.loadLevel = function() {
     this.walls[i] = new Rectangle(walls[i]);
   }
 
-  this.mode = this.Mode.ONGOING;
+  this.mode = Level.Mode.ONGOING;
 };
