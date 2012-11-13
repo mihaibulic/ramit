@@ -207,8 +207,8 @@ Projectile.prototype.getCollisionBarrier = function() {
     return new Rectangle({left: this.x - 10, right: this.x + 10,
                           top: this.y - 10, bottom: this.y + 10});
   else if (this.typw === Projectile.Type.ROCKET)
-    return new Rectangle({left: this.x - 8, right: this.x + 8,
-                          top: this.y - 8, bottom: this.y + 8});
+    return new Rectangle({left: this.x - 20, right: this.x + 20,
+                          top: this.y - 20, bottom: this.y + 20});
   return new Rectangle({left: this.x - 5, right: this.x + 5,
                         top: this.y - 5, bottom: this.y + 5});
 };
