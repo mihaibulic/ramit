@@ -227,6 +227,11 @@ ITGame.prototype.draw = function() {
     globals.level.gates[g].draw();
   }
 
+  //draw headquarters
+  for (var h in globals.level.hqs) {
+    globals.level.hqs[h].draw();
+  }
+
   // Explosions
   for (var eid in globals.explosions) {
     if (globals.explosions[eid].draw())
