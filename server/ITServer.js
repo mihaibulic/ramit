@@ -182,7 +182,7 @@ var reset = function() {
      globals.players[p] = new Player(globals.players[p].team, globals.players[p].playerID);
   }
 
-  globals.projectiles = null;
+  globals.projectiles = {};
   Projectile.nextID = 0;
 };
 
