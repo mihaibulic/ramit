@@ -652,7 +652,7 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
   if (this.health <= 0) {
     // only give points for damage caused
     // no overkill points
-    points += damage;
+    points -= damage;
     points += initHealth;
     this.health = 0;
     this.deathCounter = 1;
