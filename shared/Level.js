@@ -2,6 +2,7 @@
  * The state object for the Level.
  */
 var Level = function() {
+  this.mode = undefined; 
   this.x = 0;
   this.y = 0;
   this.walls = [];
@@ -9,6 +10,8 @@ var Level = function() {
   this.hqs = [ new Gate(0, true), new Gate(1, true) ];
   this.loadLevel();
 };
+
+Level.Mode = {START: 0, END: 1};
 
 /**
  * Loads the walls into the level.
