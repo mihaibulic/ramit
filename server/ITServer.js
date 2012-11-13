@@ -295,9 +295,6 @@ io.sockets.on('connection', function(socket) {
   });
   
   var absState = getAbsoluteState();
-  // Emit to new player the absolute state
-  socket.emit('setup', {i: id, s: absState});
-  
   // If this is the first player, start the game.
   if (globals.numberOfPlayers === 1) {
     globals.level.mode = globals.diff.m = Level.Mode.START;
@@ -308,4 +305,7 @@ io.sockets.on('connection', function(socket) {
     socket.broadcast.emit('join', {i: id, p: absState.p[id]});
   }
 
+  // Emit to new player the absolute state
+  socket.emit('setup', {i: id, s: absState});
+  
 });
