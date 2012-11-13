@@ -834,6 +834,5 @@ Player.prototype.determineSpawn = function() {
     }
   }
   // Exiting the for loop incremented it by one.
-  //return --spawn;
-  return 0;
+  return --spawn;
 };
