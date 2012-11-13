@@ -637,10 +637,9 @@ Player.prototype.canFire = function(type) {
  * @returns {Number} The number of points the hit earned.
  */
 Player.prototype.takeHit = function(damage, ownerTeam) {
-  if (this.hasShield)
+  if (this.hasShield || this.health === 0)
     return 0;
 
-  var initHealth = this.health;
   this.health -= damage;
   var points = 0;
   if (damage > 0)
@@ -650,10 +649,6 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
     this.health = this.maxHealth;
 
   if (this.health <= 0) {
-    // only give points for damage caused
-    // no overkill points
-    points -= damage;
-    points += initHealth;
     this.health = 0;
     this.deathCounter = 1;
     points += 25;
