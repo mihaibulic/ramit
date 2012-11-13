@@ -10,7 +10,9 @@ var ITGame = function(team, playerID) {
     }, this));
 
     globals.socket.on('leave', function(data) {
-      delete globals.players[data.i];
+      globals.players[data.i].leaving = true;
+      globals.players[data.i].health = 0;
+      //delete globals.players[data.i];
       // Remove all projectiles and mines owned by this player.
       for (var qid in globals.projectiles) {
         if (globals.projectiles[qid].owner === data.i) {
@@ -198,6 +200,10 @@ ITGame.prototype.update = function() {
   }
   for (var gid in globals.level.gates) {
     globals.level.gates[gid].update();
+  }
+  for (var pid in globals.players) {
+    if (globals.players[pid].leaving && globals.players[pid].deathCounter >= 120) 
+      delete globals.players[pid];
   }
 };
 

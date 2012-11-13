@@ -10,6 +10,7 @@ var Player = function(team, playerID, opt_state) {
   var aim;
 
   this.playerID = playerID;
+  this.leaving = false;
 
   this.keys = {
     up: false,
@@ -460,7 +461,7 @@ Player.prototype.updateKeys = function(e) {
 Player.prototype.update = function() {
   if (this.deathCounter > 0) {
     this.deathCounter++;
-    if(this.deathCounter >= 120) {
+    if(this.deathCounter >= 120 && !this.leaving) {
       this.respawn();
     }
   }
