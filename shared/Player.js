@@ -291,17 +291,11 @@ Player.prototype.drawHUD = function() {
   globals.ctx.fillRect(20, 20, 200 * this.health / this.maxHealth, 20);
   globals.ctx.globalAlpha = 1;
 
-  // Name
-  globals.ctx.fillStyle = "#ffffff";
-  globals.ctx.textAlign = "left";
-  globals.ctx.font = "24px serif";
-  globals.ctx.fillText(this.name, 20, 35);
-
-  // Draw Score
+  // Draw Name and Score
   globals.ctx.fillStyle = "#ffffff";
   globals.ctx.textAlign = "right";
   globals.ctx.font = "24px serif";
-  globals.ctx.fillText("$" + (this.totalScore - this.totalSpent), 980, 35);
+  globals.ctx.fillText(this.name + " $" + (this.totalScore - this.totalSpent), 980, 35);
   globals.ctx.textAlign = "left";
 
   // Minimap
