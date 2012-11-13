@@ -7,7 +7,7 @@ var Gate = function(team, hq) {
   this.team = team;
   this.underAttack = 0;
   this.detailsFadeFrames = 0;
-  this.health = 1000;
+  this.health =  100; //1000;
   if (this.hq) {
     this.name = (team === 0 ? "Blue HQ" : "Red HQ");
     this.left = 2500;

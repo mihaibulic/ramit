@@ -177,6 +177,9 @@ ITGame.prototype.loadState = function(data) {
 ITGame.prototype.update = function() {
   globals.level.x = globals.players[this.player].tank.x - 470;
   globals.level.y = globals.players[this.player].tank.y - 220;
+  for (var hid in globals.level.hqs) {
+    globals.level.hqs[hid].update();
+  }
   for (var gid in globals.level.gates) {
     globals.level.gates[gid].update();
   }

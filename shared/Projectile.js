@@ -152,6 +152,22 @@ Projectile.prototype.update = function() {
     }
   }
 
+  // Collisions with HQs
+  if (!hit) {
+    for (var hid in globals.level.hqs) {
+      target = globals.level.hqs[hid];
+      if (target.team === this.team)
+        continue;
+      if (target.getCollisionBarrier().intersects(this.getCollisionBarrier())) {
+        this.vx = this.vy = 0;
+        new Explosion(this.x, this.y, this.range, globals.players[this.owner],
+                      target, this.damage, this, false);
+        hit = true;
+        break;
+      }
+    }
+  }
+
   // Collisions with Walls
   if (!hit) {
     for (var wid in globals.level.walls) {
