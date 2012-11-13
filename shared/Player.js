@@ -678,8 +678,8 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
 
   this.health -= damage;
   var points = 0;
-  if (damage > 0)
-    points += damage;
+  if (damage > 0) 
+    points += Math.min(damage, this.health);
 
   if (this.health >= this.maxHealth) 
     this.health = this.maxHealth;
