@@ -205,11 +205,9 @@ ITGame.prototype.update = function() {
   }
   for (var pid in globals.players) {
     if (globals.players[pid].leaving) {
-      console.log(globals.players[pid].name + " is in the process of leaving");
       globals.players[pid].deathCounter++;
-      console.log("deathCounter = " + globals.players[pid].deathCounter);
     }
-    if (globals.players[pid].leaving && globals.players[pid].deathCounter >= 90) {
+    if (globals.players[pid].leaving && globals.players[pid].deathCounter >= 120) {
       console.log(globals.players[pid].name + " has left");
       delete globals.players[pid];
     }

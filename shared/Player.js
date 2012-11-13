@@ -217,9 +217,11 @@ Player.prototype.draw = function() {
   // If the tank will not be displayed on the screen, do not bother drawing it.
   if (xPos > -60 && xPos < 1000 && yPos > -60 && yPos < 500) {
     // Draw the tank.
+    if (this.leaving) globals.ctx.globalAlpha = .5;
     globals.ctx.drawImage(
       globals.resources.tanks[(this.health > 0 ? this.team : 2)][this.tank.direction],
       xPos, yPos);
+    if (this.leaving) globals.ctx.globalAlpha = 1;
     // Draw the turret.
     globals.ctx.drawImage(
       globals.resources.turrets[(this.health > 0 ? this.team : 2)][this.tank.turretAim],
