@@ -189,10 +189,12 @@ ITGame.prototype.loadState = function(data) {
   if (data.g) {
     for (var g in data.g) {
       if (data.g[g] !== undefined) {
+        console.log("updating health for gate #" + g);
         globals.level.gates[g].updateHealth(data.g[g]);
       }
     }
   }
+  console.log("done updating health");
   // Headquarters
   if (data.h) {
     for (var h in data.h) {

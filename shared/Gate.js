@@ -69,7 +69,6 @@ Gate.prototype.updateHealth = function(health) {
     this.underAttack = 600;
   }
   this.health = health;
-    console.log("oh: " + this.health + "\t\tnh: " + health);
 };
 
 Gate.prototype.update = function() {
