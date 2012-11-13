@@ -166,7 +166,9 @@ Upgrade.prototype.buy = function(device, type, pid) {
   if (globals.diff) {
     if (!globals.diff.p)
       globals.diff.p = {};
-    globals.diff.p[this.playerID].c = buyer.totalSpent;
+    if (!globals.diff.p[buyer.playerID])
+      globals.diff.p[buyer.playerID] = {};
+    globals.diff.p[buyer.playerID].c = buyer.totalSpent;
   }
 
   if (device === Upgrade.Device.TANK) {
