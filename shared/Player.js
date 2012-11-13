@@ -305,9 +305,10 @@ Player.prototype.drawHUD = function() {
   globals.ctx.textAlign = "left";
 
   // Event messages
+  globals.ctx.font = "15px serif";
   if (globals.messages.length > 0) {
     if (globals.messageCounter > 0) {
-      globals.ctx.fillText(globals.messages[0], 35, 35);
+      globals.ctx.fillText(globals.messages[0], 35, 450);
       globals.messageCounter--;
     } else {
       globals.messages.pop();
