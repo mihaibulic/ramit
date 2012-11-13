@@ -208,7 +208,7 @@ ITGame.prototype.update = function() {
 
     globals.projectiles = {};
     Projectile.nextID = 0;
-    globals.messages.push("A new game is starting, good luck!");
+    globals.messages.push("A new game is starting, good hunting!");
   }
   else if (globals.level.mode === Level.Mode.END) {
     globals.messages.push("Gameover!");
