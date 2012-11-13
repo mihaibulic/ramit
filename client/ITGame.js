@@ -96,6 +96,22 @@ var ITGame = function(team, playerID) {
  * @param {Object} data The state message.
  */
 ITGame.prototype.loadState = function(data) {
+  if (data.m === Level.Mode.START) {
+    globals.level = new Level();
+    globals.level.mode = Level.Mode.START;
+
+    // reset all players
+    for ( var p in globals.players) {
+      globals.players[p] = new Player(globals.players[p].team, globals.players[p].playerID);
+    }
+
+    globals.projectiles = {};
+    Projectile.nextID = 0;
+  }
+  else if (data.m === Level.Mode.END) {
+    //TODO you lost/won screen?
+  }
+
   // Players
   var id;
   if (data.p) {

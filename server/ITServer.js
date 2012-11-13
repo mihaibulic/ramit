@@ -56,7 +56,7 @@ var explodeAll = function(player, justMines) {
  * Updates the game and sends out a 'diff' message to the players.
  */
 var update = function() {
-  if (globals.gameoverTimer > 0) {
+  if (globals.level.mode === Level.Mode.END) {
     globals.gameoverTimer++;
 
     if (globals.gameoverTimer >= 120) 
@@ -67,7 +67,7 @@ var update = function() {
 
   for (var h in globals.level.hqs) {
     if (globals.level.hqs[h].health <= 0) {
-      globals.gameoverTimer = 1;
+      globals.level.mode = globals.diff.m = Level.Mode.END;
       console.log("GAME OVER, team #" + h + " has lost");
       return;
     }
@@ -175,6 +175,7 @@ var getAbsoluteState = function() {
   state.h = {};
   for (id in globals.level.hqs) 
     state.h[id] = globals.level.hqs[id].health;
+  state.m = globals.level.mode;
   return state;
 };
 
@@ -184,6 +185,7 @@ var getAbsoluteState = function() {
 var reset = function() {
   globals.gameoverTimer = 0;
   globals.level = new Level();
+  globals.level.mode = Level.Mode.START;
 
   // reset all players
   for ( var p in globals.players) {
@@ -208,8 +210,11 @@ io.sockets.on('connection', function(socket) {
   }
 
   // If this is the first player, start the game.
-  if (globals.numberOfPlayers === 0)
+  if (globals.numberOfPlayers === 0) {
     globals.interval = setInterval(update, 1000 / globals.fps);
+    globals.level.mode = Level.Mode.START;
+    globals.diff.m = Level.Mode.START;
+  }
 
   // Create the player.
   globals.numberOfPlayers++;
