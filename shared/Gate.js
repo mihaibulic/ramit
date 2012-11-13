@@ -1,5 +1,5 @@
 /**
- * A Gate protecting the player's base.
+ * A Gate protecting the player's HQ or the HQ itslef.
  * @param {Number} team The team number for the gate.
  */
 var Gate = function(team, hq) {
@@ -42,9 +42,16 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
   }
 
   if (globals.diff) {
-    if (!globals.diff.b)
-      globals.diff.b = {};
-    globals.diff.b[this.team] = this.health;
+    if (this.hq) {
+      if (!globals.diff.h)
+        globals.diff.h = {};
+      globals.diff.h[this.team] = this.health;
+    }
+    else {
+      if (!globals.diff.g)
+        globals.diff.g = {};
+      globals.diff.g[this.team] = this.health;
+    }
   }
 
   if (this.team === ownerTeam)

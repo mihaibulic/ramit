@@ -6,6 +6,7 @@ io.set('log level', 1);
 
 // Globals for the server.
 var globals = {
+  gameoverTimer: 0,
   interval: null,
   fps: 60,
   numberOfPlayers: 0,
@@ -55,6 +56,23 @@ var explodeAll = function(player, justMines) {
  * Updates the game and sends out a 'diff' message to the players.
  */
 var update = function() {
+  if (globals.gameoverTimer > 0) {
+    globals.gameoverTimer++;
+
+    if (globals.gameoverTimer >= 120) 
+      reset();
+    else
+      return; 
+  }
+
+  for ( var h in globals.hqs) {
+    if (globals.hqs[h].health <= 0) {
+      globals.gameoverTimer = 1;
+      console.log("GAME OVER, team #" + h + " has lost");
+      return;
+    }
+  }
+
   // Players
   for (var pid in globals.players) {
     var player = globals.players[pid];
@@ -140,12 +158,31 @@ var getAbsoluteState = function() {
   state.q = {};
   for (id in globals.projectiles)
     state.q[id] = globals.projectiles[id].getAbsoluteState();
-  // Base
-  state.b = {};
-  for (id in globals.level.gates) {
+  // Gates
+  state.g = {};
+  for (id in globals.level.gates) 
     state.b[id] = globals.level.gates[id].health;
-  }
+  // Headquarters
+  state.h = {};
+  for (id in globals.level.hqs) 
+    state.h[id] = globals.level.hqs[id].health;
   return state;
+};
+
+/**
+ * Restarts the server
+ */
+var reset = function() {
+  globals.gameoverTimer = 0;
+  globals.lastAbsolute = 300; // resend everything
+  globals.level = new Level();
+
+  // reset all players
+  for ( var p in globals.players) {
+     globals.players[p] = new Player(globals.players[p].team, globals.players[p].playerID);
+  }
+
+  globals.projectiles = null;
 };
 
 /**

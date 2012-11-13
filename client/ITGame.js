@@ -155,11 +155,18 @@ ITGame.prototype.loadState = function(data) {
       }
     }
   }
-  // Base
-  if (data.b) {
-    for (var b in data.b) {
-      if (data.b[b] !== undefined)
-        globals.level.gates[b].updateHealth(data.b[b]);
+  // Gates
+  if (data.g) {
+    for (var g in data.g) {
+      if (data.g[g] !== undefined)
+        globals.level.gates[g].updateHealth(data.g[g]);
+    }
+  }
+  // Headquarters
+  if (data.h) {
+    for (var h in data.h) {
+      if (data.h[h] !== undefined)
+        globals.level.hqs[h].updateHealth(data.h[h]);
     }
   }
 };
