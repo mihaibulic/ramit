@@ -127,7 +127,7 @@ globals.renderHqs = function() {
   var ctx = renderer.getContext('2d');
 
   var positions = [[0, 0, 100, 100, 0, 0, 100, 100],
-                   [100, 0, 100, 100, 100, 0, 100, 100]];
+                   [100, 0, 100, 100, 0, 0, 100, 100]];
   var render = function(i) {
     renderer.width = 100;
     renderer.height = 100;

@@ -97,7 +97,7 @@ Gate.prototype.draw = function() {
 
       var res = (this.hq ? globals.resources.hqs : globals.resources.gates);
       globals.ctx.globalAlpha = this.health / 100; //fades away for the last 100 hp
-      globals.ctx.drawImage(res[this.team], pos.left, pos.top - 5);
+      globals.ctx.drawImage(res[this.team], pos.left, pos.top);
       globals.ctx.globalAlpha = 1;
 /*    
       if (!this.hq) {
