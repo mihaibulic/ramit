@@ -509,16 +509,18 @@ Player.prototype.predict = function(data, you) {
         console.log("killer === " + data.b);
         console.log("this === " + this.playerID);
         var deadName = (this.playerID === you ? "You" : this.name);
+        console.log("dead " + deadName);
         if (killer === undefined)
           globals.messages.push(deadName + " died");
         else {
           killerName = (you === data.b ? "You" : killer.name);
+          console.log("kill " + killerName);
           if (killer.playerID === this.playerID)
             globals.messages.push(deadName + " committed suicide");
           else if (killer.team === this.team)
-            globals.messages.push(killer.name + " betrayed " + deadName);
+            globals.messages.push(killerName + " betrayed " + deadName);
           else
-            globals.messages.push(killer.name + " killed " + deadName);
+            globals.messages.push(killerName + " killed " + deadName);
         }
       }
       this.health = data.h;
