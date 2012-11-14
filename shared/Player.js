@@ -493,8 +493,9 @@ Player.prototype.updateKeys = function(e) {
 /**
  * Predict player as well as merge with any data from server.
  * @param {see GoogleDoc} state message of player
+ * @param {int} player id of local player
  */
-Player.prototype.predict = function(data) {
+Player.prototype.predict = function(data, you) {
   var moveData = false;
   if (data) { //merge with server
     if (data.n !== undefined)
@@ -503,16 +504,16 @@ Player.prototype.predict = function(data) {
       this.team = data.t;
     if (data.h !== undefined) {
       if (this.health !== data.h && data.h === 0) {
-        globals.messages.push(data.b + " killed " + this.name);
         var killer = globals.players[data.b];
+        var deadName = (this.playerID === you ? "You" : this.name);
         if (killer === undefined)
-          globals.messages.push(this.name + " was killed");
+          globals.messages.push(deadName + " died"));
         else if (killer.playerID === this.playerID)
-          globals.messages.push(this.name + " has committed suicide");
+          globals.messages.push(deadName + " committed suicide");
         else if (killer.team === this.team)
-          globals.messages.push(this.name + " was betrayed by " + killer.name);
+          globals.messages.push(killer.name + " betrayed " + deadName);
         else
-          globals.messages.push(this.name + " was killed by " + killer.name);
+          globals.messages.push(killer.name + " killed " + deadName);
       }
       this.health = data.h;
     }

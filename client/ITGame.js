@@ -122,7 +122,7 @@ ITGame.prototype.loadState = function(data, join) {
           globals.messages.push(player.name + " has joined the the " +
                                 (player.team === 0 ? "Blue" : "Red") + " Team");
       } else {
-        globals.players[id].predict(data.p[id]);
+        globals.players[id].predict(data.p[id], this.player);
       }
     }
   }
