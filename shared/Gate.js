@@ -108,8 +108,10 @@ Gate.prototype.draw = function() {
     if (this.health > 0) {
 
       if(this.hq) {
-        var rubble = this.underAttack > 0 && this.health < 250 && this.rubbleCounter < 0;
-        globals.ctx.drawImage(globals.resources.hqs[this.team + (rubble ? 2 : 0)], pos.left, pos.top);
+        globals.ctx.drawImage(globals.resources.hqs[this.team + 2], pos.left, pos.top);
+        globals.ctx.globalAlpha = this.health / 100; //fades away for the last 100 hp
+        globals.ctx.drawImage(globals.resources.hqs[this.team], pos.left, pos.top - 5);
+        globals.ctx.globalAlpha = 1;
       }
       else {
         globals.ctx.globalAlpha = this.health / 100; //fades away for the last 100 hp
