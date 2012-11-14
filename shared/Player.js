@@ -513,7 +513,7 @@ Player.prototype.predict = function(data, you) {
           globals.messages.push(deadName + " died");
         else {
           killerName = (you === data.b ? "You" : killer.name);
-          else if (killer.playerID === this.playerID)
+          if (killer.playerID === this.playerID)
             globals.messages.push(deadName + " committed suicide");
           else if (killer.team === this.team)
             globals.messages.push(killer.name + " betrayed " + deadName);
