@@ -7,6 +7,7 @@ var Gate = function(team, hq) {
   this.team = team;
   this.underAttack = 0;
   this.detailsFadeFrames = 0;
+  this.lastFlashCounter = 0;
   this.health = 100; //1000;
   if (this.hq) {
     this.name = (team === 0 ? "Blue HQ" : "Red HQ");
@@ -71,7 +72,25 @@ Gate.prototype.updateHealth = function(health) {
   }
 };
 
+/*
+ *  <100, 100(50,10), 90(45,15), 80(40,20), 70(35,25), 60(30,30) 50(25,35) 40(20,40), 30(15,45) 20(10, 50) 10(5,55) 0(0,60) 
+ *  *  ---------------.------------..---------...-----....---.....--......-..................  *  1
+ *
+ *  if(health < 100 && underattack)
+ *    if(health/2 < lastflash)
+ *      flash;
+ *
+ */
+
+
+
 Gate.prototype.update = function() {
+  if(this.hq && this.underAttack > 0 && this.health < 100) {
+    this.lastFlashCounter++;
+    if (this.lastFlashCounter >= this.health/2) 
+      this.lastFlashCounter = this.health/2 - 60;
+  }
+
   if (this.underAttack > 0) this.underAttack--;
   // Fade In/Out
   if (this.underAttack < 20 && this.detailsFadeFrames > 0)
@@ -95,9 +114,10 @@ Gate.prototype.draw = function() {
   if (pos.draw) {
     if (this.health > 0) {
 
+      var flash = this.hq && this.underAttack > 0 && this.health < 100 && this.lastFlashCounter < 0;
       var res = (this.hq ? globals.resources.hqs : globals.resources.gates);
       globals.ctx.globalAlpha = this.health / 100; //fades away for the last 100 hp
-      globals.ctx.drawImage(res[this.team], pos.left, pos.top - 5);
+      globals.ctx.drawImage(res[this.team + (flash ? 2 : 0)], pos.left, pos.top - 5);
       globals.ctx.globalAlpha = 1;
       
       if (globals.queries.debug === "true" || this.isUnderAttack()) {

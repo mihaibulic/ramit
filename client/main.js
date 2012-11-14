@@ -120,14 +120,16 @@ globals.load = function(callback) {
  * Renders the headquarters into two separate images
  */
 globals.renderHqs = function() {
-  globals.remainingResources += 2;
+  globals.remainingResources += 4;
   globals.resources.hqs = [];
 
   var renderer = document.getElementById('renderer');
   var ctx = renderer.getContext('2d');
 
   var positions = [[0, 0, 150, 150, 0, 0, 150, 150],
-                   [150, 0, 150, 150, 0, 0, 150, 150]];
+                   [150, 0, 150, 150, 0, 0, 150, 150],
+                   [0, 150, 150, 150, 0, 0, 150, 150],
+                   [150, 150, 150, 150, 0, 0, 150, 150]];
   var render = function(i) {
     renderer.width = 150;
     renderer.height = 150;
@@ -145,6 +147,8 @@ globals.renderHqs = function() {
   };
   render(0);
   render(1);
+  render(2);
+  render(3);
 };
 
 /**
