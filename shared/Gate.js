@@ -97,18 +97,9 @@ Gate.prototype.draw = function() {
 
       var res = (this.hq ? globals.resources.hqs : globals.resources.gates);
       globals.ctx.globalAlpha = this.health / 100; //fades away for the last 100 hp
-      globals.ctx.drawImage(res[this.team], pos.left, pos.top);
+      globals.ctx.drawImage(res[this.team], pos.left, pos.top - 5);
       globals.ctx.globalAlpha = 1;
-/*    
-      if (!this.hq) {
-        globals.ctx.globalAlpha = this.health / 100; //fades away for the last 100 hp
-        globals.ctx.drawImage(globals.resources.gates[this.team], pos.left, pos.top - 5);
-        globals.ctx.globalAlpha = 1;
-      } else {
-        globals.ctx.fillStyle = Player.TEAM_COLOR[this.team];
-        globals.ctx.fillRect(pos.left, pos.top, width, height);
-      }
-*/
+      
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
         // Fade In/Out
         var alpha = this.detailsFadeFrames / 20;
