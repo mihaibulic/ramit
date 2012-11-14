@@ -769,8 +769,10 @@ Player.prototype.takeHit = function(damage, owner) {
       globals.diff.p[this.playerID] = {};
 
     globals.diff.p[this.playerID].h = this.health;
-    if (this.health === 0)
+    if (this.health === 0) {
       globals.diff.p[this.playerID].b = owner.playerID;
+      console.log(owner.playerID + " has killed " + this.name);
+    }
   }
 
   if (owner.team === this.team) {
@@ -862,7 +864,7 @@ Player.prototype.getCollisionBarrier = function(location, useShield) {
 };
 
 /**
- * @returns {Number} A numeric value representing the keys pressed by the
+ * @returns {Number} A numeric value representing the keys preressed by the
  *               player.
  */
 Player.prototype.getKeyValue = function() {
