@@ -124,7 +124,10 @@ ITGame.prototype.loadState = function(data) {
         player = globals.players[id];
         globals.messages.push(player.name + " has joined the game for the " + (player.team === 0 ? "Blue" : "Red") + " Team");
         continue;
+      } else {
+        globals.players[id].predict(data.p[id]);
       }
+      /*
       var player = globals.players[id];
       if (data.p[id].n !== undefined)
         player.name = data.p[id].n;
@@ -156,7 +159,7 @@ ITGame.prototype.loadState = function(data) {
           console.log(player.name + " bought an upgrade");
         }
         player.totalSpent = data.p[id].c;
-      }
+      }*/
     }
   }
   // Projectiles

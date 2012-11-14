@@ -500,8 +500,11 @@ Player.prototype.predict = function(data) {
       this.name = data.n;
     if (data.t !== undefined)
       this.team = data.t;
-    if (data.h !== undefined)
+    if (data.h !== undefined) {
+      if (this.health !== data.h && player.health === 0) 
+        globals.messages.push(this.name + " has been killed");
       this.health = data.h;
+    }
     if (data.m !== undefined) 
       this.maxHealth = data.m;
     if (data.a !== undefined)
@@ -516,8 +519,11 @@ Player.prototype.predict = function(data) {
       this.hasShield = data.d;
     if (data.p !== undefined)
       this.totalScore = data.p;
-    if (data.c !== undefined)
+    if (data.c !== undefined) {
+       if (player.totalSpent !== data.p[id].c)
+          console.log(this.name + " bought an upgrade");
       this.totalSpent = data.c;
+    }
     if (data.x !== undefined && data.y !== undefined) { 
       moveData = true;
       if (!pos.draw) { //Player offscreen, no smooth merge needed
@@ -535,7 +541,7 @@ Player.prototype.predict = function(data) {
     return;
   if (!moved) {
     if (!moveData) {
-
+      //move sx and sy
     } 
     if (!pos.draw) { //Player offscreen, no smooth merge needed
       this.tank.x = this.tank.sx;
