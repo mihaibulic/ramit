@@ -738,10 +738,10 @@ Player.prototype.canFire = function(type) {
 /**
  * Causes damage to tank. Kills tank if dead (returns to spawn point)
  * @param damage {Number} The amount of damage the player has taken.
- * @param ownerTeam {Number} For point tracking negative for wrong team.
+ * @param owner {Player} For point tracking negative for wrong team.
  * @returns {Number} The number of points the hit earned.
  */
-Player.prototype.takeHit = function(damage, ownerTeam) {
+Player.prototype.takeHit = function(damage, owner) {
   if (this.hasShield || this.health === 0)
     return 0;
 
@@ -766,9 +766,11 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
       globals.diff.p[this.playerID] = {};
 
     globals.diff.p[this.playerID].h = this.health;
+    if (this.health === 0)
+      globals.diff.p[this.playerID].b = owner.playerID;
   }
 
-  if (ownerTeam === this.team) {
+  if (owner.team === this.team) {
     points *= -1;
   }
   return points;

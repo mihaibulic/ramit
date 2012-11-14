@@ -34,10 +34,10 @@ var Gate = function(team, hq) {
 /**
  * Damage the gate.
  * @param {Number} The amount of damage the gate receives.
- * @param {Number} The owner of projectile causing damage.
+ * @param {Player} The owner of projectile causing damage.
  * @returns {Number} The number of points earned for the hit.
  */
-Gate.prototype.takeHit = function(damage, ownerTeam) {
+Gate.prototype.takeHit = function(damage, owner) {
   this.health -= damage;
   if (this.health < 0) this.health = 0;
   if (this.hq && this.health === 0) {
@@ -57,7 +57,7 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
     }
   }
 
-  if (this.team === ownerTeam)
+  if (this.team === owner.team)
     return -1 * damage;
   return 0;
 };
