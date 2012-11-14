@@ -32,8 +32,8 @@ var ITGame = function(team, playerID) {
 
 
     this.player = data.i;
-    this.team = globals.players[this.player].team;
     this.loadState(data.s);
+    this.team = globals.players[this.player].team;
 
     // Input events.
     var keyEvent = globals.bind(function(e) {
