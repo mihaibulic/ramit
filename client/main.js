@@ -129,9 +129,9 @@ globals.renderHqs = function() {
   var positions = [[0, 0, 150, 150, 0, 0, 150, 150],
                    [150, 0, 150, 150, 0, 0, 150, 150]];
   var render = function(i) {
-    renderer.width = 100;
-    renderer.height = 100;
-    ctx.clearRect(0, 0, 100, 100);
+    renderer.width = 150;
+    renderer.height = 150;
+    ctx.clearRect(0, 0, 150, 150);
     ctx.drawImage(globals.rawImages.hqs, positions[i][0], positions[i][1],
                   positions[i][2], positions[i][3], positions[i][4],
                   positions[i][5], positions[i][6], positions[i][7]);
