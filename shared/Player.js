@@ -539,7 +539,7 @@ Player.prototype.predict = function(data) {
   }
   if (this.health === 0)
     return;
-  if (!moved) {
+  if (!moveData) {
     if (!moveData) {
       //move sx and sy
     } 
