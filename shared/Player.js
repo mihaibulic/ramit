@@ -495,7 +495,6 @@ Player.prototype.updateKeys = function(e) {
 Player.prototype.predict = function(data) {
   var moveData = false;
   if (data) { //merge with server
-    var pos = Rectangle.getPos(this.getCollisionBarrier());
     if (data.n !== undefined)
       this.name = data.n;
     if (data.t !== undefined)
@@ -531,18 +530,20 @@ Player.prototype.predict = function(data) {
   }
   if (this.health === 0)
     return;
-  if (!pos.draw || pos.draw) { //Player offscreen, no smooth merge needed
+  var pos = Rectangle.getPos(this.getCollisionBarrier());
+  if (!pos.draw) { //Player offscreen, no smooth merge needed
     this.tank.x = this.tank.sx;
     this.tank.y = this.tank.sy;
   } else {
+    var diff;
     if (this.tank.sx !== this.tank.x) {
-      var diff = Math.abs(this.tank.sx - this.tank.x);
+      diff = Math.abs(this.tank.sx - this.tank.x);
       if (diff < 20 || diff > 100)
         this.tank.x = this.tank.sx;
       else 
         this.tank.x = (this.tank.x + this.tank.sx) / 2;
     } if (this.tank.sy !== this.tank.y) {
-      var diff = Math.abs(this.tank.sy - this.tank.y);
+      diff = Math.abs(this.tank.sy - this.tank.y);
       if (diff < 20 || diff > 100) 
         this.tank.y = this.tank.sy;
       else
