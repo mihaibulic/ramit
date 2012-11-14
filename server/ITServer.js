@@ -304,11 +304,6 @@ io.sockets.on('connection', function(socket) {
     delete globals.socketToId[socket.id];
   });
 
-  var absState = getAbsoluteState();
-  // Broadcast to all other players that a new player has joined
-  //socket.broadcast.emit('join', {i: id, p: absState.p[id]});
-
   // Emit to new player the absolute state
-  socket.emit('setup', {i: id, s: absState});
-
+  socket.emit('setup', {i: id, s: getAbsoluteState()});
 });

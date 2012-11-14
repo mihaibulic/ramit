@@ -9,12 +9,6 @@ var ITGame = function(team, playerID) {
       this.loadState(data);
     }, this));
 
-    globals.socket.on('join', function(data) {
-      var player = new Player(null, data.i, data.p);
-      globals.players[data.i] = player;
-      globals.messages.push(player.name + " has joined the game for the " + (player.team === 0 ? "Blue" : "Red") + " Team.");
-    });
-
     globals.socket.on('leave', function(data) {
       // Set up fade out of player
       console.log(globals.players[data.i].name + " is leaving");
@@ -29,7 +23,6 @@ var ITGame = function(team, playerID) {
         }
       }
     });
-
 
     this.player = data.i;
     this.loadState(data.s);
@@ -110,8 +103,9 @@ var ITGame = function(team, playerID) {
 /**
  * Loads a state message into the game.
  * @param {Object} data The state message.
+ * @param {Boolean} join If the player is joining or not.
  */
-ITGame.prototype.loadState = function(data) {
+ITGame.prototype.loadState = function(data, join) {
   if(data.m !== undefined)
     globals.level.mode = data.m;
 
@@ -125,7 +119,7 @@ ITGame.prototype.loadState = function(data) {
         console.log(id + " " + this.player);
         if (id == this.player)
           globals.messages.push("You have joined the " + (player.team === 0 ? "Blue" : "Red") + " Team");
-        else
+        else if (!join)
           globals.messages.push(player.name + " has joined the the " +
                                 (player.team === 0 ? "Blue" : "Red") + " Team");
       } else {
@@ -192,7 +186,6 @@ ITGame.prototype.update = function() {
 
     globals.projectiles = {};
     Projectile.nextID = 0;
-    //globals.messages.push("A new game is starting, good hunting!");
   }
   else if (globals.level.mode === Level.Mode.END) {
     globals.messages.push("Gameover!");
