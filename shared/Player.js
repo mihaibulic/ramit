@@ -89,7 +89,7 @@ var Player = function(team, playerID, opt_state) {
   };
   this.projectile[Projectile.Type.ROCKET] = {
     range: 40,
-    damage: 20,
+    damage: 500,
     speed: 7,
     lastFire: 0,
     coolDown: 120
@@ -304,7 +304,7 @@ Player.prototype.drawHUD = function() {
 
   // Event messages
   globals.ctx.font = "24px sans-serif";
-  globals.ctx.textAlign = "center"
+  globals.ctx.textAlign = "center";
   if (globals.messages.length > 0) {
     if (globals.messageCounter > 0) {
       for (var m in globals.messages) {
