@@ -69,7 +69,7 @@ Gate.prototype.updateHealth = function(health, team, printMessages) {
       if (this.team === team)
         message = "Your ";
       else
-        message = "The enemey ";
+        message = "The enemy ";
       globals.messages.push(message + (this.hq ? "HQ" : "gate") + " has been destroyed!");
     } else if (printMessages && !this.isUnderAttack() && this.team === team) {
       globals.messages.push("Your " + (this.hq ? "HQ" : "gate") + " is under attack!");
