@@ -215,8 +215,14 @@ ITGame.prototype.draw = function() {
     // TODO draw special start screen?
   }
   else if (globals.level.mode === Level.Mode.END) {
+    //draw headquarters
+    for (var hid in globals.level.hqs) {
+      globals.level.hqs[hid].draw();
+    }
+    
     // game ending
     // TODO draw scores and you are [winner|loser] msg
+    
     return;
   }
 
