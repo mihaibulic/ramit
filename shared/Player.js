@@ -506,6 +506,7 @@ Player.prototype.predict = function(data, you) {
       if (this.health !== data.h && data.h === 0) {
         var killer = globals.players[data.b];
         console.log("you === " + you);
+        console.log("killer === " + data.b);
         var deadName = (this.playerID === you ? "You" : this.name);
         if (killer === undefined)
           globals.messages.push(deadName + " died");
