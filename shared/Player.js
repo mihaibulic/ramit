@@ -504,19 +504,15 @@ Player.prototype.predict = function(data) {
     if (data.h !== undefined) {
       if (this.health !== data.h && data.h === 0) {
         globals.messages.push(data.b + " killed " + this.name);
-        if (data.b !== undefined)
-          globals.messages.push(this.name + " has been killed");
-        else {
-          var killer = globals.players[data.b];
-          if (killer === undefined)
-            globals.messages.push(this.name + " was killed");
-          else if (killer.playerID === this.playerID)
-            globals.messages.push(this.name + " has committed suicide");
-          else if (killer.team === this.team)
-            globals.messages.push(this.name + " was betrayed by " + killer.name);
-          else
-            globals.messages.push(this.name + " was killed by " + killer.name);
-        }
+        var killer = globals.players[data.b];
+        if (killer === undefined)
+          globals.messages.push(this.name + " was killed");
+        else if (killer.playerID === this.playerID)
+          globals.messages.push(this.name + " has committed suicide");
+        else if (killer.team === this.team)
+          globals.messages.push(this.name + " was betrayed by " + killer.name);
+        else
+          globals.messages.push(this.name + " was killed by " + killer.name);
       }
       this.health = data.h;
     }
