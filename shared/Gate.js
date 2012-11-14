@@ -8,7 +8,7 @@ var Gate = function(team, hq) {
   this.underAttack = 0;
   this.detailsFadeFrames = 0;
   this.lastFlashCounter = 0;
-  this.health = 100; //1000;
+  this.health = 1000;
   if (this.hq) {
     this.name = (team === 0 ? "Blue HQ" : "Red HQ");
     this.left = 2500;
@@ -85,10 +85,10 @@ Gate.prototype.updateHealth = function(health) {
 
 
 Gate.prototype.update = function() {
-  if(this.hq && this.underAttack > 0 && this.health < 100) {
+  if(this.hq && this.underAttack > 0 && this.health < 250) {
     this.lastFlashCounter++;
     if (this.lastFlashCounter >= this.health/2) 
-      this.lastFlashCounter = this.health/2 - 60;
+      this.lastFlashCounter = (this.health-250)/2;
   }
 
   if (this.underAttack > 0) this.underAttack--;
@@ -115,7 +115,7 @@ Gate.prototype.draw = function() {
     if (this.health > 0) {
 
       if(this.hq) {
-        var flash = this.underAttack > 0 && this.health < 100 && this.lastFlashCounter < 0;
+        var flash = this.underAttack > 0 && this.health < 250 && this.lastFlashCounter < 0;
         globals.ctx.drawImage(globals.resources.hqs[this.team + (flash ? 2 : 0)], pos.left, pos.top);
       }
       else {
