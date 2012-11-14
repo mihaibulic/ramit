@@ -7,6 +7,7 @@ var Gate = function(team, hq) {
   this.team = team;
   this.underAttack = 0;
   this.detailsFadeFrames = 0;
+  this.alpha = 1;
   this.health = 100;
   if (this.hq) {
     this.name = (team === 0 ? "Blue HQ" : "Red HQ");
@@ -72,6 +73,11 @@ Gate.prototype.updateHealth = function(health) {
 };
 
 Gate.prototype.update = function() {
+  if(this.alpha*100 > this.health) 
+    this.alpha--;
+  else if (this.alpha*100 < this.health) 
+    this.alpha++;
+
   if (this.underAttack > 0) this.underAttack--;
   // Fade In/Out
   if (this.underAttack < 20 && this.detailsFadeFrames > 0)
@@ -94,18 +100,16 @@ Gate.prototype.draw = function() {
 
   if (pos.draw) {
     if (this.health > 0) {
-
+     
+      globals.ctx.globalAlpha = alpha;
       if(this.hq) {
-        globals.ctx.drawImage(globals.resources.hqs[this.team + 2], pos.left, pos.top);
-        globals.ctx.globalAlpha = this.health / 100; //fades away for the last 100 hp
-        globals.ctx.drawImage(globals.resources.hqs[this.team], pos.left, pos.top - 5);
-        globals.ctx.globalAlpha = 1;
+        if (this.health < 100) globals.ctx.drawImage(globals.resources.hqs[this.team + 2], pos.left, pos.top);
+        globals.ctx.drawImage(globals.resources.hqs[this.team], pos.left, pos.top);
       }
       else {
-        globals.ctx.globalAlpha = this.health / 100; //fades away for the last 100 hp
         globals.ctx.drawImage(globals.resources.gates[this.team], pos.left, pos.top - 5);
-        globals.ctx.globalAlpha = 1;
       }
+      globals.ctx.globalAlpha = 1;
       
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
         // Fade In/Out
