@@ -65,7 +65,12 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
 Gate.prototype.updateHealth = function(health, team, printMessages) {
   if (health !== this.health) {
     if (printMessages && health === 0) {
-      globals.messages.push((this.team === 0 ? "Blue" : "Red") + " Team's " + (this.hq ? "HQ" : "Gate") + " has been destroyed!");
+      var message;
+      if (this.team === team)
+        message = "Your ";
+      else
+        message = "The enemey ";
+      globals.messages.push(message + (this.hq ? "HQ" : "Gate") + " has been destroyed!");
     } else if (printMessages && !this.isUnderAttack() && this.team === team) {
       globals.messages.push("Your " + (this.hq ? "HQ" : "Gate") + " is under attack!");
     }
