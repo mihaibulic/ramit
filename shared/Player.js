@@ -543,7 +543,7 @@ Player.prototype.predict = function(data) {
     if (!moveData) {
       //move sx and sy
     } 
-    if (!pos.draw) { //Player offscreen, no smooth merge needed
+    if (!pos.draw || pos.draw) { //Player offscreen, no smooth merge needed
       this.tank.x = this.tank.sx;
       this.tank.y = this.tank.sy;
     } else {
