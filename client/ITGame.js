@@ -186,10 +186,6 @@ ITGame.prototype.update = function() {
     globals.projectiles = {};
     Projectile.nextID = 0;
   }
-  else if (globals.level.mode === Level.Mode.END) {
-    globals.messages.push("Gameover!");
-    return;
-  }
 
   globals.level.x = globals.players[this.player].tank.x - 470;
   globals.level.y = globals.players[this.player].tank.y - 220;
