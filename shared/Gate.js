@@ -77,6 +77,7 @@ Gate.prototype.update = function() {
     this.alpha--;
   else if (this.alpha*100 < this.health) 
     this.alpha++;
+  console.log(this.alpha);
 
   if (this.underAttack > 0) this.underAttack--;
   // Fade In/Out
