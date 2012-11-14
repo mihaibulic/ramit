@@ -122,6 +122,7 @@ ITGame.prototype.loadState = function(data) {
       if (!globals.players[id]) {
         globals.players[id] = new Player(null, id, data.p[id]);
         player = globals.players[id];
+        console.log(id + " " + this.player);
         if (id == this.player)
           globals.messages.push("You have joined the " + (player.team === 0 ? "Blue" : "Red") + " Team");
         else
