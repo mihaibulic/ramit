@@ -547,7 +547,7 @@ Player.prototype.predict = function(data) {
           this.tank.x = this.tank.sx;
         else 
           this.tank.x = (this.tank.x + this.tank.sx) / 2;
-      }
+      } if (this.tank.sy !== this.tank.sy) {
         var diff = Math.abs(this.tank.sy - this.tank.y);
         if (diff < 20 || diff > 100) 
           this.tank.y = this.tank.sy;
