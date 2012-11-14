@@ -525,48 +525,28 @@ Player.prototype.predict = function(data) {
       this.totalSpent = data.c;
     }
     if (data.x !== undefined)
-      this.tank.x = data.x;
+      this.tank.sx = data.x;
     if (data.y !== undefined)
-      this.tank.y = data.y;
-    return;
-    if (data.x !== undefined && data.y !== undefined) { 
-      moveData = true;
-      if (!pos.draw) { //Player offscreen, no smooth merge needed
-        console.log("moving off screen");
-        this.tank.x = data.x;
-        this.tank.y = data.y;
-        this.tank.sx = data.x;
-        this.tank.sy = data.y;
-      } else {
-        console.log("moving on screen");
-        this.tank.sx = data.x;
-        this.tank.sy = data.y;
-      }
-    } 
+      this.tank.sy = data.y;
   }
   if (this.health === 0)
     return;
-  if (!moveData) {
-    if (!moveData) {
-      //move sx and sy
-    } 
-    if (!pos.draw || pos.draw) { //Player offscreen, no smooth merge needed
-      this.tank.x = this.tank.sx;
-      this.tank.y = this.tank.sy;
-    } else {
-      if (this.tank.sx !== this.tank.x) {
-        var diff = Math.abs(this.tank.sx - this.tank.x);
-        if (diff < 20 || diff > 100 || diff < 200)
-          this.tank.x = this.tank.sx;
-        else 
-          this.tank.x = (this.tank.x + this.tank.sx) / 2;
-      } if (this.tank.sy !== this.tank.sy) {
-        var diff = Math.abs(this.tank.sy - this.tank.y);
-        if (diff < 20 || diff > 100 || diff < 200) 
-          this.tank.y = this.tank.sy;
-        else
-          this.tank.y = (this.tank.y + this.tank.sy) / 2;
-      }
+  if (!pos.draw || pos.draw) { //Player offscreen, no smooth merge needed
+    this.tank.x = this.tank.sx;
+    this.tank.y = this.tank.sy;
+  } else {
+    if (this.tank.sx !== this.tank.x) {
+      var diff = Math.abs(this.tank.sx - this.tank.x);
+      if (diff < 20 || diff > 100 || diff < 200)
+        this.tank.x = this.tank.sx;
+      else 
+        this.tank.x = (this.tank.x + this.tank.sx) / 2;
+    } if (this.tank.sy !== this.tank.sy) {
+      var diff = Math.abs(this.tank.sy - this.tank.y);
+      if (diff < 20 || diff > 100 || diff < 200) 
+        this.tank.y = this.tank.sy;
+      else
+        this.tank.y = (this.tank.y + this.tank.sy) / 2;
     }
   }
 };
