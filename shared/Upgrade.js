@@ -160,6 +160,7 @@ Upgrade.prototype.buy = function(device, type, pid) {
     return;
   } 
   this.players[pid][device][type]++;
+  console.log(buyer.name + " bought an upgrade level " + this.players[pid][device][type]);
   var diff = this.diff[device][type][this.players[pid][device][type]];
   buyer.totalSpent += this.cost[device][type][this.players[pid][device][type]];
   if (globals.diff) {

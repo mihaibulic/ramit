@@ -34,10 +34,10 @@ var Gate = function(team, hq) {
 /**
  * Damage the gate.
  * @param {Number} The amount of damage the gate receives.
- * @param {Number} The owner of projectile causing damage.
+ * @param {Player} The owner of projectile causing damage.
  * @returns {Number} The number of points earned for the hit.
  */
-Gate.prototype.takeHit = function(damage, ownerTeam) {
+Gate.prototype.takeHit = function(damage, owner) {
   this.health -= damage;
   if (this.health < 0) this.health = 0;
   if (this.hq && this.health === 0) {
@@ -57,7 +57,7 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
     }
   }
 
-  if (this.team === ownerTeam)
+  if (this.team === owner.team)
     return -1 * damage;
   return 0;
 };
@@ -102,10 +102,6 @@ Gate.prototype.draw = function() {
 
   if (pos.draw) {
     if (this.health > 0) {
-
-      if (this.hq && this.health < 100)
-        globals.ctx.drawImage(globals.resources.hqs[this.team + 2], pos.left, pos.top);
-
       var res = this.hq ? globals.resources.hqs : globals.resources.gates;
       globals.ctx.drawImage(res[this.team], pos.left, pos.top - 5);
 
@@ -135,6 +131,8 @@ Gate.prototype.draw = function() {
         globals.ctx.strokeRect(pos.left, pos.top, rect.width(), rect.height());
       }
     }
+    else if (this.hq) 
+      globals.ctx.drawImage(globals.resources.hqs[this.team+2], pos.left, pos.top - 5);
     if (!this.hq) //draw gate outside things
       globals.ctx.drawImage(globals.resources.gates[2], pos.left, pos.top - 5);
   }

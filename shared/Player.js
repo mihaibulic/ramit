@@ -89,7 +89,7 @@ var Player = function(team, playerID, opt_state) {
   };
   this.projectile[Projectile.Type.ROCKET] = {
     range: 40,
-    damage: 20,
+    damage: 500,
     speed: 7,
     lastFire: 0,
     coolDown: 120
@@ -304,7 +304,7 @@ Player.prototype.drawHUD = function() {
 
   // Event messages
   globals.ctx.font = "24px sans-serif";
-  globals.ctx.textAlign = "center"
+  globals.ctx.textAlign = "center";
   if (globals.messages.length > 0) {
     if (globals.messageCounter > 0) {
       for (var m in globals.messages) {
@@ -493,8 +493,9 @@ Player.prototype.updateKeys = function(e) {
 /**
  * Predict player as well as merge with any data from server.
  * @param {see GoogleDoc} state message of player
+ * @param {int} player id of local player
  */
-Player.prototype.predict = function(data) {
+Player.prototype.predict = function(data, you) {
   var moveData = false;
   if (data) { //merge with server
     if (data.n !== undefined)
@@ -502,19 +503,19 @@ Player.prototype.predict = function(data) {
     if (data.t !== undefined)
       this.team = data.t;
     if (data.h !== undefined) {
-      if (this.health !== data.h && player.health === 0) {
-        if (data.b !== undefined)
-          globals.messages.push(this.name + " has been killed");
+      if (this.health !== data.h && data.h === 0) {
+        var deadName = (this.playerID != you ? this.name : "You");
+        var killer = globals.players[data.b];
+        if (killer === undefined)
+          globals.messages.push(deadName + " died");
         else {
-          var killer = globals.players[data.b];
-          if (killer === undefined)
-            globals.messages.push(this.name + " was killed");
-          else if (killer.playerID === this.playerID)
-            globals.messages.push(this.name + " has committed suicide");
+          killerName = (you === data.b ? "You" : killer.name);
+          if (killer.playerID === this.playerID)
+            globals.messages.push(deadName + " committed suicide");
           else if (killer.team === this.team)
-            globals.messages.push(this.name + " was betrayed by " + killer.name);
+            globals.messages.push(killerName + " betrayed " + deadName);
           else
-            globals.messages.push(this.name + " was killed by " + killer.name);
+            globals.messages.push(killerName + " killed " + deadName);
         }
       }
       this.health = data.h;
@@ -553,13 +554,13 @@ Player.prototype.predict = function(data) {
     var diff;
     if (this.tank.sx !== this.tank.x) {
       diff = Math.abs(this.tank.sx - this.tank.x);
-      if (diff < 20 || diff > 100)
+      if (diff < 20 || diff > 50)
         this.tank.x = this.tank.sx;
       else
         this.tank.x = (this.tank.x + this.tank.sx) / 2;
     } if (this.tank.sy !== this.tank.y) {
       diff = Math.abs(this.tank.sy - this.tank.y);
-      if (diff < 20 || diff > 100)
+      if (diff < 10 || diff > 50)
         this.tank.y = this.tank.sy;
       else
         this.tank.y = (this.tank.y + this.tank.sy) / 2;
@@ -740,10 +741,10 @@ Player.prototype.canFire = function(type) {
 /**
  * Causes damage to tank. Kills tank if dead (returns to spawn point)
  * @param damage {Number} The amount of damage the player has taken.
- * @param ownerTeam {Number} For point tracking negative for wrong team.
+ * @param owner {Player} For point tracking negative for wrong team.
  * @returns {Number} The number of points the hit earned.
  */
-Player.prototype.takeHit = function(damage, ownerTeam) {
+Player.prototype.takeHit = function(damage, owner) {
   if (this.hasShield || this.health === 0)
     return 0;
 
@@ -768,9 +769,13 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
       globals.diff.p[this.playerID] = {};
 
     globals.diff.p[this.playerID].h = this.health;
+    if (this.health === 0) {
+      globals.diff.p[this.playerID].b = owner.playerID;
+      console.log(owner.playerID + " has killed " + this.name);
+    }
   }
 
-  if (ownerTeam === this.team) {
+  if (owner.team === this.team) {
     points *= -1;
   }
   return points;
@@ -859,7 +864,7 @@ Player.prototype.getCollisionBarrier = function(location, useShield) {
 };
 
 /**
- * @returns {Number} A numeric value representing the keys pressed by the
+ * @returns {Number} A numeric value representing the keys preressed by the
  *               player.
  */
 Player.prototype.getKeyValue = function() {

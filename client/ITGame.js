@@ -122,7 +122,7 @@ ITGame.prototype.loadState = function(data, join) {
           globals.messages.push(player.name + " has joined the the " +
                                 (player.team === 0 ? "Blue" : "Red") + " Team");
       } else {
-        globals.players[id].predict(data.p[id]);
+        globals.players[id].predict(data.p[id], this.player);
       }
     }
   }
@@ -210,16 +210,6 @@ ITGame.prototype.update = function() {
  * Draw the game state to the canvas.
  */
 ITGame.prototype.draw = function() {
-  if (globals.level.mode === Level.Mode.START) {
-    // game starting
-    // TODO draw special start screen?
-  }
-  else if (globals.level.mode === Level.Mode.END) {
-    // game ending
-    // TODO draw scores and you are [winner|loser] msg
-    return;
-  }
-
   globals.ctx.fillStyle = "#000000";
   globals.ctx.fillRect(0, 0, 1000, 500);
 
@@ -295,6 +285,15 @@ ITGame.prototype.draw = function() {
     globals.ctx.fillStyle = "#ffffff";
     globals.ctx.font = "normal 18px sans-serif";
     globals.ctx.fillText("FPS: " + this.fps, 500, 20);
+  }
+  
+  if (globals.level.mode === Level.Mode.START) {
+    // game starting
+    // TODO draw special start screen?
+  }
+  else if (globals.level.mode === Level.Mode.END) {
+    // game ending
+    // TODO draw scores and you are [winner|loser] msg
   }
 };
 
