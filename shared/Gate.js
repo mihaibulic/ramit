@@ -7,15 +7,18 @@ var Gate = function(team, hq) {
   this.team = team;
   this.underAttack = 0;
   this.detailsFadeFrames = 0;
-  this.health = 100;
   this.alpha = this.health;
   if (this.hq) {
+    this.health = 3000;
+    this.maxHealth = 3000;
     this.name = (team === 0 ? "Blue HQ" : "Red HQ");
     this.left = 2500;
     this.right = 2650;
     this.top = (team === 0 ? 250 : 2600);
     this.bottom = (team === 0 ? 400 : 2750);
   } else {
+    this.health = 1000;
+    this.maxHealth = 1000;
     this.name = (team === 0 ? "Blue Gate" : "Red Gate");
     this.left = 1350;
     this.right = 1650;
@@ -73,9 +76,9 @@ Gate.prototype.updateHealth = function(health) {
 };
 
 Gate.prototype.update = function() {
-  if(this.alpha > this.health) 
+  if(this.alpha > this.health)
     this.alpha--;
-  else if (this.alpha < this.health) 
+  else if (this.alpha < this.health)
     this.alpha++;
   console.log(this.alpha);
 
@@ -101,15 +104,15 @@ Gate.prototype.draw = function() {
 
   if (pos.draw) {
     if (this.health > 0) {
-     
-      if (this.hq && this.health < 100) 
+
+      if (this.hq && this.health < 100)
         globals.ctx.drawImage(globals.resources.hqs[this.team + 2], pos.left, pos.top);
-      
+
       var res = this.hq ? globals.resources.hqs : globals.resources.gates;
       globals.ctx.globalAlpha = this.alpha/100;
       globals.ctx.drawImage(res[this.team], pos.left, pos.top - 5);
       globals.ctx.globalAlpha = 1;
-      
+
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
         // Fade In/Out
         var alpha = this.detailsFadeFrames / 20;
@@ -117,12 +120,12 @@ Gate.prototype.draw = function() {
         var dataXPos = pos.left + (this.hq ? 0 : 100);
         // health bar
         globals.ctx.strokeStyle = "#00FF00";
-        var color = Math.floor(this.health / 1000 * Player.HEALTH.length);
+        var color = Math.floor(this.health / this.maxHealth * Player.HEALTH.length);
         if (color == Player.HEALTH.length) color--;
         globals.ctx.fillStyle = Player.HEALTH[color];
         globals.ctx.globalAlpha = 0.5 * alpha;
         globals.ctx.strokeRect(dataXPos, pos.top-2, 100, 3);
-        globals.ctx.fillRect(dataXPos, pos.top-2, 100 * this.health / 1000, 3);
+        globals.ctx.fillRect(dataXPos, pos.top-2, 100 * this.health / this.maxHealth, 3);
         globals.ctx.globalAlpha = alpha;
         // name
         globals.ctx.fillStyle = "#FFFFFF";
