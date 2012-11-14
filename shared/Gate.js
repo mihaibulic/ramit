@@ -28,7 +28,6 @@ var Gate = function(team, hq) {
       this.top = 2492;
       this.bottom = 2507;
     }
-  this.alpha = this.health;
   }
 };
 
@@ -63,12 +62,12 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
   return 0;
 };
 
-Gate.prototype.updateHealth = function(health) {
+Gate.prototype.updateHealth = function(health, team, printMessages) {
   if (health !== this.health) {
-    if (health === 0) {
-      globals.messages.push((this.team === 0 ? "Blue" : "Red") + " Team's " + (this.hq ? "HQ" : "Gate") + " has been destroyed");
-    } else if (!this.isUnderAttack()) {
-      globals.messages.push((this.team === 0 ? "Blue" : "Red") + " Team's " + (this.hq ? "HQ" : "Gate") + " is under attack");
+    if (printMessages && health === 0) {
+      globals.messages.push((this.team === 0 ? "Blue" : "Red") + " Team's " + (this.hq ? "HQ" : "Gate") + " has been destroyed!");
+    } else if (printMessages && !this.isUnderAttack() && this.team === team) {
+      globals.messages.push("Your " + (this.hq ? "HQ" : "Gate") + " is under attack!");
     }
     this.underAttack = 600;
     this.health = health;
@@ -76,11 +75,6 @@ Gate.prototype.updateHealth = function(health) {
 };
 
 Gate.prototype.update = function() {
-  if(this.alpha > this.health)
-    this.alpha--;
-  else if (this.alpha < this.health)
-    this.alpha++;
-
   if (this.underAttack > 0) this.underAttack--;
   // Fade In/Out
   if (this.underAttack < 20 && this.detailsFadeFrames > 0)
@@ -108,9 +102,7 @@ Gate.prototype.draw = function() {
         globals.ctx.drawImage(globals.resources.hqs[this.team + 2], pos.left, pos.top);
 
       var res = this.hq ? globals.resources.hqs : globals.resources.gates;
-      globals.ctx.globalAlpha = this.alpha/100;
       globals.ctx.drawImage(res[this.team], pos.left, pos.top - 5);
-      globals.ctx.globalAlpha = 1;
 
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
         // Fade In/Out
