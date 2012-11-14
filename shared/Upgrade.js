@@ -149,7 +149,7 @@ Upgrade.prototype.buy = function(device, type, pid) {
     this.players[pid] = [];
   if (!this.players[pid][device])
     this.players[pid][device] = [];
-  if (!this.players[pid][device][type])
+  if (this.players[pid][device][type] === undefined)
     this.players[pid][device][type] = -1;
   var cost = this.cost[device][type][this.players[pid][device][type] + 1];
   if (cost === undefined) {
