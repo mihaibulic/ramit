@@ -114,11 +114,15 @@ Gate.prototype.draw = function() {
   if (pos.draw) {
     if (this.health > 0) {
 
-      var flash = this.hq && this.underAttack > 0 && this.health < 100 && this.lastFlashCounter < 0;
-      var res = (this.hq ? globals.resources.hqs : globals.resources.gates);
-      globals.ctx.globalAlpha = this.health / 100; //fades away for the last 100 hp
-      globals.ctx.drawImage(res[this.team + (flash ? 2 : 0)], pos.left, pos.top - 5);
-      globals.ctx.globalAlpha = 1;
+      if(this.hq) {
+        var flash = this.underAttack > 0 && this.health < 100 && this.lastFlashCounter < 0;
+        globals.ctx.drawImage(globals.resources.hqs[this.team + (flash ? 2 : 0)], pos.left, pos.top);
+      }
+      else {
+        globals.ctx.globalAlpha = this.health / 100; //fades away for the last 100 hp
+        globals.ctx.drawImage(globals.resources.gates[this.team], pos.left, pos.top - 5);
+        globals.ctx.globalAlpha = 1;
+      }
       
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
         // Fade In/Out
