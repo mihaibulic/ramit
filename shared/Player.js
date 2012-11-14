@@ -798,8 +798,8 @@ Player.prototype.respawn = function() {
   this.tank.y = Player.SPAWN_POINTS[this.team][spawn].y;
   this.health = this.maxHealth;
 
-  globals.keys = {up:0, down:0, left:0, right:0, mine:0, all_mines:0, space:0, shift:0, mounted:0};
-  globals.mouse = {left:0, middle:0, right:0};
+  this.keys = {up:0, down:0, left:0, right:0, mine:0, all_mines:0, space:0, shift:0, mounted:0};
+  this.mouse = {left:0, middle:0, right:0};
 
   if (globals.diff) {
     if (!globals.diff.p)
