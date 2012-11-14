@@ -123,39 +123,8 @@ ITGame.prototype.loadState = function(data) {
         globals.players[id] = new Player(null, id, data.p[id]);
         player = globals.players[id];
         globals.messages.push(player.name + " has joined the game for the " + (player.team === 0 ? "Blue" : "Red") + " Team");
-        continue;
-      }
-      var player = globals.players[id];
-      if (data.p[id].n !== undefined)
-        player.name = data.p[id].n;
-      if (data.p[id].x !== undefined)
-        player.tank.x = data.p[id].x;
-      if (data.p[id].y !== undefined)
-        player.tank.y = data.p[id].y;
-      if (data.p[id].h !== undefined) {
-        if (player.health !== data.p[id].h && player.health === 0) 
-          globals.messages.push(player.name + " has been killed");
-        player.health = data.p[id].h;
-      }
-      if (data.p[id].m !== undefined)
-        player.maxHealth = data.p[id].m;
-      if (data.p[id].a !== undefined)
-        player.setAim(data.p[id].a);
-      if (data.p[id].k !== undefined)
-        player.setKeyValue(data.p[id].k);
-      if (data.p[id].s !== undefined)
-        player.speed = data.p[id].s;
-      if (data.p[id].w !== undefined)
-        player.mounted = data.p[id].w;
-      if (data.p[id].d !== undefined)
-        player.hasShield = data.p[id].d;
-      if (data.p[id].p !== undefined)
-        player.totalScore = data.p[id].p;
-      if (data.p[id].c !== undefined) {
-        if (player.totalSpent !== data.p[id].c) {
-          console.log(player.name + " bought an upgrade");
-        }
-        player.totalSpent = data.p[id].c;
+      } else {
+        globals.players[id].predict(data.p[id]);
       }
     }
   }

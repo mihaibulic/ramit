@@ -489,6 +489,69 @@ Player.prototype.updateKeys = function(e) {
 };
 
 /**
+ * Predict player as well as merge with any data from server.
+ * @param {see GoogleDoc} state message of player
+ */
+Player.prototype.predict = function(data) {
+  var moveData = false;
+  if (data) { //merge with server
+    var pos = Rectangle.getPos(this.getCollisionBarrier());
+    if (data.n !== undefined)
+      this.name = data.n;
+    if (data.t !== undefined)
+      this.team = data.t;
+    if (data.h !== undefined) {
+      if (this.health !== data.h && player.health === 0) 
+        globals.messages.push(this.name + " has been killed");
+      this.health = data.h;
+    }
+    if (data.m !== undefined) 
+      this.maxHealth = data.m;
+    if (data.a !== undefined)
+      this.setAim(data.a);
+    if (data.k !== undefined)
+      this.setKeyValue(data.k);
+    if (data.s !== undefined)
+      this.speed = data.s;
+    if (data.w !== undefined)
+      this.mounted = data.w;
+    if (data.d !== undefined)
+      this.hasShield = data.d;
+    if (data.p !== undefined)
+      this.totalScore = data.p;
+    if (data.c !== undefined) {
+       if (this.totalSpent !== data.c)
+          console.log(this.name + " bought an upgrade");
+      this.totalSpent = data.c;
+    }
+    if (data.x !== undefined)
+      this.tank.sx = data.x;
+    if (data.y !== undefined)
+      this.tank.sy = data.y;
+  }
+  if (this.health === 0)
+    return;
+  if (!pos.draw || pos.draw) { //Player offscreen, no smooth merge needed
+    this.tank.x = this.tank.sx;
+    this.tank.y = this.tank.sy;
+  } else {
+    if (this.tank.sx !== this.tank.x) {
+      var diff = Math.abs(this.tank.sx - this.tank.x);
+      if (diff < 20 || diff > 100)
+        this.tank.x = this.tank.sx;
+      else 
+        this.tank.x = (this.tank.x + this.tank.sx) / 2;
+    } if (this.tank.sy !== this.tank.y) {
+      var diff = Math.abs(this.tank.sy - this.tank.y);
+      if (diff < 20 || diff > 100) 
+        this.tank.y = this.tank.sy;
+      else
+        this.tank.y = (this.tank.y + this.tank.sy) / 2;
+    }
+  }
+};
+
+/**
  * Update the state of the Player.
  */
 Player.prototype.update = function() {
