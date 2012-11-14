@@ -502,7 +502,7 @@ Player.prototype.predict = function(data) {
     if (data.t !== undefined)
       this.team = data.t;
     if (data.h !== undefined) {
-      if (this.health !== data.h && player.health === 0) {
+      if (this.health !== data.h && data.h === 0) {
         globals.messages.push(data.b + " killed " + this.name);
         if (data.b !== undefined)
           globals.messages.push(this.name + " has been killed");
