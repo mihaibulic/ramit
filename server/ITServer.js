@@ -45,7 +45,7 @@ var explodeAll = function(player, justMines) {
         new Explosion(projectile.x, projectile.y, projectile.range, player, {}, projectile.damage, projectile, false);
         player.projectile[Projectile.Type.MINE].live--;
       }
-      
+
       if (!justMines || projectile.type === Projectile.Type.MINE) {
         delete globals.projectiles[p];
       }
@@ -57,10 +57,10 @@ var explodeAll = function(player, justMines) {
  * Updates the game and sends out a 'diff' message to the players.
  */
 var update = function() {
-  if (globals.level.mode === Level.Mode.START) 
-    globals.level.mode = Level.Mode.ONGOING; 
+  if (globals.level.mode === Level.Mode.START)
+    globals.level.mode = Level.Mode.ONGOING;
   else if (globals.level.mode === Level.Mode.END) {
-    if (globals.gameoverTimer >= 120) 
+    if (globals.gameoverTimer >= 120)
       reset();
     else {
       globals.gameoverTimer++;
@@ -85,7 +85,7 @@ var update = function() {
         globals.projectiles[Projectile.nextID] = new Projectile(player, Projectile.Type.MINE, Projectile.nextID);
         Projectile.nextID++;
       }
-        
+
       if (player.keys.all_mines === true) {
         console.log("Player #" + player.playerID + " has " + player.projectile[Projectile.Type.MINE].live + " live mines BEFORE");
         explodeAll(player, true);
@@ -95,7 +95,7 @@ var update = function() {
     }
 
     // Special
-    if (player.special[player.mounted] && 
+    if (player.special[player.mounted] &&
         player.special[player.mounted].lastFire > player.special[player.mounted].coolDown &&
         (player.mouse.right === true || player.keys.shift === true)) {
       console.log("firing special weapon " + player.mounted);
@@ -104,8 +104,8 @@ var update = function() {
         Projectile.nextID++;
       } else if ((player.mounted === Player.SpecialType.EMP) ||
                   (player.mounted === Player.SpecialType.MEDIC)) {
-        new Explosion(player.tank.x + 30, player.tank.y +30, 
-                    player.special[player.mounted].range, 
+        new Explosion(player.tank.x + 30, player.tank.y +30,
+                    player.special[player.mounted].range,
                     player, null, player.special[player.mounted].damage, null, true);
       } else if (player.mounted === Player.SpecialType.SHIELD) {
         player.armShield();
@@ -124,7 +124,7 @@ var update = function() {
 };
 
 /**
- * @param {Boolean} if true, absolute state will be sent, 
+ * @param {Boolean} if true, absolute state will be sent,
  *  regardless of when it was last sent
  */
 var emitState = function(override) {
@@ -162,11 +162,11 @@ var getAbsoluteState = function() {
     state.q[id] = globals.projectiles[id].getAbsoluteState();
   // Gates
   state.g = {};
-  for (id in globals.level.gates) 
+  for (id in globals.level.gates)
     state.g[id] = globals.level.gates[id].health;
   // Headquarters
   state.h = {};
-  for (id in globals.level.hqs) 
+  for (id in globals.level.hqs)
     state.h[id] = globals.level.hqs[id].health;
   // set mode
   state.m = globals.level.mode;
@@ -190,7 +190,7 @@ var reset = function() {
   Projectile.nextID = 0;
 
   // send absolute state
-  emitState(true); 
+  emitState(true);
 };
 
 /**
@@ -278,8 +278,8 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('upgrade', function(data) {
-    console.log("upgrade request received from " + globals.players[id].name + 
-                " d:" + Upgrade.DeviceStrings[data.d] + 
+    console.log("upgrade request received from " + globals.players[id].name +
+                " d:" + Upgrade.DeviceStrings[data.d] +
                 " t:" + Upgrade.TypeStrings[data.t]);
     globals.upgrade.buy(data.d, data.t, id);
   });
@@ -303,12 +303,12 @@ io.sockets.on('connection', function(socket) {
     globals.playerIDQueue.push(id);
     delete globals.socketToId[socket.id];
   });
-  
+
   var absState = getAbsoluteState();
   // Broadcast to all other players that a new player has joined
-  socket.broadcast.emit('join', {i: id, p: absState.p[id]});
+  //socket.broadcast.emit('join', {i: id, p: absState.p[id]});
 
   // Emit to new player the absolute state
   socket.emit('setup', {i: id, s: absState});
-  
+
 });

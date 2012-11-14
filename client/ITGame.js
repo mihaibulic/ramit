@@ -12,7 +12,7 @@ var ITGame = function(team, playerID) {
     globals.socket.on('join', function(data) {
       var player = new Player(null, data.i, data.p);
       globals.players[data.i] = player;
-      globals.messages.push(player.name + " has joined the game for the " + (player.team === 0 ? "Blue" : "Red") + " Team");
+      globals.messages.push(player.name + " has joined the game for the " + (player.team === 0 ? "Blue" : "Red") + " Team.");
     });
 
     globals.socket.on('leave', function(data) {
@@ -21,7 +21,7 @@ var ITGame = function(team, playerID) {
       globals.players[data.i].leaving = true;
       globals.players[data.i].health = 0;
       globals.players[data.i].deathCounter = 1;
-      globals.messages.push(globals.players[data.i].name + " has left");
+      globals.messages.push(globals.players[data.i].name + " has left the game.");
       // Remove all projectiles and mines owned by this player.
       for (var qid in globals.projectiles) {
         if (globals.projectiles[qid].owner === data.i) {
@@ -112,7 +112,7 @@ var ITGame = function(team, playerID) {
  * @param {Object} data The state message.
  */
 ITGame.prototype.loadState = function(data) {
-  if(data.m !== undefined) 
+  if(data.m !== undefined)
     globals.level.mode = data.m;
 
   // Players
@@ -122,7 +122,11 @@ ITGame.prototype.loadState = function(data) {
       if (!globals.players[id]) {
         globals.players[id] = new Player(null, id, data.p[id]);
         player = globals.players[id];
-        globals.messages.push(player.name + " has joined the game for the " + (player.team === 0 ? "Blue" : "Red") + " Team");
+        if (player.playerID === this.player)
+          globals.messages.push("Welcome to the " + (player.team === 0 ? "Blue" : "Red") + " Team");
+        else
+          globals.messages.push(player.name + " has joined the game for the " +
+                                (player.team === 0 ? "Blue" : "Red") + " Team");
       } else {
         globals.players[id].predict(data.p[id]);
       }
@@ -187,7 +191,7 @@ ITGame.prototype.update = function() {
 
     globals.projectiles = {};
     Projectile.nextID = 0;
-    globals.messages.push("A new game is starting, good hunting!");
+    //globals.messages.push("A new game is starting, good hunting!");
   }
   else if (globals.level.mode === Level.Mode.END) {
     globals.messages.push("Gameover!");
