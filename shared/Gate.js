@@ -7,7 +7,6 @@ var Gate = function(team, hq) {
   this.team = team;
   this.underAttack = 0;
   this.detailsFadeFrames = 0;
-  this.alpha = this.health;
   if (this.hq) {
     this.health = 3000;
     this.maxHealth = 3000;
@@ -76,12 +75,6 @@ Gate.prototype.updateHealth = function(health) {
 };
 
 Gate.prototype.update = function() {
-  if(this.alpha > this.health)
-    this.alpha--;
-  else if (this.alpha < this.health)
-    this.alpha++;
-  console.log(this.alpha);
-
   if (this.underAttack > 0) this.underAttack--;
   // Fade In/Out
   if (this.underAttack < 20 && this.detailsFadeFrames > 0)
@@ -109,9 +102,7 @@ Gate.prototype.draw = function() {
         globals.ctx.drawImage(globals.resources.hqs[this.team + 2], pos.left, pos.top);
 
       var res = this.hq ? globals.resources.hqs : globals.resources.gates;
-      globals.ctx.globalAlpha = this.alpha/100;
       globals.ctx.drawImage(res[this.team], pos.left, pos.top - 5);
-      globals.ctx.globalAlpha = 1;
 
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
         // Fade In/Out
