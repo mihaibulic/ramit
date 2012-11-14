@@ -303,11 +303,12 @@ Player.prototype.drawHUD = function() {
   globals.ctx.textAlign = "left";
 
   // Event messages
-  globals.ctx.font = "15px serif";
+  globals.ctx.font = "24px sans-serif";
+  globals.ctx.textAlign = "center"
   if (globals.messages.length > 0) {
     if (globals.messageCounter > 0) {
       for (var m in globals.messages) {
-        globals.ctx.fillText(globals.messages[m], 20, 480);
+        globals.ctx.fillText(globals.messages[m], 50, 450);
         globals.messageCounter--;
         if (globals.messageCounter === 0) {
           delete globals.messages[m];
@@ -317,6 +318,7 @@ Player.prototype.drawHUD = function() {
       }
     }
   }
+  globals.ctx.textAlign = "left";
 
   // Minimap
   globals.ctx.drawImage(globals.resources.minimap, 830, 330);
@@ -474,7 +476,7 @@ Player.prototype.updateKeys = function(e) {
     break;
   case 85:
     if (value && !this.keys.u) {
-      globals.socket.emit('upgrade', { d: Upgrade.Device.MINE, 
+      globals.socket.emit('upgrade', { d: Upgrade.Device.MINE,
                                        t: Upgrade.Type.ALLOWED });
       this.keys.u = true;
       console.log("requesting upgrade");
@@ -500,11 +502,11 @@ Player.prototype.predict = function(data) {
     if (data.t !== undefined)
       this.team = data.t;
     if (data.h !== undefined) {
-      if (this.health !== data.h && player.health === 0) 
+      if (this.health !== data.h && player.health === 0)
         globals.messages.push(this.name + " has been killed");
       this.health = data.h;
     }
-    if (data.m !== undefined) 
+    if (data.m !== undefined)
       this.maxHealth = data.m;
     if (data.a !== undefined)
       this.setAim(data.a);
@@ -540,11 +542,11 @@ Player.prototype.predict = function(data) {
       diff = Math.abs(this.tank.sx - this.tank.x);
       if (diff < 20 || diff > 100)
         this.tank.x = this.tank.sx;
-      else 
+      else
         this.tank.x = (this.tank.x + this.tank.sx) / 2;
     } if (this.tank.sy !== this.tank.y) {
       diff = Math.abs(this.tank.sy - this.tank.y);
-      if (diff < 20 || diff > 100) 
+      if (diff < 20 || diff > 100)
         this.tank.y = this.tank.sy;
       else
         this.tank.y = (this.tank.y + this.tank.sy) / 2;
@@ -733,11 +735,11 @@ Player.prototype.takeHit = function(damage, ownerTeam) {
     return 0;
 
   var points = 0;
-  if (damage > 0) 
+  if (damage > 0)
     points += Math.min(damage, this.health); // no overkill points
   this.health -= damage;
 
-  if (this.health >= this.maxHealth) 
+  if (this.health >= this.maxHealth)
     this.health = this.maxHealth;
 
   if (this.health <= 0) {
@@ -772,7 +774,7 @@ Player.prototype.respawn = function() {
   this.special[Player.SpecialType.MEDIC].lastFire = this.special[Player.SpecialType.MEDIC].coolDown;
   this.special[Player.SpecialType.SHIELD].lastFire = this.special[Player.SpecialType.SHIELD].coolDown;
   this.hasShield = 0;
-  
+
   var spawn = this.determineSpawn();
   this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
   this.tank.y = Player.SPAWN_POINTS[this.team][spawn].y;
