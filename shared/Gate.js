@@ -7,8 +7,8 @@ var Gate = function(team, hq) {
   this.team = team;
   this.underAttack = 0;
   this.detailsFadeFrames = 0;
-  this.lastFlashCounter = 0;
-  this.health = 1000;
+  this.rubbleCounter = 0;
+  this.health = 250;
   if (this.hq) {
     this.name = (team === 0 ? "Blue HQ" : "Red HQ");
     this.left = 2500;
@@ -72,23 +72,16 @@ Gate.prototype.updateHealth = function(health) {
   }
 };
 
-/*
- *  <100, 100(50,10), 90(45,15), 80(40,20), 70(35,25), 60(30,30) 50(25,35) 40(20,40), 30(15,45) 20(10, 50) 10(5,55) 0(0,60) 
- *  *  ---------------.------------..---------...-----....---.....--......-..................  *  1
- *
- *  if(health < 100 && underattack)
- *    if(health/2 < lastflash)
- *      flash;
- *
- */
-
-
-
 Gate.prototype.update = function() {
+  // Update the flash counter (if it's < 0 we show rubble).
+  //   we only want to flash to rubble if close to death (<250hp).
+  //   we want to show rubble more and more as we get closer to death,
+  //      hence the use of health as a way to see how long to show intact 
+  //      building.
   if(this.hq && this.underAttack > 0 && this.health < 250) {
-    this.lastFlashCounter++;
-    if (this.lastFlashCounter >= this.health/2) 
-      this.lastFlashCounter = (this.health-250)/2;
+    this.rubbleCounter++;
+    if (this.rubbleCounter >= this.health/2) 
+      this.rubbleCounter = (this.health-250)/2;
   }
 
   if (this.underAttack > 0) this.underAttack--;
@@ -115,8 +108,8 @@ Gate.prototype.draw = function() {
     if (this.health > 0) {
 
       if(this.hq) {
-        var flash = this.underAttack > 0 && this.health < 250 && this.lastFlashCounter < 0;
-        globals.ctx.drawImage(globals.resources.hqs[this.team + (flash ? 2 : 0)], pos.left, pos.top);
+        var rubble = this.underAttack > 0 && this.health < 250 && this.rubbleCounter < 0;
+        globals.ctx.drawImage(globals.resources.hqs[this.team + (rubble ? 2 : 0)], pos.left, pos.top);
       }
       else {
         globals.ctx.globalAlpha = this.health / 100; //fades away for the last 100 hp
