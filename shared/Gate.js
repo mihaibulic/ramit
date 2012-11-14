@@ -102,14 +102,12 @@ Gate.prototype.draw = function() {
   if (pos.draw) {
     if (this.health > 0) {
      
+      if (this.hq && this.health < 100) 
+        globals.ctx.drawImage(globals.resources.hqs[this.team + 2], pos.left, pos.top);
+      
+      var res = this.hq ? globals.resources.hqs : globals.resources.gates;
       globals.ctx.globalAlpha = this.alpha/100;
-      if(this.hq) {
-        if (this.health < 100) globals.ctx.drawImage(globals.resources.hqs[this.team + 2], pos.left, pos.top);
-        globals.ctx.drawImage(globals.resources.hqs[this.team], pos.left, pos.top);
-      }
-      else {
-        globals.ctx.drawImage(globals.resources.gates[this.team], pos.left, pos.top - 5);
-      }
+      globals.ctx.drawImage(res[this.team], pos.left, pos.top - 5);
       globals.ctx.globalAlpha = 1;
       
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
