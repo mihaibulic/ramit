@@ -7,6 +7,7 @@ var globals = {
     level: new Image(),
     tanks: new Image(),
     gates: new Image(),
+    hqs: new Image(),
     minimapfade: new Image()
   },
   resources: {
@@ -14,6 +15,7 @@ var globals = {
     tanks: null,
     turrets: null,
     gates: null,
+    hqs: null,
     minimap: null,
     minimapfade: null
   },
@@ -95,7 +97,9 @@ globals.load = function(callback) {
     else if (target === "level") {
       globals.renderLevelTiles();
       globals.renderMinimap();
-    } else if (target === "gates")
+    } else if (target === "hqs")
+      globals.renderHqs();
+    else if (target === "gates")
       globals.renderGates();
     else
       globals.resources[target] = globals.rawImages[target];
@@ -110,6 +114,37 @@ globals.load = function(callback) {
       globals.rawImages[img].src = "images/" + img + ".png";
     }
   }
+};
+
+/**
+ * Renders the headquarters into two separate images
+ */
+globals.renderHqs = function() {
+  globals.remainingResources += 2;
+  globals.resources.hqs = [];
+
+  var renderer = document.getElementById('renderer');
+  var ctx = renderer.getContext('2d');
+
+  var positions = [[0, 0, 100, 100, 0, 0, 100, 100],
+                   [100, 0, 100, 100, 100, 0, 100, 100]];
+  var render = function(i) {
+    renderer.width = 100;
+    renderer.height = 100;
+    ctx.clearRect(0, 0, 100, 100);
+    ctx.drawImage(globals.rawImages.hqs, positions[i][0], positions[i][1],
+                  positions[i][2], positions[i][3], positions[i][4],
+                  positions[i][5], positions[i][6], positions[i][7]);
+
+    var img = new Image();
+    img.src = renderer.toDataURL();
+    img.onload = function() {
+      globals.resources.hqs[i] = img;
+      globals.resourceLoaded();
+    };
+  };
+  render(0);
+  render(1);
 };
 
 /**
