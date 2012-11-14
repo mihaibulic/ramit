@@ -504,8 +504,8 @@ Player.prototype.predict = function(data, you) {
       this.team = data.t;
     if (data.h !== undefined) {
       if (this.health !== data.h && data.h === 0) {
-        var killer = globals.players[data.b];
         var deadName = (this.playerID != you ? this.name : "You");
+        var killer = globals.players[data.b];
         if (killer === undefined)
           globals.messages.push(deadName + " died");
         else {
@@ -554,13 +554,13 @@ Player.prototype.predict = function(data, you) {
     var diff;
     if (this.tank.sx !== this.tank.x) {
       diff = Math.abs(this.tank.sx - this.tank.x);
-      if (diff < 20 || diff > 100)
+      if (diff < 20 || diff > 50)
         this.tank.x = this.tank.sx;
       else
         this.tank.x = (this.tank.x + this.tank.sx) / 2;
     } if (this.tank.sy !== this.tank.y) {
       diff = Math.abs(this.tank.sy - this.tank.y);
-      if (diff < 20 || diff > 100)
+      if (diff < 10 || diff > 50)
         this.tank.y = this.tank.sy;
       else
         this.tank.y = (this.tank.y + this.tank.sy) / 2;
