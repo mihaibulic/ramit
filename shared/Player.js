@@ -524,6 +524,11 @@ Player.prototype.predict = function(data) {
           console.log(this.name + " bought an upgrade");
       this.totalSpent = data.c;
     }
+    if (data.x !== undefined)
+      this.tank.x = data.x;
+    if (data.y !== undefined)
+      this.tank.y = data.y;
+    return;
     if (data.x !== undefined && data.y !== undefined) { 
       moveData = true;
       if (!pos.draw) { //Player offscreen, no smooth merge needed
