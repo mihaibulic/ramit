@@ -520,7 +520,7 @@ Player.prototype.predict = function(data) {
     if (data.p !== undefined)
       this.totalScore = data.p;
     if (data.c !== undefined) {
-       if (this.totalSpent !== data..c)
+       if (this.totalSpent !== data.c)
           console.log(this.name + " bought an upgrade");
       this.totalSpent = data.c;
     }
