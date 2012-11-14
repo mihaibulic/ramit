@@ -131,10 +131,8 @@ Gate.prototype.draw = function() {
         globals.ctx.strokeRect(pos.left, pos.top, rect.width(), rect.height());
       }
     }
-    else if (this.hq) {
+    else if (this.hq) 
       globals.ctx.drawImage(globals.resources.hqs[this.team+2], pos.left, pos.top - 5);
-
-    }
     if (!this.hq) //draw gate outside things
       globals.ctx.drawImage(globals.resources.gates[2], pos.left, pos.top - 5);
   }

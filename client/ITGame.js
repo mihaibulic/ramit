@@ -210,22 +210,6 @@ ITGame.prototype.update = function() {
  * Draw the game state to the canvas.
  */
 ITGame.prototype.draw = function() {
-  if (globals.level.mode === Level.Mode.START) {
-    // game starting
-    // TODO draw special start screen?
-  }
-  else if (globals.level.mode === Level.Mode.END) {
-    //draw headquarters
-    for (var hid in globals.level.hqs) {
-      globals.level.hqs[hid].draw();
-    }
-    
-    // game ending
-    // TODO draw scores and you are [winner|loser] msg
-    
-    return;
-  }
-
   globals.ctx.fillStyle = "#000000";
   globals.ctx.fillRect(0, 0, 1000, 500);
 
@@ -301,6 +285,15 @@ ITGame.prototype.draw = function() {
     globals.ctx.fillStyle = "#ffffff";
     globals.ctx.font = "normal 18px sans-serif";
     globals.ctx.fillText("FPS: " + this.fps, 500, 20);
+  }
+  
+  if (globals.level.mode === Level.Mode.START) {
+    // game starting
+    // TODO draw special start screen?
+  }
+  else if (globals.level.mode === Level.Mode.END) {
+    // game ending
+    // TODO draw scores and you are [winner|loser] msg
   }
 };
 
