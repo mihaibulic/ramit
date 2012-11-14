@@ -7,8 +7,7 @@ var Gate = function(team, hq) {
   this.team = team;
   this.underAttack = 0;
   this.detailsFadeFrames = 0;
-  this.rubbleCounter = 0;
-  this.health = 250;
+  this.health = 100;
   if (this.hq) {
     this.name = (team === 0 ? "Blue HQ" : "Red HQ");
     this.left = 2500;
@@ -73,17 +72,6 @@ Gate.prototype.updateHealth = function(health) {
 };
 
 Gate.prototype.update = function() {
-  // Update the flash counter (if it's < 0 we show rubble).
-  //   we only want to flash to rubble if close to death (<250hp).
-  //   we want to show rubble more and more as we get closer to death,
-  //      hence the use of health as a way to see how long to show intact 
-  //      building.
-  if(this.hq && this.underAttack > 0 && this.health < 250) {
-    this.rubbleCounter++;
-    if (this.rubbleCounter >= this.health/2) 
-      this.rubbleCounter = (this.health-250)/2;
-  }
-
   if (this.underAttack > 0) this.underAttack--;
   // Fade In/Out
   if (this.underAttack < 20 && this.detailsFadeFrames > 0)
