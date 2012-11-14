@@ -537,13 +537,13 @@ Player.prototype.predict = function(data) {
   } else {
     if (this.tank.sx !== this.tank.x) {
       var diff = Math.abs(this.tank.sx - this.tank.x);
-      if (diff < 20 || diff > 100 || diff < 200)
+      if (diff < 20 || diff > 100 || true)
         this.tank.x = this.tank.sx;
       else 
         this.tank.x = (this.tank.x + this.tank.sx) / 2;
-    } if (this.tank.sy !== this.tank.sy) {
+    } if (this.tank.sy !== this.tank.y) {
       var diff = Math.abs(this.tank.sy - this.tank.y);
-      if (diff < 20 || diff > 100 || diff < 200) 
+      if (diff < 20 || diff > 100 || true) 
         this.tank.y = this.tank.sy;
       else
         this.tank.y = (this.tank.y + this.tank.sy) / 2;
