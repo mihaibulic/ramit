@@ -34,10 +34,10 @@ var Gate = function(team, hq) {
 /**
  * Damage the gate.
  * @param {Number} The amount of damage the gate receives.
- * @param {Number} The owner of projectile causing damage.
+ * @param {Player} The owner of projectile causing damage.
  * @returns {Number} The number of points earned for the hit.
  */
-Gate.prototype.takeHit = function(damage, ownerTeam) {
+Gate.prototype.takeHit = function(damage, owner) {
   this.health -= damage;
   if (this.health < 0) this.health = 0;
   if (this.hq && this.health === 0) {
@@ -57,7 +57,7 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
     }
   }
 
-  if (this.team === ownerTeam)
+  if (this.team === owner.team)
     return -1 * damage;
   return 0;
 };
@@ -65,9 +65,14 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
 Gate.prototype.updateHealth = function(health, team, printMessages) {
   if (health !== this.health) {
     if (printMessages && health === 0) {
-      globals.messages.push((this.team === 0 ? "Blue" : "Red") + " Team's " + (this.hq ? "HQ" : "Gate") + " has been destroyed!");
+      var message;
+      if (this.team === team)
+        message = "Your ";
+      else
+        message = "The enemey ";
+      globals.messages.push(message + (this.hq ? "HQ" : "gate") + " has been destroyed!");
     } else if (printMessages && !this.isUnderAttack() && this.team === team) {
-      globals.messages.push("Your " + (this.hq ? "HQ" : "Gate") + " is under attack!");
+      globals.messages.push("Your " + (this.hq ? "HQ" : "gate") + " is under attack!");
     }
     this.underAttack = 600;
     this.health = health;
