@@ -149,7 +149,7 @@ Upgrade.prototype.buy = function(device, type, pid) {
     this.players[pid] = [];
   if (!this.players[pid][device])
     this.players[pid][device] = [];
-  if (!this.players[pid][device][type])
+  if (this.players[pid][device][type] === undefined)
     this.players[pid][device][type] = -1;
   var cost = this.cost[device][type][this.players[pid][device][type] + 1];
   if (cost === undefined) {
@@ -160,6 +160,7 @@ Upgrade.prototype.buy = function(device, type, pid) {
     return;
   } 
   this.players[pid][device][type]++;
+  console.log(buyer.name + " bought an upgrade level " + this.players[pid][device][type]);
   var diff = this.diff[device][type][this.players[pid][device][type]];
   buyer.totalSpent += this.cost[device][type][this.players[pid][device][type]];
   if (globals.diff) {
