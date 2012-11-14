@@ -504,6 +504,13 @@ Player.prototype.predict = function(data, you) {
       this.team = data.t;
     if (data.h !== undefined) {
       if (this.health !== data.h && data.h === 0) {
+        if (this.playerID === you) {
+          globals.keys = {up:0, down:0, left:0, right:0, mine:0, all_mines:0, space:0, shift:0, mounted:0};
+          globals.mouse = {left:0, middle:0, right:0};
+
+          globals.socket.emit("key", {u:0,d:0,l:0,r:0,e:0,q:0,s:0,w:0,m:0});
+          globals.socket.emit("mouse", {l:0,m:0,r:0});
+        }
         var deadName = (this.playerID != you ? this.name : "You");
         var killer = globals.players[data.b];
         if (killer === undefined)
