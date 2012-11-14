@@ -12,8 +12,8 @@ var Gate = function(team, hq) {
     this.name = (team === 0 ? "Blue HQ" : "Red HQ");
     this.left = 2500;
     this.right = 2650;
-    this.top = (team === 0 ? 300 : 2600);
-    this.bottom = (team === 0 ? 450 : 2750);
+    this.top = (team === 0 ? 150 : 2600);
+    this.bottom = (team === 0 ? 300 : 2750);
   } else {
     this.name = (team === 0 ? "Blue Gate" : "Red Gate");
     this.left = 1350;
