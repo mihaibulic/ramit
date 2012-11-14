@@ -62,11 +62,11 @@ Gate.prototype.takeHit = function(damage, ownerTeam) {
   return 0;
 };
 
-Gate.prototype.updateHealth = function(health, team) {
+Gate.prototype.updateHealth = function(health, team, printMessages) {
   if (health !== this.health) {
-    if (health === 0) {
+    if (printMessages && health === 0) {
       globals.messages.push((this.team === 0 ? "Blue" : "Red") + " Team's " + (this.hq ? "HQ" : "Gate") + " has been destroyed!");
-    } else if (!this.isUnderAttack() && this.team === team) {
+    } else if (printMessages && !this.isUnderAttack() && this.team === team) {
       globals.messages.push("Your " + (this.hq ? "HQ" : "Gate") + " is under attack!");
     }
     this.underAttack = 600;

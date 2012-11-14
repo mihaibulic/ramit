@@ -6,7 +6,7 @@ var ITGame = function(team, playerID) {
   globals.socket.on('setup', globals.bind(function(data) {
 
     globals.socket.on('state', globals.bind(function(data) {
-      this.loadState(data);
+      this.loadState(data, false);
     }, this));
 
     globals.socket.on('leave', function(data) {
@@ -25,7 +25,7 @@ var ITGame = function(team, playerID) {
     });
 
     this.player = data.i;
-    this.loadState(data.s);
+    this.loadState(data.s, true);
     this.team = globals.players[this.player].team;
 
     // Input events.
@@ -163,7 +163,7 @@ ITGame.prototype.loadState = function(data, join) {
   if (data.g) {
     for (var g in data.g) {
       if (data.g[g] !== undefined) {
-        globals.level.gates[g].updateHealth(data.g[g]);
+        globals.level.gates[g].updateHealth(data.g[g], this.team, !join);
       }
     }
   }
