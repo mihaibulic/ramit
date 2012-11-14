@@ -123,7 +123,6 @@ ITGame.prototype.loadState = function(data) {
         globals.players[id] = new Player(null, id, data.p[id]);
         player = globals.players[id];
         globals.messages.push(player.name + " has joined the game for the " + (player.team === 0 ? "Blue" : "Red") + " Team");
-        continue;
       } else {
         globals.players[id].predict(data.p[id]);
       }

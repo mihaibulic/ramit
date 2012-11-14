@@ -527,6 +527,7 @@ Player.prototype.predict = function(data) {
     if (data.x !== undefined && data.y !== undefined) { 
       moveData = true;
       if (!pos.draw) { //Player offscreen, no smooth merge needed
+        console.log("moving off screen");
         this.tank.x = data.x;
         this.tank.y = data.y;
         this.tank.sx = data.x;
