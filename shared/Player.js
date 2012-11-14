@@ -308,7 +308,7 @@ Player.prototype.drawHUD = function() {
   if (globals.messages.length > 0) {
     if (globals.messageCounter > 0) {
       for (var m in globals.messages) {
-        globals.ctx.fillText(globals.messages[m], 50, 450);
+        globals.ctx.fillText(globals.messages[m], 500, 450);
         globals.messageCounter--;
         if (globals.messageCounter === 0) {
           delete globals.messages[m];
