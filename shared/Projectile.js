@@ -158,12 +158,14 @@ Projectile.prototype.predict = function() {
   var hit = false;
   var target;
 
+  var barrier = this.getCollisionBarrier({x: this.sx, y: this.sy});
+
   // Collisions with Players
   for (var pid in globals.players) {
     target = globals.players[pid];
     if (target.team === this.team)
       continue;
-    if (target.getCollisionBarrier().intersects(this.getCollisionBarrier())) {
+    if (target.getCollisionBarrier().intersects(barrier)) {
       hit = true;
       break;
     }
@@ -175,7 +177,7 @@ Projectile.prototype.predict = function() {
       target = globals.level.gates[gid];
       if (target.team === this.team)
         continue;
-      if (target.getCollisionBarrier().intersects(this.getCollisionBarrier())) {
+      if (target.getCollisionBarrier().intersects(barrier)) {
         hit = true;
         break;
       }
@@ -188,7 +190,7 @@ Projectile.prototype.predict = function() {
       target = globals.level.hqs[hid];
       if (target.team === this.team)
         continue;
-      if (target.getCollisionBarrier().intersects(this.getCollisionBarrier())) {
+      if (target.getCollisionBarrier().intersects(barrier)) {
         hit = true;
         break;
       }
@@ -198,7 +200,7 @@ Projectile.prototype.predict = function() {
   // Collisions with Walls
   if (!hit) {
     for (var wid in globals.level.walls) {
-      if (globals.level.walls[wid].intersects(this.getCollisionBarrier())) {
+      if (globals.level.walls[wid].intersects(barrier)) {
         hit = true;
         break;
       }
@@ -339,10 +341,13 @@ Projectile.prototype.update = function() {
 /**
  * @returns {Rectangle} A box describing the location of the projectile.
  */
-Projectile.prototype.getCollisionBarrier = function() {
+Projectile.prototype.getCollisionBarrier = function(location) {
+  if (!location)
+    location = this;
+
   if (this.type === Projectile.Type.MINE)
-    return new Rectangle({left: this.x - 14, right: this.x + 14,
-                          top: this.y - 14, bottom: this.y + 14});
-  return new Rectangle({left: this.x - 5, right: this.x + 5,
-                        top: this.y - 5, bottom: this.y + 5});
+    return new Rectangle({left: location.x - 14, right: this.x + 14,
+                          top: location.y - 14, bottom: this.y + 14});
+  return new Rectangle({left: location.x - 5, right: location.x + 5,
+                        top: location.y - 5, bottom: location.y + 5});
 };
