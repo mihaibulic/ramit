@@ -571,7 +571,7 @@ Player.prototype.loadState = function(data, you) {
     }
     if (data.y !== undefined) {
       this.tank.sy = data.y;
-      if (oldHealth === 0 && this.health !== 0)
+      if (oldHealth == 0 && this.health != 0)
         this.tank.y = data.y;
     }
   }
