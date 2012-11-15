@@ -868,12 +868,13 @@ Player.prototype.armShield = function() {
   this.hasShield = this.special[Player.SpecialType.SHIELD].duration;
   this.special[Player.SpecialType.SHIELD].lastFire = 0;
   if (globals.diff) {
-    if (!globals.diff.p)
-      globals.diff.p = {};
-    if (!globals.diff.p[this.playerID])
-      globals.diff.p[this.playerID] = {};
+    var diff = globals.getImmediateDiff();
+    if (!diff.p)
+      diff.p = {};
+    if (!diff.p[this.playerID])
+      diff.p[this.playerID] = {};
 
-    globals.diff.p[this.playerID].d = this.hasShield * 60;
+    diff.p[this.playerID].d = Math.round(this.hasShield * globals.dt);
   }
 };
 
