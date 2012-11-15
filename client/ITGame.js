@@ -216,6 +216,9 @@ ITGame.prototype.predict = function() {
 
     globals.players[pid].predict();
   }
+  for (var qid in globals.projectiles) {
+    globals.projectiles[qid].predict();
+  }
 
   globals.level.x = globals.players[this.player].tank.x - 470;
   globals.level.y = globals.players[this.player].tank.y - 220;
