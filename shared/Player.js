@@ -748,9 +748,9 @@ Player.prototype.move = function() {
 
   var xDiff = x - this.tank.sx;
   var yDiff = y - this.tank.sy;
-  if (xDiff > 4)
+  if (Math.abs(xDiff) > 4)
     console.log("XD: " + xDiff);
-  if (yDiff > 4)
+  if (Math.abs(yDiff) > 4)
     console.log("YD: " + yDiff);
   this.tank.sx = x;
   this.tank.sy = y;
