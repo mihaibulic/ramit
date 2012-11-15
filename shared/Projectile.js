@@ -12,6 +12,8 @@ var Projectile = function(player, type, id, opt_state) {
     this.team = globals.players[this.owner].team;
     this.x = opt_state.x;
     this.y = opt_state.y;
+    this.sx = opt_state.x;
+    this.sy = opt_state.y;
     this.range = opt_state.r;
     this.damage = opt_state.d;
     this.vx = opt_state.vx;
@@ -50,6 +52,8 @@ var Projectile = function(player, type, id, opt_state) {
   this.y = Math.round(this.y);
   this.vx = Math.round(this.vx);
   this.vy = Math.round(this.vy);
+  this.sx = x;
+  this.sy = y;
 
   if (type === Projectile.Type.MINE)
     player.projectile[type].live++;
@@ -125,7 +129,7 @@ Projectile.prototype.draw = function(team) {
       globals.ctx.closePath();
 
       globals.ctx.fill();
-     
+
     }
     else if (this.team === team) {
       var pos = Rectangle.getPos(this);
@@ -138,6 +142,68 @@ Projectile.prototype.draw = function(team) {
                              rect.top - globals.level.y, rect.width(),
                              rect.height());
     }
+  }
+};
+
+Projectile.prototype.predict = function() {
+  var x = this.x;
+  var y = this.y;
+  this.x += Math.round(this.vx / 60);
+  this.y += Math.round(this.vy / 60);
+
+  var hit = false;
+  var target;
+
+  // Collisions with Players
+  for (var pid in globals.players) {
+    target = globals.players[pid];
+    if (target.team === this.team)
+      continue;
+    if (target.getCollisionBarrier().intersects(this.getCollisionBarrier())) {
+      hit = true;
+      break;
+    }
+  }
+
+  // Collisions with Gates
+  if (!hit) {
+    for (var gid in globals.level.gates) {
+      target = globals.level.gates[gid];
+      if (target.team === this.team)
+        continue;
+      if (target.getCollisionBarrier().intersects(this.getCollisionBarrier())) {
+        hit = true;
+        break;
+      }
+    }
+  }
+
+  // Collisions with HQs
+  if (!hit) {
+    for (var hid in globals.level.hqs) {
+      target = globals.level.hqs[hid];
+      if (target.team === this.team)
+        continue;
+      if (target.getCollisionBarrier().intersects(this.getCollisionBarrier())) {
+        hit = true;
+        break;
+      }
+    }
+  }
+
+  // Collisions with Walls
+  if (!hit) {
+    for (var wid in globals.level.walls) {
+      if (globals.level.walls[wid].intersects(this.getCollisionBarrier())) {
+        hit = true;
+        break;
+      }
+    }
+  }
+
+  if (hit) {
+    this.x = x;
+    this.y = y;
   }
 };
 
