@@ -547,6 +547,7 @@ Player.prototype.loadState = function(data, you) {
 };
 
 Player.prototype.predict = function() {
+  window.console.log("predict");
   // Do nothing if dead.
   if (this.health === 0)
     return;
