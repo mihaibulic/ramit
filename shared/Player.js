@@ -54,7 +54,7 @@ var Player = function(team, playerID, opt_state) {
     this.maxHealth = 100;
     this.health = this.maxHealth;
     aim = 0;
-    this.speed = 10;
+    this.speed = 4 * 60;
     this.mounted = Player.SpecialType.ROCKET;
     this.hasShield = 0;
     this.totalScore = 0;
@@ -74,7 +74,7 @@ var Player = function(team, playerID, opt_state) {
   this.projectile[Projectile.Type.NORMAL] = {
     range: 0,
     damage: 5,
-    speed: 5,
+    speed: 5 * 60,
     lastFire: 0,
     coolDown: 20
   };
@@ -90,7 +90,7 @@ var Player = function(team, playerID, opt_state) {
   this.projectile[Projectile.Type.ROCKET] = {
     range: 40,
     damage: 500,
-    speed: 7,
+    speed: 7 * 60,
     lastFire: 0,
     coolDown: 120
   };
@@ -605,6 +605,7 @@ Player.prototype.update = function() {
  */
 Player.prototype.move = function() {
   var speed = (this.tank.direction % 2 === 0) ? this.speed : Player.DIAGONAL_CONST * this.speed;
+  speed /= 60;
   var x = this.tank.x;
   var y = this.tank.y;
   // Which direction left/right, up/down is the tank moving in.
@@ -841,7 +842,7 @@ Player.prototype.armShield = function() {
     if (!globals.diff.p[this.playerID])
       globals.diff.p[this.playerID] = {};
 
-    globals.diff.p[this.playerID].d = this.hasShield;
+    globals.diff.p[this.playerID].d = this.hasShield * 60;
   }
 };
 

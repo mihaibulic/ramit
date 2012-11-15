@@ -13,7 +13,9 @@
  * @param {Object} opt_state A state object to build the explosion with.
  */
 var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt_one_team, opt_state) {
-  this.animationFrame = 0;
+  this.startTime = globals.updateTime;
+  this.length = 5 * (1000 / globals.fps);
+
   if (opt_state) {
     this.type = opt_state.t;
     this.x = opt_state.x;
@@ -36,9 +38,9 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
   if (range > 0) {
     for (var id in globals.players) {
       var player = globals.players[id];
-      if (this.canAffect(player, owner, target)) { 
+      if (this.canAffect(player, owner, target)) {
         var distance = player.getCenterDistance(this);
-        if (distance < range) 
+        if (distance < range)
           owner.addPoints(player.takeHit(Math.round(0.25 * damage + 0.75 * (1 - distance / range) * damage), owner));
       }
     }
@@ -51,7 +53,7 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     if (opt_projectile)
       e.i = opt_projectile.id;
     var type = Explosion.Type.PROJECTILE;
-    if (damage < 0) 
+    if (damage < 0)
       type = Explosion.Type.MEDIC;
     else if (opt_one_team)
       type = Explosion.Type.EMP;
@@ -95,15 +97,16 @@ Explosion.prototype.draw = function() {
   else { //normal
     globals.ctx.strokeStyle = "#FFFF00";
   }
+
+  var progress = (globals.updateTime - this.startTime) / this.length;
   globals.ctx.lineWidth = 5;
   globals.ctx.beginPath();
-  globals.ctx.arc(xPos, yPos, (this.animationFrame + 1) / 5 * range, 0 , 2 * Math.PI);
+  globals.ctx.arc(xPos, yPos, Math.min(progress, 1) * range, 0 , 2 * Math.PI);
   globals.ctx.closePath();
   globals.ctx.stroke();
 
   globals.ctx.lineWidth = 1;
-  this.animationFrame++;
-  if (this.animationFrame > 5)
+  if (progress >= 1)
     return true;
   return false;
 };

@@ -30,8 +30,9 @@ var globals = {
   level: new Level(),
   messages: [],
   messageCounter: 120,
-  lastUpdateTime: 0,
-  dt: 0
+  updateTime: 0,
+  dt: 0,
+  fps: 60
 };
 
 /**

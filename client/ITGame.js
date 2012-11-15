@@ -89,14 +89,14 @@ var ITGame = function(team, playerID) {
     }
 
     // Game loop.
-    globals.lastUpdateTime = new Date().getTime();
+    globals.updateTime = new Date().getTime();
     var gameLoop = globals.bind(function() {
       if (globals.queries.debug === "true")
         this.count++;
 
       var now = new Date().getTime();
-      globals.dt = now - globals.lastUpdateTime;
-      lastUpdateTime = now;
+      globals.dt = now - globals.updateTime;
+      globals.updateTime = now;
 
       this.predict();
       this.draw();
