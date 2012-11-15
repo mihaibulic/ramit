@@ -191,9 +191,9 @@ Projectile.prototype.update = function() {
     globals.players[this.owner].projectile[this.type].live--;
 
   if (!hit && globals.diff) {
-    if (!globals.diff.q)
+    if (!globals.diff.q && (this.vx || this.vy))
       globals.diff.q = {};
-    if (!globals.diff.q[this.id])
+    if (!globals.diff.q[this.id] && (this.vx || this.vy))
       globals.diff.q[this.id] = {};
 
     if (this.vx)
@@ -201,8 +201,10 @@ Projectile.prototype.update = function() {
     if (this.vy)
       globals.diff.q[this.id].y = this.y;
   } else if (hit) {
-    if (globals.diff.q)
+    if (globals.diff && globals.diff.q)
       delete globals.diff.q[this.id];
+    if (globals.immediateDiff && globals.immediateDiff.q)
+      delete globals.immediateDiff.q[this.id];
   }
 
   return hit;
