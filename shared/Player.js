@@ -634,7 +634,7 @@ Player.prototype.update = function() {
 Player.prototype.move = function() {
   var speed = Math.round(this.speed * globals.dt / 1000);
   speed = (this.tank.direction % 2 === 0) ? speed : Player.DIAGONAL_CONST * speed;
-  console.log(speed);
+
   var x = this.tank.sx;
   var y = this.tank.sy;
   // Which direction left/right, up/down is the tank moving in.
@@ -748,6 +748,10 @@ Player.prototype.move = function() {
 
   var xDiff = x - this.tank.sx;
   var yDiff = y - this.tank.sy;
+  if (xDiff > 4)
+    console.log(xDiff);
+  if (yDiff > 4)
+    console.log(xDiff);
   this.tank.sx = x;
   this.tank.sy = y;
   this.tank.x += xDiff;
