@@ -372,8 +372,10 @@ Player.prototype.updateAim = function(e) {
   var r = Math.atan2(e.clientY - centerPoint.y, e.clientX - centerPoint.x) * 180 / Math.PI;
   if (r < 0)
     r += 360;
-  this.tank.turretAim = Math.floor(r / 2);
-  globals.socket.emit('aim', {a: Math.floor(r/2)});
+  var aim = Math.floor(r / 2)
+  if (this.tank.turretAim !== aim)
+    globals.socket.emit('aim', {a: aim});
+  this.tank.turretAim = aim;
 };
 
 Player.prototype.updateMouse = function(e) {
