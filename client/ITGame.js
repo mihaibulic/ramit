@@ -6,7 +6,6 @@ var ITGame = function(team, playerID) {
   globals.socket.on('setup', globals.bind(function(data) {
 
     globals.socket.on('state', globals.bind(function(data) {
-      window.console.log(JSON.stringify(data));
       this.loadState(data, false);
     }, this));
 
