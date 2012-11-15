@@ -558,21 +558,24 @@ Player.prototype.predict = function() {
     this.tank.y = this.tank.sy;
   } else {
     var diff;
+    var dir;
     if (this.tank.sx !== this.tank.x) {
       diff = Math.abs(this.tank.sx - this.tank.x);
+      dir = (this.tank.sx - this.tank.x) / diff;
       if (diff > 10)
         this.tank.x = this.tank.sx;
       else {
-        this.tank.x = Math.round((this.tank.x + this.tank.sx) / 2);
+        this.tank.x += dir * Math.min(2, diff);
       }
     }
 
     if (this.tank.sy !== this.tank.y) {
       diff = Math.abs(this.tank.sy - this.tank.y);
-      if (diff > 20)
+      dir = (this.tank.sy - this.tank.y) / diff;
+      if (diff > 10)
         this.tank.y = this.tank.sy;
       else
-        this.tank.y = Math.round((this.tank.y + this.tank.sy) / 2);
+        this.tank.y += dir * Math.min(2, diff);
     }
   }
 
