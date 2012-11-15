@@ -372,7 +372,7 @@ Player.prototype.updateAim = function(e) {
   var r = Math.atan2(e.clientY - centerPoint.y, e.clientX - centerPoint.x) * 180 / Math.PI;
   if (r < 0)
     r += 360;
-  var aim = Math.floor(r / 2)
+  var aim = Math.floor(r / 2);
   if (this.tank.turretAim !== aim)
     globals.socket.emit('aim', {a: aim});
   this.tank.turretAim = aim;
@@ -571,7 +571,7 @@ Player.prototype.loadState = function(data, you) {
     }
     if (data.y !== undefined) {
       this.tank.sy = data.y;
-      if (oldHealth == 0 && this.health != 0)
+      if (oldHealth === 0 && this.health !== 0)
         this.tank.y = data.y;
     }
   }
@@ -614,7 +614,7 @@ Player.prototype.predict = function() {
 
   if (this.hasShield)
     this.hasShield = Math.max(0, this.hasShield - globals.dt);
-}
+};
 
 /**
  * Update the state of the Player.

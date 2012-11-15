@@ -49,7 +49,7 @@ globals.getImmediateDiff = function() {
     return globals.diff;
   else
     return globals.immediateDiff;
-}
+};
 
 /**
  * Explodes projectiles of a player
