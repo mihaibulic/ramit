@@ -113,8 +113,8 @@ Projectile.prototype.draw = function(team) {
         globals.ctx.beginPath();
         for (var i = 1; i < 10; i++) {
           console.log("vx, vy: " + this.vx + ", " + this.vy);
-          var xTail = xPos - this.vx * i / 60;
-          var yTail = yPos - this.vy * i / 60;
+          var xTail = xPos - this.vx * i / 60 / 200 / 200;
+          var yTail = yPos - this.vy * i / 60 / 200 / 200;
           console.log("xtail, yTail: " + xTail + ", " + yTail);
           globals.ctx.arc(xPos - this.vx*i*20, yPos - this.vy*i*20, 20, 0, 2 * Math.PI);
         }
