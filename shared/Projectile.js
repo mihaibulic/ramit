@@ -111,12 +111,12 @@ Projectile.prototype.draw = function(team) {
       if (this.type === Projectile.Type.ROCKET) {
         globals.ctx.fillStyle = "#FFFF00";
         globals.ctx.beginPath();
-        for (var i = 1; i < 2; i++) { //will be more
+        for (var i = 1; i < 5; i++) { //will be more
           console.log("vx, vy: " + this.vx + ", " + this.vy);
-          var xTail = this.vx * i / 500;
-          var yTail = this.vy * i / 500;
+          var xTail = this.vx * i * i / 200;
+          var yTail = this.vy * i * i / 200;
           console.log("xtail, yTail: " + xTail + ", " + yTail);
-          globals.ctx.arc(xPos - xTail, yPos - yTail, 20, 0, 2 * Math.PI);
+          globals.ctx.arc(xPos - xTail, yPos - yTail, 3, 0, 2 * Math.PI);
         }
         globals.ctx.closePath();
 
