@@ -105,7 +105,7 @@ Projectile.prototype.draw = function(team) {
         globals.ctx.fillStyle = "#FFFF00";
         globals.ctx.beginPath();
         for (var i = 0; i < 10; i++) {
-          globals.ctx.arc(xPos - this.vx*i*3, yPos - this.vy*i*3, 20, 0, 2 * Math.PI);
+          globals.ctx.arc(xPos - this.vx*i*20, yPos - this.vy*i*20, 20, 0, 2 * Math.PI);
         }
         globals.ctx.closePath();
 
