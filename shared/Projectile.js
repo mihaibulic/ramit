@@ -100,6 +100,8 @@ Projectile.prototype.getAbsoluteState = function() {
  * @param {int} team for drawing only friendly mines
  */
 Projectile.prototype.draw = function(team) {
+  if (this.hitWall)
+    return;
   var xPos = this.x - globals.level.x;
   var yPos = this.y - globals.level.y;
 
