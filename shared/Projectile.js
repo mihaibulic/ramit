@@ -104,8 +104,8 @@ Projectile.prototype.draw = function(team) {
       if (this.type === Projectile.Type.ROCKET) {
         globals.ctx.fillStyle = "#FFFF00";
         globals.ctx.beginPath();
-        for (var i = 0; i < 10; i++) {
-          console.log("vx, vy, " + this.vx + ", " + this.vy);
+        for (var i = 1; i < 10; i++) {
+          console.log("vx, vy: " + this.vx + ", " + this.vy);
           globals.ctx.arc(xPos - this.vx*i*20, yPos - this.vy*i*20, 20, 0, 2 * Math.PI);
         }
         globals.ctx.closePath();
