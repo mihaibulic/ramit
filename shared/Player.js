@@ -24,6 +24,18 @@ var Player = function(team, playerID, opt_state) {
     mounted: 1,
     u: false
   };
+  this.sentKeys = {
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+    mine: false,
+    all_mines: false,
+    space: false,
+    shift: false,
+    mounted: 1,
+    u: false
+  };
   this.mouse = {
     left: false,
     middle: false,
@@ -403,27 +415,27 @@ Player.prototype.updateKeys = function(e) {
   var mounting = false;
   switch (e.keyCode) {
   case 87: // W
-    if (Boolean(this.keys.up) !== value) {
+    if (Boolean(this.sentKeys.up) !== value) {
       diff.u = value;
-      this.keys.up = value;
+      this.sentKeys.up = value;
     }
     break;
   case 65: // A
-    if (Boolean(this.keys.left) !== value) {
+    if (Boolean(this.sentKeys.left) !== value) {
       diff.l = value;
-      this.keys.left = value;
+      this.sentKeys.left = value;
     }
     break;
   case 83: // S
-    if (Boolean(this.keys.down) !== value) {
+    if (Boolean(this.sentKeys.down) !== value) {
       diff.d = value;
-      this.keys.down = value;
+      this.sentKeys.down = value;
     }
     break;
   case 68: // D
-    if (Boolean(this.keys.right) !== value) {
+    if (Boolean(this.sentKeys.right) !== value) {
       diff.r = value;
-      this.keys.right = value;
+      this.sentKeys.right = value;
     }
     break;
   case 32: // Space
@@ -524,7 +536,7 @@ Player.prototype.loadState = function(data, you) {
       this.maxHealth = data.m;
     if (data.a !== undefined && this.playerID != you)
       this.setAim(data.a);
-    if (data.k !== undefined && this.playerID != you)
+    if (data.k !== undefined)
       this.setKeyValue(data.k);
     if (data.s !== undefined)
       this.speed = data.s;
