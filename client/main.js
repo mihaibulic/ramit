@@ -130,12 +130,13 @@ globals.renderMines = function() {
   var renderer = document.getElementById('renderer');
   var ctx = renderer.getContext('2d');
 
-  var positions = [[0, 0, 28, 28, 0, 0, 28, 28],
-                   [28, 0, 28, 28, 0, 0, 28, 28]];
+  var n = 28;
+  var positions = [[0, 0, n, n, 0, 0, n, n],
+                   [n, 0, n, n, 0, 0, n, n]];
   var render = function(i) {
-    renderer.width = 20;
-    renderer.height = 20;
-    ctx.clearRect(0, 0, 20, 20);
+    renderer.width = n;
+    renderer.height = n;
+    ctx.clearRect(0, 0, n, n);
     ctx.drawImage(globals.rawImages.mines, positions[i][0], positions[i][1],
                   positions[i][2], positions[i][3], positions[i][4],
                   positions[i][5], positions[i][6], positions[i][7]);
