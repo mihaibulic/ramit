@@ -578,7 +578,7 @@ Player.prototype.predict = function() {
       diff = Math.abs(this.tank.sx - this.tank.x);
       dir = (this.tank.sx - this.tank.x) / diff;
       if (diff > 50) {
-        console.log("X " + this.tank.x + " " + this.tank.sx);
+        console.log("########X " + this.tank.x + " " + this.tank.sx);
         this.tank.x = this.tank.sx;
       }else {
         this.tank.x += dir * Math.min(2, diff);
@@ -589,7 +589,7 @@ Player.prototype.predict = function() {
       diff = Math.abs(this.tank.sy - this.tank.y);
       dir = (this.tank.sy - this.tank.y) / diff;
       if (diff > 50) {
-        console.log("Y " + this.tank.y + " " + this.tank.sy);
+        console.log("########Y " + this.tank.y + " " + this.tank.sy);
         this.tank.y = this.tank.sy;
       }
       else
@@ -634,7 +634,7 @@ Player.prototype.update = function() {
 Player.prototype.move = function() {
   var speed = Math.round(this.speed * globals.dt / 1000);
   speed = (this.tank.direction % 2 === 0) ? speed : Player.DIAGONAL_CONST * speed;
-
+  console.log(speed);
   var x = this.tank.sx;
   var y = this.tank.sy;
   // Which direction left/right, up/down is the tank moving in.
