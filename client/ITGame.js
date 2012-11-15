@@ -126,10 +126,10 @@ ITGame.prototype.loadState = function(data, join) {
         globals.players[id] = new Player(null, id, data.p[id]);
         player = globals.players[id];
         if (id == this.player)
-          globals.messages.push("You have joined the " + (player.team === 0 ? "Blue" : "Red") + " Team");
+          globals.messages.push("You have joined the " + (player.team === 0 ? "Blue" : "Red") + " Team.");
         else if (!join)
           globals.messages.push(player.name + " has joined the the " +
-                                (player.team === 0 ? "Blue" : "Red") + " Team");
+                                (player.team === 0 ? "Blue" : "Red") + " Team.");
       } else {
         globals.players[id].loadState(data.p[id], this.player);
       }
