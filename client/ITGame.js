@@ -186,7 +186,7 @@ ITGame.prototype.loadState = function(data, join) {
 };
 
 /**
- * Update the game state.
+ * Predict the updated the game state.
  */
 ITGame.prototype.predict = function() {
   if (globals.level.mode === Level.Mode.START) {

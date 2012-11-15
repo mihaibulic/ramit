@@ -612,9 +612,9 @@ Player.prototype.update = function() {
 Player.prototype.move = function() {
   var speed = Math.round(this.speed * globals.dt / 1000);
   speed = (this.tank.direction % 2 === 0) ? speed : Player.DIAGONAL_CONST * speed;
-  console.log(speed);
-  var x = this.tank.x;
-  var y = this.tank.y;
+
+  var x = this.tank.sx;
+  var y = this.tank.sy;
   // Which direction left/right, up/down is the tank moving in.
   var xDir = 1;
   var yDir = 1;
@@ -642,9 +642,9 @@ Player.prototype.move = function() {
   // The collision box of the tank.
   var tankBox = this.getCollisionBarrier();
   //The collision box after the tank moves in the Y direction.
-  var rectYMovement = this.getCollisionBarrier({x: this.tank.x, y: y});
+  var rectYMovement = this.getCollisionBarrier({x: this.tank.sx, y: y});
   //The collision box after the tank moves in the X direction.
-  var rectXMovement = this.getCollisionBarrier({x: x, y: this.tank.y});
+  var rectXMovement = this.getCollisionBarrier({x: x, y: this.tank.sy});
   var distance;
 
   //check walls
@@ -653,13 +653,13 @@ Player.prototype.move = function() {
       // Moving up/down collided with a wall, move up to the wall but no
       // farther.
       distance = tankBox.getYDistance(globals.level.walls[i]);
-      y = this.tank.y + ((distance - 1) * yDir);
+      y = this.tank.sy + ((distance - 1) * yDir);
     }
     if (rectXMovement.intersects(globals.level.walls[i])) {
       // Moving left/right collided with a wall, move up to the wall but no
       // farther.
       distance = tankBox.getXDistance(globals.level.walls[i]);
-      x = this.tank.x + ((distance - 1) * xDir);
+      x = this.tank.sx + ((distance - 1) * xDir);
     }
   }
 
@@ -672,13 +672,13 @@ Player.prototype.move = function() {
         // Moving up/down collided with a gate, move up to the gate but no
         // farther.
         distance = tankBox.getYDistance(box);
-        y = this.tank.y + ((distance - 1) * yDir);
+        y = this.tank.sy + ((distance - 1) * yDir);
       }
       if (rectXMovement.intersects(box)) {
         // Moving left/right collided with a gate, move up to the gate but no
         // farther.
         distance = tankBox.getXDistance(box);
-        x = this.tank.x + ((distance - 1) * xDir);
+        x = this.tank.sx + ((distance - 1) * xDir);
       }
     }
   }
@@ -693,22 +693,22 @@ Player.prototype.move = function() {
       // Moving up/down collided with a tank, move up to the tank but no
       // farther.
       distance = tankBox.getYDistance(barrier);
-      y = this.tank.y + ((distance - 1) * yDir);
+      y = this.tank.sy + ((distance - 1) * yDir);
     }
     if (rectXMovement.intersects(barrier)) {
       // Moving left/right collided with a tank, move up to the tank but no
       // farther.
       distance = tankBox.getXDistance(barrier);
-      x = this.tank.x + ((distance - 1) * xDir);
+      x = this.tank.sx + ((distance - 1) * xDir);
     }
   }
 
   // Update the diff for this player.
   if (globals.diff) {
     var diff = {};
-    if (this.tank.x !== x)
+    if (this.tank.sx !== x)
       diff.x = x;
-    if (this.tank.y !== y)
+    if (this.tank.sy !== y)
       diff.y = y;
 
     if (!globals.isObjectEmpty(diff)) {
@@ -724,12 +724,12 @@ Player.prototype.move = function() {
     }
   }
 
-  var xDiff = x - this.tank.x;
-  var yDiff = y - this.tank.y;
-  this.tank.x = x;
-  this.tank.y = y;
-  this.tank.xs += xDiff;
-  this.tank.ys += yDiff;
+  var xDiff = x - this.tank.sx;
+  var yDiff = y - this.tank.sy;
+  this.tank.sx = x;
+  this.tank.sy = y;
+  this.tank.x += xDiff;
+  this.tank.y += yDiff;
 };
 
 /**
