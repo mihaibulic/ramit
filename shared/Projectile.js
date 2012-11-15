@@ -208,8 +208,8 @@ Projectile.prototype.update = function() {
  */
 Projectile.prototype.getCollisionBarrier = function() {
   if (this.type === Projectile.Type.MINE)
-    return new Rectangle({left: this.x - 10, right: this.x + 10,
-                          top: this.y - 10, bottom: this.y + 10});
+    return new Rectangle({left: this.x - 14, right: this.x + 14,
+                          top: this.y - 14, bottom: this.y + 14});
   return new Rectangle({left: this.x - 5, right: this.x + 5,
                         top: this.y - 5, bottom: this.y + 5});
 };
