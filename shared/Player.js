@@ -567,48 +567,34 @@ Player.prototype.predict = function() {
     return;
 
   var pos = Rectangle.getPos(this.getCollisionBarrier());
+
+  this.move();
+
   // If player is offscreen, no smooth merge needed
   if (!pos.draw) {
-    console.log("3X " + this.tank.x + " " + this.tank.sx);
     this.tank.x = this.tank.sx;
-    console.log("3X " + this.tank.x + " " + this.tank.sx);
-    console.log("3Y " + this.tank.y + " " + this.tank.sy);
     this.tank.y = this.tank.sy;
-    console.log("3Y " + this.tank.y + " " + this.tank.sy);
   } else {
     var diff;
     var dir;
     if (this.tank.sx !== this.tank.x) {
       diff = Math.abs(this.tank.sx - this.tank.x);
       dir = (this.tank.sx - this.tank.x) / diff;
-      if (diff > 50) {
-        console.log("########X " + this.tank.x + " " + this.tank.sx);
+      if (diff > 50)
         this.tank.x = this.tank.sx;
-        console.log("@@@@@@@@X " + this.tank.x + " " + this.tank.sx);
-      } else {
-        console.log("2X " + this.tank.x + " " + this.tank.sx);
+      else
         this.tank.x += dir * Math.min(2, diff);
-        console.log("2X " + this.tank.x + " " + this.tank.sx);
-      }
     }
 
     if (this.tank.sy !== this.tank.y) {
       diff = Math.abs(this.tank.sy - this.tank.y);
       dir = (this.tank.sy - this.tank.y) / diff;
-      if (diff > 50) {
-        console.log("########Y " + this.tank.y + " " + this.tank.sy);
+      if (diff > 50)
         this.tank.y = this.tank.sy;
-        console.log("@@@@@@@@Y " + this.tank.y + " " + this.tank.sy);
-      }
-      else {
-        console.log("2Y " + this.tank.y + " " + this.tank.sy);
+      else
         this.tank.y += dir * Math.min(2, diff);
-        console.log("2Y " + this.tank.y + " " + this.tank.sy);
-      }
     }
   }
-
-  this.move();
 
   if (this.hasShield)
     this.hasShield = Math.max(0, this.hasShield - globals.dt);
@@ -761,12 +747,8 @@ Player.prototype.move = function() {
   var yDiff = y - this.tank.sy;
   this.tank.sx = x;
   this.tank.sy = y;
-  console.log("1X " + this.tank.x + " " + this.tank.sx);
   this.tank.x += xDiff;
-  console.log("1X " + this.tank.x + " " + this.tank.sx);
-  console.log("1Y " + this.tank.y + " " + this.tank.sy);
   this.tank.y += yDiff;
-  console.log("1Y " + this.tank.y + " " + this.tank.sy);
 };
 
 /**
