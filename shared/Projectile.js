@@ -221,7 +221,7 @@ Projectile.prototype.predict = function() {
   } else {
     var diff;
     var dir;
-    if (this.sx !== this..x) {
+    if (this.sx !== this.x) {
       diff = Math.abs(this.sx - this.x);
       dir = (this.sx - this.x) / diff;
       if (diff > 50)
