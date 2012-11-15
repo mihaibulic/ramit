@@ -562,7 +562,6 @@ Player.prototype.predict = function() {
     if (this.tank.sx !== this.tank.x) {
       diff = Math.abs(this.tank.sx - this.tank.x);
       dir = (this.tank.sx - this.tank.x) / diff;
-      console.log(this.tank.sx + " " + this.tank.x + " " + diff + " " + dir);
       if (diff > 50)
         this.tank.x = this.tank.sx;
       else {
@@ -573,7 +572,6 @@ Player.prototype.predict = function() {
     if (this.tank.sy !== this.tank.y) {
       diff = Math.abs(this.tank.sy - this.tank.y);
       dir = (this.tank.sy - this.tank.y) / diff;
-      console.log(this.tank.sy + " " + this.tank.y + " " + diff + " " + dir);
       if (diff > 50)
         this.tank.y = this.tank.sy;
       else
