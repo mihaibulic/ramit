@@ -519,6 +519,8 @@ Player.prototype.updateKeys = function(e) {
  * @param {Number} player id of local player
  */
 Player.prototype.loadState = function(data, you) {
+  var oldHealth = this.health;
+
   var moveData = false;
   if (data) { //merge with server
     if (data.n !== undefined)
@@ -562,10 +564,16 @@ Player.prototype.loadState = function(data, you) {
           console.log(this.name + " bought an upgrade");
       this.totalSpent = data.c;
     }
-    if (data.x !== undefined)
+    if (data.x !== undefined) {
       this.tank.sx = data.x;
-    if (data.y !== undefined)
+      if (oldHealth === 0 && this.health !== 0)
+        this.tank.x = data.x;
+    }
+    if (data.y !== undefined) {
       this.tank.sy = data.y;
+      if (oldHealth === 0 && this.health !== 0)
+        this.tank.y = data.y;
+    }
   }
 };
 
