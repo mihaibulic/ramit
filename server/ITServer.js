@@ -130,7 +130,7 @@ var update = function() {
  */
 var emitState = function(override) {
   globals.lastAbsolute++;
-  if(globals.lastAbsolute >= 300 || override) {
+  if (globals.lastAbsolute >= 300 || override) {
     var absoluteState = getAbsoluteState();
     globals.lastAbsolute = 0;
 
@@ -138,11 +138,11 @@ var emitState = function(override) {
       absoluteState.e = globals.diff.e;
 
     io.sockets.emit('state', absoluteState);
-  }
-  else if(!globals.isObjectEmpty(globals.diff))
+    globals.diff = {};
+  } else if (!globals.isObjectEmpty(globals.diff) && globals.lastAbsolute % 10 === 0) {
     io.sockets.emit('state', globals.diff);
-
-  globals.diff = {};
+    globals.diff = {};
+  }
 };
 
 /**
