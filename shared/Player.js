@@ -569,8 +569,12 @@ Player.prototype.predict = function() {
   var pos = Rectangle.getPos(this.getCollisionBarrier());
   // If player is offscreen, no smooth merge needed
   if (!pos.draw) {
+    console.log("3X " + this.tank.x + " " + this.tank.sx);
     this.tank.x = this.tank.sx;
+    console.log("3X " + this.tank.x + " " + this.tank.sx);
+    console.log("3Y " + this.tank.y + " " + this.tank.sy);
     this.tank.y = this.tank.sy;
+    console.log("3Y " + this.tank.y + " " + this.tank.sy);
   } else {
     var diff;
     var dir;
@@ -582,7 +586,9 @@ Player.prototype.predict = function() {
         this.tank.x = this.tank.sx;
         console.log("@@@@@@@@X " + this.tank.x + " " + this.tank.sx);
       } else {
+        console.log("2X " + this.tank.x + " " + this.tank.sx);
         this.tank.x += dir * Math.min(2, diff);
+        console.log("2X " + this.tank.x + " " + this.tank.sx);
       }
     }
 
@@ -594,8 +600,11 @@ Player.prototype.predict = function() {
         this.tank.y = this.tank.sy;
         console.log("@@@@@@@@Y " + this.tank.y + " " + this.tank.sy);
       }
-      else
+      else {
+        console.log("2Y " + this.tank.y + " " + this.tank.sy);
         this.tank.y += dir * Math.min(2, diff);
+        console.log("2Y " + this.tank.y + " " + this.tank.sy);
+      }
     }
   }
 
@@ -752,8 +761,12 @@ Player.prototype.move = function() {
   var yDiff = y - this.tank.sy;
   this.tank.sx = x;
   this.tank.sy = y;
+  console.log("1X " + this.tank.x + " " + this.tank.sx);
   this.tank.x += xDiff;
+  console.log("1X " + this.tank.x + " " + this.tank.sx);
+  console.log("1Y " + this.tank.y + " " + this.tank.sy);
   this.tank.y += yDiff;
+  console.log("1Y " + this.tank.y + " " + this.tank.sy);
 };
 
 /**
