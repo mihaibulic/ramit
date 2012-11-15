@@ -580,7 +580,8 @@ Player.prototype.predict = function() {
       if (diff > 50) {
         console.log("########X " + this.tank.x + " " + this.tank.sx);
         this.tank.x = this.tank.sx;
-      }else {
+        console.log("@@@@@@@@X " + this.tank.x + " " + this.tank.sx);
+      } else {
         this.tank.x += dir * Math.min(2, diff);
       }
     }
@@ -591,6 +592,7 @@ Player.prototype.predict = function() {
       if (diff > 50) {
         console.log("########Y " + this.tank.y + " " + this.tank.sy);
         this.tank.y = this.tank.sy;
+        console.log("@@@@@@@@Y " + this.tank.y + " " + this.tank.sy);
       }
       else
         this.tank.y += dir * Math.min(2, diff);
@@ -748,10 +750,6 @@ Player.prototype.move = function() {
 
   var xDiff = x - this.tank.sx;
   var yDiff = y - this.tank.sy;
-  if (Math.abs(xDiff) > 4)
-    console.log("XD: " + xDiff);
-  if (Math.abs(yDiff) > 4)
-    console.log("YD: " + yDiff);
   this.tank.sx = x;
   this.tank.sy = y;
   this.tank.x += xDiff;
