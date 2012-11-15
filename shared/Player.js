@@ -86,7 +86,7 @@ var Player = function(team, playerID, opt_state) {
   this.projectile[Projectile.Type.NORMAL] = {
     range: 0,
     damage: 5,
-    speed: 5 * 60,
+    speed: 8 * 60,
     lastFire: 0,
     coolDown: 20
   };
@@ -102,7 +102,7 @@ var Player = function(team, playerID, opt_state) {
   this.projectile[Projectile.Type.ROCKET] = {
     range: 40,
     damage: 500,
-    speed: 7 * 60,
+    speed: 9 * 60,
     lastFire: 0,
     coolDown: 120
   };
