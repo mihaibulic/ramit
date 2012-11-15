@@ -216,8 +216,8 @@ Projectile.prototype.predict = function() {
   var pos = Rectangle.getPos(this.getCollisionBarrier());
   // It is not visible so no smoothing needed.
   if (!pos.draw) {
-    this.x = this.tank.sx;
-    this.y = this.tank.sy;
+    this.x = this.sx;
+    this.y = this.sy;
   } else {
     var diff;
     var dir;
