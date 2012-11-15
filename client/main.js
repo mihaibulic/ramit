@@ -8,6 +8,7 @@ var globals = {
     tanks: new Image(),
     gates: new Image(),
     hqs: new Image(),
+    mines: new Image(),
     minimapfade: new Image()
   },
   resources: {
