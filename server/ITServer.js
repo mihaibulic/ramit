@@ -48,7 +48,7 @@ globals.getImmediateDiff = function() {
   if (globals.sendFullDiff())
     return globals.diff;
   else
-    return globals.immediateDiff();
+    return globals.immediateDiff;
 }
 
 /**
