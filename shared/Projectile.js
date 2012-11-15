@@ -6,6 +6,7 @@
  * @param {Object} opt_state An optional state to build the Projectile with.
  */
 var Projectile = function(player, type, id, opt_state) {
+  this.hitWall = false;
   if (opt_state) {
     this.id = id;
     this.owner = opt_state.i;
@@ -209,6 +210,7 @@ Projectile.prototype.predict = function() {
 
   // Move back if collision detected
   if (hit) {
+    this.hitWall = true;
     this.x = x;
     this.y = y;
     this.sx = sx;

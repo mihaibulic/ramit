@@ -143,10 +143,11 @@ ITGame.prototype.loadState = function(data, join) {
         continue;
       }
 
+      globals.projectiles[id].hitWall = false;
       if (data.q[id].x !== undefined)
-        globals.projectiles[id].x = data.q[id].x;
+        globals.projectiles[id].sx = data.q[id].x;
       if (data.q[id].y !== undefined)
-        globals.projectiles[id].y = data.q[id].y;
+        globals.projectiles[id].sy = data.q[id].y;
     }
   }
   // Explosions
