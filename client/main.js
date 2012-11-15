@@ -130,8 +130,8 @@ globals.renderMines = function() {
   var renderer = document.getElementById('renderer');
   var ctx = renderer.getContext('2d');
 
-  var positions = [[0, 0, 20, 20, 0, 0, 20, 20],
-                   [20, 0, 20, 20, 0, 0, 20, 20]];
+  var positions = [[0, 0, 28, 28, 0, 0, 28, 28],
+                   [28, 0, 28, 28, 0, 0, 28, 28]];
   var render = function(i) {
     renderer.width = 20;
     renderer.height = 20;
