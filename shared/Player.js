@@ -491,11 +491,11 @@ Player.prototype.updateKeys = function(e) {
 };
 
 /**
- * Predict player as well as merge with any data from server.
- * @param {see GoogleDoc} state message of player
- * @param {int} player id of local player
+ * Load the state from the server message.
+ * @param {Object} state message of player
+ * @param {Number} player id of local player
  */
-Player.prototype.predict = function(data, you) {
+Player.prototype.loadState = function(data, you) {
   var moveData = false;
   if (data) { //merge with server
     if (data.n !== undefined)
@@ -522,9 +522,9 @@ Player.prototype.predict = function(data, you) {
     }
     if (data.m !== undefined)
       this.maxHealth = data.m;
-    if (data.a !== undefined)
+    if (data.a !== undefined && this.playerID != you)
       this.setAim(data.a);
-    if (data.k !== undefined)
+    if (data.k !== undefined && this.playerID != you)
       this.setKeyValue(data.k);
     if (data.s !== undefined)
       this.speed = data.s;
@@ -544,29 +544,42 @@ Player.prototype.predict = function(data, you) {
     if (data.y !== undefined)
       this.tank.sy = data.y;
   }
+};
+
+Player.prototype.predict = function() {
+  // Do nothing if dead.
   if (this.health === 0)
     return;
+
   var pos = Rectangle.getPos(this.getCollisionBarrier());
-  if (!pos.draw) { //Player offscreen, no smooth merge needed
+  // If player is offscreen, no smooth merge needed
+  if (!pos.draw) {
     this.tank.x = this.tank.sx;
     this.tank.y = this.tank.sy;
   } else {
     var diff;
     if (this.tank.sx !== this.tank.x) {
       diff = Math.abs(this.tank.sx - this.tank.x);
-      if (diff < 20 || diff > 50)
+      if (diff < 8 || diff > 20)
         this.tank.x = this.tank.sx;
       else
         this.tank.x = (this.tank.x + this.tank.sx) / 2;
-    } if (this.tank.sy !== this.tank.y) {
+    }
+
+    if (this.tank.sy !== this.tank.y) {
       diff = Math.abs(this.tank.sy - this.tank.y);
-      if (diff < 10 || diff > 50)
+      if (diff < 8 || diff > 20)
         this.tank.y = this.tank.sy;
       else
         this.tank.y = (this.tank.y + this.tank.sy) / 2;
     }
   }
-};
+
+  this.move();
+
+  if (this.hasShield)
+    this.hasShield = Math.max(0, this.hasShield - globals.dt);
+}
 
 /**
  * Update the state of the Player.
@@ -605,7 +618,8 @@ Player.prototype.update = function() {
  */
 Player.prototype.move = function() {
   var speed = (this.tank.direction % 2 === 0) ? this.speed : Player.DIAGONAL_CONST * this.speed;
-  speed /= 60;
+  speed *= globals.dt / 1000;
+  speed = Math.round(speed);
   var x = this.tank.x;
   var y = this.tank.y;
   // Which direction left/right, up/down is the tank moving in.
@@ -681,15 +695,15 @@ Player.prototype.move = function() {
   for (var p in globals.players) {
     if (globals.players[p] === this) // Do not collide with myself
       continue;
-    barrier =    globals.players[p].getCollisionBarrier();
+    barrier = globals.players[p].getCollisionBarrier();
     if (rectYMovement.intersects(barrier)) {
-      // Moving up/down collided with a wall, move up to the wall but no
+      // Moving up/down collided with a tank, move up to the tank but no
       // farther.
       distance = tankBox.getYDistance(barrier);
       y = this.tank.y + ((distance - 1) * yDir);
     }
     if (rectXMovement.intersects(barrier)) {
-      // Moving left/right collided with a wall, move up to the wall but no
+      // Moving left/right collided with a tank, move up to the tank but no
       // farther.
       distance = tankBox.getXDistance(barrier);
       x = this.tank.x + ((distance - 1) * xDir);
@@ -717,8 +731,12 @@ Player.prototype.move = function() {
     }
   }
 
+  var xDiff = x - this.tank.x;
+  var yDiff = y - this.tank.y;
   this.tank.x = x;
   this.tank.y = y;
+  this.tank.xs += xDiff;
+  this.tank.ys += yDiff;
 };
 
 /**

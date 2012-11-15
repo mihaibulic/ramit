@@ -18,7 +18,8 @@ var globals = {
   level: new Level(),
   diff: {},
   lastAbsolute: 0,
-  upgrade: new Upgrade()
+  upgrade: new Upgrade(),
+  dt: 1000/60
 };
 
 /**

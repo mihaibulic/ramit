@@ -131,7 +131,7 @@ ITGame.prototype.loadState = function(data, join) {
           globals.messages.push(player.name + " has joined the the " +
                                 (player.team === 0 ? "Blue" : "Red") + " Team");
       } else {
-        globals.players[id].predict(data.p[id], this.player);
+        globals.players[id].loadState(data.p[id], this.player);
       }
     }
   }
@@ -198,6 +198,8 @@ ITGame.prototype.predict = function() {
 
   globals.level.x = globals.players[this.player].tank.x - 470;
   globals.level.y = globals.players[this.player].tank.y - 220;
+
+
   for (var hid in globals.level.hqs) {
     globals.level.hqs[hid].predict();
   }
@@ -207,11 +209,14 @@ ITGame.prototype.predict = function() {
   for (var pid in globals.players) {
     if (globals.players[pid].leaving) {
       globals.players[pid].deathCounter++;
+      if (globals.players[pid].deathCounter >= 90) {
+        console.log(globals.players[pid].name + " has left");
+        delete globals.players[pid];
+      }
+      continue;
     }
-    if (globals.players[pid].leaving && globals.players[pid].deathCounter >= 90) {
-      console.log(globals.players[pid].name + " has left");
-      delete globals.players[pid];
-    }
+
+    globals.players[pid].predict();
   }
 };
 
