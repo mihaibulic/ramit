@@ -575,9 +575,10 @@ Player.prototype.predict = function() {
     if (this.tank.sx !== this.tank.x) {
       diff = Math.abs(this.tank.sx - this.tank.x);
       dir = (this.tank.sx - this.tank.x) / diff;
-      if (diff > 50)
+      if (diff > 50) {
+        console.log(this.tank.x + " " + this.tank.sx);
         this.tank.x = this.tank.sx;
-      else {
+      }else {
         this.tank.x += dir * Math.min(2, diff);
       }
     }
@@ -585,8 +586,10 @@ Player.prototype.predict = function() {
     if (this.tank.sy !== this.tank.y) {
       diff = Math.abs(this.tank.sy - this.tank.y);
       dir = (this.tank.sy - this.tank.y) / diff;
-      if (diff > 50)
+      if (diff > 50) {
+        console.log(this.tank.y + " " + this.tank.sy);
         this.tank.y = this.tank.sy;
+      }
       else
         this.tank.y += dir * Math.min(2, diff);
     }
