@@ -102,8 +102,10 @@ Projectile.prototype.draw = function(team) {
 
       globals.ctx.fill();
     }
-    else if (this.team === team)
+    else if (this.team === team) {
+      console.log("draw mine");
       globals.ctx.drawImage(globals.resources.mines[this.team], rect.left, rect.top);
+    }
 
     if (globals.queries.debug === "true") {
       globals.ctx.strokeStyle = Player.TEAM_COLOR[this.team];

@@ -148,7 +148,6 @@ globals.renderMines = function() {
     img.onload = function() {
       globals.resources.mines[i] = img;
       globals.resourceLoaded();
-      console.log("onload " + i);
     };
   };
   render(0);
