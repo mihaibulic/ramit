@@ -190,7 +190,7 @@ Projectile.prototype.update = function() {
   if (hit && this.type === Projectile.Type.MINE)
     globals.players[this.owner].projectile[this.type].live--;
 
-  if (globals.diff) {
+  if (!hit && globals.diff) {
     if (!globals.diff.q)
       globals.diff.q = {};
     if (!globals.diff.q[this.id])
