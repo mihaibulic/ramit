@@ -359,7 +359,7 @@ Player.prototype.updateAim = function(e) {
   var r = Math.atan2(e.clientY - centerPoint.y, e.clientX - centerPoint.x) * 180 / Math.PI;
   if (r < 0)
     r += 360;
-  //this.tank.turretAim = Math.floor(r / 2);
+  this.tank.turretAim = Math.floor(r / 2);
   globals.socket.emit('aim', {a: Math.floor(r/2)});
 };
 
