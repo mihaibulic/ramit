@@ -65,15 +65,18 @@ var Projectile = function(player, type, id, opt_state) {
 };
 
 /**
- *
+ * The types of projectiles.
  */
 Projectile.Type = {NORMAL: 0, MINE: 1, ROCKET: 2};
 
 /**
- *
+ * The ID of the next projectile.
  */
 Projectile.nextID = 0;
 
+/**
+ * @returns {Object} The absolute state of the projectile.
+ */
 Projectile.prototype.getAbsoluteState = function() {
   var q = {};
   q.i = this.owner;

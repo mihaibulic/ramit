@@ -421,24 +421,32 @@ Player.prototype.updateKeys = function(e) {
     if (Boolean(this.sentKeys.up) !== value) {
       diff.u = value;
       this.sentKeys.up = value;
+      if (!value)
+        this.keys.up = false;
     }
     break;
   case 65: // A
     if (Boolean(this.sentKeys.left) !== value) {
       diff.l = value;
       this.sentKeys.left = value;
+      if (!value)
+        this.keys.left = value;
     }
     break;
   case 83: // S
     if (Boolean(this.sentKeys.down) !== value) {
       diff.d = value;
       this.sentKeys.down = value;
+      if (!value)
+        this.keys.down = value;
     }
     break;
   case 68: // D
     if (Boolean(this.sentKeys.right) !== value) {
       diff.r = value;
       this.sentKeys.right = value;
+      if (!value)
+        this.keys.right = value;
     }
     break;
   case 32: // Space
