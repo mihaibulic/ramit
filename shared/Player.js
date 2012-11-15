@@ -603,13 +603,6 @@ Player.prototype.update = function() {
   }
   if (this.hasShield) {
     this.hasShield--;
-    if (globals.diff && !this.hasShield) {
-      if (!globals.diff.p)
-        globals.diff.p = {};
-      if (!globals.diff.p[this.playerID])
-        globals.diff.p[this.playerID] = {};
-      globals.diff.p[this.playerID].d = 0;
-    }
   }
 };
 
@@ -617,9 +610,8 @@ Player.prototype.update = function() {
  * Move the tank.
  */
 Player.prototype.move = function() {
-  var speed = (this.tank.direction % 2 === 0) ? this.speed : Player.DIAGONAL_CONST * this.speed;
-  speed *= globals.dt / 1000;
-  speed = Math.round(speed);
+  var speed = Math.round(this.speed * globals.dt / 1000);
+  speed = (this.tank.direction % 2 === 0) ? speed : Player.DIAGONAL_CONST * speed;
   var x = this.tank.x;
   var y = this.tank.y;
   // Which direction left/right, up/down is the tank moving in.
