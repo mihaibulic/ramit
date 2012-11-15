@@ -101,7 +101,7 @@ var ITGame = function(team, playerID) {
       //this.predict();
       this.draw();
 
-      requestAnimationFrame(gameLoop, globals.canvas);
+      window.requestAnimationFrame(gameLoop, globals.canvas);
     }, this);
 
     gameLoop();
