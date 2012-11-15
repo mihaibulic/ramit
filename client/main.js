@@ -125,7 +125,7 @@ globals.load = function(callback) {
  *   */
 globals.renderMines = function() {
   globals.remainingResources += 2;
-  globals.resources.hqs = [];
+  globals.resources.mines = [];
 
   var renderer = document.getElementById('renderer');
   var ctx = renderer.getContext('2d');
