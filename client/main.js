@@ -136,7 +136,6 @@ globals.renderMines = function() {
   var positions = [[0, 0, n, n, 0, 0, n, n],
                    [n, 0, n, n, 0, 0, n, n]];
   var render = function(i) {
-    console.log("ren " + i);
     renderer.width = n;
     renderer.height = n;
     ctx.clearRect(0, 0, n, n);
@@ -149,6 +148,7 @@ globals.renderMines = function() {
     img.onload = function() {
       globals.resources.mines[i] = img;
       globals.resourceLoaded();
+      console.log("onload " + i);
     };
   };
   render(0);
