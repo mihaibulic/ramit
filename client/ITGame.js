@@ -98,7 +98,7 @@ var ITGame = function(team, playerID) {
       globals.dt = now - globals.lastUpdateTime;
       lastUpdateTime = now;
 
-      //this.predict();
+      this.predict();
       this.draw();
 
       window.requestAnimationFrame(gameLoop, globals.canvas);
