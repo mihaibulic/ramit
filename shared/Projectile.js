@@ -201,7 +201,8 @@ Projectile.prototype.update = function() {
     if (this.vy)
       globals.diff.q[this.id].y = this.y;
   } else if (hit) {
-    delete globals.diff.q[this.id];
+    if (globals.diff.q)
+      delete globals.diff.q[this.id];
   }
 
   return hit;
