@@ -199,10 +199,10 @@ ITGame.prototype.predict = function() {
   globals.level.x = globals.players[this.player].tank.x - 470;
   globals.level.y = globals.players[this.player].tank.y - 220;
   for (var hid in globals.level.hqs) {
-    globals.level.hqs[hid].update();
+    globals.level.hqs[hid].predict();
   }
   for (var gid in globals.level.gates) {
-    globals.level.gates[gid].update();
+    globals.level.gates[gid].predict();
   }
   for (var pid in globals.players) {
     if (globals.players[pid].leaving) {
