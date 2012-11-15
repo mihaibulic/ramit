@@ -8,6 +8,7 @@ var globals = {
     tanks: new Image(),
     gates: new Image(),
     hqs: new Image(),
+    mines: new Image(),
     minimapfade: new Image()
   },
   resources: {
@@ -16,6 +17,7 @@ var globals = {
     turrets: null,
     gates: null,
     hqs: null,
+    mines: null,
     minimap: null,
     minimapfade: null
   },
@@ -103,6 +105,8 @@ globals.load = function(callback) {
       globals.renderHqs();
     else if (target === "gates")
       globals.renderGates();
+    else if (target === "mines")
+      globals.renderMines();
     else
       globals.resources[target] = globals.rawImages[target];
 
@@ -116,6 +120,37 @@ globals.load = function(callback) {
       globals.rawImages[img].src = "images/" + img + ".png";
     }
   }
+};
+
+/**
+ *  * Renders the mines into two separate images
+ *   */
+globals.renderMines = function() {
+  globals.remainingResources += 2;
+  globals.resources.mines = [];
+
+  var renderer = document.getElementById('renderer');
+  var ctx = renderer.getContext('2d');
+
+  var positions = [[0, 0, 20, 20, 0, 0, 20, 20],
+                   [20, 0, 20, 20, 0, 0, 20, 20]];
+  var render = function(i) {
+    renderer.width = 20;
+    renderer.height = 20;
+    ctx.clearRect(0, 0, 20, 20);
+    ctx.drawImage(globals.rawImages.mines, positions[i][0], positions[i][1],
+                  positions[i][2], positions[i][3], positions[i][4],
+                  positions[i][5], positions[i][6], positions[i][7]);
+
+    var img = new Image();
+    img.src = renderer.toDataURL();
+    img.onload = function() {
+      globals.resources.mines[i] = img;
+      globals.resourceLoaded();
+    };
+  };
+  render(0);
+  render(1);
 };
 
 /**

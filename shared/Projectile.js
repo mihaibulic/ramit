@@ -95,13 +95,15 @@ Projectile.prototype.draw = function(team) {
 
     globals.ctx.fillStyle = Player.TEAM_COLOR[this.team];
 
-    if (this.type !== Projectile.Type.MINE || this.team === team) {
+    if (this.type !== Projectile.Type.MINE) {
       globals.ctx.beginPath();
       globals.ctx.arc(xPos, yPos, rect.width() / 2, 0 , 2 * Math.PI);
       globals.ctx.closePath();
 
       globals.ctx.fill();
     }
+    else if (this.team === team)
+      globals.ctx.drawImage(globals.resources.mines[this.team], rect.left, rect.top);
 
     if (globals.queries.debug === "true") {
       globals.ctx.strokeStyle = Player.TEAM_COLOR[this.team];

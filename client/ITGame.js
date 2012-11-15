@@ -50,7 +50,6 @@ var ITGame = function(team, playerID) {
 
     //Blur event
     var blur = function(e) {
-      console.log("BLUR");
       globals.keys = {up:0, down:0, left:0, right:0, mine:0, all_mines:0, space:0, shift:0, mounted:0};
       globals.mouse = {left:0, middle:0, right:0};
 
