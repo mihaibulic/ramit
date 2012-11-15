@@ -139,7 +139,7 @@ var emitState = function(override) {
 
     io.sockets.emit('state', absoluteState);
     globals.diff = {};
-  } else if (!globals.isObjectEmpty(globals.diff) && globals.lastAbsolute % 10 === 0) {
+  } else if (!globals.isObjectEmpty(globals.diff) && globals.lastAbsolute % 5 === 0) {
     io.sockets.emit('state', globals.diff);
     globals.diff = {};
   }

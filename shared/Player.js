@@ -560,7 +560,7 @@ Player.prototype.predict = function() {
     var diff;
     if (this.tank.sx !== this.tank.x) {
       diff = Math.abs(this.tank.sx - this.tank.x);
-      if (diff > 20)
+      if (diff > 10)
         this.tank.x = this.tank.sx;
       else {
         this.tank.x = Math.round((this.tank.x + this.tank.sx) / 2);
