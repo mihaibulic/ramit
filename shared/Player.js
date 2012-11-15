@@ -529,18 +529,18 @@ Player.prototype.loadState = function(data, you) {
       this.team = data.t;
     if (data.h !== undefined) {
       if (this.health !== data.h && data.h === 0) {
-        var deadName = (this.playerID != you ? this.name : "You");
+        var deadName = (this.playerID != you ? this.name : "you");
         var killer = globals.players[data.b];
         if (killer === undefined)
-          globals.messages.push(deadName + " died");
+          globals.messages.push(deadName + " died.");
         else {
           killerName = (you === data.b ? "You" : killer.name);
           if (killer.playerID === this.playerID)
-            globals.messages.push(deadName + " committed suicide");
+            globals.messages.push(killerName + " committed suicide!");
           else if (killer.team === this.team)
-            globals.messages.push(killerName + " betrayed " + deadName);
+            globals.messages.push(killerName + " betrayed " + deadName + "!");
           else
-            globals.messages.push(killerName + " killed " + deadName);
+            globals.messages.push(killerName + " killed " + deadName + ".");
         }
       }
       this.health = data.h;
