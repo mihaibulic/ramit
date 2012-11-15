@@ -104,7 +104,7 @@ Projectile.prototype.draw = function(team) {
     }
     else if (this.team === team) {
       var pos = Rectangle.getPos(this);
-      globals.ctx.drawImage(globals.resources.mines[this.team], pos.left, pos.top);
+      globals.ctx.drawImage(globals.resources.mines[this.team], xPos - rect.width()/2, yPos - rect.width()/2);
     }
 
     if (globals.queries.debug === "true") {
