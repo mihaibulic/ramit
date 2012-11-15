@@ -122,13 +122,13 @@ Gate.prototype.draw = function() {
         if (color == Player.HEALTH.length) color--;
         globals.ctx.fillStyle = Player.HEALTH[color];
         globals.ctx.globalAlpha = 0.5 * alpha;
-        globals.ctx.strokeRect(dataXPos, pos.top-2, 100, 3);
-        globals.ctx.fillRect(dataXPos, pos.top-2, 100 * this.health / this.maxHealth, 3);
+        globals.ctx.strokeRect(dataXPos, pos.top-5, 100, 3);
+        globals.ctx.fillRect(dataXPos, pos.top-5, 100 * this.health / this.maxHealth, 3);
         globals.ctx.globalAlpha = alpha;
         // name
         globals.ctx.fillStyle = "#FFFFFF";
         globals.ctx.font = "10px sans-serif";
-        globals.ctx.fillText(this.name, dataXPos, pos.top - 3);
+        globals.ctx.fillText(this.name, dataXPos, pos.top - 6);
         globals.ctx.globalAlpha = 1;
       }
       if (globals.queries.debug === "true") {
