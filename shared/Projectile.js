@@ -101,11 +101,22 @@ Projectile.prototype.draw = function(team) {
     globals.ctx.fillStyle = Player.TEAM_COLOR[this.team];
 
     if (this.type !== Projectile.Type.MINE) {
+      if (this.type === Projectile.Type.ROCKET) {
+        globals.ctx.fillStyle = "#FFFF00";
+        globals.ctx.beginPath();
+        globals.ctx.arc(xPos - vx, yPos - vy, 5, 0, 2 * Math.PI);
+        globals.ctx.closePath();
+
+        globals.ctx.fill();
+      }
+      globals.ctx.fillStyle = Player.TEAM_COLOR[this.team];
+
       globals.ctx.beginPath();
       globals.ctx.arc(xPos, yPos, rect.width() / 2, 0 , 2 * Math.PI);
       globals.ctx.closePath();
 
       globals.ctx.fill();
+     
     }
     else if (this.team === team) {
       var pos = Rectangle.getPos(this);
