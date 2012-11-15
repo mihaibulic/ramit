@@ -191,9 +191,9 @@ Projectile.prototype.update = function() {
     globals.players[this.owner].projectile[this.type].live--;
 
   if (!hit && globals.diff) {
-    if (!globals.diff.q && (this.vx || this.vy))
+    if ((this.vx || this.vy) && !globals.diff.q)
       globals.diff.q = {};
-    if (!globals.diff.q[this.id] && (this.vx || this.vy))
+    if ((this.vx || this.vy) && !globals.diff.q[this.id])
       globals.diff.q[this.id] = {};
 
     if (this.vx)
