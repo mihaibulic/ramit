@@ -560,18 +560,18 @@ Player.prototype.predict = function() {
     var diff;
     if (this.tank.sx !== this.tank.x) {
       diff = Math.abs(this.tank.sx - this.tank.x);
-      if (diff < 8 || diff > 20)
+      if (diff > 20)
         this.tank.x = this.tank.sx;
       else
-        this.tank.x = (this.tank.x + this.tank.sx) / 2;
+        this.tank.x = Math.round((this.tank.x + this.tank.sx) / 2);
     }
 
     if (this.tank.sy !== this.tank.y) {
       diff = Math.abs(this.tank.sy - this.tank.y);
-      if (diff < 8 || diff > 20)
+      if (diff > 20)
         this.tank.y = this.tank.sy;
       else
-        this.tank.y = (this.tank.y + this.tank.sy) / 2;
+        this.tank.y = Math.round((this.tank.y + this.tank.sy) / 2);
     }
   }
 
