@@ -583,7 +583,7 @@ Player.prototype.predict = function() {
       if (diff > 50)
         this.tank.x = this.tank.sx;
       else
-        this.tank.x += dir * Math.min(2, diff);
+        this.tank.x -= dir * Math.min(2, diff);
     }
 
     if (this.tank.sy !== this.tank.y) {
@@ -592,7 +592,7 @@ Player.prototype.predict = function() {
       if (diff > 50)
         this.tank.y = this.tank.sy;
       else
-        this.tank.y += dir * Math.min(2, diff);
+        this.tank.y -= dir * Math.min(2, diff);
     }
   }
 
