@@ -659,7 +659,7 @@ Player.prototype.move = function() {
   y = Math.round(y);
 
   // The collision box of the tank.
-  var tankBox = this.getCollisionBarrier();
+  var tankBox = this.getCollisionBarrier({x: this.tank.sx, y: this.tank.sy});
   //The collision box after the tank moves in the Y direction.
   var rectYMovement = this.getCollisionBarrier({x: this.tank.sx, y: y});
   //The collision box after the tank moves in the X direction.
@@ -890,12 +890,12 @@ Player.prototype.getCollisionBarrier = function(location, useShield) {
     location = this.tank;
 
   if (useShield && this.hasShield) {
-    return new Rectangle({left: location.sx + 2, right: location.sx + 58,
-                          top: location.sy + 2, bottom: location.sy + 58});
+    return new Rectangle({left: location.x + 2, right: location.x + 58,
+                          top: location.y + 2, bottom: location.y + 58});
   }
 
-  return new Rectangle({left: location.sx + 10, right: location.sx + 50,
-                        top: location.sy + 10, bottom: location.sy + 50});
+  return new Rectangle({left: location.x + 10, right: location.x + 50,
+                        top: location.y + 10, bottom: location.y + 50});
 };
 
 /**
