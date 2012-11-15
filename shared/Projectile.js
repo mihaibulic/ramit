@@ -42,12 +42,14 @@ var Projectile = function(player, type, id, opt_state) {
     this.y += (this.vy * 30);
     this.vx *= speed;
     this.vy *= speed;
-    this.vx = Math.round(this.vx);
-    this.vy = Math.round(this.vy);
   } else {
     this.vx = 0;
     this.vy = 0;
   }
+  this.x = Math.round(this.x);
+  this.y = Math.round(this.y);
+  this.vx = Math.round(this.vx);
+  this.vy = Math.round(this.vy);
 
   if (type === Projectile.Type.MINE)
     player.projectile[type].live++;
