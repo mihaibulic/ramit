@@ -103,7 +103,7 @@ Gate.prototype.draw = function() {
   if (pos.draw) {
     if (this.health > 0) {
       var res = this.hq ? globals.resources.hqs : globals.resources.gates;
-      globals.ctx.drawImage(res[this.team], pos.left, pos.top - 5);
+      globals.ctx.drawImage(res[this.team], pos.left, pos.top - (!this.hq ? 5 : 0));
 
       if (globals.queries.debug === "true" || this.isUnderAttack()) {
         // Fade In/Out
@@ -132,7 +132,8 @@ Gate.prototype.draw = function() {
       }
     }
     else if (this.hq) 
-      globals.ctx.drawImage(globals.resources.hqs[this.team+2], pos.left, pos.top - 5);
+      globals.ctx.drawImage(globals.resources.hqs[this.team+2], pos.left, pos.top);
+
     if (!this.hq) //draw gate outside things
       globals.ctx.drawImage(globals.resources.gates[2], pos.left, pos.top - 5);
   }
