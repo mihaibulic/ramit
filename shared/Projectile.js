@@ -124,8 +124,8 @@ Projectile.prototype.draw = function(team) {
  * @returns {Boolean} If the projectile has exploded.
  */
 Projectile.prototype.update = function() {
-  this.x += this.vx / 60;
-  this.y += this.vy / 60;
+  this.x += Math.round(this.vx / 60);
+  this.y += Math.round(this.vy / 60);
 
   var hit = false;
   var target;
