@@ -197,9 +197,6 @@ ITGame.prototype.predict = function() {
     Projectile.nextID = 0;
   }
 
-  globals.level.x = globals.players[this.player].tank.x - 470;
-  globals.level.y = globals.players[this.player].tank.y - 220;
-
 
   for (var hid in globals.level.hqs) {
     globals.level.hqs[hid].predict();
@@ -219,6 +216,9 @@ ITGame.prototype.predict = function() {
 
     globals.players[pid].predict();
   }
+
+  globals.level.x = globals.players[this.player].tank.x - 470;
+  globals.level.y = globals.players[this.player].tank.y - 220;
 
 };
 
