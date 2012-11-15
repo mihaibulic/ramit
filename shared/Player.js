@@ -844,6 +844,8 @@ Player.prototype.respawn = function() {
   var spawn = this.determineSpawn();
   this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
   this.tank.y = Player.SPAWN_POINTS[this.team][spawn].y;
+  this.tank.sx = Player.SPAWN_POINTS[this.team][spawn].x;
+  this.tank.sy = Player.SPAWN_POINTS[this.team][spawn].y;
   this.health = this.maxHealth;
 
   this.keys = {up:0, down:0, left:0, right:0, mine:0, all_mines:0, space:0, shift:0, mounted:0};
