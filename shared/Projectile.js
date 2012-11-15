@@ -52,8 +52,8 @@ var Projectile = function(player, type, id, opt_state) {
   this.y = Math.round(this.y);
   this.vx = Math.round(this.vx);
   this.vy = Math.round(this.vy);
-  this.sx = x;
-  this.sy = y;
+  this.sx = this.x;
+  this.sy = this.y;
 
   if (type === Projectile.Type.MINE)
     player.projectile[type].live++;
