@@ -148,8 +148,12 @@ Projectile.prototype.draw = function(team) {
 Projectile.prototype.predict = function() {
   var x = this.x;
   var y = this.y;
+  var sx = this.sx;
+  var sy = this.sy;
   this.x += Math.round(this.vx / 60);
   this.y += Math.round(this.vy / 60);
+  this.sx += Math.round(this.vx / 60);
+  this.sy += Math.round(this.vy / 60);
 
   var hit = false;
   var target;
@@ -201,10 +205,42 @@ Projectile.prototype.predict = function() {
     }
   }
 
+  // Move back if collision detected
   if (hit) {
     this.x = x;
     this.y = y;
+    this.sx = sx;
+    this.sy = sy;
   }
+
+  var pos = Rectangle.getPos(this.getCollisionBarrier());
+  // It is not visible so no smoothing needed.
+  if (!pos.draw) {
+    this.x = this.tank.sx;
+    this.y = this.tank.sy;
+  } else {
+    var diff;
+    var dir;
+    if (this.sx !== this..x) {
+      diff = Math.abs(this.sx - this.x);
+      dir = (this.sx - this.x) / diff;
+      if (diff > 50)
+        this.x = this.sx;
+      else
+        this.x += dir * Math.min(2, diff);
+    }
+
+    if (this.sy !== this.y) {
+      diff = Math.abs(this.sy - this.y);
+      dir = (this.sy - this.y) / diff;
+      if (diff > 50)
+        this.y = this.sy;
+      else
+        this.y += dir * Math.min(2, diff);
+    }
+  }
+
+
 };
 
 /**
