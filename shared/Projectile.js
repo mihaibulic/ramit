@@ -107,7 +107,7 @@ Projectile.prototype.draw = function(team) {
       if (this.type === Projectile.Type.ROCKET) {
         globals.ctx.fillStyle = "#FFFF00";
         globals.ctx.beginPath();
-        for (var i = 1; i < 3; i++) { //will be more
+        for (var i = 1; i < 5; i++) { //will be more
           console.log("vx, vy: " + this.vx + ", " + this.vy);
           var xTail = this.vx * i * i / 200;
           var yTail = this.vy * i * i / 200;
