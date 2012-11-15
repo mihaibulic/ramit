@@ -47,8 +47,10 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
   }
 
   if (globals.diff) {
-    if (!globals.diff.e)
-      globals.diff.e = [];
+    var diff = globals.getImmediateDiff();
+
+    if (!diff.e)
+      diff.e = [];
     var e = {};
     if (opt_projectile)
       e.i = opt_projectile.id;
@@ -61,7 +63,7 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     e.x = this.x;
     e.y = this.y;
     e.r = this.range;
-    globals.diff.e.push(e);
+    diff.e.push(e);
   }
 };
 

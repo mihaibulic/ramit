@@ -53,9 +53,10 @@ var Projectile = function(player, type, id, opt_state) {
   player.projectile[type].lastFire = 0;
 
   if (globals.diff) {
-    if (!globals.diff.q)
-      globals.diff.q = {};
-    globals.diff.q[this.id] = this.getAbsoluteState();
+    var diff = globals.getImmediateDiff();
+    if (!diff.q)
+      diff.q = {};
+    diff.q[this.id] = this.getAbsoluteState();
   }
 };
 

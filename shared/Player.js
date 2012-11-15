@@ -128,9 +128,10 @@ var Player = function(team, playerID, opt_state) {
   };
 
   if (globals.diff) {
-    if (!globals.diff.p)
-      globals.diff.p = {};
-    globals.diff.p[this.playerID] = this.getAbsoluteState();
+    var diff = globals.getImmediateDiff();
+    if (!diff.p)
+      diff.p = {};
+    diff.p[this.playerID] = this.getAbsoluteState();
   }
 };
 
@@ -791,14 +792,15 @@ Player.prototype.takeHit = function(damage, owner) {
   }
 
   if (globals.diff) {
-    if (!globals.diff.p)
-      globals.diff.p = {};
-    if (!globals.diff.p[this.playerID])
-      globals.diff.p[this.playerID] = {};
+    var diff = globals.getImmediateDiff();
+    if (!diff.p)
+      diff.p = {};
+    if (!diff.p[this.playerID])
+      diff.p[this.playerID] = {};
 
-    globals.diff.p[this.playerID].h = this.health;
+    diff.p[this.playerID].h = this.health;
     if (this.health === 0) {
-      globals.diff.p[this.playerID].b = owner.playerID;
+      diff.p[this.playerID].b = owner.playerID;
       console.log(owner.playerID + " has killed " + this.name);
     }
   }

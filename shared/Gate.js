@@ -45,15 +45,16 @@ Gate.prototype.takeHit = function(damage, owner) {
   }
 
   if (globals.diff) {
+    var diff = globals.getImmediateDiff();
     if (this.hq) {
-      if (!globals.diff.h)
-        globals.diff.h = {};
-      globals.diff.h[this.team] = this.health;
+      if (!diff.h)
+        diff.h = {};
+      diff.h[this.team] = this.health;
     }
     else {
-      if (!globals.diff.g)
-        globals.diff.g = {};
-      globals.diff.g[this.team] = this.health;
+      if (!diff.g)
+        diff.g = {};
+      diff.g[this.team] = this.health;
     }
   }
 

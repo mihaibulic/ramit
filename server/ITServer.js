@@ -17,6 +17,7 @@ var globals = {
   teams: [0,0],
   level: new Level(),
   diff: {},
+  immediateDiff: {},
   lastAbsolute: 0,
   upgrade: new Upgrade(),
   dt: 1000/60
@@ -32,6 +33,23 @@ globals.isObjectEmpty = function(object) {
     return false;
   return true;
 };
+
+/**
+ * @returns {Boolean} If the full diff message is sent.
+ */
+globals.sendFullDiff = function() {
+  return (globals.lastAbsolute % 5 === 0);
+};
+
+/**
+ * @returns {Object} The diff that will be sent at the end of the update.
+ */
+globals.getImmediateDiff = function() {
+  if (globals.sendFullDiff())
+    return globals.diff;
+  else
+    return globals.immediateDiff();
+}
 
 /**
  * Explodes projectiles of a player
@@ -129,7 +147,6 @@ var update = function() {
  *  regardless of when it was last sent
  */
 var emitState = function(override) {
-  globals.lastAbsolute++;
   if (globals.lastAbsolute >= 300 || override) {
     var absoluteState = getAbsoluteState();
     globals.lastAbsolute = 0;
@@ -139,10 +156,15 @@ var emitState = function(override) {
 
     io.sockets.emit('state', absoluteState);
     globals.diff = {};
-  } else if (!globals.isObjectEmpty(globals.diff) && globals.lastAbsolute % 5 === 0) {
+  } else if (!globals.isObjectEmpty(globals.diff) && globals.sendFullDiff()) {
     io.sockets.emit('state', globals.diff);
     globals.diff = {};
+  } else if (!globals.isObjectEmpty(globals.immediateDiff)) {
+    io.sockets.emit('state', globals.immediateDiff);
   }
+
+  globals.immediateDiff = {};
+  globals.lastAbsolute++;
 };
 
 /**
@@ -250,11 +272,15 @@ io.sockets.on('connection', function(socket) {
       globals.players[id].keys.shift = data.w;
     if (data.m !== undefined)
       globals.players[id].mounted = data.m;
-    if (!globals.diff.p)
-      globals.diff.p = {};
-    if (!globals.diff.p[id])
-      globals.diff.p[id] = {};
-    globals.diff.p[id].k = globals.players[id].getKeyValue();
+
+    // Important information, send immediately.
+    var diff = globals.getImmediateDiff();
+
+    if (!diff.p)
+      diff.p = {};
+    if (!diff.p[id])
+      diff.p[id] = {};
+    diff.p[id].k = globals.players[id].getKeyValue();
   });
 
   socket.on('mouse', function(data) {
