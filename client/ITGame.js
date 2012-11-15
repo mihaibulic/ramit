@@ -89,12 +89,22 @@ var ITGame = function(team, playerID) {
     }
 
     // Game loop.
-    this.interval = window.setInterval(globals.bind(function() {
+    globals.lastUpdateTime = new Date().getTime();
+    var gameLoop = globals.bind(function() {
       if (globals.queries.debug === "true")
         this.count++;
-      this.update();
+
+      var now = new Date().getTime();
+      globals.dt = now - globals.lastUpdateTime;
+      lastUpdateTime = now;
+
+      this.predict();
       this.draw();
-    }, this), 16);
+
+      window.requestAnimationFrame(gameLoop, globals.canvas);
+    }, this);
+
+    gameLoop();
   }, this));
 };
 
@@ -177,7 +187,7 @@ ITGame.prototype.loadState = function(data, join) {
 /**
  * Update the game state.
  */
-ITGame.prototype.update = function() {
+ITGame.prototype.predict = function() {
   if (globals.level.mode === Level.Mode.START) {
     globals.level = new Level();
     globals.level.mode = Level.Mode.ONGOING;
@@ -285,7 +295,7 @@ ITGame.prototype.draw = function() {
     globals.ctx.font = "normal 18px sans-serif";
     globals.ctx.fillText("FPS: " + this.fps, 500, 20);
   }
-  
+
   if (globals.level.mode === Level.Mode.START) {
     // game starting
     // TODO draw special start screen?
