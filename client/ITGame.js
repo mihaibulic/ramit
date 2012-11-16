@@ -154,6 +154,7 @@ ITGame.prototype.loadState = function(data, join) {
     for (id in data.e) {
       globals.explosions.push(new Explosion(null, null, null, null, null, null, null, null, data.e[id]));
       if (data.e[id].i !== undefined) {
+        console.log("del");
         delete globals.projectiles[data.e[id].i];
       }
     }
