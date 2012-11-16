@@ -131,8 +131,8 @@ var Player = function(team, playerID, opt_state) {
     damage: 5000,
     speed: 60,
     fired: false,
-    lastFire: 0,
-    coolDown: 60 * 60,
+    lastFire: 10, // 0
+    coolDown: 0, // 60 * 60,
     allowed: 1 // should be 0, 1 for testing
   };
 
