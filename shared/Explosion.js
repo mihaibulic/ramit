@@ -52,7 +52,7 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     if (!diff.e)
       diff.e = [];
     var e = {};
-    if (opt_projectile && opt_projectile.t !== Projectile.Type.BOMB)
+    if (opt_projectile)
       e.i = opt_projectile.id;
     var type = Explosion.Type.PROJECTILE;
     if (damage < 0)
