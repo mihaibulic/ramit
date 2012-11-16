@@ -232,7 +232,7 @@ io.sockets.on('connection', function(socket) {
   }
 
   socket.on('conn_resp', function(data) {
-    if(data !== undefined) {
+    if(data !== null) {
       globals.players[id].name = data;
       if (!globals.diff.p)
         globals.diff.p = {};
