@@ -58,6 +58,8 @@ var Projectile = function(player, type, id, opt_state) {
 
   if (type === Projectile.Type.MINE)
     player.projectile[type].live++;
+  else if (type === Projectile.Type.BOMB)
+    player.projectile[type].fired = true; 
 
   player.projectile[type].lastFire = 0;
 
@@ -72,7 +74,7 @@ var Projectile = function(player, type, id, opt_state) {
 /**
  * The types of projectiles.
  */
-Projectile.Type = {NORMAL: 0, MINE: 1, ROCKET: 2};
+Projectile.Type = {NORMAL: 0, MINE: 1, ROCKET: 2, BOMB: 3};
 
 /**
  * The ID of the next projectile.
@@ -110,7 +112,9 @@ Projectile.prototype.draw = function(team) {
 
     globals.ctx.fillStyle = Player.TEAM_COLOR[this.team];
 
-    if (this.type !== Projectile.Type.MINE) {
+    if (this.type === Projectile.Type.BOMB) 
+      globals.ctx.drawImage(globals.resources.bomb, xPos - rect.width()/2, yPos - rect.width()/2);
+    else if (this.type !== Projectile.Type.MINE) {
       if (this.type === Projectile.Type.ROCKET) {
         globals.ctx.fillStyle = "#FFFF00";
         globals.ctx.beginPath();
@@ -135,7 +139,6 @@ Projectile.prototype.draw = function(team) {
 
     }
     else if (this.team === team) {
-      var pos = Rectangle.getPos(this);
       globals.ctx.drawImage(globals.resources.mines[this.team], xPos - rect.width()/2, yPos - rect.width()/2);
     }
 
@@ -163,14 +166,16 @@ Projectile.prototype.predict = function() {
 
   var barrier = this.getCollisionBarrier({x: this.sx, y: this.sy});
 
-  // Collisions with Players
-  for (var pid in globals.players) {
-    target = globals.players[pid];
-    if (target.team === this.team)
-      continue;
-    if (target.getCollisionBarrier().intersects(barrier)) {
-      hit = true;
-      break;
+  if(this.type !== Projectile.Type.BOMB) {
+    // Collisions with Players
+    for (var pid in globals.players) {
+      target = globals.players[pid];
+      if (target.team === this.team)
+        continue;
+      if (target.getCollisionBarrier().intersects(barrier)) {
+        hit = true;
+        break;
+      }
     }
   }
 
@@ -352,6 +357,10 @@ Projectile.prototype.getCollisionBarrier = function(location) {
   if (this.type === Projectile.Type.MINE)
     return new Rectangle({left: location.x - 14, right: this.x + 14,
                           top: location.y - 14, bottom: this.y + 14});
-  return new Rectangle({left: location.x - 5, right: location.x + 5,
-                        top: location.y - 5, bottom: location.y + 5});
+  else if (this.type === Projectile.Type.BOMB)
+    return new Rectangle({left: location.x - 30, right: this.x + 30,
+                          top: location.y - 30, bottom: this.y + 30});
+  else 
+    return new Rectangle({left: location.x - 5, right: location.x + 5,
+                          top: location.y - 5, bottom: location.y + 5});
 };

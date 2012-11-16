@@ -13,7 +13,8 @@ Upgrade.Device = {
   ROCKET: 3,
   EMP: 4,
   MEDIC: 5,
-  SHIELD: 6
+  SHIELD: 6,
+  BOMB: 7
 };
 
 // A list of Devices to Strings
@@ -23,7 +24,8 @@ Upgrade.DeviceStrings = [ "Tank",
                           "Rocket", 
                           "EMP", 
                           "Medic", 
-                          "Shield" ];
+                          "Shield", 
+                          "Bomb" ];
 
 // the types of upgrades possible.
 // not all devices may receive all types of upgrades.
@@ -125,6 +127,13 @@ Upgrade.prototype.load = function() {
   this.diff[d.SHIELD][t.DURATION] = [ 120 ];
   this.cost[d.SHIELD][t.COOLDOWN] = [ 125 ];
   this.diff[d.SHIELD][t.COOLDOWN] = [ -30 ];
+
+  // Bomb upgrade
+  this.cost[d.BOMB] = [];
+  this.diff[d.BOMB] = [];
+  this.cost[d.BOMB][t.ALLOWED] = [ 5000 ];
+  this.diff[d.BOMB][t.ALLOWED] = [ 1 ];
+
 };
 
 /**
@@ -151,6 +160,21 @@ Upgrade.prototype.buy = function(device, type, pid) {
     this.players[pid][device] = [];
   if (this.players[pid][device][type] === undefined)
     this.players[pid][device][type] = -1;
+
+  if (divice === d.BOMB) {
+    var eligible = true;
+    for ( var x in Upgrade.Device) {
+      if ( this.diff[Upgrade.Device[x]][Upgrade.Type.ALLOWED][this.players[pid][Upgrade.Device[x]][Upgrade.Type.ALLOWED] + 1] !== undefined) {
+        eligible = false;
+        break;
+      }
+    }
+    
+    if (!eligible) {
+      console.log(buyer.name + ", you must max out all other upgrades first.");
+      return;
+    }
+  } 
   var cost = this.cost[device][type][this.players[pid][device][type] + 1];
   if (cost === undefined) {
     console.log(buyer.name + ", you are maxed out on that upgrade");
@@ -225,5 +249,8 @@ Upgrade.prototype.buy = function(device, type, pid) {
     } else if (type === Upgrade.Type.COOLDOWN) {
       buyer.special[Player.SpecialType.SHIELD].coolDown += diff;
     }
+  } else if (device === Upgrade.Device.BOMB) {
+    buyer.special[Player.SpecialType.BOMB].allowed = true;
   }
+  
 };

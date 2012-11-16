@@ -9,6 +9,7 @@ var globals = {
     gates: new Image(),
     hqs: new Image(),
     mines: new Image(),
+    bomb: new Image(),
     minimapfade: new Image()
   },
   resources: {
@@ -18,6 +19,7 @@ var globals = {
     gates: null,
     hqs: null,
     mines: null,
+    bomb: null,
     minimap: null,
     minimapfade: null
   },
@@ -108,6 +110,8 @@ globals.load = function(callback) {
       globals.renderGates();
     else if (target === "mines")
       globals.renderMines();
+    else if (target === "bomb")
+      globals.renderBomb();
     else
       globals.resources[target] = globals.rawImages[target];
 
@@ -124,8 +128,34 @@ globals.load = function(callback) {
 };
 
 /**
- *  * Renders the mines into two separate images
- *   */
+ * Renders the bomb into an images
+ */
+globals.renderMines = function() {
+  globals.remainingResources++;
+  globals.resources.bomb = {};
+
+  var renderer = document.getElementById('renderer');
+  var ctx = renderer.getContext('2d');
+
+  var n = 60;
+  var positions = [0, 0, n, n, 0, 0, n, n];
+
+  renderer.width = n;
+  renderer.height = n;
+  ctx.clearRect(0, 0, n, n);
+  ctx.drawImage(globals.rawImages.bomb, 0, 0, n, n, 0, 0, n, n);
+
+  var img = new Image();
+  img.src = renderer.toDataURL();
+  img.onload = function() {
+    globals.resources.bomb = img;
+    globals.resourceLoaded();
+  };
+};
+
+/**
+ * Renders the mines into two separate images
+ */
 globals.renderMines = function() {
   globals.remainingResources += 2;
   globals.resources.mines = [];
@@ -165,14 +195,15 @@ globals.renderHqs = function() {
   var renderer = document.getElementById('renderer');
   var ctx = renderer.getContext('2d');
 
-  var positions = [[0, 0, 150, 150, 0, 0, 150, 150],
-                   [150, 0, 150, 150, 0, 0, 150, 150],
-                   [0, 150, 150, 150, 0, 0, 150, 150],
-                   [150, 150, 150, 150, 0, 0, 150, 150]];
+  var n = 150;
+  var positions = [[0, 0, n, n, 0, 0, n, n],
+                   [n, 0, n, n, 0, 0, n, n],
+                   [0, n, n, n, 0, 0, n, n],
+                   [n, n, n, n, 0, 0, n, n]];
   var render = function(i) {
-    renderer.width = 150;
-    renderer.height = 150;
-    ctx.clearRect(0, 0, 150, 150);
+    renderer.width = n;
+    renderer.height = n;
+    ctx.clearRect(0, 0, n, n);
     ctx.drawImage(globals.rawImages.hqs, positions[i][0], positions[i][1],
                   positions[i][2], positions[i][3], positions[i][4],
                   positions[i][5], positions[i][6], positions[i][7]);

@@ -87,7 +87,7 @@ var Player = function(team, playerID, opt_state) {
     range: 0,
     damage: 5,
     speed: 8 * 60,
-    lastFire: 0,
+    lastFire: 20,
     coolDown: 20
   };
   this.projectile[Projectile.Type.MINE] = {
@@ -96,14 +96,14 @@ var Player = function(team, playerID, opt_state) {
     speed: 0,
     live: 0,
     allowed: 1,
-    lastFire: 0,
+    lastFire: 15,
     coolDown: 15
   };
   this.projectile[Projectile.Type.ROCKET] = {
     range: 40,
     damage: 500,
     speed: 9 * 60,
-    lastFire: 0,
+    lastFire: 120,
     coolDown: 120
   };
 
@@ -112,19 +112,28 @@ var Player = function(team, playerID, opt_state) {
   this.special[Player.SpecialType.EMP] = {
     range: 60,
     damage: 30,
-    lastFire: 0,
+    lastFire: 5 * 60,
     coolDown: 5 * 60
   };
   this.special[Player.SpecialType.MEDIC] = {
     range: 80,
     damage: -30,
-    lastFire: 0,
+    lastFire: 5 * 60,
     coolDown: 5 * 60
   };
   this.special[Player.SpecialType.SHIELD] = {
     duration: 5 * 60,
-    lastFire: 0,
+    lastFire: 6 * 60,
     coolDown: 5 * 60
+  };
+  this.special[Player.SpecialType.BOMB] = {
+    range: 200,
+    damage: 5000,
+    speed: 60,
+    fired: false,
+    lastFire: 0,
+    coolDown: 60 * 60,
+    allowed: 1 // should be 0, 1 for testing
   };
 
   if (globals.diff) {
@@ -135,7 +144,7 @@ var Player = function(team, playerID, opt_state) {
   }
 };
 
-Player.SpecialType = { ROCKET: 1, EMP: 2, MEDIC: 3, SHIELD: 4 };
+Player.SpecialType = { ROCKET: 1, EMP: 2, MEDIC: 3, SHIELD: 4 , BOMB:5};
 
 Player.prototype.getAbsoluteState = function() {
   var p = {};
@@ -495,6 +504,12 @@ Player.prototype.updateKeys = function(e) {
     if(value) {
       diff.m = 4;
       this.keys.mounted = 4;
+    }
+    break;
+  case 53: //5
+    if(value) {
+      diff.m = 5;
+      this.keys.mounted = 5;
     }
     break;
   case 85:

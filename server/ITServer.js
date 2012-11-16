@@ -118,7 +118,12 @@ var update = function() {
         player.special[player.mounted].lastFire > player.special[player.mounted].coolDown &&
         (player.mouse.right === true || player.keys.shift === true)) {
       console.log("firing special weapon " + player.mounted);
-      if (player.mounted === Player.SpecialType.ROCKET) {
+      if (player.mounted == Player.SpecialType.BOMB) {
+        if(player.projectile[Projectile.Type.BOMB].allowed) { 
+          globals.projectiles[Projectile.nextID] = new Projectile(player, Projectile.Type.BOMB, Projectile.nextID);
+          Projectile.nextID++;
+        }
+      } else if (player.mounted === Player.SpecialType.ROCKET) {
         globals.projectiles[Projectile.nextID] = new Projectile(player, Projectile.Type.ROCKET, Projectile.nextID);
         Projectile.nextID++;
       } else if ((player.mounted === Player.SpecialType.EMP) ||
