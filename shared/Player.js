@@ -106,9 +106,19 @@ var Player = function(team, playerID, opt_state) {
     lastFire: 120,
     coolDown: 120
   };
+  this.projectile[Player.SpecialType.BOMB] = {
+    range: 200,
+    damage: 5000,
+    speed: 60,
+    fired: false,
+    lastFire: 10, // 0
+    coolDown: 0, // 60 * 60,
+    allowed: 1 // should be 0, 1 for testing
+  };
 
   this.special = {};
   this.special[Player.SpecialType.ROCKET] = this.projectile[Projectile.Type.ROCKET];
+  this.special[Player.SpecialType.BOMB] = this.projectile[Projectile.Type.BOMB];
   this.special[Player.SpecialType.EMP] = {
     range: 60,
     damage: 30,
@@ -125,15 +135,6 @@ var Player = function(team, playerID, opt_state) {
     duration: 5 * 60,
     lastFire: 6 * 60,
     coolDown: 5 * 60
-  };
-  this.special[Player.SpecialType.BOMB] = {
-    range: 200,
-    damage: 5000,
-    speed: 60,
-    fired: false,
-    lastFire: 10, // 0
-    coolDown: 0, // 60 * 60,
-    allowed: 1 // should be 0, 1 for testing
   };
 
   if (globals.diff) {

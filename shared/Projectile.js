@@ -25,7 +25,7 @@ var Projectile = function(player, type, id, opt_state) {
   }
 
   this.team = player.team;
-  this.owner = player.playerID; // for score atracking
+  this.owner = player.playerID; // for score tracking
   this.type = type;
   this.id = id;
   this.range = player.projectile[type].range;
