@@ -1,8 +1,8 @@
 /**
- * A Gate protecting the player's HQ or the HQ itslef.
+ * A Base protecting the player's HQ or the HQ itslef.
  * @param {Number} team The team number for the gate.
  */
-var Gate = function(team, hq) {
+var Base = function(team, hq) {
   this.hq = hq;
   this.team = team;
   this.underAttack = 0;
@@ -37,7 +37,7 @@ var Gate = function(team, hq) {
  * @param {Player} The owner of projectile causing damage.
  * @returns {Number} The number of points earned for the hit.
  */
-Gate.prototype.takeHit = function(damage, owner) {
+Base.prototype.takeHit = function(damage, owner) {
   this.health -= damage;
   if (this.health < 0) this.health = 0;
   if (this.hq && this.health === 0) {
@@ -63,7 +63,7 @@ Gate.prototype.takeHit = function(damage, owner) {
   return 0;
 };
 
-Gate.prototype.updateHealth = function(health, team, printMessages) {
+Base.prototype.updateHealth = function(health, team, printMessages) {
   if (health !== this.health) {
     if (printMessages && health === 0) {
       var message;
@@ -80,7 +80,7 @@ Gate.prototype.updateHealth = function(health, team, printMessages) {
   }
 };
 
-Gate.prototype.predict = function() {
+Base.prototype.predict = function() {
   if (this.underAttack > 0)
     this.underAttack = Math.max(0, this.underAttack - globals.dt);
   // Fade In/Out
@@ -95,14 +95,14 @@ Gate.prototype.predict = function() {
   this.fade = Math.max(this.fade, 0);
 };
 
-Gate.prototype.isUnderAttack = function() {
+Base.prototype.isUnderAttack = function() {
   return (this.underAttack > 0);
 };
 
 /**
  * Draws the gate.
  */
-Gate.prototype.draw = function() {
+Base.prototype.draw = function() {
   var pos = Rectangle.getPos(this);
   var width = this.right - this.left;
   var height = this.bottom - this.top;
@@ -149,7 +149,7 @@ Gate.prototype.draw = function() {
 /**
  * @returns {Rectangle} A box describing the location of the gate.
  */
-Gate.prototype.getCollisionBarrier = function() {
+Base.prototype.getCollisionBarrier = function() {
   if (this.health === 0)
     return new Rectangle();
   return new Rectangle(this);

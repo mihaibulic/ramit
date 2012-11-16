@@ -6,8 +6,8 @@ var Level = function() {
   this.x = 0;
   this.y = 0;
   this.walls = [];
-  this.gates = [ new Gate(0, false), new Gate(1, false) ];
-  this.hqs = [ new Gate(0, true), new Gate(1, true) ];
+  this.gates = [ new Base(0, false), new Base(1, false) ];
+  this.hqs = [ new Base(0, true), new Base(1, true) ];
   this.loadLevel();
 };
 

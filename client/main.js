@@ -107,7 +107,7 @@ globals.load = function(callback) {
     } else if (target === "hqs")
       globals.renderHqs();
     else if (target === "gates")
-      globals.renderGates();
+      globals.renderBases();
     else if (target === "mines")
       globals.renderMines();
     else if (target === "bomb")
@@ -224,7 +224,7 @@ globals.renderHqs = function() {
 /**
  * Renders the gates image into three separate images.
  */
-globals.renderGates = function() {
+globals.renderBases = function() {
   globals.remainingResources += 3;
   globals.resources.gates = [];
 
