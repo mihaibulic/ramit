@@ -130,7 +130,7 @@ globals.load = function(callback) {
 /**
  * Renders the bomb into an images
  */
-globals.renderMines = function() {
+globals.renderBomb = function() {
   globals.remainingResources++;
   globals.resources.bomb = {};
 
