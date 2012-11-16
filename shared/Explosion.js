@@ -78,7 +78,6 @@ Explosion.prototype.canAffect = function(player, owner, target) {
           (this.damage < 0 && player.team === owner.team && player !== owner));
 };
 
-
 /**
  * Draws the explosion on the screen.
  * @returns {Boolean} true when complete
