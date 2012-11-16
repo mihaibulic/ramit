@@ -106,7 +106,7 @@ var Player = function(team, playerID, opt_state) {
     lastFire: 120,
     coolDown: 120
   };
-  this.projectile[Player.SpecialType.BOMB] = {
+  this.projectile[Projectile.Type.BOMB] = {
     range: 200,
     damage: 5000,
     speed: 60,
