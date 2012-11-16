@@ -119,7 +119,7 @@ var update = function() {
         (player.mouse.right === true || player.keys.shift === true)) {
       console.log("firing special weapon " + player.mounted);
       if (player.mounted == Player.SpecialType.BOMB) {
-        if(player.projectile[Projectile.Type.BOMB].allowed) { 
+        if(player.special[player.mounted].allowed) { 
           globals.projectiles[Projectile.nextID] = new Projectile(player, Projectile.Type.BOMB, Projectile.nextID);
           Projectile.nextID++;
         }
