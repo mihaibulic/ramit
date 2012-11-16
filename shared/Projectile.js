@@ -171,8 +171,8 @@ Projectile.prototype.predict = function() {
     target = globals.players[pid];
     if (target.team === this.team)
       continue;
-    if (target.getCollisionBarrier().intersects(barrier)) {
-      hit = (this.type !== Projectile.Type.BOMB);
+    if (target.getCollisionBarrier().intersects(barrier) && this.type !== Projectile.Type.BOMB) {
+      hit = true;
       break;
     }
   }
@@ -183,7 +183,7 @@ Projectile.prototype.predict = function() {
       target = globals.level.gates[gid];
       if (target.team === this.team)
         continue;
-      if (target.getCollisionBarrier().intersects(barrier)) {
+      if (target.getCollisionBarrier().intersects(barrier) && this.type !== Projectile.Type.BOMB) {
         hit = true;
         break;
       }
