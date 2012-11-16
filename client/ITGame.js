@@ -275,15 +275,16 @@ ITGame.prototype.draw = function() {
     globals.level.hqs[h].draw();
   }
 
-  for (qid in globals.projectiles) {
-    if (globals.projectiles[qid].type !== Projectile.Type.MINE)
-      globals.projectiles[qid].draw(this.team);
-  }
-
   // Explosions
   for (var eid in globals.explosions) {
     if (globals.explosions[eid].draw())
       delete globals.explosions[eid];
+  }
+
+  //draw non-mine projectiles
+  for (qid in globals.projectiles) {
+    if (globals.projectiles[qid].type !== Projectile.Type.MINE)
+      globals.projectiles[qid].draw(this.team);
   }
 
   //draw players info
