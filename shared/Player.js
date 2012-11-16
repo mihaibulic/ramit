@@ -928,9 +928,14 @@ Player.prototype.getCollisionBarrier = function(location, useShield) {
     return new Rectangle({left: location.x + 2, right: location.x + 58,
                           top: location.y + 2, bottom: location.y + 58});
   }
-
-  return new Rectangle({left: location.x + 10, right: location.x + 50,
-                        top: location.y + 10, bottom: location.y + 50});
+  else if( this.health > 0) {
+    return new Rectangle({left: location.x + 10, right: location.x + 50,
+                          top: location.y + 10, bottom: location.y + 50});
+  }
+  else { 
+    // if you're dead, do not collide with anything
+    return new Rectangle({left: -100, right: -100, top: -100, bottom: -100});
+  }
 };
 
 /**
