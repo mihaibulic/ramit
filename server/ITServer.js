@@ -231,6 +231,20 @@ io.sockets.on('connection', function(socket) {
     return;
   }
 
+  socket.on('conn_resp', function(data) {
+    if(data !== undefined) {
+      globals.players[id].name = data;
+      if (!globals.diff.p)
+        globals.diff.p = {};
+      if (!globals.diff.p[id])
+        globals.diff.p[id] = {};
+      globals.diff.p[id].n = data;
+    }
+
+    // Emit to new player the absolute state
+    socket.emit('setup', {i: id, s: getAbsoluteState()});
+  });
+
   // If this is the first player, start the game.
   if (globals.numberOfPlayers === 0) {
     reset();
@@ -335,7 +349,6 @@ io.sockets.on('connection', function(socket) {
     globals.playerIDQueue.push(id);
     delete globals.socketToId[socket.id];
   });
-
-  // Emit to new player the absolute state
-  socket.emit('setup', {i: id, s: getAbsoluteState()});
+  
+  socket.emit('conn_req', {});
 });
