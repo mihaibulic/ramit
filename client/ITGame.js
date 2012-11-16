@@ -254,9 +254,10 @@ ITGame.prototype.draw = function() {
                           -1 * levelX + 1000, -1 * levelY + 1000);
   }
 
-  //draw projectiles (including mines)
+  //draw  mines
   for (var qid in globals.projectiles) {
-    globals.projectiles[qid].draw(this.team);
+    if (globals.projectiles[qid].type === Projectile.Type.MINE)
+      globals.projectiles[qid].draw(this.team);
   }
 
   //draw players
@@ -272,6 +273,11 @@ ITGame.prototype.draw = function() {
   //draw headquarters
   for (var h in globals.level.hqs) {
     globals.level.hqs[h].draw();
+  }
+
+  for (qid in globals.projectiles) {
+    if (globals.projectiles[qid].type !== Projectile.Type.MINE)
+      globals.projectiles[qid].draw(this.team);
   }
 
   // Explosions

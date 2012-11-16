@@ -166,16 +166,14 @@ Projectile.prototype.predict = function() {
 
   var barrier = this.getCollisionBarrier({x: this.sx, y: this.sy});
 
-  if(this.type !== Projectile.Type.BOMB) {
-    // Collisions with Players
-    for (var pid in globals.players) {
-      target = globals.players[pid];
-      if (target.team === this.team)
-        continue;
-      if (target.getCollisionBarrier().intersects(barrier)) {
-        hit = true;
-        break;
-      }
+  // Collisions with Players
+  for (var pid in globals.players) {
+    target = globals.players[pid];
+    if (target.team === this.team)
+      continue;
+    if (target.getCollisionBarrier().intersects(barrier)) {
+      hit = (this.type !== Projectile.Type.BOMB);
+      break;
     }
   }
 
@@ -274,7 +272,8 @@ Projectile.prototype.update = function() {
       this.vx = this.vy = 0;
       new Explosion(this.x, this.y, this.range, globals.players[this.owner],
                     target, this.damage, this, false);
-      hit = true;
+  
+      hit = (this.type !== Projectile.Type.BOMB);
       break;
     }
   }
