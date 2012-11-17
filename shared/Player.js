@@ -324,6 +324,16 @@ Player.prototype.drawHUD = function() {
   globals.ctx.fill();
   globals.ctx.globalAlpha = 1;
 
+  // Special weapons + cooldowns
+  globals.ctx.globalAlpha = 0.75;
+  globals.ctx.fillStyle = "#777777";
+  drawRoundRect(globals.ctx, 15 + 80*this.mounted, 40, 80, 80);
+  globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
+  for (var s in this.special) {
+    globals.ctx.fillRect(20 + 80*s, 45, 75, 75);
+  }
+  globals.ctx.globalAlpha = 1;
+
   // Draw Name and Score
   globals.ctx.textAlign = "right";
   globals.ctx.fillStyle = "#ffffff";
