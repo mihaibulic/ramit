@@ -331,7 +331,6 @@ Player.prototype.drawHUD = function() {
   globals.ctx.fill();
   globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
 
-  console.log("mounted: " + this.mounted);
   for (var s in this.special) {
     globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
     
@@ -465,7 +464,7 @@ Player.prototype.updateMouse = function(e) {
 
     // mouse is in weapons area, so click should be used to mount another weapon rather than aim
     if (x > 20 && x < (20+40*this.special.length) && y > 50 && y < 80) { 
-      this.mounted = diff.m = Math.floor((x - 20)/40);
+      this.keys.mounted = this.mounted = diff.m = Math.floor((x - 20)/40);
       globals.socket.emit('key', diff);
       return;
     }
@@ -550,34 +549,12 @@ Player.prototype.updateKeys = function(e) {
     }
     break;
   case 49: //1
-    if(value) {
-      diff.m = 1;
-      this.keys.mounted = 1;
-    }
-    break;
   case 50: //2
-    if(value) {
-      diff.m = 2;
-      this.keys.mounted = 2;
-    }
-    break;
   case 51: //3
-    if(value) {
-      diff.m = 3;
-      this.keys.mounted = 3;
-    }
-    break;
   case 52: //4
-    if(value) {
-      diff.m = 4;
-      this.keys.mounted = 4;
-    }
-    break;
   case 53: //5
-    if(value) {
-      diff.m = 5;
-      this.keys.mounted = 5;
-    }
+    if(value) 
+      this.mounted = this.keys.mounted = diff.m = e.keyCode - 48;
     break;
   case 85:
     if (value && !this.keys.u) {
