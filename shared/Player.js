@@ -358,7 +358,7 @@ Player.prototype.drawHUD = function() {
       y = 330 + ((gate.top + 30) * 0.05);
 
       globals.ctx.fillStyle = Player.TEAM_COLOR[gate.team];
-      globals.ctx.fillRect(x, y, 12, 3);
+      globals.ctx.fillRect(x, y-2, 13, 3);
     }
   }
 
@@ -372,7 +372,7 @@ Player.prototype.drawHUD = function() {
       globals.ctx.strokeStyle = Player.TEAM_COLOR[hq.team];
       globals.ctx.lineWidth = 2;
       globals.ctx.beginPath();
-      globals.ctx.arc(x, y, 4, 0, 2 * Math.PI);
+      globals.ctx.arc(x, y, 3, 0, 2 * Math.PI);
       globals.ctx.closePath();
       globals.ctx.stroke();
     }
