@@ -82,7 +82,7 @@ var Player = function(team, playerID, opt_state) {
     turretAim: aim
   };
 
-  this.projectile = {};
+  this.projectile = [];
   this.projectile[Projectile.Type.NORMAL] = {
     range: 0,
     damage: 5,
@@ -116,7 +116,7 @@ var Player = function(team, playerID, opt_state) {
     allowed: 1 // should be 0, 1 for testing
   };
 
-  this.special = {};
+  this.special = [];
   this.special[Player.SpecialType.ROCKET] = this.projectile[Projectile.Type.ROCKET];
   this.special[Player.SpecialType.BOMB] = this.projectile[Projectile.Type.BOMB];
   this.special[Player.SpecialType.EMP] = {
@@ -469,7 +469,7 @@ Player.prototype.updateMouse = function(e) {
     var y = e.clientY - canvasPos.top;
 
     console.log("clic @ " + x + ", " + y);
-    console.log("x max: " + 20+40*this.special.length);
+    console.log("x max: " + this.special.length);
     // 73
 
     // mouse is in weapons area, so click should be used to mount another weapon rather than aim
