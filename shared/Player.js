@@ -311,7 +311,7 @@ Player.prototype.drawHUD = function() {
   // Health Bar
   var color = Math.floor(this.health / this.maxHealth * Player.HEALTH.length);
   if (color == Player.HEALTH.length) color--;
-  globals.ctx.textAlign = "right";
+  globals.ctx.textAlign = "left";
   globals.ctx.fillStyle = "#ffffff";
   globals.ctx.font = "24px sans-serif";
   globals.ctx.fillText("hp:", 20, 20);
