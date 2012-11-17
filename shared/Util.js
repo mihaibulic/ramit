@@ -15,7 +15,7 @@ function drawRoundRect(ctx, x, y, width, height, radius) {
   }
   
   ctx.beginPath();
-  if (width > 0 && height > 0) {
+  if (width > radius && height > radius) {
     ctx.moveTo(x + radius, y);
     ctx.lineTo(x + width - radius, y);
     ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
