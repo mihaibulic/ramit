@@ -330,6 +330,8 @@ Player.prototype.drawHUD = function() {
   drawRoundRect(globals.ctx, 15 + 40*(this.mounted), 45, 40, 40);
   globals.ctx.fill();
   globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
+
+  console.log("mounted: " + this.mounted);
   for (var s in this.special) {
     globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
     
