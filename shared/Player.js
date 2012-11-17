@@ -325,6 +325,7 @@ Player.prototype.drawHUD = function() {
   globals.ctx.globalAlpha = 1;
 
   // Special weapons + cooldowns
+  globals.ctx.globalAlpha = 0.75;
   globals.ctx.fillStyle = "#333333";
   drawRoundRect(globals.ctx, 15 + 40*(this.mounted), 45, 40, 40);
   globals.ctx.fill();
@@ -332,6 +333,7 @@ Player.prototype.drawHUD = function() {
   for (var s in this.special) {
     globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
   }
+  globals.ctx.globalAlpha = 1;
 
   // Draw Name and Score
   globals.ctx.textAlign = "right";
