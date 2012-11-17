@@ -326,7 +326,7 @@ Player.prototype.drawHUD = function() {
 
   // Special weapons + cooldowns
   globals.ctx.globalAlpha = 0.75;
-  globals.ctx.fillStyle = "#c1c1c1";
+  globals.ctx.fillStyle = "#a2a2a2";
   drawRoundRect(globals.ctx, 15 + 40*(this.mounted), 45, 40, 40);
   globals.ctx.fill();
   globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
