@@ -457,24 +457,12 @@ Player.prototype.updateMouse = function(e) {
   switch (e.which)
   {
   case 1: // left
-/*
-  var r = Math.atan2(e.clientY - centerPoint.y, e.clientX - centerPoint.x) * 180 / Math.PI;
- 
-  for (var s in this.special) {
-    globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
-  }
- */
     var canvasPos = globals.canvas.getBoundingClientRect();
     var x = e.clientX - canvasPos.left;
     var y = e.clientY - canvasPos.top;
 
-    console.log("clic @ " + x + ", " + y);
-    console.log("x max: " + this.special.length);
-    // 73
-
     // mouse is in weapons area, so click should be used to mount another weapon rather than aim
     if (x > 20 && x < (20+40*this.special.length) && y > 50 && y < 80) { 
-      console.log("mounted " + Math.floor((x-20)/40));
       this.mounted = diff.m = Math.floor((x - 20)/40);
     }
     else
