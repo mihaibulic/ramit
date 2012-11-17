@@ -311,11 +311,12 @@ Player.prototype.drawHUD = function() {
   // Health Bar
   var color = Math.floor(this.health / this.maxHealth * Player.HEALTH.length);
   if (color == Player.HEALTH.length) color--;
+  globals.ctx.fillText("HP:", 20, 20);
   globals.ctx.fillStyle = Player.HEALTH[color];
   globals.ctx.strokeStyle = Player.HEALTH[color];
   globals.ctx.globalAlpha = 0.75;
-  globals.ctx.strokeRect(20, 20, 200, 20);
-  globals.ctx.fillRect(20, 20, 200 * this.health / this.maxHealth, 20);
+  globals.ctx.strokeRect(50, 20, 200, 20);
+  globals.ctx.fillRect(50, 20, 200 * this.health / this.maxHealth, 20);
   globals.ctx.globalAlpha = 1;
 
   // Draw Name and Score
@@ -734,20 +735,16 @@ Player.prototype.move = function() {
     }
   }
 
-  console.log("ply col chk");
   // check HQs
   for (var h in globals.level.hqs) {
-    console.log("hq #" + h);
     var hqBox = globals.level.hqs[h].getCollisionBarrier();
     if (rectYMovement.intersects(hqBox)) {
-      console.log("\ty collision for hq #" + h);
       // Moving up/down collided with a hq, move up to the gate but no
       // farther.
       distance = tankBox.getYDistance(hqBox);
       y = this.tank.sy + ((distance - 1) * yDir);
     }
     if (rectXMovement.intersects(hqBox)) {
-      console.log("\tx collision for hq #" + h);
       // Moving left/right collided with an hq, move up to the hq but no
       // farther.
       distance = tankBox.getXDistance(hqBox);
