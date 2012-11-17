@@ -736,14 +736,17 @@ Player.prototype.move = function() {
 
   // check HQs
   for (var h in globals.level.hqs) {
+    console.log("hq #" + h);
     var hqBox = globals.level.hqs[h].getCollisionBarrier();
     if (rectYMovement.intersects(hqBox)) {
+      console.log("\ty collision for hq #" + h);
       // Moving up/down collided with a hq, move up to the gate but no
       // farther.
       distance = tankBox.getYDistance(hqBox);
       y = this.tank.sy + ((distance - 1) * yDir);
     }
     if (rectXMovement.intersects(hqBox)) {
+      console.log("\tx collision for hq #" + h);
       // Moving left/right collided with an hq, move up to the hq but no
       // farther.
       distance = tankBox.getXDistance(hqBox);
