@@ -469,6 +469,8 @@ Player.prototype.updateMouse = function(e) {
     var y = e.clientY - canvasPos.top;
 
     console.log("clic @ " + x + ", " + y);
+    console.log("x max: " + 20+40*this.special.length);
+    // 73
 
     // mouse is in weapons area, so click should be used to mount another weapon rather than aim
     if (x > 20 && x < (20+40*this.special.length) && y > 50 && y < 80) { 
