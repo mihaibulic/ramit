@@ -330,7 +330,7 @@ Player.prototype.drawHUD = function() {
   globals.ctx.fill();
   globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
   for (var s in this.special) {
-    globals.ctx.fillRect(15 + 40*(s), 50, 30, 30);
+    globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
   }
 
   // Draw Name and Score
