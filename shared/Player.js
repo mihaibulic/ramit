@@ -318,8 +318,10 @@ Player.prototype.drawHUD = function() {
   globals.ctx.fillStyle = Player.HEALTH[color];
   globals.ctx.strokeStyle = Player.HEALTH[color];
   globals.ctx.globalAlpha = 0.75;
-  globals.ctx.strokeRect(55, 20, 200, 20);
-  globals.ctx.fillRect(55, 20, 200 * this.health / this.maxHealth, 20);
+  drawRoundRect(globals.ctx, 55, 20, 200, 20, 10);
+  globals.ctx.stroke();
+  drawRoundRect(globals.ctx, 55, 20, 200 * this.health / this.maxHealth, 20, 10);
+  globals.ctx.fill();
   globals.ctx.globalAlpha = 1;
 
   // Draw Name and Score
@@ -358,7 +360,7 @@ Player.prototype.drawHUD = function() {
       y = 330 + ((gate.top + 30) * 0.05);
 
       globals.ctx.fillStyle = Player.TEAM_COLOR[gate.team];
-      globals.ctx.fillRect(x, y-2, 13, 3);
+      globals.ctx.fillRect(x, y-2, 12, 3);
     }
   }
 
