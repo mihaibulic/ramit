@@ -734,6 +734,23 @@ Player.prototype.move = function() {
     }
   }
 
+  // check HQs
+  for (var h in globals.level.hqs) {
+    var hqBox = globals.level.hqs[h].getCollisionBarrier();
+    if (rectYMovement.intersects(hqBox)) {
+      // Moving up/down collided with a hq, move up to the gate but no
+      // farther.
+      distance = tankBox.getYDistance(hqBox);
+      y = this.tank.sy + ((distance - 1) * yDir);
+    }
+    if (rectXMovement.intersects(hqBox)) {
+      // Moving left/right collided with an hq, move up to the hq but no
+      // farther.
+      distance = tankBox.getXDistance(hqBox);
+      x = this.tank.sx + ((distance - 1) * xDir);
+    }
+  }
+
   // check other tanks
   var barrier;
   for (var p in globals.players) {
