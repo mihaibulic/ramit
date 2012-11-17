@@ -314,12 +314,12 @@ Player.prototype.drawHUD = function() {
   globals.ctx.textAlign = "left";
   globals.ctx.fillStyle = "#ffffff";
   globals.ctx.font = "24px sans-serif";
-  globals.ctx.fillText("hp:", 20, 20);
+  globals.ctx.fillText("hp:", 20, 44);
   globals.ctx.fillStyle = Player.HEALTH[color];
   globals.ctx.strokeStyle = Player.HEALTH[color];
   globals.ctx.globalAlpha = 0.75;
-  globals.ctx.strokeRect(50, 20, 200, 20);
-  globals.ctx.fillRect(50, 20, 200 * this.health / this.maxHealth, 20);
+  globals.ctx.strokeRect(60, 20, 200, 20);
+  globals.ctx.fillRect(60, 20, 200 * this.health / this.maxHealth, 20);
   globals.ctx.globalAlpha = 1;
 
   // Draw Name and Score
