@@ -318,8 +318,8 @@ Player.prototype.drawHUD = function() {
   globals.ctx.fillStyle = Player.HEALTH[color];
   globals.ctx.strokeStyle = Player.HEALTH[color];
   globals.ctx.globalAlpha = 0.75;
-  globals.ctx.strokeRect(60, 20, 200, 20);
-  globals.ctx.fillRect(60, 20, 200 * this.health / this.maxHealth, 20);
+  globals.ctx.strokeRect(55, 20, 200, 20);
+  globals.ctx.fillRect(55, 20, 200 * this.health / this.maxHealth, 20);
   globals.ctx.globalAlpha = 1;
 
   // Draw Name and Score
@@ -350,6 +350,34 @@ Player.prototype.drawHUD = function() {
   // Minimap
   globals.ctx.drawImage(globals.resources.minimap, 830, 330);
 
+  // draws gates on minimap
+  for (var g in globals.level.gates) {
+    var gate = globals.level.gates[g];
+    if (gate.health > 0) {
+      x = 830 + ((gate.left + 30) * 0.05);
+      y = 330 + ((gate.top + 30) * 0.05);
+
+      globals.ctx.strokeStyle = Player.TEAM_COLOR[gate.team];
+      globals.ctx.beginPath();
+      globals.ctx.arc(x, y, 3, 0, 2 * Math.PI);
+      globals.ctx.closePath();
+      globals.ctx.stroke();
+    }
+  }
+
+  // draws hqs on minimap
+  for (var h in globals.level.hqs) {
+    var hq = globals.level.hqs[h];
+    if (hq.health > 0) {
+      x = 830 + ((hq.left + 30) * 0.05);
+      y = 330 + ((hq.top + 30) * 0.05);
+
+      globals.ctx.fillStyle = Player.TEAM_COLOR[hq.team];
+      globals.ctx.fillRect(x, y, 12, 4);
+    }
+  }
+
+  // draws players on minimap
   var x;
   var y;
   var other;
