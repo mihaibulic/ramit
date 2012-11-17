@@ -13,6 +13,9 @@ function drawRoundRect(ctx, x, y, width, height, radius) {
   if (typeof radius === "undefined") {
     radius = 5;
   }
+
+  if (width <= 0 || height <= 0) return;
+
   ctx.beginPath();
   ctx.moveTo(x + radius, y);
   ctx.lineTo(x + width - radius, y);
