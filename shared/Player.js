@@ -331,8 +331,14 @@ Player.prototype.drawHUD = function() {
   globals.ctx.fill();
   globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
   for (var s in this.special) {
-    if (this.special[s].allowed === undefined || this.special[s].allowed)
+    globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
+    
+    // if this weapon is not allowed, draw a grayed out box on top of it
+    if (this.special[s].allowed !== undefined && !this.special[s].allowed) {
+      globals.ctx.fillStyle = "#8a8a8a"; 
       globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
+      globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
+    }
   }
   globals.ctx.globalAlpha = 1;
 
@@ -461,7 +467,8 @@ Player.prototype.updateMouse = function(e) {
     var canvasPos = globals.canvas.getBoundingClientRect();
     var x = e.clientX - canvasPos.left;
     var y = e.clientY - canvasPos.top;
-    // mouse is in weapons area
+
+    // mouse is in weapons area, so click should be used to mount another weapon rather than aim
     if (x > 20 && x < (20+40*this.special.length()) && y > 50 && y < 80) 
       this.mounted = diff.m = Math.floor((x - 20)/40);
     else
