@@ -331,7 +331,8 @@ Player.prototype.drawHUD = function() {
   globals.ctx.fill();
   globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
   for (var s in this.special) {
-    globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
+    if (this.special[s].allowed === undefined || this.special[s].allowed)
+      globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
   }
   globals.ctx.globalAlpha = 1;
 
