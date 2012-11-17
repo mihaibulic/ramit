@@ -471,7 +471,7 @@ Player.prototype.updateMouse = function(e) {
     console.log("clic @ " + x + ", " + y);
 
     // mouse is in weapons area, so click should be used to mount another weapon rather than aim
-    if (x > 20 && x < (20+40*this.special.length()) && y > 50 && y < 80) { 
+    if (x > 20 && x < (20+40*this.special.length) && y > 50 && y < 80) { 
       console.log("mounted " + Math.floor((x-20)/40));
       this.mounted = diff.m = Math.floor((x - 20)/40);
     }
