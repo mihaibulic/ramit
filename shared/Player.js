@@ -734,6 +734,7 @@ Player.prototype.move = function() {
     }
   }
 
+  console.log("ply col chk");
   // check HQs
   for (var h in globals.level.hqs) {
     console.log("hq #" + h);
