@@ -314,7 +314,7 @@ Player.prototype.drawHUD = function() {
   globals.ctx.textAlign = "left";
   globals.ctx.fillStyle = "#ffffff";
   globals.ctx.font = "24px sans-serif";
-  globals.ctx.fillText("hp:", 20, 44);
+  globals.ctx.fillText("hp", 20, 40);
   globals.ctx.fillStyle = Player.HEALTH[color];
   globals.ctx.strokeStyle = Player.HEALTH[color];
   globals.ctx.globalAlpha = 0.75;
