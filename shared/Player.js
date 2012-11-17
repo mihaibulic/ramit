@@ -311,6 +311,9 @@ Player.prototype.drawHUD = function() {
   // Health Bar
   var color = Math.floor(this.health / this.maxHealth * Player.HEALTH.length);
   if (color == Player.HEALTH.length) color--;
+  globals.ctx.font = "24px sans-serif";
+  globals.ctx.textAlign = "left";
+  globals.ctx.fillStyle = "#ffffff";
   globals.ctx.fillText("HP:", 20, 20);
   globals.ctx.fillStyle = Player.HEALTH[color];
   globals.ctx.strokeStyle = Player.HEALTH[color];
@@ -320,7 +323,6 @@ Player.prototype.drawHUD = function() {
   globals.ctx.globalAlpha = 1;
 
   // Draw Name and Score
-  globals.ctx.fillStyle = "#ffffff";
   globals.ctx.textAlign = "right";
   globals.ctx.font = "24px serif";
   globals.ctx.fillText(this.name + ": $" + (this.totalScore - this.totalSpent), 980, 35);
