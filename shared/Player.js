@@ -649,6 +649,14 @@ Player.prototype.loadState = function(data, you) {
       if (oldHealth === 0 && this.health !== 0)
         this.tank.y = data.y;
     }
+    if (data.l !== undefined) {
+      this.projectile[Projectile.Type.NORMAL] = data.l.n;
+      this.projectile[Projectile.Type.MINE] = data.l.m;
+      this.projectile[Projectile.Type.ROCKETL] = data.l.r;
+      this.special[this.SpecialType.EMP] = data.l.e;
+      this.special[this.SpecialType.MEDIC] = data.l.d;
+      this.special[this.SpecialType.SHIELD] = data.l.s;
+    }
   }
 };
 
@@ -689,16 +697,6 @@ Player.prototype.predict = function() {
 
   if (this.hasShield)
     this.hasShield = Math.max(0, this.hasShield - globals.dt);
-  
-  this.projectile[Projectile.Type.NORMAL].lastFire++;
-  this.projectile[Projectile.Type.MINE].lastFire++;
-  this.special[Player.SpecialType.ROCKET].lastFire++;
-  this.special[Player.SpecialType.EMP].lastFire++;
-  this.special[Player.SpecialType.MEDIC].lastFire++;
-  if (this.hasShield === 0)
-    this.special[Player.SpecialType.SHIELD].lastFire++;
-  else if(this.hasShield === this.special[Player.SpecialType.SHIELD].duration)
-    this.special[Player.SpecialType.SHIELD].lastFire = 0;
 };
 
 /**
@@ -720,6 +718,14 @@ Player.prototype.update = function() {
     this.special[Player.SpecialType.MEDIC].lastFire++;
     if (this.hasShield === 0)
       this.special[Player.SpecialType.SHIELD].lastFire++;
+
+    diff.l = [];
+    diff.l.n = this.projectile[Projectile.Type.NORMAL].lastFire++;
+    diff.l.m = this.projectile[Projectile.Type.MINE].lastFire++;
+    diff.l.r = this.special[Player.SpecialType.ROCKET].lastFire++;
+    diff.l.e = this.special[Player.SpecialType.EMP].lastFire++;
+    diff.l.d = this.special[Player.SpecialType.MEDIC].lastFire++;
+    diff.l.s = this.special[Player.SpecialType.SHIELD].lastFire++;
   }
   if (this.hasShield) {
     this.hasShield--;
