@@ -464,10 +464,11 @@ Player.prototype.updateMouse = function(e) {
     var canvasPos = globals.canvas.getBoundingClientRect();
     var x = e.clientX - canvasPos.left;
     var y = e.clientY - canvasPos.top;
+    var num = Math.floor((x-20)/40);
 
     // mouse is in weapons area, so click should be used to mount another weapon rather than aim
-    if (x > 20 && x < (20+40*this.special.length) && y > 50 && y < 80) { 
-      this.keys.mounted = this.mounted = diff.m = Math.floor((x - 20)/40);
+    if (num >= this.SpecialType.ROCKET && num <= this.SpecialType.BOMB && this.special[num].allowed > 0 && y > 50 && y < 80) { 
+      this.keys.mounted = this.mounted = diff.m = num;
       globals.socket.emit('key', diff);
       return;
     }
@@ -556,8 +557,9 @@ Player.prototype.updateKeys = function(e) {
   case 51: //3
   case 52: //4
   case 53: //5
-    if(value) 
-      this.mounted = this.keys.mounted = diff.m = e.keyCode - 48;
+    var num = e.keyCode - 48;
+    if(value && this.special[num].allowed >= 0) 
+      this.mounted = this.keys.mounted = diff.m = num;
     break;
   case 85:
     if (value && !this.keys.u) {
