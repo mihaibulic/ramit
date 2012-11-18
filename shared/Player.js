@@ -347,6 +347,12 @@ Player.prototype.drawHUD = function() {
       globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
       globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
     }
+    else if (this.special[s].lastFire < this.special[s].coolDown) {
+      // draw cooldown
+      globals.ctx.fillStyle = "#8a8a8a"; 
+      globals.ctx.fillRect(20 + 40*(s), 50, 30, 30*(this.special[s].lastFire / this.special[s].coolDown));
+      globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
+    }
   }
   globals.ctx.globalAlpha = 1;
 
