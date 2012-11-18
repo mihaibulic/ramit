@@ -23,7 +23,7 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     this.range = opt_state.r;
     this.owner = opt_state.o;
 
-    if (this.type === Special.Type.EMP || this.type === Special.Type.MEDIC) 
+    if (this.type === Explosion.Type.EMP || this.type === Explosion.Type.MEDIC) 
       globals.players[this.owner].special[this.type].lastFire = 0;
       
     return;
