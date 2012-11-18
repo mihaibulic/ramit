@@ -689,6 +689,14 @@ Player.prototype.predict = function() {
     }
   }
 
+  this.projectile[Projectile.Type.NORMAL].lastFire++;
+  this.projectile[Projectile.Type.MINE].lastFire++;
+  this.special[Player.SpecialType.ROCKET].lastFire++;
+  this.special[Player.SpecialType.EMP].lastFire++;
+  this.special[Player.SpecialType.MEDIC].lastFire++;
+  if (this.hasShield === 0)
+    this.special[Player.SpecialType.SHIELD].lastFire++;
+
   if (this.hasShield)
     this.hasShield = Math.max(0, this.hasShield - globals.dt);
 };
