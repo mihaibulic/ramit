@@ -4,7 +4,7 @@
  * @param {Number} playerID The player's ID number.
  * @param {Object} opt_state A state object to build this object from.
  */
-var Player = function(team, playerID, opt_state, name) {
+var Player = function(team, playerID, opt_state) {
   var x;
   var y;
   var aim;
