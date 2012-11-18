@@ -340,13 +340,15 @@ Player.prototype.drawHUD = function() {
 
   for (var s in this.special) {
     globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
-    
+   
+    console.log(this.special[s].lastFire + "\t" + this.special[s].coolDown);
+ 
     globals.ctx.fillStyle = "#8a8a8a"; 
-    // if this weapon is not allowed, draw a grayed out box on top of it
-    if (this.special[s].allowed <= 0) 
+    if (this.special[s].allowed <= 0) { 
+      // if this weapon is not allowed, draw a grayed out box on top of it
       globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
+    }
     else if (this.special[s].lastFire < this.special[s].coolDown) { 
-      console.log("cooldown");
       // draw cooldown 
       globals.ctx.fillRect(20 + 40*(s), 50, 30, 30 * ((this.special[s].coolDown - this.special[s].lastFire) / this.special[s].coolDown));
     }
