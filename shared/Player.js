@@ -341,18 +341,13 @@ Player.prototype.drawHUD = function() {
   for (var s in this.special) {
     globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
     
+    globals.ctx.fillStyle = "#8a8a8a"; 
     // if this weapon is not allowed, draw a grayed out box on top of it
-    if (this.special[s].allowed <= 0) {
-      globals.ctx.fillStyle = "#8a8a8a"; 
+    if (this.special[s].allowed <= 0) 
       globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
-      globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
-    }
-    else if (this.special[s].lastFire < this.special[s].coolDown) {
-      // draw cooldown
-      globals.ctx.fillStyle = "#8a8a8a"; 
-      globals.ctx.fillRect(20 + 40*(s), 50, 30, 30*(this.special[s].lastFire / this.special[s].coolDown));
-      globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
-    }
+    else if (this.special[s].lastFire < this.special[s].coolDown) // draw cooldown 
+      globals.ctx.fillRect(20 + 40*(s), 50, 30, 30 * ((this.special[s].coolDown - this.special[s].lastFire) / this.special[s].coolDown));
+    globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
   }
   globals.ctx.globalAlpha = 1;
 
