@@ -59,7 +59,6 @@ var Player = function(team, playerID, opt_state) {
     this.totalSpent = opt_state.c;
   } else {
     this.name = "Player " + playerID;
-    //this.name = (name !== undefined) ? name : "Player " + playerID;
     this.team = team;
     var spawn = this.determineSpawn();
     x = Player.SPAWN_POINTS[team][spawn].x;
