@@ -694,6 +694,8 @@ Player.prototype.predict = function() {
   this.special[Player.SpecialType.MEDIC].lastFire++;
   if (this.hasShield === 0)
     this.special[Player.SpecialType.SHIELD].lastFire++;
+  else
+    this.special[Player.SpecialType.SHIELD].lastFire = 0;
 
   if (this.hasShield)
     this.hasShield = Math.max(0, this.hasShield - globals.dt);
