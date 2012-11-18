@@ -101,7 +101,7 @@ var Player = function(team, playerID, opt_state) {
   };
   this.projectile[Projectile.Type.ROCKET] = {
     range: 40,
-    damage: 500, //20,
+    damage: 20,
     speed: 9 * 60,
     lastFire: 120,
     coolDown: 120
@@ -111,9 +111,9 @@ var Player = function(team, playerID, opt_state) {
     damage: 5000,
     speed: 60,
     fired: false,
-    lastFire: 10, // 0
-    coolDown: 0, // 60 * 60,
-    allowed: 1 // should be 0, 1 for testing
+    lastFire: 1,
+    coolDown: 0, 
+    allowed: 0 // should be 0, 1 for testing
   };
 
   this.special = [];
