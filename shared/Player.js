@@ -719,13 +719,6 @@ Player.prototype.update = function() {
     if (this.hasShield === 0)
       this.special[Player.SpecialType.SHIELD].lastFire++;
 
-    diff.l = [];
-    diff.l.n = this.projectile[Projectile.Type.NORMAL].lastFire++;
-    diff.l.m = this.projectile[Projectile.Type.MINE].lastFire++;
-    diff.l.r = this.special[Player.SpecialType.ROCKET].lastFire++;
-    diff.l.e = this.special[Player.SpecialType.EMP].lastFire++;
-    diff.l.d = this.special[Player.SpecialType.MEDIC].lastFire++;
-    diff.l.s = this.special[Player.SpecialType.SHIELD].lastFire++;
   }
   if (this.hasShield) {
     this.hasShield--;
