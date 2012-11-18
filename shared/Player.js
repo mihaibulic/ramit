@@ -331,14 +331,13 @@ Player.prototype.drawHUD = function() {
   globals.ctx.globalAlpha = 0.75;
   globals.ctx.fillStyle = "#8a8a8a";
   drawRoundRect(globals.ctx, 15 + 40*(this.mounted), 45, 40, 40);
-  globals.ctx.fill();
   globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
 
   for (var s in this.special) {
     globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
     
     // if this weapon is not allowed, draw a grayed out box on top of it
-    if (this.special[s].allowed !== undefined && this.special[s].allowed <= 0) {
+    if (this.special[s].allowed <= 0) {
       globals.ctx.fillStyle = "#8a8a8a"; 
       globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
       globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
