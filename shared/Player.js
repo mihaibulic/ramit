@@ -293,8 +293,10 @@ Player.prototype.drawDetails = function() {
     if (color == Player.HEALTH.length) color--;
     globals.ctx.fillStyle = Player.HEALTH[color];
     globals.ctx.globalAlpha = 0.5;
-    globals.ctx.strokeRect(xPos + 10, yPos + 2, 40, 3);
-    globals.ctx.fillRect(xPos + 10, yPos + 2, 40 * this.health / this.maxHealth, 3);
+    drawRoundRect(globals.ctx, xPos + 10, yPos + 2, 40, 3, 1);
+    globals.ctx.stroke();
+    drawRoundRect(globals.ctx, xPos + 10, yPos + 2, 40 * this.health / this.maxHealth, 3, 1);
+    globals.ctx.fill();
     globals.ctx.globalAlpha = 1;
 
     //name
