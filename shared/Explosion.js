@@ -70,7 +70,7 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     e.x = this.x;
     e.y = this.y;
     e.r = this.range;
-    e.o = this.owner.playerID;
+    e.o = owner.playerID;
 
     console.log("new exp owned by: " + e.o);
 
