@@ -23,12 +23,8 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     this.range = opt_state.r;
     this.owner = opt_state.o;
 
-    console.log(this.owner);
-
-    if (opt_state.t === Projectile.Type.NORMAL || opt_state.t === Projectile.Type.MINE) 
-      globals.players[opt_state.o].projectile[opt_state.t].lastFire = 0;
-    else
-      globals.players[opt_state.o].special[opt_state.t].lastFire = 0;
+    if (this.type === Special.Type.EMP || this.type === Special.Type.MEDIC) 
+      globals.players[this.owner].special[this.type].lastFire = 0;
       
     return;
   }
@@ -72,10 +68,8 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     e.x = this.x;
     e.y = this.y;
     e.r = this.range;
-  
-    console.log("QQQ " + this.owner);
-
     e.o = this.owner;
+
     diff.e.push(e);
   }
 };
