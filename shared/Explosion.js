@@ -72,6 +72,9 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     e.x = this.x;
     e.y = this.y;
     e.r = this.range;
+  
+    console.log("QQQ " + this.owner);
+
     e.o = this.owner;
     diff.e.push(e);
   }
