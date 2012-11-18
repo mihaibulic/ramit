@@ -211,7 +211,7 @@ var reset = function() {
 
   // reset all players
   for ( var p in globals.players) {
-     globals.players[p] = new Player(globals.players[p].team, globals.players[p].playerID);
+     globals.players[p] = new Player(globals.players[p].team, globals.players[p].playerID, globals.players[p].name);
   }
 
   globals.projectiles = {};

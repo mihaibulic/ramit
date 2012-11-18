@@ -4,7 +4,7 @@
  * @param {Number} playerID The player's ID number.
  * @param {Object} opt_state A state object to build this object from.
  */
-var Player = function(team, playerID, opt_state) {
+var Player = function(team, playerID, opt_state, name) {
   var x;
   var y;
   var aim;
@@ -58,7 +58,7 @@ var Player = function(team, playerID, opt_state) {
     this.totalScore = opt_state.p;
     this.totalSpent = opt_state.c;
   } else {
-    this.name = "Player " + playerID;
+    this.name = (name !== undefined) ? name : "Player " + playerID;
     this.team = team;
     var spawn = this.determineSpawn();
     x = Player.SPAWN_POINTS[team][spawn].x;
@@ -290,8 +290,9 @@ Player.prototype.drawDetails = function() {
     // health bar
     globals.ctx.strokeStyle = "#00FF00";
     var color = Math.floor(this.health / this.maxHealth * Player.HEALTH.length);
-    if (color == Player.HEALTH.length) color--;
+    if (color === Player.HEALTH.length) color--;
     globals.ctx.fillStyle = Player.HEALTH[color];
+    globals.ctx.strokeStyle = Player.HEALTH[color];
     globals.ctx.globalAlpha = 0.5;
     drawRoundRect(globals.ctx, xPos + 10, yPos + 2, 40, 3, 1);
     globals.ctx.stroke();
@@ -312,7 +313,7 @@ Player.prototype.drawDetails = function() {
 Player.prototype.drawHUD = function() {
   // Health Bar
   var color = Math.floor(this.health / this.maxHealth * Player.HEALTH.length);
-  if (color == Player.HEALTH.length) color--;
+  if (color === Player.HEALTH.length) color--;
   globals.ctx.textAlign = "left";
   globals.ctx.fillStyle = "#ffffff";
   globals.ctx.font = "24px sans-serif";
