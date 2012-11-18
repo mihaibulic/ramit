@@ -351,7 +351,8 @@ Player.prototype.drawHUD = function() {
     else if (this.special[s].lastFire < this.special[s].coolDown) { 
       // draw cooldown 
       console.log("COOLDOWN");
-      globals.ctx.fillRect(20 + 40*(s), 50, 30, 30 * ((this.special[s].coolDown - this.special[s].lastFire) / this.special[s].coolDown));
+      var coolDownPercent = ((this.special[s].coolDown - this.special[s].lastFire) / this.special[s].coolDown);
+      globals.ctx.fillRect(20 + 40*(s), 50 + (30*coolDownPercent), 30, 30 * coolDownPercent);
     }
     globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
   }
