@@ -101,7 +101,7 @@ var Player = function(team, playerID, opt_state) {
   };
   this.projectile[Projectile.Type.ROCKET] = {
     range: 40,
-    damage: 20,
+    damage: 500, //20,
     speed: 9 * 60,
     lastFire: 120,
     coolDown: 120
