@@ -106,10 +106,8 @@ var update = function() {
       }
 
       if (player.keys.all_mines === true) {
-        console.log("Player #" + player.playerID + " has " + player.projectile[Projectile.Type.MINE].live + " live mines BEFORE");
         explodeAll(player, true);
         player.keys.all_mines = false;
-        console.log("Player #" + player.playerID + " has " + player.projectile[Projectile.Type.MINE].live + " live mines AFTER");
       }
     }
 
@@ -117,7 +115,6 @@ var update = function() {
     if (player.special[player.mounted] &&
         player.special[player.mounted].lastFire > player.special[player.mounted].coolDown &&
         (player.mouse.right === true || player.keys.shift === true)) {
-      console.log("firing special weapon " + player.mounted);
       if (player.mounted == Player.SpecialType.BOMB) {
         if(player.special[player.mounted].allowed) { 
           globals.projectiles[Projectile.nextID] = new Projectile(player, Projectile.Type.BOMB, Projectile.nextID);
