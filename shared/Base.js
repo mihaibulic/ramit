@@ -122,9 +122,12 @@ Base.prototype.draw = function() {
         var color = Math.floor(this.health / this.maxHealth * Player.HEALTH.length);
         if (color == Player.HEALTH.length) color--;
         globals.ctx.fillStyle = Player.HEALTH[color];
+        globals.ctx.strokeStyle = Player.HEALTH[color];
         globals.ctx.globalAlpha = 0.5 * alpha;
-        globals.ctx.strokeRect(dataXPos, pos.top-5, 100, 3);
-        globals.ctx.fillRect(dataXPos, pos.top-5, 100 * this.health / this.maxHealth, 3);
+        drawRoundRect(globals.ctx, dataXPos, pos.top-5, 100, 3, 1);
+        globals.ctx.stroke();
+        drawRoundRect(globals.ctx, dataXPos, pos.top-5, 100 * this.health / this.maxHealth, 3, 1);
+        globals.ctx.fill();
         globals.ctx.globalAlpha = alpha;
         // name
         globals.ctx.fillStyle = "#FFFFFF";
