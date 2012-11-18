@@ -72,6 +72,8 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     e.r = this.range;
     e.o = this.owner;
 
+    console.log("new exp owned by: " + e.o);
+
     diff.e.push(e);
   }
 };
