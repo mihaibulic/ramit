@@ -687,6 +687,9 @@ Player.prototype.predict = function() {
     }
   }
 
+  if (this.hasShield)
+    this.hasShield = Math.max(0, this.hasShield - globals.dt);
+  
   this.projectile[Projectile.Type.NORMAL].lastFire++;
   this.projectile[Projectile.Type.MINE].lastFire++;
   this.special[Player.SpecialType.ROCKET].lastFire++;
@@ -694,11 +697,8 @@ Player.prototype.predict = function() {
   this.special[Player.SpecialType.MEDIC].lastFire++;
   if (this.hasShield === 0)
     this.special[Player.SpecialType.SHIELD].lastFire++;
-  else
+  else if(this.hasShield === this.special[Player.SpecialType.SHIELD].duration)
     this.special[Player.SpecialType.SHIELD].lastFire = 0;
-
-  if (this.hasShield)
-    this.hasShield = Math.max(0, this.hasShield - globals.dt);
 };
 
 /**
