@@ -104,7 +104,8 @@ var Player = function(team, playerID, opt_state) {
     damage: 20,
     speed: 9 * 60,
     lastFire: 120,
-    coolDown: 120
+    coolDown: 120,
+    allowed: 1 // not used to limit how many rockets are out there, just to say the weapon is permitted
   };
   this.projectile[Projectile.Type.BOMB] = {
     range: 200,
@@ -123,18 +124,21 @@ var Player = function(team, playerID, opt_state) {
     range: 60,
     damage: 30,
     lastFire: 5 * 60,
-    coolDown: 5 * 60
+    coolDown: 5 * 60,
+    allowed: 1
   };
   this.special[Player.SpecialType.MEDIC] = {
     range: 80,
     damage: -30,
     lastFire: 5 * 60,
-    coolDown: 5 * 60
+    coolDown: 5 * 60,
+    allowed: 1
   };
   this.special[Player.SpecialType.SHIELD] = {
     duration: 5 * 60,
     lastFire: 6 * 60,
-    coolDown: 5 * 60
+    coolDown: 5 * 60,
+    allowed: 1
   };
 
   if (globals.diff) {
