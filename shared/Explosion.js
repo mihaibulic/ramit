@@ -21,13 +21,7 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     this.x = opt_state.x;
     this.y = opt_state.y;
     this.range = opt_state.r;
-    this.owner = opt_state.o;
 
-    if (this.type === Explosion.Type.EMP)
-      globals.players[this.owner].special[Player.SpecialType.EMP].lastFire = 0;
-    else if (this.type === Explosion.Type.MEDIC) 
-      globals.players[this.owner].special[Player.SpecialType.MEDIC].lastFire = 0;
-      
     return;
   }
 
@@ -70,9 +64,6 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     e.x = this.x;
     e.y = this.y;
     e.r = this.range;
-    e.o = owner.playerID;
-
-    console.log("new exp owned by: " + e.o);
 
     diff.e.push(e);
   }

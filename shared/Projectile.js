@@ -21,8 +21,6 @@ var Projectile = function(player, type, id, opt_state) {
     this.vy = opt_state.vy;
     this.type = opt_state.t;
 
-    globals.players[this.owner].projectile[this.type].lastFire = 0;
-
     return;
   }
 
