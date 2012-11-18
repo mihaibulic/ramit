@@ -23,6 +23,8 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     this.range = opt_state.r;
     this.owner = opt_state.o;
 
+    console.log(this.owner);
+
     if (opt_state.t === Projectile.Type.NORMAL || opt_state.t === Projectile.Type.MINE) 
       globals.players[opt_state.o].projectile[opt_state.t].lastFire = 0;
     else
