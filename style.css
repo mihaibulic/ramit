@@ -32,11 +32,11 @@ html, body {
     background-repeat: no-repeat;
     background-position: center 63px;
     color: #fff;
-	display:inline;
 }
 
 #cnv {
     cursor: crosshair;
+	display: inline;
 }
 
 #renderer {
