@@ -39,6 +39,10 @@ html, body {
 	display: inline;
 }
 
+#upmenu {
+	display: inline;
+}
+
 #renderer {
     display: none;
 }
