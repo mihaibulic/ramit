@@ -38,11 +38,6 @@ html, body {
     cursor: crosshair;
 }
 
-#upmenu {
-	display: inline;
-	cursor: move;
-}
-
 #renderer {
     display: none;
 }
