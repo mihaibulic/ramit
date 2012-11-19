@@ -326,7 +326,7 @@ Player.prototype.drawHUD = function() {
   globals.ctx.strokeStyle = Player.HEALTH[color];
   globals.ctx.globalAlpha = 0.75;
   drawRoundRect(globals.ctx, 55, 20, 300, 20, 10);
-  globals.ctx.lineWidth = 1;
+  globals.ctx.lineWidth = 2;
   globals.ctx.stroke();
   drawRoundRect(globals.ctx, 55, 20, 300 * this.health / this.maxHealth, 20, 10);
   globals.ctx.fill();
