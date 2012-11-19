@@ -41,6 +41,7 @@ html, body {
 
 #upmenu {
 	display: inline;
+	cursor: move;
 }
 
 #renderer {
