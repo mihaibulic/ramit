@@ -161,7 +161,7 @@ Upgrade.prototype.buy = function(device, type, pid) {
   if (this.players[pid][device][type] === undefined)
     this.players[pid][device][type] = -1;
 
-  if (divice === d.BOMB) {
+  if (device === d.BOMB) {
     var eligible = true;
     for ( var x in Upgrade.Device) {
       if ( this.diff[Upgrade.Device[x]][Upgrade.Type.ALLOWED][this.players[pid][Upgrade.Device[x]][Upgrade.Type.ALLOWED] + 1] !== undefined) {
