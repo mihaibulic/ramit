@@ -349,7 +349,7 @@ Player.prototype.drawHUD = function() {
     if (this.special[s].allowed <= 0)  
       globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
     else if (!this.special[s].lastFire.isDone()) { 
-      var coolDownPercent = ((this.special[s].coolDown - this.special[s].lastFire.timeLeft()) / this.special[s].coolDown);
+      var coolDownPercent = (this.special[s].lastFire.timeLeft() / this.special[s].coolDown);
       globals.ctx.fillRect(20 + 40*(s), 50 + (30*(1-coolDownPercent)), 30, 30 * coolDownPercent);
     }
   }
