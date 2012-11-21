@@ -88,7 +88,7 @@ var Player = function(team, playerID, opt_state) {
     damage: 5,
     speed: 8 * 60,
     coolDown: 300, 
-    lastFire: new Timer(coolDown)
+    lastFire: new Timer(300)
   };
   this.projectile[Projectile.Type.MINE] = {
     range: 80,
@@ -97,14 +97,14 @@ var Player = function(team, playerID, opt_state) {
     live: 0,
     allowed: 1,
     coolDown: 250,
-    lastFire: new Timer(coolDown)
+    lastFire: new Timer(250)
   };
   this.projectile[Projectile.Type.ROCKET] = {
     range: 40,
     damage: 20,
     speed: 9 * 60,
     coolDown: 2000,
-    lastFire: new Timer(coolDown),
+    lastFire: new Timer(2000),
     allowed: 1 // not used to limit how many rockets are out there, just to say the weapon is permitted
   };
   this.projectile[Projectile.Type.BOMB] = {
@@ -112,7 +112,7 @@ var Player = function(team, playerID, opt_state) {
     damage: 5000,
     speed: 60,
     coolDown: 0, 
-    lastFire: new Timer(coolDown),
+    lastFire: new Timer(0),
     allowed: 1 // should be 0, 1 for testing
   };
 
@@ -123,20 +123,20 @@ var Player = function(team, playerID, opt_state) {
     range: 60,
     damage: 30,
     coolDown: 5000,
-    lastFire: new Timer(coolDown),
+    lastFire: new Timer(5000),
     allowed: 1
   };
   this.special[Player.SpecialType.MEDIC] = {
     range: 80,
     damage: -30,
     coolDown: 5000,
-    lastFire: new Timer(coolDown),
+    lastFire: new Timer(5000),
     allowed: 1
   };
   this.special[Player.SpecialType.SHIELD] = {
     duration: 5,
     coolDown: 5000,
-    lastFire: new Timer(coolDown),
+    lastFire: new Timer(5000),
     allowed: 1
   };
 
