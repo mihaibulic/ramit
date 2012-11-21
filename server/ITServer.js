@@ -130,7 +130,6 @@ var update = function() {
       } else if (player.mounted === Player.SpecialType.SHIELD) {
         player.armShield();
       }
-      player.special[player.mounted].lastFire.reset();
     }
   }
 
