@@ -205,7 +205,7 @@ ITGame.prototype.predict = function() {
     Projectile.nextID = 0;
   }
 
-  if(globals.time.timeToExpiration % 100 === 0) {
+  if(globals.timer.timeToExpiration % 100 === 0) {
     console.log(globals.timer.timeToExpiration());
     if(globals.timer.isStarted()) {
       console.log("is started");
