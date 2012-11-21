@@ -329,7 +329,6 @@ Player.prototype.drawHUD = function() {
   globals.ctx.stroke();
   drawRoundRect(globals.ctx, 55, 20, 300 * this.health / this.maxHealth, 20, 10);
   globals.ctx.fill();
-  globals.ctx.globalAlpha = 1;
 
   // Show mounted weapon if allowed
   globals.ctx.globalAlpha = 0.75;
@@ -345,17 +344,15 @@ Player.prototype.drawHUD = function() {
     globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
   
   // Gray out not allowed weapons
-  globals.ctx.fillStyle = "#8a8a8a"; 
+/*  globals.ctx.fillStyle = "#8a8a8a"; 
   for (s in this.special) {
-    if (this.special[s].allowed <= 0) { 
-      console.log("*");
+    if (this.special[s].allowed <= 0)  
       globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
-    }
     else if (this.special[s].lastFire < this.special[s].coolDown) { 
       var coolDownPercent = ((this.special[s].coolDown - this.special[s].lastFire) / this.special[s].coolDown);
       globals.ctx.fillRect(20 + 40*(s), 50 + (30*(1-coolDownPercent)), 30, 30 * coolDownPercent);
     }
-  }
+  }*/
   globals.ctx.globalAlpha = 1;
 
   // Draw Name and Score
