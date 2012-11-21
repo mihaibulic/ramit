@@ -62,7 +62,7 @@ var Projectile = function(player, type, id, opt_state) {
     }
   }
 
-  globals.players[this.owner].projectile[this.type].lastFire = 0;
+  globals.players[this.owner].projectile[this.type].lastFire.reset();
 
   if (this.type === Projectile.Type.MINE)
     globals.players[this.owner].projectile[this.type].live++;

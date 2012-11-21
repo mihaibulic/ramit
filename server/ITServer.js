@@ -112,8 +112,7 @@ var update = function() {
     }
 
     // Special
-    if (player.special[player.mounted] &&
-        player.special[player.mounted].lastFire > player.special[player.mounted].coolDown &&
+    if (player.special[player.mounted] && player.special[player.mounted].lastFire.isDone() &&
         (player.mouse.right === true || player.keys.shift === true)) {
       if (player.mounted == Player.SpecialType.BOMB) {
         if(player.special[player.mounted].allowed) { 
@@ -131,7 +130,7 @@ var update = function() {
       } else if (player.mounted === Player.SpecialType.SHIELD) {
         player.armShield();
       }
-      player.special[player.mounted].lastFire = 0;
+      player.special[player.mounted].lastFire.reset();
     }
   }
 

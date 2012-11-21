@@ -87,8 +87,8 @@ var Player = function(team, playerID, opt_state) {
     range: 0,
     damage: 5,
     speed: 8 * 60,
-    lastFire: 300,
-    coolDown: 300 
+    coolDown: 300, 
+    lastFire: new Timer(this.coolDown)
   };
   this.projectile[Projectile.Type.MINE] = {
     range: 80,
@@ -96,23 +96,23 @@ var Player = function(team, playerID, opt_state) {
     speed: 0,
     live: 0,
     allowed: 1,
-    lastFire: 250,
-    coolDown: 250
+    coolDown: 250,
+    lastFire: new Timer(this.coolDown)
   };
   this.projectile[Projectile.Type.ROCKET] = {
     range: 40,
     damage: 20,
     speed: 9 * 60,
-    lastFire: 2000,
     coolDown: 2000,
+    lastFire: new Timer(this.coolDown),
     allowed: 1 // not used to limit how many rockets are out there, just to say the weapon is permitted
   };
   this.projectile[Projectile.Type.BOMB] = {
     range: 200,
     damage: 5000,
     speed: 60,
-    lastFire: 0,
     coolDown: 0, 
+    lastFire: new Timer(this.coolDown),
     allowed: 1 // should be 0, 1 for testing
   };
 
@@ -122,21 +122,21 @@ var Player = function(team, playerID, opt_state) {
   this.special[Player.SpecialType.EMP] = {
     range: 60,
     damage: 30,
-    lastFire: 5000,
     coolDown: 5000,
+    lastFire: new Timer(this.coolDown),
     allowed: 1
   };
   this.special[Player.SpecialType.MEDIC] = {
     range: 80,
     damage: -30,
-    lastFire: 5000,
     coolDown: 5000,
+    lastFire: new Timer(this.coolDown),
     allowed: 1
   };
   this.special[Player.SpecialType.SHIELD] = {
     duration: 5,
-    lastFire: 5000,
     coolDown: 5000,
+    lastFire: new Timer(this.coolDown),
     allowed: 1
   };
 
@@ -348,8 +348,8 @@ Player.prototype.drawHUD = function() {
   for (s in this.special) {
     if (this.special[s].allowed <= 0)  
       globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
-    else if (this.special[s].lastFire < this.special[s].coolDown) { 
-      var coolDownPercent = ((this.special[s].coolDown - this.special[s].lastFire) / this.special[s].coolDown);
+    else if (!this.special[s].lastFire.isDone()) { 
+      var coolDownPercent = ((this.special[s].coolDown - this.special[s].lastFire.timeLeft()) / this.special[s].coolDown);
       globals.ctx.fillRect(20 + 40*(s), 50 + (30*(1-coolDownPercent)), 30, 30 * coolDownPercent);
     }
   }
@@ -711,13 +711,15 @@ Player.prototype.update = function() {
   }
   else {
     this.move();
-    this.projectile[Projectile.Type.NORMAL].lastFire++;
+/*
+    this.projectile[Projectile.Type.NORMAL].lastFire++
     this.projectile[Projectile.Type.MINE].lastFire++;
     this.special[Player.SpecialType.ROCKET].lastFire++;
     this.special[Player.SpecialType.EMP].lastFire++;
     this.special[Player.SpecialType.MEDIC].lastFire++;
     if (this.hasShield === 0)
       this.special[Player.SpecialType.SHIELD].lastFire++;
+*/
   }
   if (this.hasShield) {
     this.hasShield--;
@@ -933,12 +935,12 @@ Player.prototype.respawn = function() {
   console.log("Respawning " + this.name);
   this.deathCounter = 0;
 
-  this.projectile[Projectile.Type.NORMAL].lastFire = this.projectile[Projectile.Type.NORMAL].coolDown;
-  this.projectile[Projectile.Type.MINE].lastFire = this.projectile[Projectile.Type.MINE].coolDown;
-  this.special[Player.SpecialType.ROCKET].lastFire = this.special[Player.SpecialType.ROCKET].coolDown;
-  this.special[Player.SpecialType.EMP].lastFire = this.special[Player.SpecialType.EMP].coolDown;
-  this.special[Player.SpecialType.MEDIC].lastFire = this.special[Player.SpecialType.MEDIC].coolDown;
-  this.special[Player.SpecialType.SHIELD].lastFire = this.special[Player.SpecialType.SHIELD].coolDown;
+  this.projectile[Projectile.Type.NORMAL].lastFire.reset();
+  this.projectile[Projectile.Type.MINE].lastFire.reset();
+  this.special[Player.SpecialType.ROCKET].lastFire.reset();
+  this.special[Player.SpecialType.EMP].lastFire.reset();
+  this.special[Player.SpecialType.MEDIC].lastFire.reset();
+  this.special[Player.SpecialType.SHIELD].lastFire.reset();
   this.hasShield = 0;
 
   var spawn = this.determineSpawn();
