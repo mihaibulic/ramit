@@ -884,7 +884,7 @@ Player.prototype.setAim = function(aim) {
 };
 
 Player.prototype.canFire = function(type) {
-  return this.projectile[type].lastFire >= this.projectile[type].coolDown;
+  return this.projectile[type].lastFire.isDone();
 };
 
 /**
