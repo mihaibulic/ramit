@@ -331,7 +331,7 @@ Player.prototype.drawHUD = function() {
   globals.ctx.fill();
   globals.ctx.globalAlpha = 1;
 
-  // Special weapons + cooldowns
+  // Show mounted weapon if allowed
   globals.ctx.globalAlpha = 0.75;
   if(this.special[this.mounted].allowed > 0) {
     globals.ctx.fillStyle = "#8a8a8a";
@@ -339,10 +339,12 @@ Player.prototype.drawHUD = function() {
     globals.ctx.fill();
   }
 
+  // Draw icons for each weapon
   globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
   for (var s in this.special) 
     globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
   
+  // Gray out not allowed weapons
   globals.ctx.fillStyle = "#8a8a8a"; 
   for (s in this.special) {
     if (this.special[s].allowed <= 0)  

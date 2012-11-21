@@ -66,8 +66,10 @@ var Projectile = function(player, type, id, opt_state) {
 
   if (this.type === Projectile.Type.MINE)
     globals.players[this.owner].projectile[this.type].live++;
-  else if (this.type === Projectile.Type.BOMB)
+  else if (this.type === Projectile.Type.BOMB) {  
+    console.log("minus allowed");
     globals.players[this.owner].projectile[this.type].allowed--;
+  }
 };
 
 /**
