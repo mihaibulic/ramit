@@ -47,6 +47,12 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
       }
     }
 
+    this.type = Explosion.Type.PROJECTILE;
+    if (damage < 0)
+      this.type = Explosion.Type.MEDIC;
+    else if (opt_one_team)
+      this.type = Explosion.Type.EMP;
+
     if (globals.diff) {
       var diff = globals.getImmediateDiff();
   
@@ -55,11 +61,6 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
       var e = {};
       if (opt_projectile)
         e.i = opt_projectile.id;
-      this.type = Explosion.Type.PROJECTILE;
-      if (damage < 0)
-        this.type = Explosion.Type.MEDIC;
-      else if (opt_one_team)
-        this.type = Explosion.Type.EMP;
       e.t = this.type;
       e.x = this.x;
       e.y = this.y;
