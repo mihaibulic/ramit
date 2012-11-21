@@ -244,10 +244,10 @@ Player.prototype.draw = function() {
     // Draw underglow
     else {
       globals.ctx.globalAlpha = .3;
-      //globals.ctx.fillStyle = Player.TEAM_COLOR_LIGHT[this.team];
+      globals.ctx.fillStyle = Player.TEAM_COLOR_LIGHT[this.team];
       //globals.ctx.fillStyle = Player.TEAM_COLOR[this.team];
-      globals.ctx.fillStyle = "#FFFFFF";
-      globals.ctx.fillStyle = "#FFFF00";
+      //globals.ctx.fillStyle = "#FFFFFF";
+      //globals.ctx.fillStyle = "#FFFF00";
       globals.ctx.beginPath();
       globals.ctx.arc(xPos + 30, yPos + 30, 30, 0, 2 * Math.PI);
       globals.ctx.closePath();
