@@ -267,13 +267,14 @@ Projectile.prototype.update = function() {
     if (target.team === this.team)
       continue;
     if (target.getCollisionBarrier().intersects(this.getCollisionBarrier())) {
-      if(this.type !== Projectile.Type.BOMB) {
+      if(this.type === Projectile.Type.BOMB) 
         proj = null;
+      else {
         this.vx = this.vy = 0;
         hit = true;
       }
       new Explosion(this.x, this.y, this.range, globals.players[this.owner],
-                    target, this.damage, null, false);
+                    target, this.damage, proj, false);
       break;
     }
   }
@@ -285,8 +286,9 @@ Projectile.prototype.update = function() {
       if (target.team === this.team)
         continue;
       if (target.getCollisionBarrier().intersects(this.getCollisionBarrier())) {
-        if(this.type !== Projectile.Type.BOMB) {
+        if(this.type === Projectile.Type.BOMB) 
           proj = null;
+        else {
           this.vx = this.vy = 0;
           hit = true;
         }
