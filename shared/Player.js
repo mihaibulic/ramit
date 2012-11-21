@@ -347,6 +347,7 @@ Player.prototype.drawHUD = function() {
   // Gray out not allowed weapons
   globals.ctx.fillStyle = "#8a8a8a"; 
   for (s in this.special) {
+    console.log(s + " " + this.special[s].allowed);
     if (this.special[s].allowed <= 0)  
       globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
     else if (this.special[s].lastFire < this.special[s].coolDown) { 
