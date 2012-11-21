@@ -7,14 +7,7 @@
  */
 var Projectile = function(player, type, id, opt_state) {
   this.hitWall = false;
-  
-  player.projectile[type].lastFire = 0;
-
-  if (type === Projectile.Type.MINE)
-    player.projectile[type].live++;
-  else if (type === Projectile.Type.BOMB)
-    player.projectile[type].allowed--;
-  
+ 
   if (opt_state) {
     this.id = id;
     this.owner = opt_state.i;
@@ -28,9 +21,17 @@ var Projectile = function(player, type, id, opt_state) {
     this.vx = opt_state.vx;
     this.vy = opt_state.vy;
     this.type = opt_state.t;
-
-    return;
   }
+
+  player.projectile[type].lastFire = 0;
+
+  if (type === Projectile.Type.MINE)
+    player.projectile[type].live++;
+  else if (type === Projectile.Type.BOMB)
+    player.projectile[type].allowed--;
+
+  if (opt_state)
+    return;
 
   this.team = player.team;
   this.owner = player.playerID; // for score tracking
