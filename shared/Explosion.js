@@ -71,6 +71,7 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     }
   }
 
+  console.log(this.owner);
   globals.players[this.owner].special[this.type].lastFire.reset();
 };
 
