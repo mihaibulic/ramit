@@ -111,7 +111,6 @@ var Player = function(team, playerID, opt_state) {
     range: 200,
     damage: 5000,
     speed: 60,
-    fired: false,
     lastFire: 1,
     coolDown: 0, 
     allowed: 1 // should be 0, 1 for testing
