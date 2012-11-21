@@ -5,6 +5,7 @@
  *    if null or omitted, timer is started (default = true)
  */
 var Timer = function(millis, start) {
+  console.log("Starting timer: " + millis);
   this.length = millis;
 
   if(start === undefined || start)
