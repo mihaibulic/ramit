@@ -7,9 +7,9 @@
  */
 var Projectile = function(player, type, id, opt_state) {
   this.hitWall = false;
+  this.id = id;
  
   if (opt_state) {
-    this.id = id;
     this.owner = opt_state.i;
     this.team = globals.players[this.owner].team;
     this.x = opt_state.x;
@@ -26,7 +26,6 @@ var Projectile = function(player, type, id, opt_state) {
     this.team = player.team;
     this.owner = player.playerID; // for score tracking
     this.type = type;
-    this.id = id;
     this.range = player.projectile[type].range;
     this.damage = player.projectile[type].damage;
   
@@ -63,12 +62,12 @@ var Projectile = function(player, type, id, opt_state) {
     }
   }
 
-  globals.players[id].projectile[this.type].lastFire = 0;
+  globals.players[this.owner].projectile[this.type].lastFire = 0;
 
   if (this.type === Projectile.Type.MINE)
-    globals.players[id].projectile[this.type].live++;
+    globals.players[this.owner].projectile[this.type].live++;
   else if (this.type === Projectile.Type.BOMB)
-    globals.players[id].projectile[this.type].allowed--;
+    globals.players[this.owner].projectile[this.type].allowed--;
 };
 
 /**
