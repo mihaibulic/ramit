@@ -1,14 +1,15 @@
 /**
  * A timer is able to let you know when a certain amount of time has elapsed
  * @param {Number} millis - length of this timer, in milliseconds
- * @param {Boolean} opt_start_done - if true, the timer will have no time left at instantiation
+ * @param {Boolean} opt_start_done - if true, the timer will have no time left at instantiation,
+ *    if null or omitted, the timer will start w/ no time left at instantiation (default = true)
  * @param {Boolean} opt_state - true if the timer should be started right away, 
  *    if null or omitted, timer is started (default = true)
  */
 var Timer = function(millis, opt_start_done, opt_start) {
   this.originalLength = this.length = millis;
 
-  if(opt_start_done !== undefined && opt_start_done)
+  if(opt_start_done === undefined || opt_start_done)
     this.length = 0;
 
   if(opt_start === undefined || opt_start)
