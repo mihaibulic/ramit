@@ -695,10 +695,8 @@ Player.prototype.predict = function() {
     }
   }
 
-  if (!this.hasShield.isDone()) {
-    this.special[Player.SpecialType.SHIELD].lastFire.reset();
+  if (!this.hasShield.isDone()) 
     this.hasShield = new Timer(Math.max(0, this.hasShield - globals.dt), false);
-  }
 };
 
 /**
