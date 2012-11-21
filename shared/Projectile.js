@@ -22,55 +22,53 @@ var Projectile = function(player, type, id, opt_state) {
     this.vy = opt_state.vy;
     this.type = opt_state.t;
   }
+  else {
+    this.team = player.team;
+    this.owner = player.playerID; // for score tracking
+    this.type = type;
+    this.id = id;
+    this.range = player.projectile[type].range;
+    this.damage = player.projectile[type].damage;
+  
+    var speed = player.projectile[type].speed;
+    this.x = player.tank.x + 30;
+    this.y = player.tank.y + 30;
+  
+    if (speed) {
+      var degrees = player.tank.turretAim * 2;
+      var rads = degrees * Math.PI / 180;
+      this.vx = Math.cos(rads);
+      this.vy = Math.sin(rads);
+      // Add (turret direction * length)
+      this.x += (this.vx * 30);
+      this.y += (this.vy * 30);
+      this.vx *= speed;
+      this.vy *= speed;
+    } else {
+      this.vx = 0;
+      this.vy = 0;
+    }
+    this.x = Math.round(this.x);
+    this.y = Math.round(this.y);
+    this.vx = Math.round(this.vx);
+    this.vy = Math.round(this.vy);
+    this.sx = this.x;
+    this.sy = this.y;
 
-  player.projectile[type].lastFire = 0;
-
-  if (type === Projectile.Type.MINE)
-    player.projectile[type].live++;
-  else if (type === Projectile.Type.BOMB)
-    player.projectile[type].allowed--;
-
-  if (opt_state)
-    return;
-
-  this.team = player.team;
-  this.owner = player.playerID; // for score tracking
-  this.type = type;
-  this.id = id;
-  this.range = player.projectile[type].range;
-  this.damage = player.projectile[type].damage;
-
-  var speed = player.projectile[type].speed;
-  this.x = player.tank.x + 30;
-  this.y = player.tank.y + 30;
-
-  if (speed) {
-    var degrees = player.tank.turretAim * 2;
-    var rads = degrees * Math.PI / 180;
-    this.vx = Math.cos(rads);
-    this.vy = Math.sin(rads);
-    // Add (turret direction * length)
-    this.x += (this.vx * 30);
-    this.y += (this.vy * 30);
-    this.vx *= speed;
-    this.vy *= speed;
-  } else {
-    this.vx = 0;
-    this.vy = 0;
+    if (globals.diff) {
+      var diff = globals.getImmediateDiff();
+      if (!diff.q)
+        diff.q = {};
+      diff.q[this.id] = this.getAbsoluteState();
+    }
   }
-  this.x = Math.round(this.x);
-  this.y = Math.round(this.y);
-  this.vx = Math.round(this.vx);
-  this.vy = Math.round(this.vy);
-  this.sx = this.x;
-  this.sy = this.y;
 
-  if (globals.diff) {
-    var diff = globals.getImmediateDiff();
-    if (!diff.q)
-      diff.q = {};
-    diff.q[this.id] = this.getAbsoluteState();
-  }
+  player.projectile[this.type].lastFire = 0;
+
+  if (this.type === Projectile.Type.MINE)
+    player.projectile[this.type].live++;
+  else if (this.type === Projectile.Type.BOMB)
+    player.projectile[this.type].allowed--;
 };
 
 /**
