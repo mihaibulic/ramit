@@ -309,6 +309,7 @@ Player.prototype.drawDetails = function() {
     if (color === Player.HEALTH.length) color--;
     globals.ctx.fillStyle = Player.HEALTH[color];
     globals.ctx.strokeStyle = Player.HEALTH[color];
+    globals.ctx.lineWidth = 1;
     globals.ctx.globalAlpha = 0.5;
     drawRoundRect(globals.ctx, xPos + 10, yPos + 2, 40, 3, 1);
     globals.ctx.stroke();
