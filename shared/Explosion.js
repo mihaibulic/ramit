@@ -22,8 +22,6 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     this.y = opt_state.y;
     this.range = opt_state.r;
     this.owner = opt_state.o;
-
-    return;
   }
   else {
     // affect everyone by default
@@ -57,12 +55,12 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
       var e = {};
       if (opt_projectile)
         e.i = opt_projectile.id;
-      var type = Explosion.Type.PROJECTILE;
+      this.type = Explosion.Type.PROJECTILE;
       if (damage < 0)
-        type = Explosion.Type.MEDIC;
+        this.type = Explosion.Type.MEDIC;
       else if (opt_one_team)
-        type = Explosion.Type.EMP;
-      e.t = type;
+        this.type = Explosion.Type.EMP;
+      e.t = this.type;
       e.x = this.x;
       e.y = this.y;
       e.r = this.range;
