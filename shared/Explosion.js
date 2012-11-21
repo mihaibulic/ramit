@@ -21,52 +21,58 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     this.x = opt_state.x;
     this.y = opt_state.y;
     this.range = opt_state.r;
+    this.owner = opt_state.o;
 
     return;
   }
+  else {
+    // affect everyone by default
+    this.one_team = (!opt_one_team ? false : true);
+    this.damage = damage;
+    this.owner = owner;
+  
+    this.x = x;
+    this.y = y;
+    this.range = range;
 
-  // affect everyone by default
-  this.one_team = (!opt_one_team ? false : true);
-  this.damage = damage;
+    if (target && target.takeHit)
+      owner.addPoints(target.takeHit(damage, owner));
 
-  this.x = x;
-  this.y = y;
-  this.range = range;
-
-  if (target && target.takeHit)
-    owner.addPoints(target.takeHit(damage, owner));
-
-  if (range > 0) {
-    for (var id in globals.players) {
-      var player = globals.players[id];
-      if (this.canAffect(player, owner, target)) {
-        var distance = player.getCenterDistance(this);
-        if (distance < range)
-          owner.addPoints(player.takeHit(Math.round(0.25 * damage + 0.75 * (1 - distance / range) * damage), owner));
+    if (range > 0) {
+      for (var id in globals.players) {
+        var player = globals.players[id];
+        if (this.canAffect(player, owner, target)) {
+          var distance = player.getCenterDistance(this);
+          if (distance < range)
+            owner.addPoints(player.takeHit(Math.round(0.25 * damage + 0.75 * (1 - distance / range) * damage), owner));
+        }
       }
+    }
+
+    if (globals.diff) {
+      var diff = globals.getImmediateDiff();
+  
+      if (!diff.e)
+        diff.e = [];
+      var e = {};
+      if (opt_projectile)
+        e.i = opt_projectile.id;
+      var type = Explosion.Type.PROJECTILE;
+      if (damage < 0)
+        type = Explosion.Type.MEDIC;
+      else if (opt_one_team)
+        type = Explosion.Type.EMP;
+      e.t = type;
+      e.x = this.x;
+      e.y = this.y;
+      e.r = this.range;
+      e.o = this.owner;
+
+      diff.e.push(e);
     }
   }
 
-  if (globals.diff) {
-    var diff = globals.getImmediateDiff();
-
-    if (!diff.e)
-      diff.e = [];
-    var e = {};
-    if (opt_projectile)
-      e.i = opt_projectile.id;
-    var type = Explosion.Type.PROJECTILE;
-    if (damage < 0)
-      type = Explosion.Type.MEDIC;
-    else if (opt_one_team)
-      type = Explosion.Type.EMP;
-    e.t = type;
-    e.x = this.x;
-    e.y = this.y;
-    e.r = this.range;
-
-    diff.e.push(e);
-  }
+  globals.players[this.owner].special[this.type].lastFire.reset();
 };
 
 Explosion.Type = { PROJECTILE: 0, MEDIC: 1, EMP: 2 };

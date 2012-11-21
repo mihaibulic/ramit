@@ -709,21 +709,11 @@ Player.prototype.update = function() {
       this.respawn();
     }
   }
-  else {
+  else 
     this.move();
-/*
-    this.projectile[Projectile.Type.NORMAL].lastFire++
-    this.projectile[Projectile.Type.MINE].lastFire++;
-    this.special[Player.SpecialType.ROCKET].lastFire++;
-    this.special[Player.SpecialType.EMP].lastFire++;
-    this.special[Player.SpecialType.MEDIC].lastFire++;
-    if (this.hasShield === 0)
-      this.special[Player.SpecialType.SHIELD].lastFire++;
-*/
-  }
-  if (this.hasShield) {
+
+  if (this.hasShield) 
     this.hasShield--;
-  }
 };
 
 /**
@@ -985,6 +975,7 @@ Player.prototype.addPoints = function(amount) {
 };
 
 Player.prototype.armShield = function() {
+  this.special[this.SpecialType.SHIELD].lastFire.reset();
   this.hasShield = this.special[Player.SpecialType.SHIELD].duration;
   if (globals.diff) {
     var diff = globals.getImmediateDiff();
