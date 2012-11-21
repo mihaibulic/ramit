@@ -1,14 +1,17 @@
 /**
  * A timer is able to let you know when a certain amount of time has elapsed
- * @param {Number} length of this timer, in milliseconds
- * @param {Boolean} true if the timer should be started right away, 
+ * @param {Number} millis - length of this timer, in milliseconds
+ * @param {Boolean} opt_start_done - if true, the timer will have no time left at instantiation
+ * @param {Boolean} opt_state - true if the timer should be started right away, 
  *    if null or omitted, timer is started (default = true)
  */
-var Timer = function(millis, start) {
-  console.log("Starting timer: " + millis);
-  this.length = millis;
+var Timer = function(millis, opt_start_done, opt_start) {
+  this.originalLength = this.length = millis;
 
-  if(start === undefined || start)
+  if(opt_start_done !== undefined && opt_start_done)
+    this.length = 0;
+
+  if(opt_start === undefined || opt_start)
     this.start();
 };
 
@@ -62,6 +65,7 @@ Timer.prototype.stop = function() {
  * Convinience function
  */
 Timer.prototype.reset = function() {
+  this.length = this.originalLength;
   this.start();
 };
 
