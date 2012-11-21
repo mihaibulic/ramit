@@ -249,7 +249,7 @@ Player.prototype.draw = function() {
       globals.ctx.fillStyle = "#FFFFFF";
       globals.ctx.fillStyle = "#FFFF00";
       globals.ctx.beginPath();
-      globals.ctx.arc(xPos + 30, yPos + 30, 50, 0, 2 * Math.PI);
+      globals.ctx.arc(xPos + 30, yPos + 30, 30, 0, 2 * Math.PI);
       globals.ctx.closePath();
       globals.ctx.fill();
       globals.ctx.globalAlpha = 1;
