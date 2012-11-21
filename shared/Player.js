@@ -1,5 +1,3 @@
-Player.SpecialType = { ROCKET: 1, EMP: 2, MEDIC: 3, SHIELD: 4 , BOMB:5};
-
 /**
  * A player of the IT game.
  * @param {Number} team The team number the player is on.
@@ -149,6 +147,8 @@ var Player = function(team, playerID, opt_state) {
     diff.p[this.playerID] = this.getAbsoluteState();
   }
 };
+
+Player.SpecialType = { ROCKET: 1, EMP: 2, MEDIC: 3, SHIELD: 4, BOMB: 5 };
 
 Player.prototype.getAbsoluteState = function() {
   var p = {};
