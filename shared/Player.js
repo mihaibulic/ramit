@@ -695,8 +695,10 @@ Player.prototype.predict = function() {
     }
   }
 
-  if (this.hasShield)
+  if (this.hasShield) {
+    this.special[Player.SpecialType.SHIELD].lastFire.reset();
     this.hasShield = Math.max(0, this.hasShield - globals.dt);
+  }
 };
 
 /**
