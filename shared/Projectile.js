@@ -63,12 +63,12 @@ var Projectile = function(player, type, id, opt_state) {
     }
   }
 
-  player.projectile[this.type].lastFire = 0;
+  globals.players[id].projectile[this.type].lastFire = 0;
 
   if (this.type === Projectile.Type.MINE)
-    player.projectile[this.type].live++;
+    globals.players[id].projectile[this.type].live++;
   else if (this.type === Projectile.Type.BOMB)
-    player.projectile[this.type].allowed--;
+    globals.players[id].projectile[this.type].allowed--;
 };
 
 /**
