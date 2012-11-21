@@ -2,6 +2,10 @@
  * The Interactive Tanks game.
  */
 var ITGame = function(team, playerID) {
+  //XXX
+  console.log((new Date()).getTime());
+  globals.timer = new Timer(1000, true);
+
   globals.socket = io.connect('ws://www.misquares.com');
 
   globals.socket.on('conn_req', function(data) {
@@ -201,6 +205,9 @@ ITGame.prototype.predict = function() {
     Projectile.nextID = 0;
   }
 
+  console.log(globals.timer.timeToExpiration());
+  if(globals.timer.isStarted()) console.log("is started");
+  if(globals.timer.isExpired()) console.log("DONE");
 
   for (var hid in globals.level.hqs) {
     globals.level.hqs[hid].predict();
