@@ -250,7 +250,7 @@ Upgrade.prototype.buy = function(device, type, pid) {
       buyer.special[Player.SpecialType.SHIELD].coolDown += diff;
     }
   } else if (device === Upgrade.Device.BOMB) {
-    buyer.special[Player.SpecialType.BOMB].allowed = true;
+    buyer.special[Player.SpecialType.BOMB].allowed++;
   }
   
 };
