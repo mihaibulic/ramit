@@ -205,9 +205,13 @@ ITGame.prototype.predict = function() {
     Projectile.nextID = 0;
   }
 
-  console.log(globals.timer.timeToExpiration());
-  if(globals.timer.isStarted()) console.log("is started");
-  if(globals.timer.isExpired()) console.log("DONE");
+  if(globals.time.timeToExpiration % 100 === 0) {
+    console.log(globals.timer.timeToExpiration());
+    if(globals.timer.isStarted()) {
+      console.log("is started");
+      if(globals.timer.isExpired()) globals.timer.stop(); 
+    } 
+  }
 
   for (var hid in globals.level.hqs) {
     globals.level.hqs[hid].predict();
