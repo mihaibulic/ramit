@@ -114,7 +114,7 @@ var Player = function(team, playerID, opt_state) {
     fired: false,
     lastFire: 1,
     coolDown: 0, 
-    allowed: 0 // should be 0, 1 for testing
+    allowed: 1 // should be 0, 1 for testing
   };
 
   this.special = [];
