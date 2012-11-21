@@ -71,8 +71,8 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     }
   }
 
-  console.log(this.owner);
-  globals.players[this.owner].special[this.type].lastFire.reset();
+  if(this.type === Explosion.Type.MEDIC || this.type === Explosion.Type.EMP ) 
+    globals.players[this.owner].special[this.type].lastFire.reset();
 };
 
 Explosion.Type = { PROJECTILE: 0, MEDIC: 1, EMP: 2 };
