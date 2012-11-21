@@ -61,6 +61,8 @@ var Projectile = function(player, type, id, opt_state) {
   else if (type === Projectile.Type.BOMB)
     player.projectile[type].allowed--;
 
+  console.log("allowed: " + player.projectile[type].allowed);
+
   player.projectile[type].lastFire = 0;
 
   if (globals.diff) {
