@@ -27,7 +27,7 @@ var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt
     // affect everyone by default
     this.one_team = (!opt_one_team ? false : true);
     this.damage = damage;
-    this.owner = owner;
+    this.owner = owner.playerID;
   
     this.x = x;
     this.y = y;
