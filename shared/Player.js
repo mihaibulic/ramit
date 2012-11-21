@@ -341,7 +341,7 @@ Player.prototype.drawHUD = function() {
   // Draw icons for each weapon
   globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
   for (var s in this.special) {
-    if (s !== this.SpecialType.BOMB || this.special[s].allowed > 0) {
+    if (s !== Player.SpecialType.BOMB || this.special[s].allowed > 0) {
       globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
     }
   }
@@ -350,7 +350,7 @@ Player.prototype.drawHUD = function() {
   globals.ctx.fillStyle = "#8a8a8a"; 
   for (s in this.special) {
     if (this.special[s].allowed <= 0) {
-      if (s !== this.SpecialType.BOMB) {
+      if (s !== Player.SpecialType.BOMB) {
         globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
       }
     }
