@@ -7,6 +7,14 @@
  */
 var Projectile = function(player, type, id, opt_state) {
   this.hitWall = false;
+  
+  player.projectile[type].lastFire = 0;
+
+  if (type === Projectile.Type.MINE)
+    player.projectile[type].live++;
+  else if (type === Projectile.Type.BOMB)
+    player.projectile[type].allowed--;
+  
   if (opt_state) {
     this.id = id;
     this.owner = opt_state.i;
@@ -55,15 +63,6 @@ var Projectile = function(player, type, id, opt_state) {
   this.vy = Math.round(this.vy);
   this.sx = this.x;
   this.sy = this.y;
-
-  if (type === Projectile.Type.MINE)
-    player.projectile[type].live++;
-  else if (type === Projectile.Type.BOMB)
-    player.projectile[type].allowed--;
-
-  console.log("allowed: " + player.projectile[type].allowed);
-
-  player.projectile[type].lastFire = 0;
 
   if (globals.diff) {
     var diff = globals.getImmediateDiff();
