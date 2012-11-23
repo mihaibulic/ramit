@@ -166,7 +166,7 @@ Player.prototype.getAbsoluteState = function() {
   p.s = this.speed;
   p.w = this.mounted;
 //  p.d = this.hasShield;
-  p.d = this.useShield.timeLeft();
+  p.d = this.special[Player.SpecialType.SHIELD].useShield.timeLeft();
   p.p = this.totalScore;
   p.c = this.totalSpent;
   return p;
