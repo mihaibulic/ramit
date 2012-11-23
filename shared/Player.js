@@ -65,7 +65,7 @@ var Player = function(team, playerID, opt_state) {
   };
   this.special[Player.SpecialType.SHIELD] = {
     duration: 2000,
-    isUse: new Timer(2000, false, false),
+    isUse: new Timer(2000),
     coolDown: 5000,
     lastFire: new Timer(5000),
     allowed: 1
@@ -114,7 +114,7 @@ var Player = function(team, playerID, opt_state) {
     this.speed = opt_state.s;
     this.mounted = opt_state.w;
     //this.hasShield = opt_state.d;
-    this.special[Player.SpecialType.SHIELD].inUse = new Timer(opt_state.d, false, true);
+    this.special[Player.SpecialType.SHIELD].inUse = new Timer(opt_state.d);
     this.totalScore = opt_state.p;
     this.totalSpent = opt_state.c;
   } else {
@@ -658,7 +658,9 @@ Player.prototype.loadState = function(data, you) {
       this.mounted = data.w;
     if (data.d !== undefined) {
       //this.hasShield = data.d;
-      this.special[Player.SpecialType.SHIELD].inUse = new Timer(data.d, false, true);
+      if (data.d > 0 && this.special[Player.SpecialType.SHIELD].inUse.isDone())
+        this.special[Player.SpecialType.SHIELD].lastFire.reset();
+      this.special[Player.SpecialType.SHIELD].inUse.reset();
     }
     if (data.p !== undefined)
       this.totalScore = data.p;
