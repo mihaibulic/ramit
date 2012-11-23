@@ -12,45 +12,6 @@ var Player = function(team, playerID, opt_state) {
   this.playerID = playerID;
   this.leaving = false;
 
-  this.keys = {
-    up: false,
-    down: false,
-    left: false,
-    right: false,
-    mine: false,
-    all_mines: false,
-    space: false,
-    shift: false,
-    mounted: 1,
-    u: false
-  };
-  this.sentKeys = {
-    up: false,
-    down: false,
-    left: false,
-    right: false,
-    mine: false,
-    all_mines: false,
-    space: false,
-    shift: false,
-    mounted: 1,
-    u: false
-  };
-  this.mouse = {
-    left: false,
-    middle: false,
-    right: false
-  };
-
-  this.tank = {
-    x: x,
-    y: y,
-    sx: x,
-    sy: y,
-    direction: 0,
-    turretAim: aim
-  };
-
   this.projectile = [];
   this.projectile[Projectile.Type.NORMAL] = {
     range: 0,
@@ -142,6 +103,45 @@ var Player = function(team, playerID, opt_state) {
     this.totalScore = 0;
     this.totalSpent = 0;
   }
+
+  this.keys = {
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+    mine: false,
+    all_mines: false,
+    space: false,
+    shift: false,
+    mounted: 1,
+    u: false
+  };
+  this.sentKeys = {
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+    mine: false,
+    all_mines: false,
+    space: false,
+    shift: false,
+    mounted: 1,
+    u: false
+  };
+  this.mouse = {
+    left: false,
+    middle: false,
+    right: false
+  };
+
+  this.tank = {
+    x: x,
+    y: y,
+    sx: x,
+    sy: y,
+    direction: 0,
+    turretAim: aim
+  };
 
   if (globals.diff) {
     var diff = globals.getImmediateDiff();

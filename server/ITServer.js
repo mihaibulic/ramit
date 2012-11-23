@@ -124,7 +124,7 @@ var update = function() {
         Projectile.nextID++;
       } else if ((player.mounted === Player.SpecialType.EMP) ||
                   (player.mounted === Player.SpecialType.MEDIC)) {
-        new Explosion(player.tank.x + 30, player.tank.y +30,
+        new Explosion(player.tank.x + 30, player.tank.y + 30,
                     player.special[player.mounted].range,
                     player, null, player.special[player.mounted].damage, null, true);
       } else if (player.mounted === Player.SpecialType.SHIELD) {
