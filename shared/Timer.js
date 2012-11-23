@@ -63,10 +63,12 @@ Timer.prototype.stop = function() {
 };
 
 /**
- * Convinience function
+ * Convinience function, if stop is not defined, automatically start
  */
-Timer.prototype.reset = function() {
+Timer.prototype.reset = function(stop) {
   this.length = this.originalLength;
-  this.start();
+
+  if (stop === undefined || !stop)
+    this.start();
 };
 

@@ -54,7 +54,8 @@ var Player = function(team, playerID, opt_state) {
     this.setKeyValue(opt_state.k);
     this.speed = opt_state.s;
     this.mounted = opt_state.w;
-    this.hasShield = opt_state.d;
+    //this.hasShield = opt_state.d;
+    this.special[Player.SpecialType.SHIELD].inUse = new Timer(opt_state.d, false, true);
     this.totalScore = opt_state.p;
     this.totalSpent = opt_state.c;
   } else {
@@ -68,7 +69,8 @@ var Player = function(team, playerID, opt_state) {
     aim = 0;
     this.speed = 4 * 60;
     this.mounted = Player.SpecialType.ROCKET;
-    this.hasShield = 0;
+    //this.hasShield = 0;
+    this.special[Player.SpecialType.SHIELD].inUse = new Timer(this.special[Player.SpecialType.SHIELD].duration);
     this.totalScore = 0;
     this.totalSpent = 0;
   }
@@ -135,6 +137,7 @@ var Player = function(team, playerID, opt_state) {
   };
   this.special[Player.SpecialType.SHIELD] = {
     duration: 2000,
+    isUse: new Timer(2000, false, false),
     coolDown: 5000,
     lastFire: new Timer(5000),
     allowed: 1
@@ -162,7 +165,8 @@ Player.prototype.getAbsoluteState = function() {
   p.k = this.getKeyValue();
   p.s = this.speed;
   p.w = this.mounted;
-  p.d = this.hasShield;
+//  p.d = this.hasShield;
+  p.d = this.useShield.timeLeft();
   p.p = this.totalScore;
   p.c = this.totalSpent;
   return p;
@@ -267,7 +271,8 @@ Player.prototype.draw = function() {
       return;
     }
     // Draw the shield.
-    if (this.hasShield) {
+    if (!this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
+//    if (this.hasShield) {
       var grad = globals.ctx.createRadialGradient(xPos+30, yPos+30, 10, xPos+30, yPos+30, 60);
       grad.addColorStop(0, Player.TEAM_COLOR_LIGHT[this.team]);
       grad.addColorStop(1, Player.TEAM_COLOR[this.team]);
@@ -287,7 +292,8 @@ Player.prototype.draw = function() {
     globals.ctx.strokeRect(rect.left - globals.level.x, rect.top - globals.level.y, rect.width(),
                            rect.height());
 
-    if (this.hasShield) {
+    if (!this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
+    //if (this.hasShield) {
       rect = this.getCollisionBarrier(null, true);
       globals.ctx.strokeRect(rect.left - globals.level.x, rect.top - globals.level.y, rect.width(),
                              rect.height());
@@ -359,8 +365,6 @@ Player.prototype.drawHUD = function() {
       globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
     }
   }
-
-  if (this.hasShield && this.hasShield > 0 ) console.log("hasshield: " + this.hasShield);
 
   // Gray out not allowed weapons/cooldown times
   globals.ctx.fillStyle = "#8a8a8a"; 
@@ -652,8 +656,10 @@ Player.prototype.loadState = function(data, you) {
       this.speed = data.s;
     if (data.w !== undefined)
       this.mounted = data.w;
-    if (data.d !== undefined)
-      this.hasShield = data.d;
+    if (data.d !== undefined) {
+      //this.hasShield = data.d;
+      this.special[Player.SpecialType.SHIELD].inUse = new Timer(data.d, false, true);
+    }
     if (data.p !== undefined)
       this.totalScore = data.p;
     if (data.c !== undefined) {
@@ -717,10 +723,10 @@ Player.prototype.predict = function() {
     }
   }
 
-  if (this.hasShield) {
-    this.hasShield = Math.max(0, this.hasShield - globals.dt);
-    console.log("has shield test: " + this.hasShield + ", " + globals.dt);
-  }
+  //if (this.hasShield) {
+    //this.hasShield = Math.max(0, this.hasShield - globals.dt);
+    //console.log("has shield test: " + this.hasShield + ", " + globals.dt);
+  //}
 
 };
 
@@ -737,8 +743,8 @@ Player.prototype.update = function() {
   else 
     this.move();
 
-  if (this.hasShield) 
-    this.hasShield--;
+//  if (this.hasShield) 
+//    this.hasShield--;
 };
 
 /**
@@ -909,7 +915,8 @@ Player.prototype.canFire = function(type) {
  * @returns {Number} The number of points the hit earned.
  */
 Player.prototype.takeHit = function(damage, owner) {
-  if (this.hasShield || this.health === 0)
+//  if (this.hasShield || this.health === 0)
+  if (!this.special[Player.SpecialType.SHIELD].inUse.isDone() || this.health === 0)
     return 0;
 
   var points = 0;
@@ -956,7 +963,8 @@ Player.prototype.respawn = function() {
   this.special[Player.SpecialType.EMP].lastFire.reset();
   this.special[Player.SpecialType.MEDIC].lastFire.reset();
   this.special[Player.SpecialType.SHIELD].lastFire.reset();
-  this.hasShield = 0;
+//  this.hasShield = 0;
+  this.special[Player.SpecialType.SHIELD].inUse.reset(true);
 
   var spawn = this.determineSpawn();
   this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
@@ -1000,7 +1008,8 @@ Player.prototype.addPoints = function(amount) {
 };
 
 Player.prototype.armShield = function() {
-  this.hasShield = this.special[Player.SpecialType.SHIELD].duration;
+//  this.hasShield = this.special[Player.SpecialType.SHIELD].duration;
+  this.special[Player.SpecialType.SHIELD].inUse.reset();
   if (globals.diff) {
     var diff = globals.getImmediateDiff();
     if (!diff.p)
@@ -1008,7 +1017,8 @@ Player.prototype.armShield = function() {
     if (!diff.p[this.playerID])
       diff.p[this.playerID] = {};
 
-    diff.p[this.playerID].d = this.hasShield;
+    //diff.p[this.playerID].d = this.hasShield;
+    diff.p[this.playerID].d = this.special[Player.SpecialType.SHIELD].inUse.timeLeft();
   }
 };
 
@@ -1024,7 +1034,8 @@ Player.prototype.getCollisionBarrier = function(location, useShield) {
   if (!location)
     location = this.tank;
 
-  if (useShield && this.hasShield) {
+  //if (useShield && this.hasShield) {
+  if (useShield && !this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
     return new Rectangle({left: location.x + 2, right: location.x + 58,
                           top: location.y + 2, bottom: location.y + 58});
   }
