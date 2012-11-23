@@ -243,7 +243,7 @@ Player.prototype.draw = function() {
     if (this.leaving) globals.ctx.globalAlpha = 0.5;
     // Draw underglow
     else {
-      globals.ctx.globalAlpha = .3;
+      globals.ctx.globalAlpha = 0.3;
       globals.ctx.fillStyle = Player.TEAM_COLOR_LIGHT[this.team];
       //globals.ctx.fillStyle = Player.TEAM_COLOR[this.team];
       //globals.ctx.fillStyle = "#FFFFFF";
@@ -360,7 +360,9 @@ Player.prototype.drawHUD = function() {
     }
   }
 
-  // Gray out not allowed weapons
+  console.log("hasshield: " + this.hasShield);
+
+  // Gray out not allowed weapons/cooldown times
   globals.ctx.fillStyle = "#8a8a8a"; 
   for (s in this.special) {
     if (this.special[s].allowed <= 0) {
