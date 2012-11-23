@@ -360,7 +360,7 @@ Player.prototype.drawHUD = function() {
     }
   }
 
-  console.log("hasshield: " + this.hasShield);
+  if (this.hasShield && this.hasShield > 0 ) console.log("hasshield: " + this.hasShield);
 
   // Gray out not allowed weapons/cooldown times
   globals.ctx.fillStyle = "#8a8a8a"; 
