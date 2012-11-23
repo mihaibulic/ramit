@@ -134,7 +134,7 @@ var Player = function(team, playerID, opt_state) {
     allowed: 1
   };
   this.special[Player.SpecialType.SHIELD] = {
-    duration: 5,
+    duration: 2000,
     coolDown: 5000,
     lastFire: new Timer(5000),
     allowed: 1
