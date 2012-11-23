@@ -1010,6 +1010,8 @@ Player.prototype.addPoints = function(amount) {
 Player.prototype.armShield = function() {
 //  this.hasShield = this.special[Player.SpecialType.SHIELD].duration;
   this.special[Player.SpecialType.SHIELD].inUse.reset();
+  this.special[Player.SpecialType.SHIELD].lastFire.reset();
+
   if (globals.diff) {
     var diff = globals.getImmediateDiff();
     if (!diff.p)
