@@ -42,39 +42,6 @@ var Player = function(team, playerID, opt_state) {
     right: false
   };
 
-  if (opt_state) {
-    this.name = opt_state.n;
-    this.team = opt_state.t;
-    x = opt_state.x;
-    y = opt_state.y;
-    this.deathCounter = 0;
-    this.health = opt_state.h;
-    this.maxHealth = opt_state.m;
-    aim = opt_state.a;
-    this.setKeyValue(opt_state.k);
-    this.speed = opt_state.s;
-    this.mounted = opt_state.w;
-    //this.hasShield = opt_state.d;
-    this.special[Player.SpecialType.SHIELD].inUse = new Timer(opt_state.d, false, true);
-    this.totalScore = opt_state.p;
-    this.totalSpent = opt_state.c;
-  } else {
-    this.name = "Player " + playerID;
-    this.team = team;
-    var spawn = this.determineSpawn();
-    x = Player.SPAWN_POINTS[team][spawn].x;
-    y = Player.SPAWN_POINTS[team][spawn].y;
-    this.maxHealth = 100;
-    this.health = this.maxHealth;
-    aim = 0;
-    this.speed = 4 * 60;
-    this.mounted = Player.SpecialType.ROCKET;
-    //this.hasShield = 0;
-    this.special[Player.SpecialType.SHIELD].inUse = new Timer(this.special[Player.SpecialType.SHIELD].duration);
-    this.totalScore = 0;
-    this.totalSpent = 0;
-  }
-
   this.tank = {
     x: x,
     y: y,
@@ -142,6 +109,39 @@ var Player = function(team, playerID, opt_state) {
     lastFire: new Timer(5000),
     allowed: 1
   };
+
+  if (opt_state) {
+    this.name = opt_state.n;
+    this.team = opt_state.t;
+    x = opt_state.x;
+    y = opt_state.y;
+    this.deathCounter = 0;
+    this.health = opt_state.h;
+    this.maxHealth = opt_state.m;
+    aim = opt_state.a;
+    this.setKeyValue(opt_state.k);
+    this.speed = opt_state.s;
+    this.mounted = opt_state.w;
+    //this.hasShield = opt_state.d;
+    this.special[Player.SpecialType.SHIELD].inUse = new Timer(opt_state.d, false, true);
+    this.totalScore = opt_state.p;
+    this.totalSpent = opt_state.c;
+  } else {
+    this.name = "Player " + playerID;
+    this.team = team;
+    var spawn = this.determineSpawn();
+    x = Player.SPAWN_POINTS[team][spawn].x;
+    y = Player.SPAWN_POINTS[team][spawn].y;
+    this.maxHealth = 100;
+    this.health = this.maxHealth;
+    aim = 0;
+    this.speed = 4 * 60;
+    this.mounted = Player.SpecialType.ROCKET;
+    //this.hasShield = 0;
+    this.special[Player.SpecialType.SHIELD].inUse = new Timer(this.special[Player.SpecialType.SHIELD].duration);
+    this.totalScore = 0;
+    this.totalSpent = 0;
+  }
 
   if (globals.diff) {
     var diff = globals.getImmediateDiff();
