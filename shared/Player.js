@@ -1008,7 +1008,7 @@ Player.prototype.armShield = function() {
     if (!diff.p[this.playerID])
       diff.p[this.playerID] = {};
 
-    diff.p[this.playerID].d = Math.round(this.hasShield * globals.dt);
+    diff.p[this.playerID].d = this.hasShield;
   }
 };
 
