@@ -717,8 +717,11 @@ Player.prototype.predict = function() {
     }
   }
 
-  if (this.hasShield)
+  if (this.hasShield) {
     this.hasShield = Math.max(0, this.hasShield - globals.dt);
+    console.log("has shield test: " + this.hasShield + ", " + globals.dt);
+  }
+
 };
 
 /**
