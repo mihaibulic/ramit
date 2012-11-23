@@ -71,6 +71,36 @@ var Player = function(team, playerID, opt_state) {
     allowed: 1
   };
 
+  this.keys = {
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+    mine: false,
+    all_mines: false,
+    space: false,
+    shift: false,
+    mounted: 1,
+    u: false
+  };
+  this.sentKeys = {
+    up: false,
+    down: false,
+    left: false,
+    right: false,
+    mine: false,
+    all_mines: false,
+    space: false,
+    shift: false,
+    mounted: 1,
+    u: false
+  };
+  this.mouse = {
+    left: false,
+    middle: false,
+    right: false
+  };
+
   if (opt_state) {
     this.name = opt_state.n;
     this.team = opt_state.t;
@@ -103,36 +133,6 @@ var Player = function(team, playerID, opt_state) {
     this.totalScore = 0;
     this.totalSpent = 0;
   }
-
-  this.keys = {
-    up: false,
-    down: false,
-    left: false,
-    right: false,
-    mine: false,
-    all_mines: false,
-    space: false,
-    shift: false,
-    mounted: 1,
-    u: false
-  };
-  this.sentKeys = {
-    up: false,
-    down: false,
-    left: false,
-    right: false,
-    mine: false,
-    all_mines: false,
-    space: false,
-    shift: false,
-    mounted: 1,
-    u: false
-  };
-  this.mouse = {
-    left: false,
-    middle: false,
-    right: false
-  };
 
   this.tank = {
     x: x,
