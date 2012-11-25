@@ -29,6 +29,7 @@ var ITGame = function(team, playerID) {
       }
     });
 
+    this.player = data.i;
     globals.socket.on('upgrade_resp', function(d) {
       console.log("player: " + data.i);
       console.log("player2: " + this.player);
@@ -38,7 +39,6 @@ var ITGame = function(team, playerID) {
     });
 
     this.loadState(data.s, true);
-    this.player = data.i;
     this.team = globals.players[this.player].team;
 
     // Input events.
