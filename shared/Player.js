@@ -180,6 +180,7 @@ Player.DIAGONAL_CONST = Math.sqrt(0.5);
 Player.TEAM_COLOR = ["#0000FF", "#FF0000"];
 
 Player.TEAM_COLOR_LIGHT = ["#00AAFF", "#FFAA00"];
+Player.TEAM_COLOR_DARK = ["#000055", "#550000"];
 
 Player.HEALTH = ["#FF0000", "#FFFF00", "#00FF00"];
 
@@ -354,7 +355,7 @@ Player.prototype.drawHUD = function() {
   }
 
   // Draw icons for each weapon
-  globals.ctx.fillStyle = 0.50*Player.TEAM_COLOR[this.team]; 
+  globals.ctx.fillStyle = Player.TEAM_COLOR_DARK[this.team]; 
   for (var s in this.special) {
     if (s != Player.SpecialType.BOMB || this.special[s].allowed > 0) {
         drawRoundRect(globals.ctx, 20 + 40*s, 50, 30, 30, 5);
