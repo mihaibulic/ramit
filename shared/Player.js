@@ -700,8 +700,17 @@ Player.prototype.loadState = function(data, you) {
 
 Player.prototype.predict = function() {
   // Do nothing if dead.
-  if (this.health === 0)
+  if (this.health === 0) {
+    this.projectile[Projectile.Type.NORMAL].lastFire.reset();
+    this.projectile[Projectile.Type.MINE].lastFire.reset();
+    this.special[Player.SpecialType.ROCKET].lastFire.reset();
+    this.special[Player.SpecialType.EMP].lastFire.reset();
+    this.special[Player.SpecialType.MEDIC].lastFire.reset();
+    this.special[Player.SpecialType.SHIELD].lastFire.reset();
+    this.special[Player.SpecialType.SHIELD].inUse.reset(true);
+
     return;
+  }
 
   var pos = Rectangle.getPos(this.getCollisionBarrier());
 
