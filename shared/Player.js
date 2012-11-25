@@ -659,6 +659,7 @@ Player.prototype.loadState = function(data, you) {
       console.log("SHIELD: " + data.d);
       console.log("shield time left: " + this.special[Player.SpecialType.SHIELD].inUse.timeLeft());
       if (data.d > 0 && this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
+        console.log("BOOM SHIELD ON");
         this.special[Player.SpecialType.SHIELD].lastFire.reset();
         this.special[Player.SpecialType.SHIELD].inUse.reset();
       }
