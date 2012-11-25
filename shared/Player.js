@@ -657,6 +657,7 @@ Player.prototype.loadState = function(data, you) {
       this.mounted = data.w;
     if (data.d !== undefined) {
       console.log("SHIELD: " + data.d);
+      console.log("shield time left: " + this.special[Player.SpecialType.SHIELD].inUse.timeLeft());
       if (data.d > 0 && this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
         this.special[Player.SpecialType.SHIELD].lastFire.reset();
         this.special[Player.SpecialType.SHIELD].inUse.reset();
