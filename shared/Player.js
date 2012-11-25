@@ -349,7 +349,7 @@ Player.prototype.drawHUD = function() {
   globals.ctx.globalAlpha = 0.75;
   if(this.special[this.mounted].allowed > 0) {
     globals.ctx.fillStyle = "#8a8a8a";
-    drawRoundRect(globals.ctx, 15 + 40*(this.mounted), 45, 40, 40);
+    drawRoundRect(globals.ctx, 15 + 40*(this.mounted), 45, 40, 40, 5);
     globals.ctx.fill();
   }
 
@@ -357,6 +357,8 @@ Player.prototype.drawHUD = function() {
   globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
   for (var s in this.special) {
     if (s != Player.SpecialType.BOMB || this.special[s].allowed > 0) {
+        drawRoundRect(globals.ctx, 20 + 40*s, 50, 30, 30, 5);
+        globals.ctx.fill();
         globals.ctx.drawImage(globals.resources.icons[s-1], 20 + 40*s, 50);
     }
   }
