@@ -602,10 +602,8 @@ Player.prototype.updateKeys = function(e) {
     break;
   case 85:
     if (value && !this.keys.u) {
-//      globals.socket.emit('upgrade', { d: Upgrade.Device.MINE,
-//                                       t: Upgrade.Type.ALLOWED });
-      globals.socket.emit('upgrade', { d: Upgrade.Device.ROCKET,
-                                       t: Upgrade.Type.COOLDOWN });
+      globals.socket.emit('upgrade', { d: Upgrade.Device.MINE,
+                                       t: Upgrade.Type.ALLOWED });
       this.keys.u = true;
       console.log("requesting upgrade");
     } else if (!value) {
