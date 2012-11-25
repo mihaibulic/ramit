@@ -268,6 +268,10 @@ Player.prototype.draw = function() {
       globals.ctx.globalAlpha = 1;
       return;
     }
+
+    console.log(this.special[Player.SpecialType.SHIELD].inUse.isDone() ? "done" : "not done");
+    console.log(this.special[Player.SpecialType.SHIELD].inUse.timeLeft());
+
     // Draw the shield.
     if (!this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
       var grad = globals.ctx.createRadialGradient(xPos+30, yPos+30, 10, xPos+30, yPos+30, 60);
@@ -655,14 +659,9 @@ Player.prototype.loadState = function(data, you) {
       this.speed = data.s;
     if (data.w !== undefined)
       this.mounted = data.w;
-    if (data.d !== undefined) {
-      console.log("SHIELD: " + data.d);
-      console.log("shield time left: " + this.special[Player.SpecialType.SHIELD].inUse.timeLeft());
-      if (data.d > 0 && this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
-        console.log("BOOM SHIELD ON");
+    if (data.d !== undefined && data.d > 0 && this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
         this.special[Player.SpecialType.SHIELD].lastFire.reset();
         this.special[Player.SpecialType.SHIELD].inUse.reset();
-      }
     }
     if (data.p !== undefined)
       this.totalScore = data.p;
