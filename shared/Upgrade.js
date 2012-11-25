@@ -219,6 +219,7 @@ Upgrade.prototype.buy = function(device, type, pid) {
     } else if (type === Upgrade.Type.DAMAGE) {
       buyer.projectile[Projectile.Type.MINE].damage += diff;
     } else if (type === Upgrade.Type.ALLOWED) {
+      console.log("SEEEEEEEEE MEEEE ");
       buyer.projectile[Projectile.Type.MINE].allowed += diff;
     } 
   } else if (device === Upgrade.Device.ROCKET) {
