@@ -32,10 +32,10 @@ var ITGame = function(team, playerID) {
     });
 
     globals.socket.on('upgrade_resp', function(data) {
-      console.log("upgrade request received from " + globals.players[this.player].name +
-                " d:" + Upgrade.DeviceStrings[data.d] +
-                " t:" + Upgrade.TypeStrings[data.t]);
+      console.log("rocket cooldown is (b4): "+globals.players[this.player].projectile[Projectile.Type.ROCKET].coolDown);
       globals.upgrade.buy(data.d, data.t, this.player);
+
+      console.log("rocket cooldown is (aft): "+globals.players[this.player].projectile[Projectile.Type.ROCKET].coolDown);
     });
 
     this.loadState(data.s, true);
