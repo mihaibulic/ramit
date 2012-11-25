@@ -435,6 +435,7 @@ window.onload = function() {
   globals.ctx = globals.canvas.getContext('2d');
   globals.load(function() {
     globals.game = new ITGame(0,0);
+    globals.upgrade = new Upgrade(),
   });
 };
 
