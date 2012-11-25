@@ -701,13 +701,13 @@ Player.prototype.loadState = function(data, you) {
 Player.prototype.predict = function() {
   // Do nothing if dead.
   if (this.health === 0) {
-    this.projectile[Projectile.Type.NORMAL].lastFire.reset();
-    this.projectile[Projectile.Type.MINE].lastFire.reset();
-    this.special[Player.SpecialType.ROCKET].lastFire.reset();
-    this.special[Player.SpecialType.EMP].lastFire.reset();
-    this.special[Player.SpecialType.MEDIC].lastFire.reset();
-    this.special[Player.SpecialType.SHIELD].lastFire.reset();
-    this.special[Player.SpecialType.SHIELD].inUse.reset(true);
+    this.projectile[Projectile.Type.NORMAL].lastFire.resetToDone();
+    this.projectile[Projectile.Type.MINE].lastFire.resetToDone();
+    this.special[Player.SpecialType.ROCKET].lastFire.resetToDone();
+    this.special[Player.SpecialType.EMP].lastFire.resetToDone();
+    this.special[Player.SpecialType.MEDIC].lastFire.resetToDone();
+    this.special[Player.SpecialType.SHIELD].lastFire.resetToDone();
+    this.special[Player.SpecialType.SHIELD].inUse.reset(false);
 
     return;
   }
@@ -966,13 +966,13 @@ Player.prototype.respawn = function() {
   console.log("Respawning " + this.name);
   this.deathCounter = 0;
 
-  this.projectile[Projectile.Type.NORMAL].lastFire.reset();
-  this.projectile[Projectile.Type.MINE].lastFire.reset();
-  this.special[Player.SpecialType.ROCKET].lastFire.reset();
-  this.special[Player.SpecialType.EMP].lastFire.reset();
-  this.special[Player.SpecialType.MEDIC].lastFire.reset();
-  this.special[Player.SpecialType.SHIELD].lastFire.reset();
-  this.special[Player.SpecialType.SHIELD].inUse.reset(true);
+  this.projectile[Projectile.Type.NORMAL].lastFire.resetToDone();
+  this.projectile[Projectile.Type.MINE].lastFire.resetToDone();
+  this.special[Player.SpecialType.ROCKET].lastFire.resetToDone();
+  this.special[Player.SpecialType.EMP].lastFire.resetToDone();
+  this.special[Player.SpecialType.MEDIC].lastFire.resetToDone();
+  this.special[Player.SpecialType.SHIELD].lastFire.resetToDone();
+  this.special[Player.SpecialType.SHIELD].inUse.reset(false);
 
   var spawn = this.determineSpawn();
   this.tank.x = Player.SPAWN_POINTS[this.team][spawn].x;
