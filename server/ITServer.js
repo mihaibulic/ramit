@@ -326,7 +326,9 @@ io.sockets.on('connection', function(socket) {
     console.log("upgrade request received from " + globals.players[id].name +
                 " d:" + Upgrade.DeviceStrings[data.d] +
                 " t:" + Upgrade.TypeStrings[data.t]);
-    globals.upgrade.buy(data.d, data.t, id);
+    if (globals.upgrade.buy(data.d, data.t, id)) {
+      socket.emit('upgrade_resp', data);
+    }
   });
 
   // Actions to perform when the player disconnects.

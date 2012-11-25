@@ -29,6 +29,13 @@ var ITGame = function(team, playerID) {
       }
     });
 
+    globals.socket.on('upgrade_resp', function(data) {
+      console.log("upgrade request received from " + globals.players[id].name +
+                " d:" + Upgrade.DeviceStrings[data.d] +
+                " t:" + Upgrade.TypeStrings[data.t]);
+      globals.upgrade.buy(data.d, data.t, id);
+    });
+
     this.player = data.i;
     this.loadState(data.s, true);
     this.team = globals.players[this.player].team;

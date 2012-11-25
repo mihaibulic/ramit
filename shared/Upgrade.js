@@ -147,10 +147,11 @@ Upgrade.prototype.load = function() {
  * @param {int} The pid of player buying upgrade.
  */
 Upgrade.prototype.buy = function(device, type, pid) {
+  var isOK = false;
   var buyer = globals.players[pid];
   if (this.cost[device][type] === undefined) {
     console.log(buyer.name + ", that device can't upgrade that way");
-    return;
+    return isOK;
   }
   if (!this.players)
     this.players = [];
@@ -172,17 +173,19 @@ Upgrade.prototype.buy = function(device, type, pid) {
     
     if (!eligible) {
       console.log(buyer.name + ", you must max out all other upgrades first.");
-      return;
+      return isOK;
     }
   } 
   var cost = this.cost[device][type][this.players[pid][device][type] + 1];
   if (cost === undefined) {
     console.log(buyer.name + ", you are maxed out on that upgrade");
-    return;
+    return isOK;
   } else if (cost > (buyer.totalScore - buyer.totalSpent)) {
     console.log(buyer.name + ", you don't have enough for that upgrade");
-    return;
+    return isOK;
   } 
+
+  isOK = true;
   this.players[pid][device][type]++;
   console.log(buyer.name + " bought an upgrade level " + this.players[pid][device][type]);
   var diff = this.diff[device][type][this.players[pid][device][type]];
@@ -252,5 +255,6 @@ Upgrade.prototype.buy = function(device, type, pid) {
   } else if (device === Upgrade.Device.BOMB) {
     buyer.special[Player.SpecialType.BOMB].allowed++;
   }
-  
+
+  return isOK;
 };

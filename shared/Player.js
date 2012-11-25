@@ -689,14 +689,6 @@ Player.prototype.loadState = function(data, you) {
       if (oldHealth === 0 && this.health !== 0)
         this.tank.y = data.y;
     }
-    if (data.l !== undefined) {
-      this.projectile[Projectile.Type.NORMAL] = data.l.n;
-      this.projectile[Projectile.Type.MINE] = data.l.m;
-      this.projectile[Projectile.Type.ROCKETL] = data.l.r;
-      this.special[this.SpecialType.EMP] = data.l.e;
-      this.special[this.SpecialType.MEDIC] = data.l.d;
-      this.special[this.SpecialType.SHIELD] = data.l.s;
-    }
   }
 };
 
