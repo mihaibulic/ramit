@@ -29,16 +29,14 @@ var ITGame = function(team, playerID) {
       }
     });
 
-    this.player = data.i;
     globals.socket.on('upgrade_resp', function(d) {
-      console.log("player: " + data.i);
-      console.log("player2: " + this.player);
-      console.log("rocket cooldown is (b4): "+ globals.players[this.player].projectile[Projectile.Type.ROCKET].coolDown);
-      globals.upgrade.buy(d.d, d.t, this.player);
-      console.log("rocket cooldown is (aft): "+ globals.players[this.player].projectile[Projectile.Type.ROCKET].coolDown);
+      console.log("rocket cooldown is (b4): "+ globals.players[data.i].projectile[Projectile.Type.ROCKET].coolDown);
+      globals.upgrade.buy(d.d, d.t, data.i);
+      console.log("rocket cooldown is (aft): "+ globals.players[data.i].projectile[Projectile.Type.ROCKET].coolDown);
     });
 
     this.loadState(data.s, true);
+    this.player = data.i;
     this.team = globals.players[this.player].team;
 
     // Input events.
