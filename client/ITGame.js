@@ -29,10 +29,11 @@ var ITGame = function(team, playerID) {
       }
     });
 
-    globals.socket.on('upgrade_resp', function(data) {
-      console.log("player: " + this.player);
+    globals.socket.on('upgrade_resp', function(d) {
+      console.log("player: " + data.i);
+      console.log("player2: " + this.player);
       console.log("rocket cooldown is (b4): "+ globals.players[this.player].projectile[Projectile.Type.ROCKET].coolDown);
-      globals.upgrade.buy(data.d, data.t, this.player);
+      globals.upgrade.buy(d.d, d.t, this.player);
       console.log("rocket cooldown is (aft): "+ globals.players[this.player].projectile[Projectile.Type.ROCKET].coolDown);
     });
 
