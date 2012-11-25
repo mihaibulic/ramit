@@ -344,6 +344,7 @@ Player.prototype.drawHUD = function() {
   globals.ctx.stroke();
   drawRoundRect(globals.ctx, 55, 20, 300 * this.health / this.maxHealth, 20, 10);
   globals.ctx.fill();
+  globals.ctx.globalAlpha = 1;
 
   // Show mounted weapon if allowed
   if(this.special[this.mounted].allowed > 0) {
