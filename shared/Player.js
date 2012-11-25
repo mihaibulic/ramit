@@ -113,7 +113,6 @@ var Player = function(team, playerID, opt_state) {
     this.setKeyValue(opt_state.k);
     this.speed = opt_state.s;
     this.mounted = opt_state.w;
-    //this.hasShield = opt_state.d;
     this.special[Player.SpecialType.SHIELD].inUse = new Timer(opt_state.d);
     this.totalScore = opt_state.p;
     this.totalSpent = opt_state.c;
@@ -128,7 +127,6 @@ var Player = function(team, playerID, opt_state) {
     aim = 0;
     this.speed = 4 * 60;
     this.mounted = Player.SpecialType.ROCKET;
-    //this.hasShield = 0;
     this.special[Player.SpecialType.SHIELD].inUse = new Timer(this.special[Player.SpecialType.SHIELD].duration);
     this.totalScore = 0;
     this.totalSpent = 0;
@@ -165,7 +163,6 @@ Player.prototype.getAbsoluteState = function() {
   p.k = this.getKeyValue();
   p.s = this.speed;
   p.w = this.mounted;
-//  p.d = this.hasShield;
   p.d = this.special[Player.SpecialType.SHIELD].inUse.timeLeft();
   p.p = this.totalScore;
   p.c = this.totalSpent;
@@ -272,7 +269,6 @@ Player.prototype.draw = function() {
     }
     // Draw the shield.
     if (!this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
-//    if (this.hasShield) {
       var grad = globals.ctx.createRadialGradient(xPos+30, yPos+30, 10, xPos+30, yPos+30, 60);
       grad.addColorStop(0, Player.TEAM_COLOR_LIGHT[this.team]);
       grad.addColorStop(1, Player.TEAM_COLOR[this.team]);
@@ -293,7 +289,6 @@ Player.prototype.draw = function() {
                            rect.height());
 
     if (!this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
-    //if (this.hasShield) {
       rect = this.getCollisionBarrier(null, true);
       globals.ctx.strokeRect(rect.left - globals.level.x, rect.top - globals.level.y, rect.width(),
                              rect.height());
@@ -362,7 +357,6 @@ Player.prototype.drawHUD = function() {
   globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
   for (var s in this.special) {
     if (s != Player.SpecialType.BOMB || this.special[s].allowed > 0) {
-//      globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
         globals.ctx.drawImage(globals.resources.icons[s-1], 20 + 40*s, 50);
     }
   }
@@ -658,7 +652,6 @@ Player.prototype.loadState = function(data, you) {
     if (data.w !== undefined)
       this.mounted = data.w;
     if (data.d !== undefined && data.d > 0 && this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
-      //this.hasShield = data.d;
       this.special[Player.SpecialType.SHIELD].lastFire.reset();
       this.special[Player.SpecialType.SHIELD].inUse.reset();
     }
@@ -724,12 +717,6 @@ Player.prototype.predict = function() {
         this.tank.y += dir * Math.min(2, diff);
     }
   }
-
-  //if (this.hasShield) {
-    //this.hasShield = Math.max(0, this.hasShield - globals.dt);
-    //console.log("has shield test: " + this.hasShield + ", " + globals.dt);
-  //}
-
 };
 
 /**
@@ -744,9 +731,6 @@ Player.prototype.update = function() {
   }
   else 
     this.move();
-
-//  if (this.hasShield) 
-//    this.hasShield--;
 };
 
 /**
@@ -917,7 +901,6 @@ Player.prototype.canFire = function(type) {
  * @returns {Number} The number of points the hit earned.
  */
 Player.prototype.takeHit = function(damage, owner) {
-//  if (this.hasShield || this.health === 0)
   if (!this.special[Player.SpecialType.SHIELD].inUse.isDone() || this.health === 0)
     return 0;
 
@@ -965,7 +948,6 @@ Player.prototype.respawn = function() {
   this.special[Player.SpecialType.EMP].lastFire.reset();
   this.special[Player.SpecialType.MEDIC].lastFire.reset();
   this.special[Player.SpecialType.SHIELD].lastFire.reset();
-//  this.hasShield = 0;
   this.special[Player.SpecialType.SHIELD].inUse.reset(true);
 
   var spawn = this.determineSpawn();
@@ -1010,7 +992,6 @@ Player.prototype.addPoints = function(amount) {
 };
 
 Player.prototype.armShield = function() {
-//  this.hasShield = this.special[Player.SpecialType.SHIELD].duration;
   this.special[Player.SpecialType.SHIELD].inUse.reset();
   this.special[Player.SpecialType.SHIELD].lastFire.reset();
 
@@ -1021,7 +1002,6 @@ Player.prototype.armShield = function() {
     if (!diff.p[this.playerID])
       diff.p[this.playerID] = {};
 
-    //diff.p[this.playerID].d = this.hasShield;
     diff.p[this.playerID].d = this.special[Player.SpecialType.SHIELD].inUse.timeLeft();
   }
 };
@@ -1038,7 +1018,6 @@ Player.prototype.getCollisionBarrier = function(location, useShield) {
   if (!location)
     location = this.tank;
 
-  //if (useShield && this.hasShield) {
   if (useShield && !this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
     return new Rectangle({left: location.x + 2, right: location.x + 58,
                           top: location.y + 2, bottom: location.y + 58});
