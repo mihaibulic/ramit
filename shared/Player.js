@@ -354,7 +354,7 @@ Player.prototype.drawHUD = function() {
   }
 
   // Draw icons for each weapon
-  globals.ctx.fillStyle = Player.TEAM_COLOR[this.team]; 
+  globals.ctx.fillStyle = 0.50*Player.TEAM_COLOR[this.team]; 
   for (var s in this.special) {
     if (s != Player.SpecialType.BOMB || this.special[s].allowed > 0) {
         drawRoundRect(globals.ctx, 20 + 40*s, 50, 30, 30, 5);
