@@ -10,6 +10,7 @@ var globals = {
     hqs: new Image(),
     mines: new Image(),
     bomb: new Image(),
+    icons: new Image(),
     minimapfade: new Image()
   },
   resources: {
@@ -20,6 +21,7 @@ var globals = {
     hqs: null,
     mines: null,
     bomb: null,
+    icons: null,
     minimap: null,
     minimapfade: null
   },
@@ -112,6 +114,8 @@ globals.load = function(callback) {
       globals.renderMines();
     else if (target === "bomb")
       globals.renderBomb();
+    else if (target === "icons")
+      globals.renderIcons();
     else
       globals.resources[target] = globals.rawImages[target];
 
@@ -128,7 +132,7 @@ globals.load = function(callback) {
 };
 
 /**
- * Renders the bomb into an images
+ * Renders the bomb into an image
  */
 globals.renderBomb = function() {
   globals.remainingResources++;
@@ -138,7 +142,6 @@ globals.renderBomb = function() {
   var ctx = renderer.getContext('2d');
 
   var n = 60;
-  var positions = [0, 0, n, n, 0, 0, n, n];
 
   renderer.width = n;
   renderer.height = n;
@@ -154,7 +157,7 @@ globals.renderBomb = function() {
 };
 
 /**
- * Renders the mines into two separate images
+ * Renders the icons into 5 separate images
  */
 globals.renderMines = function() {
   globals.remainingResources += 2;
@@ -170,9 +173,7 @@ globals.renderMines = function() {
     renderer.width = n;
     renderer.height = n;
     ctx.clearRect(0, 0, n, n);
-    ctx.drawImage(globals.rawImages.mines, positions[i][0], positions[i][1],
-                  positions[i][2], positions[i][3], positions[i][4],
-                  positions[i][5], positions[i][6], positions[i][7]);
+    ctx.drawImage(globals.rawImages.mines, i*n, 0, n, n, 0, 0, n, n);
 
     var img = new Image();
     img.src = renderer.toDataURL();
@@ -183,6 +184,38 @@ globals.renderMines = function() {
   };
   render(0);
   render(1);
+};
+
+/**
+ * Renders the mines into two separate images
+ */
+globals.renderIcons = function() {
+  globals.remainingResources += 5;
+  globals.resources.icons = [];
+
+  var renderer = document.getElementById('renderer');
+  var ctx = renderer.getContext('2d');
+
+  var n = 30;
+  var render = function(i) {
+    renderer.width = n;
+    renderer.height = n;
+    ctx.clearRect(0, 0, n, n);
+    ctx.drawImage(globals.rawImages.icons, i*n, 0, n, n, 0, 0, n, n);
+
+    var img = new Image();
+    img.src = renderer.toDataURL();
+    img.onload = function() {
+      globals.resources.icons[i] = img;
+      globals.resourceLoaded();
+    };
+  };
+  render(0);
+  render(1);
+  render(2);
+  render(3);
+  render(4);
+  render(5);
 };
 
 /**
