@@ -10,8 +10,6 @@ var ITGame = function(team, playerID) {
 
   globals.socket.on('setup', globals.bind(function(data) {
 
-    this.player = data.i;
-    
     globals.socket.on('state', globals.bind(function(data) {
       this.loadState(data, false);
     }, this));
@@ -32,13 +30,13 @@ var ITGame = function(team, playerID) {
     });
 
     globals.socket.on('upgrade_resp', function(data) {
-      console.log("rocket cooldown is (b4): "+globals.players[this.player].projectile[Projectile.Type.ROCKET].coolDown);
+      console.log("rocket cooldown is (b4): "+ globals.players[this.player].projectile[Projectile.Type.ROCKET].coolDown);
       globals.upgrade.buy(data.d, data.t, this.player);
-
-      console.log("rocket cooldown is (aft): "+globals.players[this.player].projectile[Projectile.Type.ROCKET].coolDown);
+      console.log("rocket cooldown is (aft): "+ globals.players[this.player].projectile[Projectile.Type.ROCKET].coolDown);
     });
 
     this.loadState(data.s, true);
+    this.player = data.i;
     this.team = globals.players[this.player].team;
 
     // Input events.
