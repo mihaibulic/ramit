@@ -101,12 +101,14 @@ var Player = function(team, playerID, opt_state) {
     right: false
   };
 
+  // timer will not be set to start done & will not be start automatically
+  this.deathTimer = new Timer(2000, false, false);
+
   if (opt_state) {
     this.name = opt_state.n;
     this.team = opt_state.t;
     x = opt_state.x;
     y = opt_state.y;
-    this.deathCounter = 0;
     this.health = opt_state.h;
     this.maxHealth = opt_state.m;
     aim = opt_state.a;
@@ -738,9 +740,8 @@ Player.prototype.predict = function() {
  * Update the state of the Player.
  */
 Player.prototype.update = function() {
-  if (this.deathCounter > 0) {
-    this.deathCounter++;
-    if(this.deathCounter >= 120 && !this.leaving) {
+  if (this.deathTimer.isStarted()) {
+    if (this.deathTimer.isDone() && !this.leaving) {
       this.respawn();
     }
   }
@@ -929,7 +930,7 @@ Player.prototype.takeHit = function(damage, owner) {
 
   if (this.health <= 0) {
     this.health = 0;
-    this.deathCounter = 1;
+    this.deathTimer.reset();
     points += 25;
   }
 
@@ -955,7 +956,7 @@ Player.prototype.takeHit = function(damage, owner) {
 
 Player.prototype.respawn = function() {
   console.log("Respawning " + this.name);
-  this.deathCounter = 0;
+  this.deathTimer.stop();
 
   this.projectile[Projectile.Type.NORMAL].lastFire.resetToDone();
   this.projectile[Projectile.Type.MINE].lastFire.resetToDone();

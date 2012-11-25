@@ -20,7 +20,7 @@ var ITGame = function(team, playerID) {
       console.log(globals.players[data.i].name + " is leaving");
       globals.players[data.i].leaving = true;
       globals.players[data.i].health = 0;
-      globals.players[data.i].deathCounter = 1;
+      globals.players[data.i].deathTimer.reset();
       globals.messages.push(globals.players[data.i].name + " has left the game.");
       // Remove all projectiles and mines owned by this player.
       for (var qid in globals.projectiles) {
@@ -215,8 +215,7 @@ ITGame.prototype.predict = function() {
   }
   for (var pid in globals.players) {
     if (globals.players[pid].leaving) {
-      globals.players[pid].deathCounter++;
-      if (globals.players[pid].deathCounter >= 90) {
+      if (globals.players[pid].deathTimer.isDone()) {
         console.log(globals.players[pid].name + " has left");
         delete globals.players[pid];
       }
