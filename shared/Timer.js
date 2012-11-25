@@ -64,11 +64,24 @@ Timer.prototype.stop = function() {
 
 /**
  * Convinience function, if stop is not defined, automatically start
+ * @param {Boolean} opt_start - if true, timer will start right away (undef = true)
  */
-Timer.prototype.reset = function(stop) {
+Timer.prototype.reset = function(opt_start) {
   this.length = this.originalLength;
 
-  if (stop === undefined || !stop)
+  if (opt_start === undefined || opt_start)
+    this.start();
+};
+
+/**
+ * Temporarily sets the timer to this time
+ * @param {Number} length - time to temporarily set the timer to (reset will set timer to ORIGINAL length)
+ * @param {Boolean} opt_start - if true, timer will start right away (undef = true)
+ */
+Timer.prototype.tempSet = function(length, opt_start) {
+  this.length = length;
+
+  if (opt_start === undefined || opt_start)
     this.start();
 };
 

@@ -659,9 +659,15 @@ Player.prototype.loadState = function(data, you) {
       this.speed = data.s;
     if (data.w !== undefined)
       this.mounted = data.w;
-    if (data.d !== undefined && data.d > 0 && this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
-        this.special[Player.SpecialType.SHIELD].lastFire.reset();
-        this.special[Player.SpecialType.SHIELD].inUse.reset();
+    if (data.d !== undefined) {
+        if (data.d <= 0 && !this.special[Player.SpecialType.SHIELD].inUse.isDone()) { 
+          // server has shield off, but client has it on      
+          this.special[Player.SpecialType.SHIELD].inUse.reset();
+        }
+        else if (data.d > 0 && this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
+          // server has shield on, but client doesn't
+          this.special[Player.SpecialType.SHIELD].inUse.tempSet(data.d);
+        }
     }
     if (data.p !== undefined)
       this.totalScore = data.p;
