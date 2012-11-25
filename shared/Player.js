@@ -269,9 +269,6 @@ Player.prototype.draw = function() {
       return;
     }
 
-    console.log(this.special[Player.SpecialType.SHIELD].inUse.isDone() ? "done" : "not done");
-    console.log(this.special[Player.SpecialType.SHIELD].inUse.timeLeft());
-
     // Draw the shield.
     if (!this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
       var grad = globals.ctx.createRadialGradient(xPos+30, yPos+30, 10, xPos+30, yPos+30, 60);
