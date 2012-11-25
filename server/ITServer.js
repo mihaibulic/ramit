@@ -131,8 +131,6 @@ var update = function() {
         player.armShield();
       }
     }
-
-    console.log(player.tank.x + ", " + player.tank.y);
   }
 
   // update and check for hits in projectiles
