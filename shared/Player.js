@@ -644,6 +644,8 @@ Player.prototype.loadState = function(data, you) {
             globals.messages.push(killerName + " committed suicide!");
           else if (killer.team === this.team)
             globals.messages.push(killerName + " betrayed " + deadName + "!");
+          else if (killerName === "GOD") // easter egg :)
+            globals.messages.push(killerName + " smote " + deadName + ".");
           else
             globals.messages.push(killerName + " killed " + deadName + ".");
         }

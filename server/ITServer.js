@@ -6,7 +6,8 @@ io.set('log level', 1);
 
 // Globals for the server.
 var globals = {
-  gameoverTimer: 0,
+  // set the gameover timer to 2 sec (2000ms), don't have it set to be done, & don't start it
+  gameoverTimer: new Timer(2000, false, false),
   interval: null,
   fps: 60,
   numberOfPlayers: 0,
@@ -79,10 +80,11 @@ var update = function() {
   if (globals.level.mode === Level.Mode.START)
     globals.level.mode = Level.Mode.ONGOING;
   else if (globals.level.mode === Level.Mode.END) {
-    if (globals.gameoverTimer >= 120)
+    if (!globals.gameoverTimer.isStarted()) {
+      globals.gameoverTimer.reset();
+    } 
+    else if (globals.gameoverTimer.isDone()) {
       reset();
-    else {
-      globals.gameoverTimer++;
     }
   }
 
@@ -90,6 +92,9 @@ var update = function() {
   for (var pid in globals.players) {
     var player = globals.players[pid];
     player.update();
+
+    if (player.deathTimer.isStarted()) continue;
+ 
     // Shoot
     if (player.canFire(Projectile.Type.NORMAL) &&
         (player.keys.space === true || player.mouse.left === true)) {
@@ -200,7 +205,7 @@ var getAbsoluteState = function() {
  * Restarts the server
  */
 var reset = function() {
-  globals.gameoverTimer = 0;
+  globals.gameoverTimer.stop();
   globals.level = new Level();
   globals.level.mode = Level.Mode.START;
 
