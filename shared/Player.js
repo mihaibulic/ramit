@@ -346,7 +346,6 @@ Player.prototype.drawHUD = function() {
   globals.ctx.fill();
 
   // Show mounted weapon if allowed
-  globals.ctx.globalAlpha = 0.75;
   if(this.special[this.mounted].allowed > 0) {
     globals.ctx.fillStyle = "#8a8a8a";
     drawRoundRect(globals.ctx, 15 + 40*(this.mounted), 45, 40, 40, 5);
@@ -365,6 +364,7 @@ Player.prototype.drawHUD = function() {
 
   // Gray out not allowed weapons/cooldown times
   globals.ctx.fillStyle = "#8a8a8a"; 
+  globals.ctx.globalAlpha = 0.75;
   for (s in this.special) {
     if (this.special[s].allowed <= 0) {
       if (s != Player.SpecialType.BOMB) {
