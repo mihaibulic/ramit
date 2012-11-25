@@ -374,12 +374,14 @@ Player.prototype.drawHUD = function() {
   for (s in this.special) {
     if (this.special[s].allowed <= 0) {
       if (s != Player.SpecialType.BOMB) {
-        globals.ctx.fillRect(20 + 40*(s), 50, 30, 30);
+        drawRoundRect(globals.ctx, 20 + 40*(s), 50, 30, 30, 5);
+        globals.ctx.fill();
       }
     }
     else if (!this.special[s].lastFire.isDone()) { 
       var coolDownPercent = (this.special[s].lastFire.timeLeft() / this.special[s].coolDown);
-      globals.ctx.fillRect(20 + 40*(s), 50 + (30*(1-coolDownPercent)), 30, 30 * coolDownPercent);
+      drawRoundRect(globals.ctx, 20 + 40*(s), 50 + (30*(1-coolDownPercent)), 30, 30 * coolDownPercent, 5);
+      globals.ctx.fill();
     }
   }
   globals.ctx.globalAlpha = 1;
