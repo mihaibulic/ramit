@@ -245,19 +245,6 @@ Player.prototype.draw = function() {
   // If the tank will not be displayed on the screen, do not bother drawing it.
   if (xPos > -60 && xPos < 1000 && yPos > -60 && yPos < 500) {
     if (this.leaving) globals.ctx.globalAlpha = 0.5;
-    // Draw underglow
-    else {
-      globals.ctx.globalAlpha = 0.3;
-      globals.ctx.fillStyle = Player.TEAM_COLOR_LIGHT[this.team];
-      //globals.ctx.fillStyle = Player.TEAM_COLOR[this.team];
-      //globals.ctx.fillStyle = "#FFFFFF";
-      //globals.ctx.fillStyle = "#FFFF00";
-      globals.ctx.beginPath();
-      globals.ctx.arc(xPos + 30, yPos + 30, 30, 0, 2 * Math.PI);
-      globals.ctx.closePath();
-      globals.ctx.fill();
-      globals.ctx.globalAlpha = 1;
-    }
     // Draw the tank.
     globals.ctx.drawImage(
       globals.resources.tanks[(this.health > 0 ? this.team : 2)][this.tank.direction],
