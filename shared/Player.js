@@ -663,11 +663,11 @@ Player.prototype.loadState = function(data, you) {
         if (data.d <= 0 && !this.special[Player.SpecialType.SHIELD].inUse.isDone()) { 
           // server has shield off, but client has it on      
           this.special[Player.SpecialType.SHIELD].inUse.reset();
-          this.special[Player.SpecialType.SHIELD].lastFire.reset();
         }
         else if (data.d > 0 && this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
           // server has shield on, but client doesn't
           this.special[Player.SpecialType.SHIELD].inUse.tempSet(data.d);
+          this.special[Player.SpecialType.SHIELD].lastFire.reset();
         }
     }
     if (data.p !== undefined)
