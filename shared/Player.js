@@ -33,7 +33,7 @@ var Player = function(team, playerID, opt_state) {
     range: 40,
     damage: 20,
     speed: 9 * 60,
-    coolDown: 2000,
+    coolDown: 20000,
     lastFire: new Timer(2000),
     allowed: 1 // not used to limit how many rockets are out there, just to say the weapon is permitted
   };
