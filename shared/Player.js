@@ -655,9 +655,12 @@ Player.prototype.loadState = function(data, you) {
       this.speed = data.s;
     if (data.w !== undefined)
       this.mounted = data.w;
-    if (data.d !== undefined && data.d > 0 && this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
-      this.special[Player.SpecialType.SHIELD].lastFire.reset();
-      this.special[Player.SpecialType.SHIELD].inUse.reset();
+    if (data.d !== undefined) {
+      console.log("SHIELD: " + data.d);
+      if (data.d > 0 && this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
+        this.special[Player.SpecialType.SHIELD].lastFire.reset();
+        this.special[Player.SpecialType.SHIELD].inUse.reset();
+      }
     }
     if (data.p !== undefined)
       this.totalScore = data.p;
