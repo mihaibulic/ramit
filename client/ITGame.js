@@ -30,10 +30,9 @@ var ITGame = function(team, playerID) {
       }
     });
 
+    //XXX to save on # of msgs, could instead call buy, before emitting the upgrade msg
     globals.socket.on('upgrade_resp', function(d) {
-      console.log("rocket cooldown is (b4): "+ globals.players[data.i].projectile[Projectile.Type.ROCKET].coolDown);
       globals.upgrade.buy(d.d, d.t, data.i);
-      console.log("rocket cooldown is (aft): "+ globals.players[data.i].projectile[Projectile.Type.ROCKET].coolDown);
     });
 
     this.loadState(data.s, true);
