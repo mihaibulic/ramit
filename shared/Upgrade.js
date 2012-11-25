@@ -209,6 +209,7 @@ Upgrade.prototype.buy = function(device, type, pid) {
       buyer.projectile[Projectile.Type.NORMAL].speed += diff;
     } else if (type === Upgrade.COOLDOWN) {
       buyer.projectile[Projectile.Type.NORMAL].coolDown += diff;
+      buyer.projectile[Projectile.Type.NORMAL].lastFire = new Timer(buyer.projectile[Projectile.Type.NORMAL].coolDown);
     } else  if (type === Upgrade.Type.DAMAGE) {
       buyer.projectile[Projectile.Type.NORMAL].damage += diff;
     }
@@ -225,6 +226,7 @@ Upgrade.prototype.buy = function(device, type, pid) {
       buyer.projectile[Projectile.Type.ROCKET].speed += diff;
     } else if (type === Upgrade.Type.COOLDOWN) {
       buyer.projectile[Projectile.Type.ROCKET].coolDown += diff;
+      buyer.projectile[Projectile.Type.ROCKET].lastFire = new Timer(buyer.projectile[Projectile.Type.ROCKET].coolDown);
     } else if (type === Upgrade.Type.RANGE) {
       buyer.projectile[Projectile.Type.ROCKET].range += diff;
     } else if (type === Upgrade.Type.DAMAGE) {
@@ -233,6 +235,7 @@ Upgrade.prototype.buy = function(device, type, pid) {
   } else if (device === Upgrade.Device.EMP) {
     if (type === Upgrade.Type.COOLDOWN) {
       buyer.special[Player.SpecialType.EMP].coolDown += diff;
+      buyer.special[Player.SpecialType.EMP].lastFire = new Timer(buyer.special[Player.SpecialType.EMP].coolDown);
     } else if (type === Upgrade.Type.RANGE) {
       buyer.special[Player.SpecialType.EMP].range += diff;
     } else if (type === Upgrade.Type.DAMAGE) {
@@ -241,6 +244,7 @@ Upgrade.prototype.buy = function(device, type, pid) {
   } else if (device === Upgrade.Device.MEDIC) {
     if (type === Upgrade.Type.COOLDOWN) {
       buyer.special[Player.SpecialType.MEDIC].coolDown += diff;
+      buyer.special[Player.SpecialType.MEDIC].lastFire = new Timer(buyer.special[Player.SpecialType.MEDIC].coolDown);
     } else if (type === Upgrade.Type.RANGE) {
       buyer.special[Player.SpecialType.MEDIC].range += diff;
     } else if (type === Upgrade.Type.DAMAGE) {
@@ -251,6 +255,7 @@ Upgrade.prototype.buy = function(device, type, pid) {
       buyer.special[Player.SpecialType.SHIELD].duration += diff;
     } else if (type === Upgrade.Type.COOLDOWN) {
       buyer.special[Player.SpecialType.SHIELD].coolDown += diff;
+      buyer.special[Player.SpecialType.SHIELD].lastFire = new Timer(buyer.special[Player.SpecialType.SHIELD].coolDown);
     }
   } else if (device === Upgrade.Device.BOMB) {
     buyer.special[Player.SpecialType.BOMB].allowed++;

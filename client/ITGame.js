@@ -3,6 +3,7 @@
  */
 var ITGame = function(team, playerID) {
   globals.socket = io.connect('ws://www.misquares.com');
+  globals.upgrade = new Upgrade();
 
   globals.socket.on('conn_req', function(data) {
     globals.socket.emit('conn_resp', globals.queries.name); 
