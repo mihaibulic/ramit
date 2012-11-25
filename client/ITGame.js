@@ -10,6 +10,8 @@ var ITGame = function(team, playerID) {
 
   globals.socket.on('setup', globals.bind(function(data) {
 
+    this.player = data.i;
+    
     globals.socket.on('state', globals.bind(function(data) {
       this.loadState(data, false);
     }, this));
@@ -30,13 +32,12 @@ var ITGame = function(team, playerID) {
     });
 
     globals.socket.on('upgrade_resp', function(data) {
-      console.log("upgrade request received from " + globals.players[id].name +
+      console.log("upgrade request received from " + globals.players[this.player].name +
                 " d:" + Upgrade.DeviceStrings[data.d] +
                 " t:" + Upgrade.TypeStrings[data.t]);
-      globals.upgrade.buy(data.d, data.t, id);
+      globals.upgrade.buy(data.d, data.t, this.player);
     });
 
-    this.player = data.i;
     this.loadState(data.s, true);
     this.team = globals.players[this.player].team;
 
