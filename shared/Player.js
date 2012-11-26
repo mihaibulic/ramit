@@ -52,8 +52,8 @@ var Player = function(team, playerID, opt_state) {
   this.special[Player.SpecialType.EMP] = {
     range: 60,
     damage: 30,
-    coolDown: 5000,
-    lastFire: new Timer(5000),
+    coolDown: 2000,
+    lastFire: new Timer(2000),
     allowed: 1
   };
   this.special[Player.SpecialType.MEDIC] = {
