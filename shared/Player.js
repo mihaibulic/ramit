@@ -3,8 +3,9 @@
  * @param {Number} team The team number the player is on.
  * @param {Number} playerID The player's ID number.
  * @param {Object} opt_state A state object to build this object from.
+ * @param {String} name The player's name.
  */
-var Player = function(team, playerID, opt_state) {
+var Player = function(team, playerID, opt_state, opt_name) {
   var x;
   var y;
   var aim;
@@ -17,7 +18,7 @@ var Player = function(team, playerID, opt_state) {
     range: 0,
     damage: 5,
     speed: 8 * 60,
-    coolDown: 300, 
+    coolDown: 300,
     lastFire: new Timer(300)
   };
   this.projectile[Projectile.Type.MINE] = {
@@ -41,9 +42,9 @@ var Player = function(team, playerID, opt_state) {
     range: 200,
     damage: 5000,
     speed: 60,
-    coolDown: 0, 
+    coolDown: 0,
     lastFire: new Timer(0),
-    allowed: 0 
+    allowed: 0
   };
 
   this.special = [];
@@ -133,6 +134,9 @@ var Player = function(team, playerID, opt_state) {
     this.totalScore = 0;
     this.totalSpent = 0;
   }
+
+  if (opt_name)
+    this.name = opt_name;
 
   this.tank = {
     x: x,
@@ -345,7 +349,7 @@ Player.prototype.drawHUD = function() {
   }
 
   // Draw icons for each weapon
-  globals.ctx.fillStyle = Player.TEAM_COLOR_DARK[this.team]; 
+  globals.ctx.fillStyle = Player.TEAM_COLOR_DARK[this.team];
   for (var s in this.special) {
     if (s != Player.SpecialType.BOMB || this.special[s].allowed > 0) {
         drawRoundRect(globals.ctx, 20 + 40*s, 50, 30, 30, 5);
@@ -355,7 +359,7 @@ Player.prototype.drawHUD = function() {
   }
 
   // Gray out not allowed weapons/cooldown times
-  globals.ctx.fillStyle = "#8a8a8a"; 
+  globals.ctx.fillStyle = "#8a8a8a";
   globals.ctx.globalAlpha = 0.75;
   for (s in this.special) {
     if (this.special[s].allowed <= 0) {
@@ -364,7 +368,7 @@ Player.prototype.drawHUD = function() {
         globals.ctx.fill();
       }
     }
-    else if (!this.special[s].lastFire.isDone()) { 
+    else if (!this.special[s].lastFire.isDone()) {
       var coolDownPercent = (this.special[s].lastFire.timeLeft() / this.special[s].coolDown);
       drawRoundRect(globals.ctx, 20 + 40*(s), 50 + (30*(1-coolDownPercent)), 30, 30 * coolDownPercent, 5);
       globals.ctx.fill();
@@ -500,7 +504,7 @@ Player.prototype.updateMouse = function(e) {
       }
       return;
     }
-    
+
     diff.l = value;
     break;
   case 2: // middle
@@ -586,7 +590,7 @@ Player.prototype.updateKeys = function(e) {
   case 52: //4
   case 53: //5
     var num = e.keyCode - 48;
-    if(value && this.special[num].allowed > 0) 
+    if(value && this.special[num].allowed > 0)
       this.mounted = this.keys.mounted = diff.m = num;
     break;
   case 85:
@@ -650,8 +654,8 @@ Player.prototype.loadState = function(data, you) {
     if (data.w !== undefined)
       this.mounted = data.w;
     if (data.d !== undefined) {
-        if (data.d <= 0 && !this.special[Player.SpecialType.SHIELD].inUse.isDone()) { 
-          // server has shield off, but client has it on      
+        if (data.d <= 0 && !this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
+          // server has shield off, but client has it on
           this.special[Player.SpecialType.SHIELD].inUse.reset();
         }
         else if (data.d > 0 && this.special[Player.SpecialType.SHIELD].inUse.isDone()) {
@@ -734,7 +738,7 @@ Player.prototype.update = function() {
       this.respawn();
     }
   }
-  else 
+  else
     this.move();
 };
 
@@ -1031,7 +1035,7 @@ Player.prototype.getCollisionBarrier = function(location, useShield) {
     return new Rectangle({left: location.x + 10, right: location.x + 50,
                           top: location.y + 10, bottom: location.y + 50});
   }
-  else { 
+  else {
     // if you're dead, do not collide with anything
     return new Rectangle({left: -100, right: -100, top: -100, bottom: -100});
   }

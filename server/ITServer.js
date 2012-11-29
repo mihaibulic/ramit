@@ -248,8 +248,7 @@ io.sockets.on('connection', function(socket) {
     globals.teams[team]++;
     var id = globals.playerIDQueue.pop();
     globals.socketToId[socket.id] = id;
-    globals.players[id] = new Player(team, id);
-    globals.players[id].name = name;
+    globals.players[id] = new Player(team, id, undefined, name);
 
     // Actions to perform when the player presses or releases a key.
     socket.on('key', function(data) {
