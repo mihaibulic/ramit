@@ -5,10 +5,6 @@ var ITGame = function(team, playerID) {
   globals.socket = io.connect('ws://www.misquares.com');
   globals.upgrade = new Upgrade();
 
-  globals.socket.on('conn_req', function(data) {
-    globals.socket.emit('conn_resp', globals.queries.name); 
-  });
-
   globals.socket.on('setup', globals.bind(function(data) {
 
     globals.socket.on('state', globals.bind(function(data) {
@@ -78,10 +74,6 @@ var ITGame = function(team, playerID) {
       e.preventDefault();
     });
 
-    // Sets the player's name if specified.
-    if (globals.queries.name !== undefined) {
-      globals.socket.emit('name', globals.queries.name);
-    }
     window.addEventListener('keydown', keyEvent);
     window.addEventListener('keyup', keyEvent);
     window.addEventListener('mousedown', mouseEvent);
@@ -118,6 +110,13 @@ var ITGame = function(team, playerID) {
   }, this));
 };
 
+/**
+ * Joins the game.
+ * @param {String} name The player's selected name.
+ */
+ITGame.prototype.join = function(name) {
+  globals.socket.emit('join', name);
+};
 
 /**
  * Loads a state message into the game.

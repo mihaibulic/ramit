@@ -36,7 +36,8 @@ var globals = {
   messageCounter: 120,
   updateTime: 0,
   dt: 0,
-  fps: 60
+  fps: 60,
+  name: null
 };
 
 /**
@@ -427,6 +428,29 @@ globals.renderTanks = function()
   renderTank(0);
 };
 
+globals.join_submit = function() {
+  var name = document.getElementById('namebox').value;
+  if (name !== "") {
+    globals.name = name;
+  } else {
+    return false;
+  }
+
+  if (globals.game) {
+    globals.join();
+  } else {
+    document.getElementById('login').style.display = "none";
+    document.getElementById('loading').style.display = "block";
+  }
+};
+
+globals.join = function() {
+  document.getElementById('login').style.display = "none";
+  document.getElementById('loading').style.display = "none";
+  document.getElementById('game').style.display = "block";
+  globals.game.join(globals.name);
+};
+
 /**
  * Initialize the state and begin.
  */
@@ -435,6 +459,8 @@ window.onload = function() {
   globals.ctx = globals.canvas.getContext('2d');
   globals.load(function() {
     globals.game = new ITGame(0,0);
+    if (globals.name != null)
+      globals.join();
   });
 };
 
