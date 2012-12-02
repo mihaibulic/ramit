@@ -152,21 +152,26 @@ var update = function() {
  *  regardless of when it was last sent
  */
 var emitState = function(override) {
+  var absoluteState = getAbsoluteState();
+  var stateToEmit;
+
   if (globals.lastAbsolute >= 300 || override) {
-    var absoluteState = getAbsoluteState();
     globals.lastAbsolute = 0;
 
     if(globals.diff.e)
       absoluteState.e = globals.diff.e;
 
-    io.sockets.emit('state', absoluteState);
+    stateToEmit = absoluteState;  
     globals.diff = {};
   } else if (!globals.isObjectEmpty(globals.diff) && globals.sendFullDiff()) {
-    io.sockets.emit('state', globals.diff);
+    stateToEmit = globals.diff;
     globals.diff = {};
   } else if (!globals.isObjectEmpty(globals.immediateDiff)) {
-    io.sockets.emit('state', globals.immediateDiff);
+    stateToEmit = globals.immediateDiff;
   }
+
+  console.log("$$$\t" + System.Runtime.InteropServices.Marshal.SizeOf(absoluteState)+ "\t"+System.Runtime.InteropServices.Marshal.SizeOf(stateToEmit));
+  globals.emit('state', stateToEmit);
 
   globals.immediateDiff = {};
   globals.lastAbsolute++;
