@@ -9,8 +9,18 @@
 <body>
   <div id="logo"></div>
   <div id="main">
-    <canvas width="1000" height="500" id="cnv">Error: can't display canvas. Ram Co. recommends downloading the lastest version of Chrome for free.</canvas>
-    <canvas id="renderer"></canvas>
+    <div id="login">
+      <h1>Enter Your Name:</h1>
+      <input type="text" id="namebox" />
+      <input type="button" value="Join" onclick="globals.join_submit()" />
+    </div>
+    <div id="loading">
+      <h2>Loading</h2>
+    </div>
+    <div id="game">
+      <canvas width="1000" height="500" id="cnv">Error: can't display canvas. Ram Co. recommends downloading the lastest version of Chrome for free.</canvas>
+      <canvas id="renderer"></canvas>
+    </div>
   </div>
   <div id="footer">
     <p>&copy; 2012 RamCo</p>
