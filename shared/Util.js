@@ -34,7 +34,9 @@ function drawRoundRect(ctx, x, y, width, height, radius) {
  * Returns the size of a message in bytes
  */
 function getMessageSize (message) {
+  if (message === undefined) return 0;
   var msg = JSON.stringify( message );
+  if (msg === undefined) return 0;
   var sizeInBytes = msg.split('').map(function( ch ) {
     return ch.charCodeAt(0);
   }).map(function( uchar ) {
