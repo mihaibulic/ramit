@@ -28,3 +28,20 @@ function drawRoundRect(ctx, x, y, width, height, radius) {
   }
   ctx.closePath();
 }
+
+
+/**
+ * Returns the size of a message in bytes
+ */
+function getMessageSize (message) {
+  var msg = JSON.stringify( message );
+  var sizeInBytes = msg.split('').map(function( ch ) {
+    return ch.charCodeAt(0);
+  }).map(function( uchar ) {
+      return uchar < 128 ? 1 : 2;
+    }).reduce(function( curr, next ) {
+        return curr + next;
+      });
+
+  return sizeInBytes;
+};

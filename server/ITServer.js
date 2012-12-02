@@ -170,7 +170,7 @@ var emitState = function(override) {
     stateToEmit = globals.immediateDiff;
   }
 
-  console.log("$$$\t" + System.Runtime.InteropServices.Marshal.SizeOf(absoluteState)+ "\t"+System.Runtime.InteropServices.Marshal.SizeOf(stateToEmit));
+  console.log("$$$\t" + getMessageSize(absoluteState) + "\t" + getMessageSize(stateToEmit));
   globals.emit('state', stateToEmit);
 
   globals.immediateDiff = {};
