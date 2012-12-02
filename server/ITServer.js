@@ -171,7 +171,7 @@ var emitState = function(override) {
   }
 
   console.log("$$$\t" + getMessageSize(absoluteState) + "\t" + getMessageSize(stateToEmit));
-  globals.emit('state', stateToEmit);
+  io.sockets.emit('state', stateToEmit);
 
   globals.immediateDiff = {};
   globals.lastAbsolute++;
