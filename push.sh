@@ -16,7 +16,7 @@ function push {
   git push ${remote} ${branch}
 
   echo "ssh"
-  yes | ssh -i misquares.pem ec2-user@ec2-184-72-242-128.compute-1.amazonaws.com 'cd /var/lib/tomcat6/webapps/ROOT/ramit && git pull origin ${branch} &&./deploy.sh'
+  yes | ssh -i misquares.pem ec2-user@ec2-184-72-242-128.compute-1.amazonaws.com 'cd /home/ec2-user/ramit && git pull origin ${branch} &&./deploy.sh'
 }
 
 case $(git remote | grep -c "") in
