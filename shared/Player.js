@@ -51,10 +51,10 @@ var Player = function(team, playerID, opt_state, opt_name) {
   this.special[Player.SpecialType.ROCKET] = this.projectile[Projectile.Type.ROCKET];
   this.special[Player.SpecialType.BOMB] = this.projectile[Projectile.Type.BOMB];
   this.special[Player.SpecialType.EMP] = {
-    range: 60,
-    damage: 30,
-    coolDown: 2000,
-    lastFire: new Timer(2000),
+    range: 75,
+    damage: 50,
+    coolDown: 500,
+    lastFire: new Timer(500),
     allowed: 1
   };
   this.special[Player.SpecialType.MEDIC] = {

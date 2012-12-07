@@ -153,7 +153,7 @@ var update = function() {
  */
 var emitState = function(override) {
   var absoluteState = getAbsoluteState();
-  var stateToEmit;
+  var stateToEmit = null;
 
   if (globals.lastAbsolute >= 300 || override) {
     globals.lastAbsolute = 0;
@@ -170,8 +170,10 @@ var emitState = function(override) {
     stateToEmit = globals.immediateDiff;
   }
 
-  console.log("$$$\t" + getMessageSize(absoluteState) + "\t" + getMessageSize(stateToEmit));
-  io.sockets.emit('state', stateToEmit);
+  console.log("Msg Sizes \t" + globals.numberOfPlayers + "\t" + getMessageSize(absoluteState) + "\t" + getMessageSize(stateToEmit));
+  if(stateToEmit !== null) {
+    io.sockets.emit('state', stateToEmit);
+  }
 
   globals.immediateDiff = {};
   globals.lastAbsolute++;

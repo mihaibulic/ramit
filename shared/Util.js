@@ -46,4 +46,4 @@ function getMessageSize (message) {
       });
 
   return sizeInBytes;
-};
+}
