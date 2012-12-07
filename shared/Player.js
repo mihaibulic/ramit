@@ -44,7 +44,7 @@ var Player = function(team, playerID, opt_state, opt_name) {
     speed: 60,
     coolDown: 0,
     lastFire: new Timer(0),
-    allowed: 0
+    allowed: 1
   };
 
   this.special = [];
