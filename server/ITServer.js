@@ -170,7 +170,6 @@ var emitState = function(override) {
     stateToEmit = globals.immediateDiff;
   }
 
-  console.log("Msg Sizes \t" + globals.numberOfPlayers + "\t" + getMessageSize(absoluteState) + "\t" + getMessageSize(stateToEmit));
   if(stateToEmit !== null) {
     io.sockets.emit('state', stateToEmit);
   }
