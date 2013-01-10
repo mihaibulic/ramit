@@ -9,7 +9,7 @@ var globals = {
   // set the gameover timer to 2 sec (2000ms), don't have it set to be done, & don't start it
   gameoverTimer: new Timer(2000, false, false),
   interval: null,
-  fps: 30,
+  fps: 60,
   numberOfPlayers: 0,
   players: {},
   projectiles: {},
@@ -21,7 +21,7 @@ var globals = {
   immediateDiff: {},
   lastAbsolute: 0,
   upgrade: new Upgrade(),
-  dt: 1000/30
+  dt: 1000/fps
 };
 
 /**

@@ -36,7 +36,7 @@ var globals = {
   messageCounter: 120,
   updateTime: 0,
   dt: 0,
-  fps: 30,
+  fps: 0,  // used only to count fps
   name: null
 };
 
