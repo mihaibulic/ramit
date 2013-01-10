@@ -428,6 +428,10 @@ globals.renderTanks = function()
   renderTank(0);
 };
 
+globals.mapMaker = function() {
+  console.log("map making");
+};
+
 globals.join_submit = function() {
   var name = document.getElementById('namebox').value;
   if (name !== "") {
