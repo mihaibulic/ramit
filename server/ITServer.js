@@ -21,7 +21,7 @@ var globals = {
   immediateDiff: {},
   lastAbsolute: 0,
   upgrade: new Upgrade(),
-  dt: 1000/60
+  dt: 1000/30
 };
 
 /**

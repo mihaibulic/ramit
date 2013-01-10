@@ -153,10 +153,10 @@ Projectile.prototype.predict = function() {
   var y = this.y;
   var sx = this.sx;
   var sy = this.sy;
-  this.x += Math.round(this.vx / 60);
-  this.y += Math.round(this.vy / 60);
-  this.sx += Math.round(this.vx / 60);
-  this.sy += Math.round(this.vy / 60);
+  this.x += Math.round(this.vx / 30);
+  this.y += Math.round(this.vy / 30);
+  this.sx += Math.round(this.vx / 30);
+  this.sy += Math.round(this.vy / 30);
 
   var hit = false;
   var target;
@@ -254,8 +254,8 @@ Projectile.prototype.predict = function() {
  * @returns {Boolean} If the projectile has exploded.
  */
 Projectile.prototype.update = function() {
-  this.x += Math.round(this.vx / 60);
-  this.y += Math.round(this.vy / 60);
+  this.x += Math.round(this.vx / 30);
+  this.y += Math.round(this.vy / 30);
 
   var hit = false;
   var target;

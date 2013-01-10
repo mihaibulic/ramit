@@ -36,7 +36,7 @@ var globals = {
   messageCounter: 120,
   updateTime: 0,
   dt: 0,
-  fps: 60,
+  fps: 30,
   name: null
 };
 
@@ -486,6 +486,6 @@ if ( !window.requestAnimationFrame ) {
       window.oRequestAnimationFrame ||
       window.msRequestAnimationFrame ||
       function(callback) {
-        window.setTimeout( callback, 1000 / 60, new Date()); };
+        window.setTimeout( callback, 1000 / 30, new Date()); };
   } )();
 }
