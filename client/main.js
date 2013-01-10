@@ -431,6 +431,7 @@ globals.renderTanks = function()
 globals.mapMaker = function() {
   console.log("map maker");
   document.getElementById('login').style.display = "none";
+  document.getElementById('loading').style.display = "none";
   document.getElementById('map').style.display = "block";
 };
 
