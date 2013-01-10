@@ -14,7 +14,7 @@
  */
 var Explosion = function(x, y, range, owner, target, damage, opt_projectile, opt_one_team, opt_state) {
   this.startTime = globals.updateTime;
-  this.length = 5 * (1000 / globals.fps);
+  this.length = 150;
 
   if (opt_state) {
     this.type = opt_state.t;
