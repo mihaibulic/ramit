@@ -153,7 +153,6 @@ Projectile.prototype.predict = function() {
   var y = this.y;
   var sx = this.sx;
   var sy = this.sy;
-  console.log(globals.dt);
   this.x += Math.round(this.vx * globals.dt/1000);
   this.y += Math.round(this.vy * globals.dt/1000);
   this.sx += Math.round(this.vx * globals.dt/1000);

@@ -9,7 +9,9 @@ var globals = {
   // set the gameover timer to 2 sec (2000ms), don't have it set to be done, & don't start it
   gameoverTimer: new Timer(2000, false, false),
   interval: null,
-  fps: 100,
+  fps: 30,
+  dt: 0,
+  updateTime: 0,
   numberOfPlayers: 0,
   players: {},
   projectiles: {},
@@ -20,8 +22,7 @@ var globals = {
   diff: {},
   immediateDiff: {},
   lastAbsolute: 0,
-  upgrade: new Upgrade(),
-  dt: 1000/100
+  upgrade: new Upgrade()
 };
 
 /**
@@ -77,6 +78,10 @@ var explodeAll = function(player, justMines) {
  * Updates the game and sends out a 'diff' message to the players.
  */
 var update = function() {
+  var now = new Date().getTime();
+  globals.dt = now - globals.updateTime;
+  globals.updateTime = now;
+
   if (globals.level.mode === Level.Mode.START)
     globals.level.mode = Level.Mode.ONGOING;
   else if (globals.level.mode === Level.Mode.END) {
