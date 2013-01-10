@@ -28,6 +28,13 @@ h2 {
     background-position: center bottom;
 }
 
+h3 {
+    font-size: 32px;
+    margin-left: 50px;
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+
 input {
     margin-left: 50px;
     display: block;

@@ -428,11 +428,15 @@ globals.renderTanks = function()
   renderTank(0);
 };
 
-globals.mapMaker = function() {
+globals.mapSetup = function() {
   console.log("map maker");
   document.getElementById('login').style.display = "none";
   document.getElementById('loading').style.display = "none";
   document.getElementById('map').style.display = "block";
+};
+
+globals.mapMaker = function() {
+
 };
 
 globals.join_submit = function() {
@@ -454,6 +458,7 @@ globals.join_submit = function() {
 globals.join = function() {
   document.getElementById('login').style.display = "none";
   document.getElementById('loading').style.display = "none";
+  document.getElementById('map').style.display = "none";
   document.getElementById('game').style.display = "block";
   globals.game.join(globals.name);
 };
