@@ -110,7 +110,7 @@ Explosion.prototype.draw = function() {
   }
 
   var progress = (globals.updateTime - this.startTime) / this.length;
-  globals.ctx.globalAlpha = 1 / progress;
+  globals.ctx.globalAlpha = Math.max(1 - progress, 0);
   globals.ctx.lineWidth = 5;
   globals.ctx.beginPath();
   globals.ctx.arc(xPos, yPos, Math.min(progress, 1) * range, 0 , 2 * Math.PI);
