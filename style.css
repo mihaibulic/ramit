@@ -74,6 +74,10 @@ input[type=button] {
     display: none;
 }
 
+#map {
+    display: none;
+}
+
 #cnv {
     cursor: crosshair;
 }

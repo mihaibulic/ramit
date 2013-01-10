@@ -496,7 +496,7 @@ Player.prototype.updateMouse = function(e) {
     var y = e.clientY - canvasPos.top;
     var num = Math.floor((x-20)/40);
 
-    // mouse is in weapons area, so click should be used to mount another weapon rather than aim
+    // mouse is in weapons area, so click should be used to mount another weapon rather than shoot
     if (num >= Player.SpecialType.ROCKET && num <= Player.SpecialType.BOMB && y > 50 && y < 80) {
       if (this.special[num].allowed > 0) {
         this.keys.mounted = this.mounted = diff.m = num;
