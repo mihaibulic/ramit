@@ -430,6 +430,7 @@ globals.renderTanks = function()
 
 globals.mapMaker = function() {
   console.log("map making");
+  document.getElementById('login').style.display = "none";
 };
 
 globals.join_submit = function() {
