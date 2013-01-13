@@ -2,7 +2,7 @@
  * The Interactive Tanks game.
  */
 var ITGame = function(team, playerID) {
-  globals.socket = io.connect('ws://www.misquares.com');
+  globals.socket = io.connect('ws://ramit.misquares.com');
   globals.upgrade = new Upgrade();
 
   globals.socket.on('setup', globals.bind(function(data) {
